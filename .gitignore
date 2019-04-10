@@ -1,0 +1,12 @@
+# dependencies
+node_modules
+
+# yarn
+yarn-error.log
+yarn.lock
+
+# OSX files
+.DS_STORE
+
+# build
+/build
