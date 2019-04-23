@@ -1,6 +1,5 @@
 import React from "react";
 import "./button.css";
-
 /* Ripple */
 import Ripple from "./../ripple";
 
@@ -11,7 +10,7 @@ const ButtonOutlined = ({ color, label, handleClick }) => (
       className="buttonOutlined"
       style={{
         color: color,
-        borderColor: color
+        boxShadow: "inset 0px 0px 0px 0.123rem ".concat(color)
       }}
     >
       <Ripple />

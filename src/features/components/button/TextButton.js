@@ -1,6 +1,6 @@
 import React from "react";
 import "./button.css";
-
+/* Ripple */
 import Ripple from "./../ripple";
 
 const TextButton = ({ color, label, handleClick }) => (
