@@ -1,6 +1,8 @@
 import React from "react";
 import "./button.css";
 
+import Ripple from "./../ripple";
+
 const TextButton = ({ color, label, handleClick }) => (
   <div className="buttonContainer buttonTextContainer">
     <button
@@ -11,6 +13,7 @@ const TextButton = ({ color, label, handleClick }) => (
         borderColor: color
       }}
     >
+      <Ripple />
       <span>{label}</span>
     </button>
   </div>
