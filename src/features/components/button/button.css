@@ -3,7 +3,7 @@
 */
 
 :root {
-  --button-radius: 0.55rem;
+  --button-radius: 0.4rem;
 }
 
 /* General button and button container styles */
@@ -65,6 +65,10 @@
 
 .buttonFilled:focus {
   opacity: 0.85;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.buttonFilled:active {
 }
 
 .buttonFilled {
