@@ -7,7 +7,8 @@ const ButtonOutlined = ({
   color,
   label,
   handleClick,
-  fontSize = "1.25rem"
+  fontSize = "1.25rem",
+  padding = "1rem 1.5rem"
 }) => (
   <div className="buttonContainer buttonOutlinedContainer">
     <button
@@ -16,6 +17,7 @@ const ButtonOutlined = ({
       style={{
         color: color,
         fontSize: fontSize,
+        padding: padding,
         boxShadow: "inset 0px 0px 0px 0.123rem ".concat(color)
       }}
     >
