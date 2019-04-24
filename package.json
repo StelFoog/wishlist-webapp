@@ -17,7 +17,9 @@
     "redux-logger": "^3.0.6",
     "redux-persist": "^5.10.0",
     "redux-saga": "^1.0.2",
-    "reselect": "^4.0.0"
+    "reselect": "^4.0.0",
+    "typeface-ibm-plex-sans": "^0.0.61",
+    "typeface-noto-sans-sc": "^0.0.71"
   },
   "scripts": {
     "start": "react-scripts start",
