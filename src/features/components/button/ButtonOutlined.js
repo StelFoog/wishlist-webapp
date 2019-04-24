@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+/* CSS */
 import "./button.css";
 /* Ripple */
 import Ripple from "./../ripple";
@@ -7,6 +9,7 @@ const ButtonOutlined = ({
   color,
   label,
   handleClick,
+  colorOutline = true,
   fontSize = "1.25rem",
   padding = "1rem 1.5rem"
 }) => (
@@ -18,7 +21,9 @@ const ButtonOutlined = ({
         color: color,
         fontSize: fontSize,
         padding: padding,
-        boxShadow: "inset 0px 0px 0px 0.123rem ".concat(color)
+        boxShadow: colorOutline
+          ? "inset 0px 0px 0px 0.123rem ".concat(color)
+          : "inset 0px 0px 0px 0.123rem #7f7f7f"
       }}
     >
       <Ripple />
@@ -26,5 +31,14 @@ const ButtonOutlined = ({
     </button>
   </div>
 );
+
+ButtonOutlined.propTypes = {
+  color: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  handleClick: PropTypes.func,
+  colorEdge: PropTypes.bool,
+  fontSize: PropTypes.string,
+  padding: PropTypes.string
+};
 
 export default ButtonOutlined;

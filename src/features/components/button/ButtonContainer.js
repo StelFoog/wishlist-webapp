@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 /* Buttons */
 import TextButton from "./TextButton";
 import ButtonFilled from "./ButtonFilled";
@@ -11,5 +12,9 @@ const ButtonContainer = ({ variant, ...rest }) => (
     {variant === "text" && <TextButton {...rest} />}
   </React.Fragment>
 );
+
+ButtonContainer.propTypes = {
+  variant: PropTypes.string.isRequired
+};
 
 export default ButtonContainer;

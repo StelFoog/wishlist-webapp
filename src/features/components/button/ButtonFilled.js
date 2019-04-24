@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+/*CSS*/
 import "./button.css";
 /* Ripple */
 import Ripple from "./../ripple";
@@ -21,5 +23,13 @@ const ButtonFilled = ({
     </button>
   </div>
 );
+
+ButtonFilled.propTypes = {
+  color: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  handleClick: PropTypes.func,
+  fontSize: PropTypes.string,
+  padding: PropTypes.string
+};
 
 export default ButtonFilled;
