@@ -15,10 +15,26 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
   background-color: var(--color-light);
   min-height: 100vh;
   display: flex;
+  font-family: "Noto Sans SC", sans-serif;
+}
+
+input,
+textarea,
+select,
+button {
+  font-family: "Noto Sans SC", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "IBM Plex Sans", sans-serif;
 }
 
 @media (max-width: 600px) {
