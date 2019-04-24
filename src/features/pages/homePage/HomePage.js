@@ -1,8 +1,7 @@
 import React from "react";
 
 import Button from "../../components/button";
-import {
-  CardContainer,
+import Card, {
   CardContent,
   CardMedia,
   CardHeader
@@ -25,7 +24,7 @@ class HomePage extends React.Component {
           padding="1rem 1rem"
         />
         <Button label="Text" variant="text" color="#73359B" />
-        <CardContainer>
+        <Card>
           <CardMedia media="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
           <CardHeader>Test</CardHeader>
           <CardContent>
@@ -38,7 +37,7 @@ class HomePage extends React.Component {
             med lanseringen av Letraset-ark med avsnitt av Lorem Ipsum, och
             senare med mjukvaror som Aldus PageMaker.
           </CardContent>
-        </CardContainer>
+        </Card>
       </React.Fragment>
     );
   }
