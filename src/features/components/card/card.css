@@ -1,5 +1,9 @@
 /* Card container */
 
+.card-container > div:not(.card-media) {
+  padding: 1.5rem;
+}
+
 .card-container {
   border-radius: var(--border-radius);
   display: flex;
@@ -16,23 +20,30 @@
 /* Card header */
 
 .card-header h3 {
-  margin-top: 1rem;
-  margin-bottom: 0;
+  margin-bottom: 0.6rem;
+  margin-top: 0;
   color: var(--color-dark);
 }
 
 /* Card content */
 
 .card-content {
-  margin-top: 1rem;
   color: var(--color-dark-gray);
 }
 
 /* Card media */
 
-.card-media {
+.card-media:first-child {
   border-top-left-radius: var(--border-radius);
   border-top-right-radius: var(--border-radius);
+}
+
+.card-media:last-child {
+  border-bottom-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+}
+
+.card-media {
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover; /* Resize the background image to cover the entire container */

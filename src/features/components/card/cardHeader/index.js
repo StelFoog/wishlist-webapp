@@ -1,8 +1,8 @@
 import React from "react";
 
-const CardHeader = ({ title }) => (
+const CardHeader = ({ children }) => (
   <div className="card-header">
-    <h3>{title}</h3>
+    <h3>{children}</h3>
   </div>
 );
 
