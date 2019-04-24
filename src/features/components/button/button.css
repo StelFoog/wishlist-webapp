@@ -2,10 +2,6 @@
   Styles for the buttons
 */
 
-:root {
-  --button-radius: 0.4rem;
-}
-
 /* General button and button container styles */
 
 .buttonContainer {

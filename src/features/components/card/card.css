@@ -1,10 +1,5 @@
-body {
-  background: #e2e1e0;
-  text-align: center;
-}
-
 .card-container {
-  border-radius: 0.4rem;
+  border-radius: var(--button-radius);
   display: flex;
 }
 @media (min-width: 601px) {
