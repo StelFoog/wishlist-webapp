@@ -3,7 +3,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import { Route, Switch } from "react-router";
 import { PersistGate } from "redux-persist/integration/react";
-import App from "./App"; // should be destroyed
+import HomePage from "./features/pages/homePage";
 
 const Root = ({ store, history, persistor }) => (
   <Provider store={store}>
@@ -14,7 +14,7 @@ const Root = ({ store, history, persistor }) => (
             path={"/"}
             exact
             render={props => {
-              return <App {...props} />;
+              return <HomePage {...props} />;
             }}
           />
         </Switch>
