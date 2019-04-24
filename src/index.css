@@ -1,5 +1,5 @@
 :root {
-  --button-radius: 0.4rem;
+  --border-radius: 0.4rem;
   --color-primary: #73359b;
   --color-primary-light: #a463cd;
   --color-primary-dark: #43026c;
@@ -8,6 +8,7 @@
   --color-secondary-dark: #00527d;
   --color-light: #d3d3d3;
   --color-dark: #292929;
+  --color-dark-gray: #616161;
   --color-error: #c0392b;
 }
 

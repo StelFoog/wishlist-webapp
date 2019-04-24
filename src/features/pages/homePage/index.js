@@ -20,7 +20,11 @@ class HomePage extends React.Component {
           padding="1rem 1rem"
         />
         <Button label="Text" variant="text" color="#73359B" />
-        <Card>
+        <Card
+          title="intro"
+          mediaHeight="300px"
+          media="https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+        >
           Lorem Ipsum är en utfyllnadstext från tryck- och förlagsindustrin.
           Lorem ipsum har varit standard ända sedan 1500-talet, när en okänd
           boksättare tog att antal bokstäver och blandade dem för att göra ett
