@@ -6,3 +6,16 @@ body {
   min-height: 100vh;
   display: flex;
 }
+
+@media (max-width: 600px) {
+  #root {
+    flex-direction: column;
+  }
+}
+#root {
+  justify-content: space-around;
+  align-items: center;
+  display: flex;
+  text-align: center;
+  flex: 1;
+}
