@@ -1,0 +1,36 @@
+
+body{
+  margin-left: 140px;
+}
+.dashboardNav{
+  height: 100%;
+  width: 140px;
+  
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 999;
+  
+  background-color: var(--color-primary-dark);
+  box-shadow: 1px 0 2px 0 var(--color-dark);
+
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+
+.navProfilePicture{
+  padding-bottom: 19px;
+  border-bottom: 2px solid var(--color-light);
+}
+
+.navButton{
+  margin-top: 20px;
+}
+
+.navButtonBottom{
+  position: absolute;
+  bottom: 20px;
+  width: 100px;
+}
+
