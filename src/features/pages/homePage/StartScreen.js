@@ -15,18 +15,8 @@ const StartScreen = ({ handleCLick }) => (
       <h1>Wishlists</h1>
     </div>
     <div className="authButtonContainer">
-      <Button
-        label="Log in with Facebook"
-        variant="filled"
-        color="#73359B"
-        fontSize="1rem"
-      />
-      <Button
-        label="Log in with Google"
-        variant="outlined"
-        color="#73359B"
-        padding="1rem 1rem"
-      />
+      <Button label="Log in with Facebook" variant="filled" color="#73359B" />
+      <Button label="Log in with Google" variant="outlined" color="#73359B" />
     </div>
     <div className="downArrowContainer">
       <NavLink to="#intro" smooth>
