@@ -16,7 +16,6 @@ body {
   margin: 0;
   padding: 0;
   background-color: var(--color-light);
-  min-height: 100vh;
   display: flex;
   font-family: "Noto Sans SC", sans-serif;
 }
