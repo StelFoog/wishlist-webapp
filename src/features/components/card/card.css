@@ -25,7 +25,6 @@
 }
 @media (min-width: 601px) {
   .card-container {
-    max-width: 50%;
     margin: 4rem;
   }
 }
