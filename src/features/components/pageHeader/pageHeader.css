@@ -1,0 +1,15 @@
+
+.pageHeader{
+  width: 100%;
+  border-bottom: 2px solid var(--color-dark);
+}
+
+.headerTitle{
+  text-align: left;
+  font-weight: 400;
+  font-size: 3rem;
+  color: var(--color-dark);
+
+  margin: 1rem;
+  
+}
