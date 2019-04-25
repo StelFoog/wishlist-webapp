@@ -36,6 +36,11 @@ h6 {
   font-family: "IBM Plex Sans", sans-serif;
 }
 
+p {
+  font-size: 1.25rem;
+  font-weight: 300;
+}
+
 #root {
   display: flex;
   flex: 1;
