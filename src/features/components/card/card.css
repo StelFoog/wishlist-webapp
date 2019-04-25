@@ -18,7 +18,6 @@
 }
 
 .card-container {
-  border-radius: var(--border-radius);
   display: flex;
   flex-direction: column;
   text-align: left;
@@ -27,6 +26,10 @@
   .card-container {
     margin: 4rem;
   }
+}
+
+.card-edge {
+  border-radius: var(--border-radius);
 }
 
 /* Card header */

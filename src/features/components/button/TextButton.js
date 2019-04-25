@@ -8,13 +8,14 @@ const TextButton = ({
   color,
   label,
   handleClick,
+  className = "",
   fontSize = "1.25rem",
   padding = "1rem 1.5rem"
 }) => (
   <div className="buttonContainer buttonTextContainer">
     <button
       onClick={handleClick}
-      className="buttonText"
+      className={`buttonText ${className}`}
       style={{
         color: color,
         borderColor: color,
