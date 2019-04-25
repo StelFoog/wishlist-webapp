@@ -5,6 +5,7 @@ import SvgIcon, { RoundKeyboardArrowDown } from "../../components/svgIcon";
 
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
+import { NavHashLink as NavLink } from "react-router-hash-link";
 
 import "./startScreen.css";
 
@@ -28,15 +29,17 @@ const StartScreen = ({ handleCLick }) => (
       />
     </div>
     <div className="downArrowContainer">
-      <SvgIcon className="downArrow" ripple={true} handleCLick={handleCLick}>
-        <RoundKeyboardArrowDown size={100} />
-      </SvgIcon>
+      <NavLink to="#intro" smooth>
+        <SvgIcon className="downArrow" handleCLick={handleCLick}>
+          <RoundKeyboardArrowDown size={100} />
+        </SvgIcon>
+      </NavLink>
     </div>
   </div>
 );
 
 const mapDispatchToProps = dispatch => ({
-  handleCLick: () => dispatch(push("#next"))
+  handleCLick: () => dispatch(push("#intro"))
 });
 
 export default connect(
