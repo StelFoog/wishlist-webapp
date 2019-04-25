@@ -37,23 +37,7 @@ h6 {
   font-family: "IBM Plex Sans", sans-serif;
 }
 
-<<<<<<< HEAD
 p {
   font-size: 1.25rem;
   font-weight: 300;
-}
-
-=======
-@media (max-width: 600px) {
-  #root {
-    flex-direction: column;
-  }
-}
->>>>>>> dev
-#root {
-  justify-content: space-around;
-  align-items: center;
-  display: flex;
-  text-align: center;
-  flex: 1;
 }
