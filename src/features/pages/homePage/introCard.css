@@ -1,4 +1,5 @@
 .introCard {
+  background: #fff;
   display: flex;
   flex: 1;
   min-height: 50vh;

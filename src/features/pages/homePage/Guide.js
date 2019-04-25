@@ -1,6 +1,7 @@
 import React from "react";
 
-import { CardContainer, CardContent, CardMedia } from "../../components/card";
+import Card, { CardContent, CardMedia } from "../../components/card";
+import Paper from "../../components/paper";
 
 import "./guide.css";
 
@@ -9,11 +10,11 @@ const Guide = () => (
     <div className="guide-row">
       <div className="guide-col">
         <div className="guide-step">
-          <div className="circle card-2">
+          <Paper elevation={2} className="circle">
             <span>1</span>
-          </div>
+          </Paper>
         </div>
-        <CardContainer elevation={2}>
+        <Card elevation={2}>
           <CardMedia />
           <CardContent>
             <p>
@@ -21,15 +22,15 @@ const Guide = () => (
               et ex luctus, condimentum nisi id,
             </p>
           </CardContent>
-        </CardContainer>
+        </Card>
       </div>
       <div className="guide-col">
         <div className="guide-step">
-          <div className="circle card-2">
+          <Paper elevation={2} className="circle">
             <span>2</span>
-          </div>
+          </Paper>
         </div>
-        <CardContainer elevation={2}>
+        <Card elevation={2}>
           <CardMedia />
           <CardContent>
             <p>
@@ -37,15 +38,15 @@ const Guide = () => (
               et ex luctus, condimentum nisi id,
             </p>
           </CardContent>
-        </CardContainer>
+        </Card>
       </div>
       <div className="guide-col">
         <div className="guide-step">
-          <div className="circle card-2">
+          <Paper elevation={2} className="circle">
             <span>3</span>
-          </div>
+          </Paper>
         </div>
-        <CardContainer elevation={2}>
+        <Card elevation={2}>
           <CardMedia />
           <CardContent>
             <p>
@@ -53,15 +54,15 @@ const Guide = () => (
               et ex luctus, condimentum nisi id,
             </p>
           </CardContent>
-        </CardContainer>
+        </Card>
       </div>
       <div className="guide-col">
         <div className="guide-step">
-          <div className="circle card-2">
+          <Paper elevation={2} className="circle">
             <span>4</span>
-          </div>
+          </Paper>
         </div>
-        <CardContainer elevation={2}>
+        <Card elevation={2}>
           <CardMedia />
           <CardContent>
             <p>
@@ -69,7 +70,7 @@ const Guide = () => (
               et ex luctus, condimentum nisi id,
             </p>
           </CardContent>
-        </CardContainer>
+        </Card>
       </div>
     </div>
   </div>
