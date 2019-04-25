@@ -5,13 +5,18 @@ import TextButton from "./TextButton";
 import ButtonFilled from "./ButtonFilled";
 import ButtonOutlined from "./ButtonOutlined";
 
-const ButtonContainer = ({ variant, ...rest }) => (
-  <React.Fragment>
-    {variant === "filled" && <ButtonFilled {...rest} />}
-    {variant === "outlined" && <ButtonOutlined {...rest} />}
-    {variant === "text" && <TextButton {...rest} />}
-  </React.Fragment>
-);
+const BUTTON_TYPES = {
+  filled: ButtonFilled,
+  outlined: ButtonOutlined,
+  text: TextButton
+};
+
+const ButtonContainer = ({ variant, ...rest }) => {
+  const ButtonType = BUTTON_TYPES[variant] ? BUTTON_TYPES[variant] : "div";
+  if (ButtonType === "div")
+    console.log(`${variant} is not a valid button variant`);
+  return <ButtonType {...rest} />;
+};
 
 ButtonContainer.propTypes = {
   variant: PropTypes.string.isRequired

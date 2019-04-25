@@ -9,13 +9,14 @@ const ButtonFilled = ({
   color,
   label,
   handleClick,
+  className = "",
   fontSize = "1.25rem",
   padding = "1rem 1.5rem"
 }) => (
   <div className="buttonContainer buttonFilledContainer">
     <button
       onClick={handleClick}
-      className="buttonFilled"
+      className={`buttonFilled ${className}`}
       style={{ background: color, fontSize: fontSize, padding: padding }}
     >
       <Ripple />
@@ -27,6 +28,7 @@ const ButtonFilled = ({
 ButtonFilled.propTypes = {
   color: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  className: PropTypes.string,
   handleClick: PropTypes.func,
   fontSize: PropTypes.string,
   padding: PropTypes.string
