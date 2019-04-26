@@ -58,7 +58,6 @@ class DashboardNav extends Component {
           <div className="navButtonBottom">
             <Button variant={"filled"} label={"S"} color={"var(--color-light)"} />
           </div>
-
         </div>
 
         <div className="mobileTopNav">

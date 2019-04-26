@@ -52,38 +52,33 @@ body{
     background-color: var(--color-primary-dark);
     box-shadow: 1px 0 2px 0 var(--color-dark);
     display: flex;
-    flex-direction: row-reverse;
-    justify-content: flex-end;
 
   }
 
   .dashboardNav{
     width: 140px;
-    -webkit-transition: width 0.5s;
-    transition: width 0.5s;
+    -webkit-transition: width 0.5s, padding 0.5s;
+    transition: width 0.5s, padding 0.5s;
+  }
+
+  .dashboardNav.hidden{
+    width: 0;
+    padding: 0;
   }
 
   .dashboardNav *{
+    visibility: visible;
     opacity: 1;
-    -webkit-transition: opacity 2s;
-    transition: opacity 2s;
-  }
+    -webkit-transition: opacity 1.2s, visibility 1.2s;
+    transition: opacity 1.2s, visibility 1.2s;
+  } 
 
-  .hidden{
-    
-    width: 0;
-    padding: 0;
-    -webkit-transition: width 0.5s;
-    transition: width 0.5s;
 
-  }
-
-  .hidden *{
-    display: none;
+  .dashboardNav.dashboardNav.hidden *{
+    visibility: hidden;
     opacity: 0;
-    -webkit-transition: opacity 2s;
-    transition: opacity 2s;
-    
   }
+
+
 }
 
