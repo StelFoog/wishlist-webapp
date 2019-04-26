@@ -21,12 +21,4 @@ const HomePage = ({ handleCLick }) => (
   </React.Fragment>
 );
 
-const mapDispatchToProps = dispatch => ({
-  openDialog: () =>
-    dispatch(openDialog({ body: <div>hej</div>, header: "hej" }))
-});
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(HomePage);
+export default HomePage;
