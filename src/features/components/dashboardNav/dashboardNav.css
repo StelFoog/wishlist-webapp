@@ -56,20 +56,14 @@ body{
   }
 
   .dashboardNav{
+    width: 75vw;
     left: 0;
     -webkit-transition: left 0.5s;
     transition: left 0.5s;
   }
 
   .dashboardNav.hidden{
-    left: -145px;
-  }
-
-  
-
-
-  .dashboardNav.dashboardNav.hidden *{
-    
+    left: -76vw;
   }
 
 
