@@ -14,4 +14,8 @@ package-lock.json
 # build
 /build
 
+<<<<<<< HEAD
+=======
+# API
+>>>>>>> d61ce646eb6addfc71b64760e65284e5349d8308
 firebase.js
