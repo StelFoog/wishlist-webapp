@@ -21,6 +21,10 @@ body{
 
   padding: 20px;
   box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 
@@ -31,6 +35,11 @@ body{
 
 .navButton{
   margin-top: 20px;
+}
+
+/* Set settings button to bottom of sidenav */
+.navButtonBottom{
+  justify-self: flex-end;
 }
 
 .navButtonBottom{
