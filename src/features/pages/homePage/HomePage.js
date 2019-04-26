@@ -1,5 +1,4 @@
 import React from "react";
-
 /* Components */
 
 import Footer from "../../components/footer";
@@ -10,7 +9,7 @@ import Guide from "./Guide";
 
 import "./homePage.css";
 
-const HomePage = ({ handleCLick }) => (
+const HomePage = ({}) => (
   <React.Fragment>
     <div className="homePage">
       <StartScreen />
@@ -21,12 +20,4 @@ const HomePage = ({ handleCLick }) => (
   </React.Fragment>
 );
 
-const mapDispatchToProps = dispatch => ({
-  openDialog: () =>
-    dispatch(openDialog({ body: <div>hej</div>, header: "hej" }))
-});
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(HomePage);
+export default HomePage;
