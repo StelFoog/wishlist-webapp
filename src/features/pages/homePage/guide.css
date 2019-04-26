@@ -1,0 +1,63 @@
+.guide-container {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  margin-top: 5rem;
+  padding: 1rem;
+}
+
+/* Row */
+.guide-container .guide-row {
+  display: flex;
+  flex-wrap: wrap;
+  flex-basis: 100%;
+}
+
+/*  Column */
+.guide-container .guide-row .guide-col {
+  margin: 1.5rem 0;
+  display: flex;
+  flex-basis: 50%;
+  flex-direction: column;
+}
+
+.guide-col > * {
+  flex: 1;
+}
+
+@media (max-width: 600px) {
+  .guide-container {
+    padding: 1rem 0;
+  }
+  .guide-container .guide-row .guide-col {
+    flex-basis: 100%;
+  }
+}
+
+/* Number */
+
+.guide-step {
+  justify-content: center;
+  display: flex;
+  text-align: center;
+  font-size: 2rem;
+}
+.guide-step .circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5rem;
+  width: 60px;
+  height: 60px;
+  background: #fff;
+}
+.guide-step .circle span {
+  padding-bottom: 2px;
+}
+
+/* Specific Card styles */
+
+.guide-container .card-content {
+  font-size: 1.5rem;
+  text-align: center;
+}
