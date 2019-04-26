@@ -1,6 +1,5 @@
 import { database } from "../firebase/";
 import { makeWishlist } from "./wishlist.js";
-import { User } from "../authentication/";
 import { editUser } from '../authentication/db.js';
 
 function _getWishlistRef(uid) {
@@ -15,14 +14,6 @@ function _getRefDoc(ref) {
   });
 }
 
-function _wishlistExists(uid) {
-  return _getRefDoc(_getWishlistRef(uid)).exists;
-}
-
-function _getWishlistDoc(uid) {
-  return _getRefDoc(_getWishlistRef(uid));
-}
-
 function addWishlistItem(uid, item) {
   let wishlist = fetchWishlistByUid(uid);
   wishlist.items.push(item);
@@ -34,17 +25,19 @@ function createWishlistWithOwner(user) {
   const ref = _getWishlistRef(uid);
   const doc = _getRefDoc(ref);
   if(doc.exists)
-    throw "createWishlistWithOwner(): Wishlist with uid " 
-         + uid 
-         + " already exists";
-  ref.set(makeWishlist("Unnamed wishlist", user.uid, uid);
+    throw new Error("createWishlistWithOwner(): Wishlist with uid " 
+                   + uid 
+                   + " already exists");
+  ref.set(makeWishlist("Unnamed wishlist", user.uid, uid));
 }
 
 function fetchWishlistByUid(uid) {
   const ref = _getWishlistRef(uid);
   const doc = _getRefDoc(ref);
   if(!doc.exists)
-    throw "fetchWishlistByUid(): No wishlist with uid " + uid + " exists";
+    throw new Error("fetchWishlistByUid(): No wishlist with uid " 
+                   + uid 
+                   + " exists");
   return {...makeWishlist(), ...doc.data()};
 }
 

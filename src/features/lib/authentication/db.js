@@ -29,14 +29,14 @@ function getUser(uid) {
 function createUser(user) {
   const ref = _getUserRef(user.uid);
   if(_getRefDoc(ref).exists)
-    throw "createUser(): User with UID " + user.uid + " already exists";
+    throw new Error("createUser(): User with UID " + user.uid + " already exists");
   ref.set(user);
 }
 
 function editUser(uid, newUser) {
   const ref = _getUserRef(uid);
   if(_getRefDoc(ref).exists)
-    throw "editUser(): No user with UID " + uid + " exists";
+    throw new Error("editUser(): No user with UID " + uid + " exists");
   ref.set(newUser);
 }
 
