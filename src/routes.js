@@ -5,6 +5,7 @@ import { Route, Switch } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 import HomePage from "./features/pages/homePage";
+import Dashboard from "./features/pages/dashboard";
 
 const Root = ({ store, history, persistor }) => (
   <Provider store={store}>
@@ -17,6 +18,13 @@ const Root = ({ store, history, persistor }) => (
               exact
               render={props => {
                 return <HomePage {...props} />;
+              }}
+            />
+            <Route
+              path={"/dashboard"}
+              exact
+              render={props => {
+                return <Dashboard {...props} />;
               }}
             />
           </Switch>

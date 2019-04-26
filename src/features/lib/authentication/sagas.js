@@ -1,4 +1,5 @@
 import { takeEvery, call, put } from "redux-saga/effects";
+import { push } from "connected-react-router";
 import { authWithFacebookAPI, authWithGoogleAPI } from "./auth.js";
 import types from "./types.js";
 
@@ -20,6 +21,7 @@ function* workUserAuthFacebook() {
   try {
     let result = yield call(authWithFacebookAPI);
     yield put({ type: AUTH_USER_SUCCESS, userData: result });
+    yield put(push("/dashboard"));
   } catch (error) {
     yield put({ type: AUTH_USER_ERROR, error: error });
   }
