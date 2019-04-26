@@ -11,8 +11,6 @@ import { actions as dialogActions } from "../../components/dialog";
 
 const { openDialog } = dialogActions;
 
-const Hej = () => <Button label="hej" variant="filled" color="black" />;
-
 class HomePage extends React.Component {
   render() {
     return (

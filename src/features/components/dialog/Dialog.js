@@ -4,10 +4,6 @@ import Card, { CardContent, CardHeader } from "../card";
 
 import "./dialog.css";
 
-function isObj(v) {
-  return typeof v == "object";
-}
-
 const Dialog = ({ content, showDialog, closeDialog }) => (
   <React.Fragment>
     {showDialog && (
