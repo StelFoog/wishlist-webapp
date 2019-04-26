@@ -1,0 +1,82 @@
+.iconButtonContainer button {
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  background: rgba(0, 0, 0, 0);
+  width: 100%;
+  height: 100%;
+}
+
+.iconButton {
+  display: inline-flex;
+}
+
+.iconButtonContainer {
+  display: inline-flex;
+  padding: 0;
+}
+
+/* Outlined icon Button */
+
+.iconButton-outlined {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.iconButton-outlined:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.iconButton-outlined:focus {
+  background: rgba(0, 0, 0, 0.13);
+}
+
+/* Clear icon button */
+
+.iconButton-clear {
+  background: rgba(0, 0, 0, 0);
+}
+
+.iconButton-clear:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.iconButton-clear:focus {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* Filled Icon Button */
+
+.iconButton-filled {
+  border: none;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.iconButton-filled:hover {
+  opacity: 0.95;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.iconButton-filled:focus {
+  opacity: 0.85;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.iconButton-filled:active {
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+
+.iconButtonContainer-filld {
+  background: rgba(255, 255, 255, 0.65);
+}
+
+/* Edges */
+
+.iconButton-circle {
+  border-radius: 50%;
+}
+
+.iconButton-rounded {
+  border-radius: var(--border-radius);
+}
