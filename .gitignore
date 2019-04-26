@@ -15,5 +15,4 @@ package-lock.json
 /build
 
 # API
-firebase.js
 .env
