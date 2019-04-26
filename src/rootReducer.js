@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
 import { reducers as authReducers } from "./features/lib/authentication";
+import { reducers as dialogReducers } from "./features/components/dialog";
 
 const appReducer = combineReducers({
-  auth: authReducers.userReducer
+  auth: authReducers.userReducer,
+  dialog: dialogReducers.dialogReducer
 });
 
 const rootReducer = (state, action) => {
