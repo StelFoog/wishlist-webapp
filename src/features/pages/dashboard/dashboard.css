@@ -1,3 +1,10 @@
 .dashboard{
   width: 100%;
 }
+
+.createWishlistButton{
+  position: fixed;
+  right: 40px;
+  bottom: 40px;
+  width: 100px;
+}
