@@ -51,7 +51,8 @@ class HomePage extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  openDialog: () => dispatch(openDialog(<Hej />))
+  openDialog: () =>
+    dispatch(openDialog({ body: <div>hej</div>, header: "hej" }))
 });
 
 export default connect(

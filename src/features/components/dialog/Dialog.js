@@ -4,6 +4,10 @@ import Card, { CardContent, CardHeader } from "../card";
 
 import "./dialog.css";
 
+function isObj(v) {
+  return typeof v == "object";
+}
+
 const Dialog = ({ content, showDialog, closeDialog }) => (
   <React.Fragment>
     {showDialog && (
@@ -18,8 +22,12 @@ const Dialog = ({ content, showDialog, closeDialog }) => (
       >
         <div className="dialog">
           <Card elevation={5}>
-            <CardHeader className="dialog-header">This is a dialog</CardHeader>
-            <CardContent>{content}</CardContent>
+            {content.header && (
+              <CardHeader className="dialog-header">
+                {content.header}
+              </CardHeader>
+            )}
+            <CardContent>{content.body ? content.body : content}</CardContent>
           </Card>
         </div>
       </div>
