@@ -13,3 +13,6 @@ package-lock.json
 
 # build
 /build
+
+# API
+firebase.js
