@@ -1,24 +1,35 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { push } from "connected-react-router";
 import DashboardNav from "../../components/dashboardNav";
 import ListWishlists from "../../components/listWishlists";
 import Button from "../../components/button";
 import "./dashboard.css";
 
-class Dashboard extends Component {
-  render() {
-    return (
-      <div className="dashboard">
-        <DashboardNav />
+const Dashboard = ({ goToForm }) => {
+  return (
+    <div className="dashboard">
+      <DashboardNav />
 
-        { /* Here we place whatever dashboard page user is on, currently listWishlists as placeholder */}
-        <ListWishlists />
-        <div className="createWishlistButton">
-          <Button variant={"filled"} label={"+"} color={"var(--color-secondary)"} />
-        </div>
-
+      {/* Here we place whatever dashboard page user is on, currently listWishlists as placeholder */}
+      <ListWishlists />
+      <div className="createWishlistButton">
+        <Button
+          variant={"filled"}
+          label={"+"}
+          color={"var(--color-secondary)"}
+          handleClick={goToForm}
+        />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
-export default Dashboard;
+const mapDispatchToProps = dispatch => ({
+  goToForm: () => dispatch(push("/formtest"))
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Dashboard);
