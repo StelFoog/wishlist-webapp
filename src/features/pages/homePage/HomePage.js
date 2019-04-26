@@ -6,6 +6,7 @@ import Card, {
   CardMedia,
   CardHeader
 } from "../../components/card";
+import { ItemAddition, WishListTitle } from "../../components/wishListForm";
 
 class HomePage extends React.Component {
   render() {
@@ -36,6 +37,20 @@ class HomePage extends React.Component {
             större förändringar. Det blev allmänt känt på 1960-talet i samband
             med lanseringen av Letraset-ark med avsnitt av Lorem Ipsum, och
             senare med mjukvaror som Aldus PageMaker.
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>Form Test</CardHeader>
+          <CardContent>
+            <WishListTitle />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>Form Test</CardHeader>
+          <CardContent>
+            <ItemAddition />
           </CardContent>
         </Card>
       </React.Fragment>
