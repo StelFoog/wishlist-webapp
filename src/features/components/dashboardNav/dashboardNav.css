@@ -56,27 +56,20 @@ body{
   }
 
   .dashboardNav{
-    width: 140px;
-    -webkit-transition: width 0.5s, padding 0.5s;
-    transition: width 0.5s, padding 0.5s;
+    left: 0;
+    -webkit-transition: left 0.5s;
+    transition: left 0.5s;
   }
 
   .dashboardNav.hidden{
-    width: 0;
-    padding: 0;
+    left: -145px;
   }
 
-  .dashboardNav *{
-    visibility: visible;
-    opacity: 1;
-    -webkit-transition: opacity 1.2s, visibility 1.2s;
-    transition: opacity 1.2s, visibility 1.2s;
-  } 
+  
 
 
   .dashboardNav.dashboardNav.hidden *{
-    visibility: hidden;
-    opacity: 0;
+    
   }
 
 
