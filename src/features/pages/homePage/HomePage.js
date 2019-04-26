@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 /* Components */
 import Button from "../../components/button";
 import Card, {
@@ -6,6 +7,11 @@ import Card, {
   CardMedia,
   CardHeader
 } from "../../components/card";
+import { actions as dialogActions } from "../../components/dialog";
+
+const { openDialog } = dialogActions;
+
+const Hej = () => <Button label="hej" variant="filled" color="black" />;
 
 class HomePage extends React.Component {
   render() {
@@ -16,6 +22,7 @@ class HomePage extends React.Component {
           variant="filled"
           color="#73359B"
           fontSize="1rem"
+          handleClick={this.props.openDialog}
         />
         <Button
           label="Outline"
@@ -43,4 +50,11 @@ class HomePage extends React.Component {
   }
 }
 
-export default HomePage;
+const mapDispatchToProps = dispatch => ({
+  openDialog: () => dispatch(openDialog(<Hej />))
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(HomePage);
