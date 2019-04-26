@@ -2,6 +2,11 @@
 body{
   margin-left: 140px;
 }
+
+.mobileTopNav{
+  display: none;
+}
+
 .dashboardNav{
   height: 100%;
   width: 140px;
@@ -9,7 +14,7 @@ body{
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 999;
+  z-index: 2;
   
   background-color: var(--color-primary-dark);
   box-shadow: 1px 0 2px 0 var(--color-dark);
@@ -32,5 +37,53 @@ body{
   position: absolute;
   bottom: 20px;
   width: 100px;
+}
+
+/* Mobile version of navbar */
+
+@media (max-width: 600px) {
+  
+  body{
+    margin-left: 0;
+  }
+
+  .mobileTopNav{
+    width: 100%;
+    background-color: var(--color-primary-dark);
+    box-shadow: 1px 0 2px 0 var(--color-dark);
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+
+  }
+
+  .dashboardNav{
+    width: 140px;
+    -webkit-transition: width 0.5s;
+    transition: width 0.5s;
+  }
+
+  .dashboardNav *{
+    opacity: 1;
+    -webkit-transition: opacity 2s;
+    transition: opacity 2s;
+  }
+
+  .hidden{
+    
+    width: 0;
+    padding: 0;
+    -webkit-transition: width 0.5s;
+    transition: width 0.5s;
+
+  }
+
+  .hidden *{
+    display: none;
+    opacity: 0;
+    -webkit-transition: opacity 2s;
+    transition: opacity 2s;
+    
+  }
 }
 
