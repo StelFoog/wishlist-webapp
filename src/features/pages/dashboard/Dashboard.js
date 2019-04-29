@@ -7,16 +7,20 @@ import "./dashboard.css";
 class Dashboard extends Component {
   render() {
     return (
-      <div className="dashboard">
+      <React.Fragment>
         <DashboardNav />
-
-        { /* Here we place whatever dashboard page user is on, currently listWishlists as placeholder */}
-        <ListWishlists />
-        <div className="createWishlistButton">
-          <Button variant={"filled"} label={"+"} color={"var(--color-secondary)"} />
+        <div className="dashboard">
+          {/* Here we place whatever dashboard page user is on, currently listWishlists as placeholder */}
+          <ListWishlists />
+          <div className="createWishlistButton">
+            <Button
+              variant={"filled"}
+              label={"+"}
+              color={"var(--color-secondary)"}
+            />
+          </div>
         </div>
-
-      </div>
+      </React.Fragment>
     );
   }
 }

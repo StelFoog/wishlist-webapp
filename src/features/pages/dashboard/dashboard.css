@@ -1,8 +1,9 @@
-.dashboard{
+.dashboard {
+  margin-left: 140px;
   width: 100%;
 }
 
-.createWishlistButton{
+.createWishlistButton {
   position: fixed;
   right: 40px;
   bottom: 40px;
