@@ -1,6 +1,8 @@
-.dashboard {
-  margin-left: 140px;
-  width: 100%;
+@media (min-width: 601px) {
+  .dashboard {
+    margin-left: 140px;
+    width: 100%;
+  }
 }
 
 .createWishlistButton {
