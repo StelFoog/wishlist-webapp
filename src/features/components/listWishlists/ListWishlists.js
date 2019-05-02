@@ -2,34 +2,71 @@ import React, { Component } from 'react';
 import PageHeader from "../pageHeader";
 import CardContainer from "../card/CardContainer";
 import { CardContent, CardHeader } from "../card/";
-
+import ProfilePicture from "../profilePicture/ProfilePicture.js";
 import "./listWishlists.css";
 
+const MAX_WISHLIST_AVATARS = 5;
+
+function homog_seq(x, n) {
+  let seq = [];
+  for(let i = 0; i < n; ++i) {
+    seq.unshift(x);
+  }
+  return seq;
+}
+
+function getUserAvatarElem(user) {
+  return(
+    <ProfilePicture src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" width="30px" />
+  );
+}
+
+const moreMembers = <ProfilePicture src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" width="30px" />;
+
+function getWishlistAvatars(wishlist) {
+  const members = homog_seq(1, 10); // placeholder
+  const avatars = members
+    .slice(0, Math.min(MAX_WISHLIST_AVATARS-1, members.length))
+    .map(getUserAvatarElem);
+  
+  if(members.length >= MAX_WISHLIST_AVATARS)
+    avatars.push(members.length === MAX_WISHLIST_AVATARS 
+               ? getUserAvatarElem(members[MAX_WISHLIST_AVATARS-1]) 
+               : moreMembers);
+  return avatars;
+}
+
 class ListWishlists extends Component {
-
-  getWishlists = () => {
-    return (
-
+  displayWishlist(wishlist) {
+    return(
       <CardContainer children={
         <div className="cardContent">
-          <CardHeader children={"Wishlist"} />
+          <CardHeader children={wishlist.title} />
+          <hr />
           <CardContent children={
-            <p>Nulla esse quis velit officia reprehenderit
-              reprehenderit consequat.</p>
+            <div className="wishlistCard">
+              <p className="wishlistText">...</p>
+              <div className="wishlistAvatarList">
+                {getWishlistAvatars(wishlist)}
+              </div>
+            </div>
           } />
         </div>
       } />
     );
   }
 
+  getWishlists() {
+    const x = {title: "Yellow", text: "blue red black yellow green gray orange purple magenta violet turqoise lime white blue yellow orange brown gray"};
+    return homog_seq(x, 100).map(this.displayWishlist)
+  }
+
   render() {
     return (
       <div className="listWishlists">
         <PageHeader title={"Your wishlists"} />
-
         {/* Fetch users wishlists from database*/}
         {this.getWishlists()}
-
       </div>
     );
   }
