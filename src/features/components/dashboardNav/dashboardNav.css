@@ -1,21 +1,16 @@
-
-body{
-  margin-left: 140px;
-}
-
-.mobileTopNav{
+.mobileTopNav {
   display: none;
 }
 
-.dashboardNav{
+.dashboardNav {
   height: 100%;
   width: 140px;
-  
+
   position: fixed;
   left: 0;
   top: 0;
   z-index: 2;
-  
+
   background-color: var(--color-primary-dark);
   box-shadow: 1px 0 2px 0 var(--color-dark);
 
@@ -27,22 +22,21 @@ body{
   justify-content: flex-start;
 }
 
-
-.navProfilePicture{
+.navProfilePicture {
   padding-bottom: 19px;
   border-bottom: 2px solid var(--color-light);
 }
 
-.navButton{
+.navButton {
   margin-top: 20px;
 }
 
 /* Set settings button to bottom of sidenav */
-.navButtonBottom{
+.navButtonBottom {
   justify-self: flex-end;
 }
 
-.navButtonBottom{
+.navButtonBottom {
   position: absolute;
   bottom: 20px;
   width: 100px;
@@ -51,30 +45,25 @@ body{
 /* Mobile version of navbar */
 
 @media (max-width: 600px) {
-  
-  body{
+  body {
     margin-left: 0;
   }
 
-  .mobileTopNav{
+  .mobileTopNav {
     width: 100%;
     background-color: var(--color-primary-dark);
     box-shadow: 1px 0 2px 0 var(--color-dark);
     display: flex;
-
   }
 
-  .dashboardNav{
+  .dashboardNav {
     width: 75vw;
     left: 0;
     -webkit-transition: left 0.5s;
     transition: left 0.5s;
   }
 
-  .dashboardNav.hidden{
+  .dashboardNav.hidden {
     left: -76vw;
   }
-
-
 }
-
