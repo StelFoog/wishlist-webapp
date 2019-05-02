@@ -57,12 +57,8 @@ function* watchFetchWishlists() {
 
 function* workFetchWishlists() {
   try {
-    console.log("hej1")
-    const user = yield select(getUser);
-    console.log("hej2")
-    console.log(user)
-    const wishlists = yield call(fetchAllWishlistsFromUser, user);
-    console.log("hej3")
+    const user = yield call(getUser);
+    const wishlists = yield call(fetchAllWishlistsFromUser(user.uid));
     yield put({
       type: FETCH_WISHLISTS_SUCCESS,
       wishlistData: wishlists

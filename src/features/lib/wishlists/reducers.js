@@ -1,11 +1,15 @@
 import types from "./types.js";
 
+<<<<<<< HEAD
 const {
   CREATE_USER_WISHLIST_ERROR,
   CREATE_USER_WISHLIST_SUCCESS,
   FETCH_WISHLISTS_SUCCESS,
   FETCH_WISHLISTS_ERROR
 } = types;
+=======
+const { CREATE_USER_WISHLIST_ERROR, CREATE_USER_WISHLIST_SUCCESS, FETCH_WISHLISTS_SUCCESS, FETCH_WISHLISTS_ERROR } = types;
+>>>>>>> Added functions to fetch wishlists
 
 const initialState = {
   wishlists: []
