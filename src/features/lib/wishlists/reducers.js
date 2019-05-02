@@ -3,7 +3,7 @@ import types from "./types.js";
 const { CREATE_USER_WISHLIST_ERROR, CREATE_USER_WISHLIST_SUCCESS } = types;
 
 const initialState = {
-  // TODO: Add some state?
+  wishlists: []
 };
 
 const wishlistReducer = (state = initialState, action) => {
@@ -17,7 +17,7 @@ const wishlistReducer = (state = initialState, action) => {
       );
       return { ...nextState };
     case CREATE_USER_WISHLIST_SUCCESS:
-      // TODO: Do something?
+      nextState.wishlists.push(wishlistData);
       console.log("Wishlist created!" + wishlistData);
       return { ...nextState };
     default:

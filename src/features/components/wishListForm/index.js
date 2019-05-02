@@ -1,4 +1,4 @@
-import ItemAddition from "./Item.js";
-import WishListTitle from "./Title&User.js";
+import ItemAddition from "./Item";
+import WishListTitle from "./WishlistCreateForm";
 
 export { ItemAddition, WishListTitle };

@@ -1,28 +1,27 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
-import { actions } from "react-redux-form";
 import { connect } from "react-redux";
 import { withAuth } from "react-devise";
 import renderField, { required } from "./validate";
+import { actions } from "../../lib/wishlists";
 
-class WishListTitle extends React.Component {
-  handleSubmit(data) {
-    console.log("Submission received!", data);
-  }
+const { createUserWishlist } = actions;
 
-  render() {
-    return (
-      <form onSubmit={this.props.handleSubmit(this.handleSubmit.bind(this))}>
+// Wishlist createation form component
+const WishlistCreateForm = ({ handleSubmit, handleCreateWishlist }) => (
+  <form onSubmit={handleSubmit(handleCreateWishlist)}>
+    <div>
+      <label htmlFor="Wish List Title">Wish List Title</label>
+      <div>
+        <Field
+          name="title"
+          component={renderField}
+          type="text"
+          validate={required}
+        />
+      </div>
+      {false && ( // Currently unnessicary
         <div>
-          <label htmlFor="Wish List Title">Wish List Title</label>
-          <div>
-            <Field
-              name="title"
-              component={renderField}
-              type="text"
-              validate={required}
-            />
-          </div>
           <label htmlFor="firstName">First Name</label>
           <div>
             <Field
@@ -43,21 +42,22 @@ class WishListTitle extends React.Component {
               validate={required}
             />
           </div>
-          <button>Submit</button>
         </div>
-      </form>
-    );
-  }
-}
+      )}
+      <button>Submit</button>
+    </div>
+  </form>
+);
 
-WishListTitle = reduxForm({
-  form: "Title&User"
-})(WishListTitle);
+const mapDispatchToProps = dispatch => ({
+  handleCreateWishlist: () => dispatch(createUserWishlist())
+});
 
-const mapStateToProps = state => {
-  return {
-    currentUser: state.currentUser
-  };
-};
-
-export default connect(mapStateToProps)(withAuth(WishListTitle));
+export default reduxForm({
+  form: "WishlistCreateForm"
+})(
+  connect(
+    null,
+    mapDispatchToProps
+  )(WishlistCreateForm)
+);

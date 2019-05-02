@@ -1,49 +1,52 @@
 import { database } from "../firebase/";
-import { makeWishlist } from "./wishlist.js";
-import { editUser } from '../authentication/db.js';
+import { makeWishlist } from "./wishlist";
+import { editUser } from "../authentication/db";
+import { generateWishlistUid } from "../authentication/user";
 
-function _getWishlistRef(uid) {
-  return database.collection('Wishlists').doc('' + uid);
-}
+const _getWishlistRef = uid => database.collection("Wishlists").doc("" + uid);
 
-function _getRefDoc(ref) {
-  return ref.get().then((doc) => {
-    return doc;
-  }).catch((error) => {
-    throw error;
-  });
-}
+const _getRefDoc = ref => {
+  return ref
+    .get()
+    .then(doc => {
+      return doc;
+    })
+    .catch(error => {
+      throw error;
+    });
+};
 
-function addWishlistItem(uid, item) {
+const addWishlistItem = (uid, item) => {
   let wishlist = fetchWishlistByUid(uid);
   wishlist.items.push(item);
   _getWishlistRef(uid).set(wishlist);
-}
+};
 
-function createWishlistWithOwner(user) {
-  const uid = user.generateWishlistUid();
+const createWishlistWithOwner = (user, wishlistName) => {
+  const uid = generateWishlistUid(user);
   const ref = _getWishlistRef(uid);
   const doc = _getRefDoc(ref);
-  if(doc.exists)
-    throw new Error("createWishlistWithOwner(): Wishlist with uid " 
-                   + uid 
-                   + " already exists");
-  ref.set(makeWishlist("Unnamed wishlist", user.uid, uid));
-}
+  if (doc.exists)
+    throw new Error(
+      "createWishlistWithOwner(): Wishlist with uid " + uid + " already exists"
+    );
+  const wishlist = makeWishlist(wishlistName, user.uid, uid);
+  ref.set(wishlist);
+  return wishlist;
+};
 
-function fetchWishlistByUid(uid) {
+const fetchWishlistByUid = uid => {
   const ref = _getWishlistRef(uid);
   const doc = _getRefDoc(ref);
-  if(!doc.exists)
-    throw new Error("fetchWishlistByUid(): No wishlist with uid " 
-                   + uid 
-                   + " exists");
-  return {...makeWishlist(), ...doc.data()};
-}
+  if (!doc.exists)
+    throw new Error(
+      "fetchWishlistByUid(): No wishlist with uid " + uid + " exists"
+    );
+  return { ...makeWishlist(), ...doc.data() };
+};
 
-function fetchAllWishlistsFromUser(user) {
-  return user.wishlists.map(fetchWishlistByUid);
-}
+const fetchAllWishlistsFromUser = user =>
+  user.wishlists.map(fetchWishlistByUid);
 
 export {
   createWishlistWithOwner,
