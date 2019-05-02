@@ -14,6 +14,7 @@ function generateWishlistUid(user) {
   do {
     uid = user.uid + "-" + Math.floor(Math.random() * 0x7fffffff);
   } while (user.wishlists.includes(uid));
+
   return uid;
 }
 
