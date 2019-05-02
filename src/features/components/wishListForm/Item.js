@@ -1,7 +1,6 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import { withAuth } from "react-devise";
 import renderField, { required } from "./validate";
 
 class ItemAddition extends React.Component {
@@ -55,11 +54,8 @@ class ItemAddition extends React.Component {
           </div>
           <label htmlFor="Website link">Website link</label>
           <div>
-            <Field
-              name="weblink"
-              component="input"
-              type="text" //Fixa Url compatibiltet och check
-            />
+            <Field name="weblink" component="input" type="text" />
+            {/*Fixa Url compatibiltet och check*/}
           </div>
           <button type="submit">Subimt Item</button>
         </div>
@@ -68,14 +64,16 @@ class ItemAddition extends React.Component {
   }
 }
 
-ItemAddition = reduxForm({
-  form: "itemAdd"
-})(ItemAddition);
+// Super Getto plz remove
 
-const mapStateToProps = state => {
-  return {
-    currentUser: state.currentUser
-  };
-};
-
-export default connect(mapStateToProps)(withAuth(ItemAddition));
+// ItemAddition = reduxForm({
+//   form: "itemAdd"
+// })(ItemAddition);
+//
+// const mapStateToProps = state => {
+//   return {
+//     currentUser: state.currentUser
+//   };
+// };
+//
+// export default connect(mapStateToProps)(withAuth(ItemAddition));
