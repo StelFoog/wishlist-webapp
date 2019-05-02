@@ -1,6 +1,10 @@
 import { takeEvery, call, put, select, all } from "redux-saga/effects";
 import { getFormValues, reset } from "redux-form";
+<<<<<<< HEAD
 import db from "./db";
+=======
+import { createWishlistWithOwner, fetchAllWishlistsFromUser } from "./db.js";
+>>>>>>> Added functions to fetch wishlists
 import { getUser } from "../authentication/selectors";
 import { addNewWishlistIdToUser } from "../authentication/db";
 import wishlistTypes from "./types.js";
@@ -13,6 +17,9 @@ const {
   CREATE_USER_WISHLIST,
   CREATE_USER_WISHLIST_ERROR,
   CREATE_USER_WISHLIST_SUCCESS
+  FETCH_WISHLISTS,
+  FETCH_WISHLISTS_ERROR,
+  FETCH_WISHLISTS_SUCCESS
 } = wishlistTypes;
 
 const { ADD_WISHLIST_ID_TO_USER } = authTypes;
@@ -47,4 +54,23 @@ function* workCreateUserWishlist() {
   }
 }
 
-export default { watchCreateUserWishlist };
+function* watchFetchWishlists() {
+  yield takeEvery(FETCH_WISHLISTS, workFetchWishlists);
+}
+
+function* workFetchWishlists() {
+  try {
+    const user = yield call(getUser);
+    const wishlists = yield call(fetchAllWishlistsFromUser(user.uid));
+    yield put({
+      type: FETCH_WISHLISTS_SUCCESS,
+      wishlistData: wishlists
+    });
+
+  }
+  catch (error) {
+    yield put({ type: FETCH_WISHLISTS_ERROR, error: error });
+  }
+}
+
+export default { watchCreateUserWishlist, watchFetchWishlists };

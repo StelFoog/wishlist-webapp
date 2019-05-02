@@ -1,6 +1,6 @@
 import types from "./types.js";
 
-const { CREATE_USER_WISHLIST_ERROR, CREATE_USER_WISHLIST_SUCCESS } = types;
+const { CREATE_USER_WISHLIST_ERROR, CREATE_USER_WISHLIST_SUCCESS, FETCH_WISHLISTS_SUCCESS, FETCH_WISHLISTS_ERROR } = types;
 
 const initialState = {
   wishlists: []
@@ -19,6 +19,12 @@ const wishlistReducer = (state = initialState, action) => {
     case CREATE_USER_WISHLIST_SUCCESS:
       nextState.wishlists.push(wishlistData);
       return { ...nextState };
+    case FETCH_WISHLISTS_SUCCESS:
+      nextState.wishlists = wishlistData;
+      console.log("Fetched wishlists!" + wishlistData);
+      return { ...nextState };
+    case FETCH_WISHLISTS_ERROR:
+      console.error("Error occurred while fetching wishlists.");
     default:
       return { ...nextState };
   }
