@@ -119,7 +119,6 @@ class ListWishlists extends Component {
     console.log(this.props);
     return this.props.wishlists.map(this.displayWishlist);
   }
-
   render() {
     return (
       <div>
@@ -130,7 +129,6 @@ class ListWishlists extends Component {
           {this.getWishlists()}
         </div>
       </div>
-    </div>
     );
   }
 }
