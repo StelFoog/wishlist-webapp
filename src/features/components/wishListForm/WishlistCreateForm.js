@@ -1,7 +1,7 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import { withAuth } from "react-devise";
+//import { withAuth } from "react-devise";
 import renderField, { required } from "./validate";
 import { actions } from "../../lib/wishlists";
 
