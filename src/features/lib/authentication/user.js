@@ -10,7 +10,11 @@ function makeUser(name, uid, wishlists, groups) {
 }
 
 function generateWishlistUid(user) {
-  return user.uid + '-' + user.createdWishlists;
+  let uid;
+  do {
+    uid = user.uid + '-' + Math.floor(Math.random() * 0x7fffffff);
+  }while(user.wishlists.includes(uid));
+  return uid;
 }
 
 function giveWishlistToUserAsOwner(user, wishlist) {
