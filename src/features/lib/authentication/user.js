@@ -12,7 +12,7 @@ function makeUser(name, uid, wishlists, groups) {
 function generateWishlistUid(user) {
   let uid;
   do {
-    uid = user.uid + '-' + (Math.random() * 0x7fffffff);
+    uid = user.uid + '-' + Math.floor(Math.random() * 0x7fffffff);
   }while(user.wishlists.includes(uid));
   return uid;
 }
