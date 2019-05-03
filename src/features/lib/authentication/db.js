@@ -48,6 +48,7 @@ const logInAndCreateUserIfDoesNotExist = async firebaseUser => {
     ...makeUser(firebaseUser.displayName, firebaseUser.uid),
     ...(await getUser(firebaseUser.uid))
   };
+
   editUser(user.uid, user);
   return user;
 };
