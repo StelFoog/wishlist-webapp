@@ -5,7 +5,7 @@ import { generateWishlistUid } from "../authentication/user";
 
 const _getWishlistRef = uid => database.collection("Wishlists").doc("" + uid);
 
-const _getRefDoc = ref => {
+const _getRefDoc = async ref => {
   return ref
     .get()
     .then(doc => {
@@ -14,6 +14,12 @@ const _getRefDoc = ref => {
     .catch(error => {
       throw error;
     });
+};
+
+const addWishlistItem = (uid, item) => {
+  let wishlist = fetchWishlistByUid(uid);
+  wishlist.items.push(item);
+  _getWishlistRef(uid).set(wishlist);
 };
 
 const createWishlistWithOwner = async (user, wishlistName) => {
@@ -40,9 +46,9 @@ const fetchWishlistByUid = async uid => {
   return { ...makeWishlist(), ...doc.data() };
 };
 
-const fetchAllWishlistsFromUser = user => {
-  return Promise.all(user.wishlists.map(fetchWishlistByUid));
-}
+const fetchAllWishlistsFromUser = async user => {
+  return await Promise.all(user.wishlists.map(fetchWishlistByUid));
+};
 
 export default {
   _getWishlistRef,
