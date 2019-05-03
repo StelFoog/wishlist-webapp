@@ -5,7 +5,8 @@ import { sagas as wishlistSagas } from "./features/lib/wishlists/";
 function* rootSaga() {
   yield all([
     authSagas.watchUserAuthFacebook(),
-    wishlistSagas.watchCreateUserWishlist()
+    wishlistSagas.watchCreateUserWishlist(),
+    wishlistSagas.watchFetchWishlists()
   ]);
 }
 
