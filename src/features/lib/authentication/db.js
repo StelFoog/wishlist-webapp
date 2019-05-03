@@ -21,8 +21,8 @@ function userExistsWithUid(uid) {
   return _getUserDoc(uid).exists;
 }
 
-function getUser(uid) {
-  const doc = _getUserDoc(uid);
+async function getUser(uid) {
+  const doc = await _getUserDoc(uid);
   return !doc.exists ? null :{...makeUser(), ...doc.data()};
 }
 
@@ -40,12 +40,12 @@ function editUser(uid, newUser) {
   ref.set(newUser);
 }
 
-function logInAndCreateUserIfDoesNotExist(firebaseUser) {
+async function logInAndCreateUserIfDoesNotExist(firebaseUser) {
   if(!userExistsWithUid(firebaseUser.uid))
     makeUser(makeUser(firebaseUser.displayName, firebaseUser.uid));
 
   const user = {...makeUser(firebaseUser.displayName, firebaseUser.uid),
-                ...getUser(firebaseUser.uid)};
+                ...(await getUser(firebaseUser.uid))};
   editUser(user.uid, user);
   return user;
 }
