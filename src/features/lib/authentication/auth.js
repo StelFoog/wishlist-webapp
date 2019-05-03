@@ -1,8 +1,8 @@
 import { firebase } from "../firebase/";
 import { logInAndCreateUserIfDoesNotExist } from './db.js';
 
-function authWithProvider(provider) {
-	return firebase.auth().signInWithPopup(provider)
+async function authWithProvider(provider) {
+	return await firebase.auth().signInWithPopup(provider)
 		.then((result) => {
       return logInAndCreateUserIfDoesNotExist(result.user);
 		}).catch((error) => {
@@ -10,12 +10,12 @@ function authWithProvider(provider) {
 		});
 }
 
-function authWithFacebookAPI() {
-  return authWithProvider(new firebase.auth.FacebookAuthProvider());
+async function authWithFacebookAPI() {
+  return await authWithProvider(new firebase.auth.FacebookAuthProvider());
 }
 
-function authWithGoogleAPI() {
-	return authWithProvider(new firebase.auth.GoogleAuthProvider());
+async function authWithGoogleAPI() {
+	return await authWithProvider(new firebase.auth.GoogleAuthProvider());
 }
 
 export {
