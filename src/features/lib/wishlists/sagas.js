@@ -1,9 +1,12 @@
 import { takeEvery, call, put, select, all } from "redux-saga/effects";
 import { push } from "connected-react-router";
 import { getFormValues, reset } from "redux-form";
-import { createWishlistWithOwner } from "./db.js";
+import db from "./db";
 import { getUser } from "../authentication/selectors";
+import { addNewWishlistIdToUser } from "../authentication/db";
 import types from "./types.js";
+
+const { createWishlistWithOwner } = db;
 
 const {
   CREATE_USER_WISHLIST,
@@ -24,7 +27,7 @@ function* workCreateUserWishlist() {
       userValues,
       wishlistForm.title
     );
-    console.log(result);
+    yield call(addNewWishlistIdToUser, userValues.uid, result.uid);
     // TODO: add the wishlist to the user obejct
     yield all([
       put({ type: CREATE_USER_WISHLIST_SUCCESS, wishlistData: result }),

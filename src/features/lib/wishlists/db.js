@@ -16,12 +16,6 @@ const _getRefDoc = ref => {
     });
 };
 
-const addWishlistItem = (uid, item) => {
-  let wishlist = fetchWishlistByUid(uid);
-  wishlist.items.push(item);
-  _getWishlistRef(uid).set(wishlist);
-};
-
 const createWishlistWithOwner = (user, wishlistName) => {
   const uid = generateWishlistUid(user);
   const ref = _getWishlistRef(uid);
@@ -31,6 +25,7 @@ const createWishlistWithOwner = (user, wishlistName) => {
       "createWishlistWithOwner(): Wishlist with uid " + uid + " already exists"
     );
   const wishlist = makeWishlist(wishlistName, user.uid, uid);
+  console.log(wishlist);
   ref.set(wishlist);
   return wishlist;
 };
@@ -48,7 +43,8 @@ const fetchWishlistByUid = uid => {
 const fetchAllWishlistsFromUser = user =>
   user.wishlists.map(fetchWishlistByUid);
 
-export {
+export default {
+  _getWishlistRef,
   createWishlistWithOwner,
   fetchWishlistByUid,
   fetchAllWishlistsFromUser

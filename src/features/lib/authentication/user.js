@@ -1,10 +1,9 @@
-
 function makeUser(name, uid, wishlists, groups) {
   return {
-    name: name || null, 
-    uid :  uid, 
+    name: name || null,
+    uid: uid,
     wishlists: wishlists || [],
-    groups   : groups    || [],
+    groups: groups || [],
     createdWishlists: 0
   };
 }
@@ -12,8 +11,8 @@ function makeUser(name, uid, wishlists, groups) {
 function generateWishlistUid(user) {
   let uid;
   do {
-    uid = user.uid + '-' + Math.floor(Math.random() * 0x7fffffff);
-  }while(user.wishlists.includes(uid));
+    uid = user.uid + "-" + Math.floor(Math.random() * 0x7fffffff);
+  } while (user.wishlists.includes(uid));
   return uid;
 }
 
