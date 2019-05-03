@@ -12,6 +12,8 @@ import { ConnectedRouter } from "connected-react-router";
 import Dashboard from "../../pages/dashboard";
 import HomePage from "../../pages/homePage";
 
+const { fetchWishlists } = actions;
+
 const MAX_WISHLIST_AVATARS = 5;
 
 function homog_seq(x, n) {
@@ -39,7 +41,7 @@ const moreMembers = (
 );
 
 function getWishlistAvatars(wishlist) {
-  const members = homog_seq(1, 10); // placeholder
+  const members = homog_seq(1, 10); //
   const avatars = members
     .slice(0, Math.min(MAX_WISHLIST_AVATARS - 1, members.length))
     .map(getUserAvatarElem);
