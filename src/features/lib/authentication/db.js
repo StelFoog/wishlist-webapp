@@ -24,18 +24,21 @@ async function getUser(uid) {
   return !doc.exists ? null :{...makeUser(), ...doc.data()};
 }
 
-const createUser = user => {
+const createUser = async user => {
   const ref = _getUserRef(user.uid);
-  if (_getRefDoc(ref).exists)
+  const doc = await _getRefDoc(ref);
+  if (doc.exists)
     throw new Error(
       "createUser(): User with UID " + user.uid + " already exists"
     );
   ref.set(user);
 };
 
-const editUser = (uid, newUser) => {
+const editUser = async (uid, newUser) => {
   const ref = _getUserRef(uid);
-  if (_getRefDoc(ref).exists)
+  console.log(ref);
+  const doc = await _getRefDoc(ref);
+  if (!doc.exists)
     throw new Error("editUser(): No user with UID " + uid + " exists");
   ref.set(newUser);
 };
