@@ -4,19 +4,23 @@ import CardContainer from "../card/CardContainer";
 import { CardContent, CardHeader } from "../card/";
 import ProfilePicture from "../profilePicture/ProfilePicture.js";
 import "./listWishlists.css";
+import { connect } from "react-redux";
+import { actions, selectors } from "../../lib/wishlists";
+
+const { fetchWishlists } = actions;
 
 const MAX_WISHLIST_AVATARS = 5;
 
 function homog_seq(x, n) {
   let seq = [];
-  for(let i = 0; i < n; ++i) {
+  for (let i = 0; i < n; ++i) {
     seq.unshift(x);
   }
   return seq;
 }
 
 function getUserAvatarElem(user) {
-  return(
+  return (
     <ProfilePicture src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" width="30px" />
   );
 }
@@ -26,19 +30,19 @@ const moreMembers = <ProfilePicture src="https://upload.wikimedia.org/wikipedia/
 function getWishlistAvatars(wishlist) {
   const members = homog_seq(1, 10); // placeholder
   const avatars = members
-    .slice(0, Math.min(MAX_WISHLIST_AVATARS-1, members.length))
+    .slice(0, Math.min(MAX_WISHLIST_AVATARS - 1, members.length))
     .map(getUserAvatarElem);
-  
-  if(members.length >= MAX_WISHLIST_AVATARS)
-    avatars.push(members.length === MAX_WISHLIST_AVATARS 
-               ? getUserAvatarElem(members[MAX_WISHLIST_AVATARS-1]) 
-               : moreMembers);
+
+  if (members.length >= MAX_WISHLIST_AVATARS)
+    avatars.push(members.length === MAX_WISHLIST_AVATARS
+      ? getUserAvatarElem(members[MAX_WISHLIST_AVATARS - 1])
+      : moreMembers);
   return avatars;
 }
 
 class ListWishlists extends Component {
   displayWishlist(wishlist) {
-    return(
+    return (
       <CardContainer children={
         <div className="cardContent">
           <CardHeader children={wishlist.title} />
@@ -56,9 +60,14 @@ class ListWishlists extends Component {
     );
   }
 
+  componentDidMount() {
+    this.props.fetchWishlists();
+  }
+
   getWishlists() {
-    const x = {title: "Yellow", text: "blue red black yellow green gray orange purple magenta violet turqoise lime white blue yellow orange brown gray"};
-    return homog_seq(x, 100).map(this.displayWishlist)
+    //const x = { title: "Yellow", text: "blue red black yellow green gray orange purple magenta violet turqoise lime white blue yellow orange brown gray" };
+    console.log(this.props);
+    return this.props.wishlists.map(this.displayWishlist)
   }
 
   render() {
@@ -72,4 +81,18 @@ class ListWishlists extends Component {
   }
 }
 
-export default ListWishlists;
+const mapStateToProps = () => {
+  const getWishlists = selectors.getWishlistsState();
+  return state => ({
+    wishlists: getWishlists(state)
+  })
+}
+
+const mapDispatchToProps = dispatch => ({
+  fetchWishlists: () => dispatch(fetchWishlists())
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ListWishlists);
