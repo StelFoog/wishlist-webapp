@@ -7,7 +7,10 @@ function* rootSaga() {
   yield all([
     authSagas.watchUserAuthFacebook(),
     wishlistSagas.watchCreateUserWishlist(),
+<<<<<<< HEAD
     wishlistItemSagas.watchCreateWishlistItem(),
+=======
+>>>>>>> Added functionality to list and display wishlists
     wishlistSagas.watchFetchWishlists()
   ]);
 }
