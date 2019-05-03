@@ -25,6 +25,7 @@ const wishlistReducer = (state = initialState, action) => {
       return { ...nextState };
     case FETCH_WISHLISTS_ERROR:
       console.error("Error occurred while fetching wishlists.");
+      return { ...nextState }
     default:
       return { ...nextState };
   }
