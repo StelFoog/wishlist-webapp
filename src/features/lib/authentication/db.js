@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { database } from "../firebase/";
 import { makeUser } from "./user.js";
 import { getWishlistByUid, editWishlist } from "../wishlists/db.js";
@@ -25,6 +26,37 @@ const getUser = async uid => {
 };
 
 const createUser = async user => {
+=======
+import { database } from '../firebase/';
+import { makeUser } from './user.js';
+
+function _getUserRef(uid) {
+  return database.collection('Users').doc('' + uid);
+}
+
+function _getRefDoc(ref) {
+  return ref.get().then((doc) => {
+    return doc;
+  }).catch((error) => {
+    throw error;
+  });
+}
+
+function _getUserDoc(uid) {
+  return _getRefDoc(_getUserRef(uid));
+}
+
+function userExistsWithUid(uid) {
+  return _getUserDoc(uid).exists;
+}
+
+async function getUser(uid) {
+  const doc = await _getUserDoc(uid);
+  return !doc.exists ? null :{...makeUser(), ...doc.data()};
+}
+
+function createUser(user) {
+>>>>>>> Fixed bug in database regarding reading of user data
   const ref = _getUserRef(user.uid);
   const doc = await _getRefDoc(ref);
   if (doc.exists)
@@ -40,6 +72,7 @@ const editUser = async (uid, newUser) => {
   if (!doc.exists)
     throw new Error("editUser(): No user with UID " + uid + " exists");
   ref.set(newUser);
+<<<<<<< HEAD
 };
 
 const logInAndCreateUserIfDoesNotExist = async firebaseUser => {
@@ -49,6 +82,16 @@ const logInAndCreateUserIfDoesNotExist = async firebaseUser => {
     ...makeUser(firebaseUser.displayName, firebaseUser.uid),
     ...(await getUser(firebaseUser.uid))
   };
+=======
+}
+
+async function logInAndCreateUserIfDoesNotExist(firebaseUser) {
+  if(!userExistsWithUid(firebaseUser.uid))
+    makeUser(makeUser(firebaseUser.displayName, firebaseUser.uid));
+
+  const user = {...makeUser(firebaseUser.displayName, firebaseUser.uid),
+                ...(await getUser(firebaseUser.uid))};
+>>>>>>> Fixed bug in database regarding reading of user data
   editUser(user.uid, user);
   return user;
 };
