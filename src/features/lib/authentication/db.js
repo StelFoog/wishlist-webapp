@@ -16,15 +16,12 @@ const _getRefDoc = ref =>
 const _getUserDoc = uid => _getRefDoc(_getUserRef(uid));
 
 const userExistsWithUid = async uid => {
-  console.log(uid);
-  console.log(_getUserDoc(uid));
   const doc = await _getUserDoc(uid);
   return doc.exists;
 };
 
 const getUser = async uid => {
   const doc = await _getUserDoc(uid);
-  console.log(typeof doc);
 
   return !doc.exists ? null : { ...makeUser(), ...doc.data() };
 };
@@ -41,21 +38,20 @@ const createUser = async user => {
 
 const editUser = async (uid, newUser) => {
   const ref = _getUserRef(uid);
-  console.log(ref);
   const doc = await _getRefDoc(ref);
   if (!doc.exists)
     throw new Error("editUser(): No user with UID " + uid + " exists");
   ref.set(newUser);
 };
 
-const logInAndCreateUserIfDoesNotExist = firebaseUser => {
+const logInAndCreateUserIfDoesNotExist = async firebaseUser => {
   if (!userExistsWithUid(firebaseUser.uid))
     makeUser(makeUser(firebaseUser.displayName, firebaseUser.uid));
-
   const user = {
     ...makeUser(firebaseUser.displayName, firebaseUser.uid),
-    ...getUser(firebaseUser.uid)
+    ...(await getUser(firebaseUser.uid))
   };
+  console.log(user);
   editUser(user.uid, user);
   return user;
 };
@@ -66,7 +62,6 @@ const addNewWishlistIdToUser = async (uid, wishlistId) => {
       "addNewWishlistIdToUser: No user with UID " + uid + " exists"
     );
   let userData = await getUser(uid);
-  console.log(userData);
   userData.wishlists.push(wishlistId);
   editUser(uid, userData);
 };

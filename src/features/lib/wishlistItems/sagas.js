@@ -16,7 +16,7 @@ function* watchCreateWishlistItem() {
 function* workCreateWishlistItem(wishlistUid) {
   try {
     const itemForm = yield select(getFormValues("itemAdd"));
-    yield call(addWishlistItem);
+    yield call(addWishlistItem, wishlistUid, itemForm);
     yield put(reset("itemAdd"));
   } catch (error) {
     yield put({ type: CREATE_WISHLIST_ITEM_ERROR, error });

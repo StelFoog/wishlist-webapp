@@ -1,6 +1,11 @@
 import types from "./types.js";
 
-const { AUTH_USER_ERROR, AUTH_USER_SUCCESS, AUTH_LOGOUT } = types;
+const {
+  AUTH_USER_ERROR,
+  AUTH_USER_SUCCESS,
+  AUTH_LOGOUT,
+  ADD_WISHLIST_ID_TO_USER
+} = types;
 
 const initialState = {
   user: null,
@@ -9,7 +14,7 @@ const initialState = {
 
 const userReducer = (state = initialState, action) => {
   let nextState = state;
-  const { type, userData, error } = action;
+  const { type, userData, error, wishlistId } = action;
 
   switch (type) {
     case AUTH_USER_ERROR:
@@ -26,6 +31,9 @@ const userReducer = (state = initialState, action) => {
       nextState.loggedIn = false;
       nextState.user = null;
       alert("logged out successfully");
+      return { ...nextState };
+    case ADD_WISHLIST_ID_TO_USER:
+      nextState.user.wishlists.push(wishlistId);
       return { ...nextState };
     default:
       return { ...nextState };

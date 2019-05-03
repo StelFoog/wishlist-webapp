@@ -4,7 +4,8 @@ import { getFormValues, reset } from "redux-form";
 import db from "./db";
 import { getUser } from "../authentication/selectors";
 import { addNewWishlistIdToUser } from "../authentication/db";
-import types from "./types.js";
+import wishlistTypes from "./types.js";
+import { types as authTypes } from "../authentication";
 
 const { createWishlistWithOwner } = db;
 
@@ -12,7 +13,9 @@ const {
   CREATE_USER_WISHLIST,
   CREATE_USER_WISHLIST_ERROR,
   CREATE_USER_WISHLIST_SUCCESS
-} = types;
+} = wishlistTypes;
+
+const { ADD_WISHLIST_ID_TO_USER } = authTypes;
 
 function* watchCreateUserWishlist() {
   yield takeEvery(CREATE_USER_WISHLIST, workCreateUserWishlist);
@@ -27,7 +30,10 @@ function* workCreateUserWishlist() {
       userValues,
       wishlistForm.title
     );
-    yield call(addNewWishlistIdToUser, userValues.uid, result.uid);
+    yield all([
+      call(addNewWishlistIdToUser, userValues.uid, result.uid),
+      put({ type: ADD_WISHLIST_ID_TO_USER, wishlistId: result.uid })
+    ]);
     // TODO: add the wishlist to the user obejct
     yield all([
       put({ type: CREATE_USER_WISHLIST_SUCCESS, wishlistData: result }),
