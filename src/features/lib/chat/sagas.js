@@ -41,8 +41,8 @@ function* workLoadChat(action) {
   const { id } = action;
   try {
     const result = yield call(loadChatMessages, id);
-    console.log("Chat loading yielded: " + result + " #VåtaDjur"); //TODO: Remove debug logging
     yield put({ type: LOAD_CHAT_SUCCESS, messages: result });
+    console.log("JAG ÄR FISK: " + result);
   } catch (error) {
     yield put({ type: LOAD_CHAT_ERROR, error: error });
   }

@@ -20,27 +20,25 @@ function createNewChat(id) {
 }
 
 function sendChatMessage(chatId, user, text) {
-  console.log("sendChatMessage(" + chatId + ", " + user + ", " + text + ")");
   const ref = _getChatRef(chatId);
+  const msg = {sender: user.uid, timestamp: new Date(), text: text};
   ref.get().then((doc) => {
     if(!doc.exists)
       throw new Error("sendChatMessage(): No chat with id " 
                      + chatId 
                      + " exists");
-    let messageList = doc.data().messages;
-    messageList.push({sender: user.uid,
-                   timestamp: new Date(),
-                   text: text
-    });
-    ref.set({messages: messageList});
+    let messages = doc.data().messages;
+    messages.push(msg);
+    ref.set({messages: messages});
   });
+  return msg;
 }
 
-async function loadChatMessages(chatId) {
+function loadChatMessages(chatId) {
   const ref = _getChatRef(chatId);
-  return (await ref.get().then((doc) => {
+  return ref.get().then((doc) => {
     return doc.data();
-  })).messages;
+  }).messages;
 }
 
 export {
