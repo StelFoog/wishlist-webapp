@@ -42,7 +42,6 @@ function* workFetchAllItems() {
     yield put({
       type: FETCH_ALL_ITEMS_SUCCESS,
       itemData: items
-<<<<<<< HEAD
     });
   } catch (error) {
     yield put({
@@ -56,16 +55,3 @@ export default {
   watchCreateWishlistItem,
   watchFetchAllItems
 };
-=======
-    })
-  }
-  catch (error) {
-    yield put({
-      type: FETCH_ALL_ITEMS_ERROR,
-      error: error
-    })
-  }
-}
-
-export default { watchFetchAllItems };
->>>>>>> eb0e4c27cdd7d6224324a684602f9038955cf1b7
