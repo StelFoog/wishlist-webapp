@@ -43,6 +43,13 @@ const Root = ({ store, history, persistor }) => (
               }}
             />
             <Route
+              path={"/wishlist/:uid"}
+              exact
+              render={props => {
+                return <WishlistPage {...props} />;
+              }}
+            />
+            <Route
               path={"/formtest"}
               exact
               render={props => {
@@ -55,6 +62,17 @@ const Root = ({ store, history, persistor }) => (
               exact
               render={props => {
                 return <WishlistItem {...props} />;
+              }}
+            />
+            <Route
+              path={"/dashboard/wishlist/:uid"}
+              exact
+              component={WishlistPageTest}
+            />
+            <Route
+              exact
+              render={props => {
+                return <h1> 404 </h1>;
               }}
             />
             <Route

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { db as wishlistDb } from "../wishlists";
 import { database } from "../firebase/";
 
@@ -25,6 +26,10 @@ async function removeWishlistItem(uid, index) {
   _getWishlistRef(uid).set(wishlist);
 }
 
+=======
+import { database } from "../firebase/";
+
+>>>>>>> eb0e4c27cdd7d6224324a684602f9038955cf1b7
 function _getWishlistRef(uid) {
   return database.collection("Wishlists").doc("" + uid);
 }
@@ -50,9 +55,13 @@ const fetchWishlistByUid = async uid => {
   return { ...doc.data() };
 };
 
+<<<<<<< HEAD
 export default {
   fetchWishlistByUid,
   addWishlistItem,
   editWishlistItem,
   removeWishlistItem
 };
+=======
+export { fetchWishlistByUid };
+>>>>>>> eb0e4c27cdd7d6224324a684602f9038955cf1b7
