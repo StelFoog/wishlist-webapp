@@ -1,8 +1,9 @@
 import React from "react";
 import CardContainer from "../card/CardContainer";
 import { CardContent, CardHeader } from "../card";
+import Button from "../button";
 
-const wishListItem = ({ item }) => (
+const wishListItem = ({ item, index }) => (
   <CardContainer key={item.name}>
     <div className="itemContent">
       <div className="itemText">
@@ -14,9 +15,21 @@ const wishListItem = ({ item }) => (
 
       <div className="itemPrice">
         <h3>{item.price}</h3>
+        <Button
+          variant={"filled"}
+          label={"Edit"}
+          color={"var(--color-primary"}
+          handleClick={showEditDialog}
+        />
+
       </div>
     </div>
   </CardContainer>
 );
+
+function showEditDialog() {
+  console.log("Edit dialog");
+}
+
 
 export default wishListItem;
