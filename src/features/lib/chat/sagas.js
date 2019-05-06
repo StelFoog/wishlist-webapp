@@ -1,5 +1,6 @@
 import { takeEvery, call, put, select, all } from "redux-saga/effects";
 import types from "./types.js";
+import { createNewChat, sendChatMessage } from "./db";
 
 const {
   CREATE_CHAT,
@@ -26,25 +27,30 @@ function* watchSendChatMessage() {
 }
 
 
-function* workCreateChat() {
+function* workCreateChat(action) {
+  const { id } = action;
   try {
-
+    yield call(createNewChat, id);
+    yield put({ type: CREATE_CHAT_SUCCESS, value: "" });
   } catch (error) {
     yield put({ type: CREATE_CHAT_ERROR, error: error });
   }
 }
 
-function* workLoadChat() {
+function* workLoadChat(action) {
+  const { id } = action;
   try {
-
+    //TODO: Do stuff
   } catch (error) {
     yield put({ type: LOAD_CHAT_ERROR, error: error });
   }
 }
 
-function* workSendChatMessage() {
+function* workSendChatMessage(action) {
+  const { id, user, message } = action;
   try {
-
+    yield call(sendChatMessage, id, user, message);
+    yield put({ type: SEND_CHAT_MESSAGE_SUCCESS, value: "" });
   } catch (error) {
     yield put({ type: SEND_CHAT_MESSAGE_ERROR, error: error });
   }
