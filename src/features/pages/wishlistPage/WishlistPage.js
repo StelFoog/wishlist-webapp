@@ -39,6 +39,7 @@ class WishlistPage extends Component {
 
   render() {
     const { items } = this.state;
+    console.log("y9o");
     return (
       <div className="wishlistPage">
         <PageHeader title="Name of wishlist" />

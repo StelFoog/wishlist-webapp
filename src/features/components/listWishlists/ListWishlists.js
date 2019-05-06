@@ -150,7 +150,8 @@ const mapStateToProps = () => {
 
 const mapDispatchToProps = dispatch => ({
   fetchWishlists: () => dispatch(fetchWishlists()),
-  goToWishlist: wishlist => dispatch(push(`/wishlist/${wishlist.uid}`))
+  goToWishlist: wishlist =>
+    dispatch(push(`/dashboard/wishlist/${wishlist.uid}`))
 });
 
 export default connect(

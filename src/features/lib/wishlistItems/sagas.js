@@ -1,9 +1,13 @@
 import { takeEvery, put, select, call } from "redux-saga/effects";
 import { getFormValues, reset } from "redux-form";
 import { getUser } from "../authentication/selectors";
-import { fetchWishlistByUid } from "./db.js";
+import wishlistItemDb from "./db.js";
 import types from "./types.js";
-import { addWishlistItem } from "./db";
+import wishlistDb from "../wishlists/db";
+
+const { fetchWishlistByUid } = wishlistDb;
+
+const { addWishlistItem } = wishlistItemDb;
 
 const {
   CREATE_WISHLIST_ITEM,
