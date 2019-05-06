@@ -16,10 +16,10 @@ const _getRefDoc = ref => {
     });
 };
 
-const createWishlistWithOwner = (user, wishlistName) => {
+const createWishlistWithOwner = async (user, wishlistName) => {
   const uid = generateWishlistUid(user);
   const ref = _getWishlistRef(uid);
-  const doc = _getRefDoc(ref);
+  const doc = await _getRefDoc(ref);
   if (doc.exists)
     throw new Error(
       "createWishlistWithOwner(): Wishlist with uid " + uid + " already exists"
@@ -30,9 +30,9 @@ const createWishlistWithOwner = (user, wishlistName) => {
   return wishlist;
 };
 
-const fetchWishlistByUid = uid => {
+const fetchWishlistByUid = async uid => {
   const ref = _getWishlistRef(uid);
-  const doc = _getRefDoc(ref);
+  const doc = await _getRefDoc(ref);
   if (!doc.exists)
     throw new Error(
       "fetchWishlistByUid(): No wishlist with uid " + uid + " exists"
@@ -40,8 +40,9 @@ const fetchWishlistByUid = uid => {
   return { ...makeWishlist(), ...doc.data() };
 };
 
-const fetchAllWishlistsFromUser = user =>
-  user.wishlists.map(fetchWishlistByUid);
+const fetchAllWishlistsFromUser = user => {
+  return Promise.all(user.wishlists.map(fetchWishlistByUid));
+}
 
 export default {
   _getWishlistRef,
