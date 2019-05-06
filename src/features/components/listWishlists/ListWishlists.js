@@ -6,6 +6,17 @@ import ProfilePicture from "../profilePicture/ProfilePicture.js";
 import "./listWishlists.css";
 import { connect } from "react-redux";
 import { actions, selectors } from "../../lib/wishlists";
+import { Switch, Route } from "react-router";
+import { Link, BrowserRouter as Router } from "react-router-dom";
+import { ConnectedRouter } from "connected-react-router";
+import Dashboard from "../../pages/dashboard";
+import HomePage from "../../pages/homePage";
+
+function WishlistPageTest({match}) {
+  return <h1> {"Hello" + match.params.uid } </h1>;
+}
+
+export { WishlistPageTest }
 
 const { fetchWishlists } = actions;
 
@@ -17,6 +28,31 @@ function homog_seq(x, n) {
     seq.unshift(x);
   }
   return seq;
+}
+
+function createWishlistRoutes() {
+  return(
+    <ConnectedRouter history="none">
+      <Router>
+        <Switch>
+          <Route
+            path={"/dashboard/wishlist/test"}
+            exact
+            render={(props) => {
+              return <HomePage {...props} />
+            }}
+          />
+          <Route
+            path={"/dashboard/wishlist/test2"}
+            exact
+            render={(props) => {
+              return <Dashboard {...props} />
+            }}
+          />
+        </Switch>
+      </Router>
+    </ConnectedRouter>
+  );
 }
 
 function getUserAvatarElem(user) {
@@ -72,11 +108,14 @@ class ListWishlists extends Component {
 
   render() {
     return (
+    <div>
+      <Route path="/dashboard/nirb" exact component={Dashboard} />
       <div className="listWishlists">
         <PageHeader title={"Your wishlists"} />
         {/* Fetch users wishlists from database*/}
         {this.getWishlists()}
       </div>
+    </div>
     );
   }
 }
