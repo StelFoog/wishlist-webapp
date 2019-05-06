@@ -51,8 +51,8 @@ function* workLoadChat(action) {
 function* workSendChatMessage(action) {
   const { id, user, message } = action;
   try {
-    yield call(sendChatMessage, id, user, message);
-    yield put({ type: SEND_CHAT_MESSAGE_SUCCESS, value: "" });
+    const result = yield call(sendChatMessage, id, user, message);
+    yield put({ type: SEND_CHAT_MESSAGE_SUCCESS, messages: result });
   } catch (error) {
     yield put({ type: SEND_CHAT_MESSAGE_ERROR, error: error });
   }
