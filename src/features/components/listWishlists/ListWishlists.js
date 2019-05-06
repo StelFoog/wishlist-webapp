@@ -24,6 +24,31 @@ function homog_seq(x, n) {
   return seq;
 }
 
+function createWishlistRoutes() {
+  return(
+    <ConnectedRouter history="none">
+      <Router>
+        <Switch>
+          <Route
+            path={"/dashboard/wishlist/test"}
+            exact
+            render={(props) => {
+              return <HomePage {...props} />
+            }}
+          />
+          <Route
+            path={"/dashboard/wishlist/test2"}
+            exact
+            render={(props) => {
+              return <Dashboard {...props} />
+            }}
+          />
+        </Switch>
+      </Router>
+    </ConnectedRouter>
+  );
+}
+
 function getUserAvatarElem(user) {
   return (
     <ProfilePicture
@@ -99,6 +124,7 @@ class ListWishlists extends Component {
           {this.getWishlists()}
         </div>
       </div>
+    </div>
     );
   }
 }
