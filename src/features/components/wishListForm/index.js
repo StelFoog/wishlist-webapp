@@ -1,4 +1,4 @@
 import ItemAddition from "./Item";
-import WishListTitle from "./WishlistCreateForm";
+import WishlistCreateForm from "./WishlistCreateForm";
 
-export { ItemAddition, WishListTitle };
+export { ItemAddition, WishlistCreateForm };
