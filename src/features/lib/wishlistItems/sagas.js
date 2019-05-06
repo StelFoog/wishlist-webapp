@@ -1,7 +1,8 @@
-import { takeEvery, put, select, call } from "redux-saga/effects";
 import { getFormValues, reset } from "redux-form";
 import types from "./types.js";
-import { addWishlistItem } from "./db";
+import { addWishlistItem, fetchWishlistByUid } from "./db";
+import { takeEvery, call, put, select, all } from "redux-saga/effects";
+import { getUser } from "../authentication/selectors";
 
 const {
   CREATE_WISHLIST_ITEM,
@@ -23,6 +24,30 @@ function* workCreateWishlistItem(wishlistUid) {
   }
 }
 
-export default {
-  watchCreateWishlistItem
-};
+const {
+  FETCH_ALL_ITEMS,
+  FETCH_ALL_ITEMS_SUCCESS,
+  FETCH_ALL_ITEMS_ERROR
+} = types;
+
+function* watchFetchAllItems() {
+  yield takeEvery(FETCH_ALL_ITEMS, workFetchAllItems);
+}
+
+function* workFetchAllItems() {
+  try {
+    const user = yield select(getUser);
+    const items = yield call(fetchWishlistByUid, user.uid);
+    yield put({
+      type: FETCH_ALL_ITEMS_SUCCESS,
+      itemData: items
+    });
+  } catch (error) {
+    yield put({
+      type: FETCH_ALL_ITEMS_ERROR,
+      error: error
+    });
+  }
+}
+
+export default { watchFetchAllItems, watchCreateWishlistItem };

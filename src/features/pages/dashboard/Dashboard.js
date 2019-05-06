@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { actions } from "../../components/dialog";
 import DashboardNav from "../../components/dashboardNav";
 import ListWishlists from "../../components/listWishlists";
+import WishlistPage from "../../components/wishlistPage";
 import Button from "../../components/button";
 import "./dashboard.css";
 
@@ -13,7 +14,7 @@ const Dashboard = ({ openForm }) => (
     <DashboardNav />
 
     {/* Here we place whatever dashboard page user is on, currently listWishlists as placeholder */}
-    <ListWishlists />
+    <WishlistPage />
     <div className="createWishlistButton">
       <Button
         variant={"filled"}
