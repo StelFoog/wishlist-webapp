@@ -5,17 +5,19 @@ import DashboardNav from "../../components/dashboardNav";
 import ListWishlists from "../../components/listWishlists";
 //import WishlistPage from "../../components/wishlistPage";
 import Button from "../../components/button";
+import { history } from "../../../store";
 import "./dashboard.css";
 
 const { openDialog } = actions;
 
-const Dashboard = ({ openForm }) => (
+const Dashboard = ({ openForm, children }) => (
   <div className="dashboard">
     <DashboardNav />
 
     {/* Here we place whatever dashboard page user is on, currently listWishlists as placeholder */}
     {/*<WishlistPage /> */}
-    <ListWishlists />
+    {history.location.pathname === "/dashboard" && <ListWishlists />}
+    {children}
     <div className="createWishlistButton">
       <Button
         variant={"filled"}

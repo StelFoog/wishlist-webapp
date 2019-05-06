@@ -10,8 +10,9 @@ import WishlistPage from "./features/pages/wishlistPage";
 import Dialog from "./features/components/dialog/DialogContainer";
 // import { WishListTitle as NewWishlist } from "./features/components/wishListForm";
 import { ItemAddition as WishlistItem } from "./features/components/wishListForm";
-import { WishListTitle as Form } from "./features/components/wishListForm";
-import { WishlistPageTest } from "./features/components/listWishlists/ListWishlists.js";
+import ListWishlists, {
+  WishlistPageTest
+} from "./features/components/listWishlists/ListWishlists.js";
 
 const Root = ({ store, history, persistor }) => (
   <Provider store={store}>

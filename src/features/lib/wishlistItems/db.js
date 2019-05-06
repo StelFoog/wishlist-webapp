@@ -24,11 +24,11 @@ async function removeWishlistItem(uid, index) {
   wishlist.items.splice(index, 1);
   _getWishlistRef(uid).set(wishlist);
 }
-
+/*
 function _getWishlistRef(uid) {
   return database.collection("Wishlists").doc("" + uid);
 }
-
+*/
 const _getRefDoc = async ref => {
   return ref
     .get()
@@ -40,6 +40,7 @@ const _getRefDoc = async ref => {
     });
 };
 
+/*
 const fetchWishlistByUid = async uid => {
   const ref = _getWishlistRef(uid);
   const doc = await _getRefDoc(ref);
@@ -49,7 +50,7 @@ const fetchWishlistByUid = async uid => {
     );
   return { ...doc.data() };
 };
-
+*/
 export default {
   fetchWishlistByUid,
   addWishlistItem,
