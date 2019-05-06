@@ -29,7 +29,7 @@ const chatReducer = (state = initialState, action) => {
       console.error("chat loading error: " + error.code + "-> " + error.message);
       return { ...nextState };
     case LOAD_CHAT_SUCCESS:
-      nextState.chat = messages;
+      nextState.messages = messages;
       console.log("Chat loaded successfully: " + messages + " #VåtaDjur"); //TODO: Remove debug logging
       return { ...nextState };
 
@@ -37,7 +37,7 @@ const chatReducer = (state = initialState, action) => {
       console.error("chat message sending error: " + error.code + "-> " + error.message);
       return { ...nextState };
     case SEND_CHAT_MESSAGE_SUCCESS:
-      nextState.chat.push(messages);
+      nextState.messages.push(messages);
       console.log("Chat message sent: " + messages + " #VåtaDjur"); //TODO: Remove debug logging
       return { ...nextState };
     default:
