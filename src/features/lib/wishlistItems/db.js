@@ -1,8 +1,7 @@
 import { database } from "../firebase/";
-import { makeWishlist } from "../wishlist.js";
 
 function _getWishlistRef(uid) {
-  return database.collection('Wishlists').doc('' + uid);
+  return database.collection("Wishlists").doc("" + uid);
 }
 
 const _getRefDoc = async ref => {
@@ -23,7 +22,7 @@ const fetchWishlistByUid = async uid => {
     throw new Error(
       "fetchWishlistByUid(): No wishlist with uid " + uid + " exists"
     );
-  return { ...makeWishlist(), ...doc.data() };
+  return { ...doc.data() };
 };
 
-export default { fetchWishlistByUid };
+export { fetchWishlistByUid };
