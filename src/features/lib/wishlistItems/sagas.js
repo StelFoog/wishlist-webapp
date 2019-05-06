@@ -50,4 +50,7 @@ function* workFetchAllItems() {
   }
 }
 
-export default { watchFetchAllItems, watchCreateWishlistItem };
+export default {
+  watchCreateWishlistItem,
+  watchFetchAllItems
+};

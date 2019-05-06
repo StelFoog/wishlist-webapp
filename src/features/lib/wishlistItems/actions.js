@@ -11,4 +11,7 @@ const fetchAllItems = () => ({
   type: FETCH_ALL_WISHLISTS
 });
 
-export default { fetchAllItems, createWishlistItem };
+export default {
+  createWishlistItem,
+  fetchAllItems
+};
