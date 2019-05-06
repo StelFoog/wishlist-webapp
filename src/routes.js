@@ -9,6 +9,8 @@ import Dashboard from "./features/pages/dashboard";
 import Dialog from "./features/components/dialog/DialogContainer";
 // import { WishListTitle as NewWishlist } from "./features/components/wishListForm";
 import { ItemAddition as WishlistItem } from "./features/components/wishListForm";
+import { WishListTitle as Form } from "./features/components/wishListForm";
+import { WishlistPageTest } from "./features/components/listWishlists/ListWishlists.js";
 
 const Root = ({ store, history, persistor }) => (
   <Provider store={store}>
@@ -45,6 +47,17 @@ const Root = ({ store, history, persistor }) => (
               exact
               render={props => {
                 return <WishlistItem {...props} />;
+              }}
+            />
+            <Route
+              path={"/dashboard/wishlist/:uid"}
+              exact
+              component={WishlistPageTest}
+            />
+            <Route
+              exact
+              render={props => {
+                return <h1> 404 </h1>;
               }}
             />
           </Switch>
