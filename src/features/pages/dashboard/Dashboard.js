@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { push } from "connected-react-router";
+import { actions } from "../../components/dialog";
 import DashboardNav from "../../components/dashboardNav";
 import ListWishlists from "../../components/listWishlists";
 import Button from "../../components/button";
 import "./dashboard.css";
 
-const Dashboard = ({ goToForm }) => (
+const { openDialog } = actions;
+
+const Dashboard = ({ openForm }) => (
   <div className="dashboard">
     <DashboardNav />
 
@@ -17,14 +19,14 @@ const Dashboard = ({ goToForm }) => (
         variant={"filled"}
         label={"+"}
         color={"var(--color-secondary)"}
-        handleClick={goToForm}
+        handleClick={openForm}
       />
     </div>
   </div>
 );
 
 const mapDispatchToProps = dispatch => ({
-  goToForm: () => dispatch(push("/formtest"))
+  openForm: () => dispatch(openDialog("newWishlist"))
 });
 
 export default connect(

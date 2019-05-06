@@ -7,7 +7,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import HomePage from "./features/pages/homePage";
 import Dashboard from "./features/pages/dashboard";
 import Dialog from "./features/components/dialog/DialogContainer";
-import { WishListTitle as NewWishlist } from "./features/components/wishListForm";
+// import { WishListTitle as NewWishlist } from "./features/components/wishListForm";
 import { ItemAddition as WishlistItem } from "./features/components/wishListForm";
 
 const Root = ({ store, history, persistor }) => (
@@ -31,6 +31,7 @@ const Root = ({ store, history, persistor }) => (
                 return <Dashboard {...props} />;
               }}
             />
+            {/*
             <Route
               path={"/formtest"}
               exact
@@ -38,6 +39,7 @@ const Root = ({ store, history, persistor }) => (
                 return <NewWishlist {...props} />;
               }}
             />
+          */}
             <Route
               path={"/wishlistitem"}
               exact
