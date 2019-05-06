@@ -6,6 +6,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
 import HomePage from "./features/pages/homePage";
 import Dashboard from "./features/pages/dashboard";
+import WishlistPage from "./features/pages/wishlistPage";
 import Dialog from "./features/components/dialog/DialogContainer";
 // import { WishListTitle as NewWishlist } from "./features/components/wishListForm";
 import { ItemAddition as WishlistItem } from "./features/components/wishListForm";
@@ -34,6 +35,13 @@ const Root = ({ store, history, persistor }) => (
               }}
             />
             {/*
+            <Route
+              path={"/wishlist"}
+              exact
+              render={props => {
+                return <WishlistPage {...props} />;
+              }}
+            />
             <Route
               path={"/formtest"}
               exact
