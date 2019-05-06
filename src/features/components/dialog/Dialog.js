@@ -10,7 +10,6 @@ const DIALOG_VARIANTS = {
 };
 
 const Dialog = ({ variant, showDialog, handleClose, ...rest }) => {
-  console.log(variant);
   const DialogVariant = DIALOG_VARIANTS[variant]
     ? DIALOG_VARIANTS[variant]
     : "div";
