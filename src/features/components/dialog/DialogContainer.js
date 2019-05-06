@@ -5,15 +5,15 @@ import Dialog from "./Dialog";
 const { closeDialog } = actions;
 
 const mapDispatchToProps = dispatch => ({
-  closeDialog: () => dispatch(closeDialog())
+  handleClose: () => dispatch(closeDialog())
 });
 
 const mapStateToProps = () => {
-  const getDialogOpenedState = selectors.getDialogOpenedState();
-  const getDialogContentState = selectors.getDialogContentState();
+  const getDialogOpened = selectors.getDialogOpenedState();
+  const getDialogVariant = selectors.getDialogVariantState();
   return state => ({
-    showDialog: getDialogOpenedState(state),
-    content: getDialogContentState(state)
+    showDialog: getDialogOpened(state),
+    variant: getDialogVariant(state)
   });
 };
 

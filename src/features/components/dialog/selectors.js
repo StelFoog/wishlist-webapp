@@ -1,18 +1,12 @@
 import { createSelector } from "reselect";
 
 const getDialogOpened = ({ dialog }) => dialog.showDialog;
-const getDialogContent = ({ dialog }) => dialog.content;
+const getDialogVariant = ({ dialog }) => dialog.variant;
 
 const getDialogOpenedState = () =>
-  createSelector(
-    [getDialogOpened],
-    dialogOpened => dialogOpened
-  );
+  createSelector([getDialogOpened], dialogOpened => dialogOpened);
 
-const getDialogContentState = () =>
-  createSelector(
-    [getDialogContent],
-    dialogContent => dialogContent
-  );
+const getDialogVariantState = () =>
+  createSelector([getDialogVariant], dialogVariant => dialogVariant);
 
-export default { getDialogOpenedState, getDialogContentState };
+export default { getDialogOpenedState, getDialogVariantState };

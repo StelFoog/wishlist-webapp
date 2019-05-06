@@ -1,16 +1,19 @@
-
 function makeUser(name, uid, wishlists, groups) {
   return {
-    name: name || null, 
-    uid :  uid, 
+    name: name || null,
+    uid: uid,
     wishlists: wishlists || [],
-    groups   : groups    || [],
+    groups: groups || [],
     createdWishlists: 0
   };
 }
 
 function generateWishlistUid(user) {
-  return user.uid + '-' + user.createdWishlists;
+  let uid;
+  do {
+    uid = user.uid + "-" + Math.floor(Math.random() * 0x7fffffff);
+  } while (user.wishlists.includes(uid));
+  return uid;
 }
 
 function giveWishlistToUserAsOwner(user, wishlist) {

@@ -4,16 +4,16 @@ const { OPEN_DIALOG, CLOSE_DIALOG } = types;
 
 const initialState = {
   showDialog: false,
-  content: null
+  variant: ""
 };
 
 const dialogReducer = (state = initialState, action) => {
-  const { type, content } = action;
+  const { type, variant } = action;
   let newState = state;
   switch (type) {
     case OPEN_DIALOG:
       newState.showDialog = true;
-      newState.content = content;
+      newState.variant = variant;
       return { ...newState };
     case CLOSE_DIALOG:
       newState.showDialog = false;

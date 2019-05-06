@@ -71,6 +71,11 @@
   background-size: cover; /* Resize the background image to cover the entire container */
 }
 
+.card-actions {
+  float: right;
+  display: inline-flex;
+}
+
 /* Elavation */
 
 .card-1 {

@@ -1,16 +1,14 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
-import { connect } from "react-redux";
-//import { withAuth } from "react-devise";
 import renderField, { required } from "./validate";
 import { actions } from "../../lib/wishlists";
 
 const { createUserWishlist } = actions;
 
 // Wishlist createation form component
-const WishlistCreateForm = ({ handleSubmit, handleCreateWishlist }) => (
-  <form onSubmit={handleSubmit(handleCreateWishlist)}>
-    <div>
+const WishlistCreateForm = ({ handleSubmit }) => (
+  <form onSubmit={handleSubmit}>
+    <React.Fragment>
       <label htmlFor="Wish List Title">Wish List Title</label>
       <div>
         <Field
@@ -44,20 +42,13 @@ const WishlistCreateForm = ({ handleSubmit, handleCreateWishlist }) => (
           </div>
         </div>
       )}
-      <button>Submit</button>
-    </div>
+    </React.Fragment>
   </form>
 );
 
-const mapDispatchToProps = dispatch => ({
-  handleCreateWishlist: () => dispatch(createUserWishlist())
-});
+const submit = (values, dispatch) => dispatch(createUserWishlist());
 
 export default reduxForm({
-  form: "WishlistCreateForm"
-})(
-  connect(
-    null,
-    mapDispatchToProps
-  )(WishlistCreateForm)
-);
+  form: "WishlistCreateForm",
+  onSubmit: submit
+})(WishlistCreateForm);
