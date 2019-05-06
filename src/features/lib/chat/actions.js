@@ -19,6 +19,7 @@ const loadChat = (id) => ({
 const sendChatMessage = (id, user, message) => ({
   type: SEND_CHAT_MESSAGE,
   id,
+  user,
   message
 });
 
