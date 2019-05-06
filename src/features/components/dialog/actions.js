@@ -2,9 +2,9 @@ import types from "./types";
 
 const { OPEN_DIALOG, CLOSE_DIALOG } = types;
 
-const openDialog = content => ({
+const openDialog = variant => ({
   type: OPEN_DIALOG,
-  content: content
+  variant
 });
 
 const closeDialog = () => ({
