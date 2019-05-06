@@ -15,7 +15,7 @@ const initialState = {
 
 const chatReducer = (state = initialState, action) => {
   let nextState = state;
-  const { type, id, error, messages } = action;
+  const { type, messages, error } = action;
 
   switch (type) {
     case CREATE_CHAT_ERROR:
