@@ -20,6 +20,7 @@ function createNewChat(id) {
 }
 
 function sendChatMessage(chatId, user, text) {
+  console.log("sendChatMessage(" + chatId + ", " + user + ", " + text + ")");
   const ref = _getChatRef(chatId);
   ref.get().then((doc) => {
     if(!doc.exists)
@@ -45,5 +46,5 @@ async function loadChatMessages(chatId) {
 export {
   createNewChat,
   sendChatMessage,
-  onChatMessageReceived
+  loadChatMessages
 }
