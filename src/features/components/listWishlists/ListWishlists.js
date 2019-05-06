@@ -130,6 +130,7 @@ class ListWishlists extends Component {
           {this.getWishlists()}
         </div>
       </div>
+    </div>
     );
   }
 }
