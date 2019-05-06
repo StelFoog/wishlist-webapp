@@ -1,0 +1,12 @@
+
+.wishlistPage{
+  padding: 3rem;
+}
+.itemContent{
+  display: flex;
+  justify-content: space-between;
+}
+
+.itemText{
+
+}

@@ -23,6 +23,33 @@ function* workCreateWishlistItem(wishlistUid) {
   }
 }
 
+const {
+  FETCH_ALL_ITEMS,
+  FETCH_ALL_ITEMS_SUCCESS,
+  FETCH_ALL_ITEMS_ERROR
+} = types;
+
+function* watchFetchAllItems() {
+  yield takeEvery(FETCH_ALL_ITEMS, workFetchAllItems);
+}
+
+function* workFetchAllItems() {
+  try {
+    const user = yield select(getUser);
+    const items = yield call(fetchWishlistByUid, user.uid);
+    yield put({
+      type: FETCH_ALL_ITEMS_SUCCESS,
+      itemData: items
+    });
+  } catch (error) {
+    yield put({
+      type: FETCH_ALL_ITEMS_ERROR,
+      error: error
+    });
+  }
+}
+
 export default {
-  watchCreateWishlistItem
+  watchCreateWishlistItem,
+  watchFetchAllItems
 };
