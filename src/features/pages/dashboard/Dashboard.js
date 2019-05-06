@@ -13,6 +13,7 @@ const Dashboard = ({ goToForm }) => (
 
     {/* Here we place whatever dashboard page user is on, currently listWishlists as placeholder */}
     {/*<WishlistPage /> */}
+    <ListWishlists />
     <div className="createWishlistButton">
       <Button
         variant={"filled"}
