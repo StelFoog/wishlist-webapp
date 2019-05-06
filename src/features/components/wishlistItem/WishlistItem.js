@@ -21,7 +21,6 @@ const wishListItem = ({ item, index }) => (
           color={"var(--color-primary"}
           handleClick={showEditDialog}
         />
-
       </div>
     </div>
   </CardContainer>
@@ -30,6 +29,5 @@ const wishListItem = ({ item, index }) => (
 function showEditDialog() {
   console.log("Edit dialog");
 }
-
 
 export default wishListItem;
