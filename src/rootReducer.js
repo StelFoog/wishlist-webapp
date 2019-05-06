@@ -3,12 +3,14 @@ import { reducer as formReducer } from "redux-form";
 import { reducers as authReducers } from "./features/lib/authentication";
 import { reducers as dialogReducers } from "./features/components/dialog";
 import { reducers as wishlistReducers } from "./features/lib/wishlists";
+import { reducers as chatReducers } from "./features/lib/chat";
 
 const appReducer = combineReducers({
   auth: authReducers.userReducer,
   dialog: dialogReducers.dialogReducer,
   wishlist: wishlistReducers.wishlistReducer,
-  form: formReducer
+  form: formReducer,
+  chat: chatReducers.chatReducer
 });
 
 const rootReducer = (state, action) => {
