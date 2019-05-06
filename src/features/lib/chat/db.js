@@ -12,10 +12,10 @@ function _getChatRef(uid) {
 
 function createNewChat(id) {
   const ref = _getChatRef(id);
-  /*const doc = await ref.get();
-  if(doc.exists)
-    throw new Error("createNewChat(): Chat with id " + id + " already exists");*/
-  ref.set({messages: []});
+  ref.get().then((doc) => {
+    if(!doc.exists)
+      ref.set({messages: []});
+  });
   return id;
 }
 
@@ -26,20 +26,20 @@ function sendChatMessage(chatId, user, text) {
       throw new Error("sendChatMessage(): No chat with id " 
                      + chatId 
                      + " exists");
-    let messages = doc.data().messages;
-    messages.push({sender: user.uid, 
-                   timestamp: 0,
+    let messageList = doc.data().messages;
+    messageList.push({sender: user.uid,
+                   timestamp: new Date(),
                    text: text
     });
-    ref.set({messages: messages});
-  }).catch((error) => {
-    throw error;
+    ref.set({messages: messageList});
   });
 }
 
-function onChatMessageReceived(chatId, callback) {
+async function loadChatMessages(chatId) {
   const ref = _getChatRef(chatId);
-  ref.onSnapshot(callback);
+  return (await ref.get().then((doc) => {
+    return doc.data();
+  })).messages;
 }
 
 export {
