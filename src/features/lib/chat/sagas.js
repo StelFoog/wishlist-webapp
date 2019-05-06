@@ -1,6 +1,6 @@
 import { takeEvery, call, put, select, all } from "redux-saga/effects";
 import types from "./types.js";
-import { createNewChat, sendChatMessage } from "./db";
+import { createNewChat, sendChatMessage, loadChatMessages } from "./db";
 
 const {
   CREATE_CHAT,
@@ -40,7 +40,8 @@ function* workCreateChat(action) {
 function* workLoadChat(action) {
   const { id } = action;
   try {
-    //TODO: Do stuff
+    const result = yield call(loadChatMessages, id);
+    yield put({ type: CREATE_CHAT_SUCCESS, messages: result });
   } catch (error) {
     yield put({ type: LOAD_CHAT_ERROR, error: error });
   }

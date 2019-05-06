@@ -30,7 +30,7 @@ const chatReducer = (state = initialState, action) => {
       return { ...nextState };
     case LOAD_CHAT_SUCCESS:
       nextState.chat = messages;
-      console.log("Chat loaded successfully #VåtaDjur"); //TODO: Remove debug logging
+      console.log("Chat loaded successfully: " + messages + " #VåtaDjur"); //TODO: Remove debug logging
       return { ...nextState };
 
     case SEND_CHAT_MESSAGE_ERROR:

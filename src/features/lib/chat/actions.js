@@ -16,7 +16,7 @@ const loadChat = (id) => ({
   id
 });
 
-const sendChatMessage = (id, message) => ({
+const sendChatMessage = (id, user, message) => ({
   type: SEND_CHAT_MESSAGE,
   id,
   message
