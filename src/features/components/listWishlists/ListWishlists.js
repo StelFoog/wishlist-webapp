@@ -6,6 +6,17 @@ import ProfilePicture from "../profilePicture/ProfilePicture.js";
 import "./listWishlists.css";
 import { connect } from "react-redux";
 import { actions, selectors } from "../../lib/wishlists";
+import { Switch, Route } from "react-router";
+import { Link, BrowserRouter as Router } from "react-router-dom";
+import { ConnectedRouter } from "connected-react-router";
+import Dashboard from "../../pages/dashboard";
+import HomePage from "../../pages/homePage";
+
+function WishlistPageTest({match}) {
+  return <h1> {"Hello" + match.params.uid } </h1>;
+}
+
+export { WishlistPageTest }
 
 import { Switch, Route } from "react-router";
 import { Link, BrowserRouter as Router } from "react-router-dom";

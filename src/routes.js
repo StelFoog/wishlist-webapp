@@ -68,6 +68,17 @@ const Root = ({ store, history, persistor }) => (
                 return <h1> 404 </h1>;
               }}
             />
+            <Route
+              path={"/dashboard/wishlist/:uid"}
+              exact
+              component={WishlistPageTest}
+            />
+            <Route
+              exact
+              render={props => {
+                return <h1> 404 </h1>;
+              }}
+            />
           </Switch>
         </Router>
       </ConnectedRouter>
