@@ -16,7 +16,7 @@ const Dashboard = ({ openForm, children }) => (
 
     {/* Here we place whatever dashboard page user is on, currently listWishlists as placeholder */}
     {/*<WishlistPage /> */}
-    {history.location.pathname === "/dashboard" && <ListWishlists />}
+    {/*history.location.pathname === "/dashboard" && <ListWishlists />*/}
     {children}
     <div className="createWishlistButton">
       <Button

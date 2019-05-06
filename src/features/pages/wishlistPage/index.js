@@ -4,19 +4,9 @@ import Button from "../../components/button";
 import WishlistPage from "./WishlistPage";
 
 const wishLIstPageContainer = ({ goToForm, ...rest }) => (
-  <div className="dashboard">
-    <DashboardNav />
-
+  <div className="page">
     {/* Here we place whatever dashboard page user is on, currently listWishlists as placeholder */}
     <WishlistPage {...rest} />
-    <div className="createWishlistButton">
-      <Button
-        variant={"filled"}
-        label={"+"}
-        color={"var(--color-secondary)"}
-        handleClick={goToForm}
-      />
-    </div>
   </div>
 );
 
