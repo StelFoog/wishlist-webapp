@@ -44,8 +44,8 @@ class WishlistPage extends Component {
         <PageHeader title="Name of wishlist" />
         {items.length > 0 && (
           <React.Fragment>
-            {items.map(item => (
-              <WishlistItem item={item} />
+            {items.map((item, index) => (
+              <WishlistItem item={item} index={index} />
             ))}
           </React.Fragment>
         )}
