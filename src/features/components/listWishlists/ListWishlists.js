@@ -8,15 +8,15 @@ import { connect } from "react-redux";
 import { actions, selectors } from "../../lib/wishlists";
 import { Switch, Route } from "react-router";
 import { Link, BrowserRouter as Router } from "react-router-dom";
-import { ConnectedRouter } from "connected-react-router";
+import { ConnectedRouter, push } from "connected-react-router";
 import Dashboard from "../../pages/dashboard";
 import HomePage from "../../pages/homePage";
 
-function WishlistPageTest({match}) {
-  return <h1> {"Hello" + match.params.uid } </h1>;
+function WishlistPageTest({ match }) {
+  return <h1> {"Hello" + match.params.uid} </h1>;
 }
 
-export { WishlistPageTest }
+export { WishlistPageTest };
 
 import { Switch, Route } from "react-router";
 import { Link, BrowserRouter as Router } from "react-router-dom";
@@ -89,7 +89,6 @@ function getWishlistAvatars(wishlist) {
         ? getUserAvatarElem(members[MAX_WISHLIST_AVATARS - 1])
         : moreMembers
     );
-
   return avatars;
 }
 
@@ -102,24 +101,26 @@ class ListWishlists extends Component {
 
   displayWishlist(wishlist) {
     return (
-      <CardContainer
-        children={
-          <div className="cardContent">
-            <CardHeader children={wishlist.title} />
-            <hr />
-            <CardContent
-              children={
-                <div className="wishlistCard">
-                  <p className="wishlistText">...</p>
-                  <div className="wishlistAvatarList">
-                    {getWishlistAvatars(wishlist)}
+      <div onClick={() => this.props.goToWishlist(wishlist)}>
+        <CardContainer
+          children={
+            <div className="cardContent">
+              <CardHeader children={wishlist.title} />
+              <hr />
+              <CardContent
+                children={
+                  <div className="wishlistCard">
+                    <p className="wishlistText">...</p>
+                    <div className="wishlistAvatarList">
+                      {getWishlistAvatars(wishlist)}
+                    </div>
                   </div>
-                </div>
-              }
-            />
-          </div>
-        }
-      />
+                }
+              />
+            </div>
+          }
+        />
+      </div>
     );
   }
 
