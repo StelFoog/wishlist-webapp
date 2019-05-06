@@ -33,13 +33,28 @@ const Root = ({ store, history, persistor }) => (
               return <Dashboard {...props} />;
             }}
           />
-          <Route
-            path={"/dashboard/wishlist/:uid"}
-            exact
-            render={props => {
-              return <WishlistPage {...props} />;
-            }}
-          />
+          <Switch>
+            <Route
+              path={"/dashboard"}
+              exact
+              render={props => {
+                return <ListWishlists {...props} />;
+              }}
+            />
+            <Route
+              path={"/dashboard/wishlist/:uid"}
+              exact
+              render={props => {
+                return <WishlistPage {...props} />;
+              }}
+            />
+            <Route
+              exact
+              render={props => {
+                return <h1> 404 </h1>;
+              }}
+            />
+          </Switch>
           {/*
             <Route
               path={"/formtest"}
@@ -54,12 +69,6 @@ const Root = ({ store, history, persistor }) => (
             exact
             render={props => {
               return <WishlistItem {...props} />;
-            }}
-          />
-          <Route
-            exact
-            render={props => {
-              return <h1> 404 </h1>;
             }}
           />
         </Router>
