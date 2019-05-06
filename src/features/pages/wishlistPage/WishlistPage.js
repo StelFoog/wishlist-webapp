@@ -10,21 +10,26 @@ import { actions, selectors } from "../../lib/wishlistItems";
 const { fetchAllItems } = actions;
 
 class WishlistPage extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    console.log(props);
     this.state = {
-      items: []
+      items: [],
+      uid: props.match.params.uid
     };
   }
 
   getAllWishlistItems() {
+    const { uid } = this.state;
     firebase
       .firestore()
       .collection("Wishlists")
-      .doc("jxS5xHaHRyPwtJp7GWe0AfOlHBN2-873964620")
+      .doc(uid)
       .get()
       .then(doc => {
-        this.setState({ items: doc.data().items });
+        if (doc.data()) {
+          this.setState({ items: doc.data().items });
+        }
       });
   }
 
