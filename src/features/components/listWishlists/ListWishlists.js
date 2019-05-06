@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import { actions, selectors } from "../../lib/wishlists";
 import { Switch, Route } from "react-router";
 import { Link, BrowserRouter as Router } from "react-router-dom";
-import { ConnectedRouter } from "connected-react-router";
+import { ConnectedRouter, push } from "connected-react-router";
 import Dashboard from "../../pages/dashboard";
 import HomePage from "../../pages/homePage";
 
@@ -25,22 +25,22 @@ function homog_seq(x, n) {
 }
 
 function createWishlistRoutes() {
-  return(
+  return (
     <ConnectedRouter history="none">
       <Router>
         <Switch>
           <Route
             path={"/dashboard/wishlist/test"}
             exact
-            render={(props) => {
-              return <HomePage {...props} />
+            render={props => {
+              return <HomePage {...props} />;
             }}
           />
           <Route
             path={"/dashboard/wishlist/test2"}
             exact
-            render={(props) => {
-              return <Dashboard {...props} />
+            render={props => {
+              return <Dashboard {...props} />;
             }}
           />
         </Switch>
@@ -81,6 +81,12 @@ function getWishlistAvatars(wishlist) {
 }
 
 class ListWishlists extends Component {
+  constructor(props) {
+    super(props);
+
+    this.displayWishlist = this.displayWishlist.bind(this);
+  }
+
   displayWishlist(wishlist) {
     return (
       <CardContainer
@@ -124,7 +130,6 @@ class ListWishlists extends Component {
           {this.getWishlists()}
         </div>
       </div>
-    </div>
     );
   }
 }
@@ -137,7 +142,8 @@ const mapStateToProps = () => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchWishlists: () => dispatch(fetchWishlists())
+  fetchWishlists: () => dispatch(fetchWishlists()),
+  goToWishlist: wishlist => dispatch(push(`/wishlist/${wishlist.uid}`))
 });
 
 export default connect(

@@ -36,7 +36,7 @@ const Root = ({ store, history, persistor }) => (
             />
             {/*
             <Route
-              path={"/wishlist"}
+              path={"/wishlist/:uid"}
               exact
               render={props => {
                 return <WishlistPage {...props} />;

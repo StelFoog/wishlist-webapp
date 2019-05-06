@@ -3,12 +3,12 @@ import DashboardNav from "../../components/dashboardNav";
 import Button from "../../components/button";
 import WishlistPage from "./WishlistPage";
 
-const wishLIstPageContainer = ({ goToForm }) => (
+const wishLIstPageContainer = ({ goToForm, ...rest }) => (
   <div className="dashboard">
     <DashboardNav />
 
     {/* Here we place whatever dashboard page user is on, currently listWishlists as placeholder */}
-    <WishlistPage />
+    <WishlistPage {...rest} />
     <div className="createWishlistButton">
       <Button
         variant={"filled"}
