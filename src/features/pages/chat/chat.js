@@ -5,6 +5,10 @@ import { connect } from "react-redux";
 
 const { sendChatMessage, loadChat } = actions;
 
+function  dateString(date) {
+  // Datetime function goes here
+}
+
 class Chat extends Component {
   componentDidMount() {
     this.props.handleChatSend(0, {uid: 0}, "#VÅTA DJUR");
@@ -12,9 +16,10 @@ class Chat extends Component {
   }
 
   render() {
-    return(
-      <p> HEJ JAG ÄR RÖD </p>
-    );
+
+    return this.props.messages.map((msg) => {
+      return <p> {msg.sender}: "{msg.text}" at {dateString(msg.timestamp)} </p>;
+    });
   }
 }
 
@@ -27,7 +32,12 @@ const mapDispatchToProps = dispatch => ({
   handleChatLoad: ( id ) => dispatch(loadChat( id ))
 });
 
+const mapStateToProps = (state) => {
+  const { chat } = state
+  return { messages: chat.messages }
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Chat);
