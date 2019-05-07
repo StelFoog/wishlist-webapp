@@ -31,6 +31,7 @@ function* workCreateChat(action) {
   const { id } = action;
   try {
     yield call(createNewChat, id);
+    console.log("(SAGA)Chat created");
     yield put({ type: CREATE_CHAT_SUCCESS, value: "" });
   } catch (error) {
     yield put({ type: CREATE_CHAT_ERROR, error: error });
@@ -41,8 +42,8 @@ function* workLoadChat(action) {
   const { id } = action;
   try {
     const result = yield call(loadChatMessages, id);
+    console.log("(SAGA)Chat loaded: " + result[0].text);
     yield put({ type: LOAD_CHAT_SUCCESS, messages: result });
-    console.log("JAG ÄR FISK: " + result);
   } catch (error) {
     yield put({ type: LOAD_CHAT_ERROR, error: error });
   }
@@ -52,6 +53,7 @@ function* workSendChatMessage(action) {
   const { id, user, message } = action;
   try {
     const result = yield call(sendChatMessage, id, user, message);
+    console.log("(SAGA)Chat message sent: " + result.text);
     yield put({ type: SEND_CHAT_MESSAGE_SUCCESS, messages: result });
   } catch (error) {
     yield put({ type: SEND_CHAT_MESSAGE_ERROR, error: error });
