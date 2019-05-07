@@ -5,4 +5,4 @@ import selectors from "./selectors";
 import sagas from "./sagas";
 import types from "./types";
 
-export { actions, db, reducers, selectors, sagas, types };
+export { actions, db, reducers, sagas, types, selectors };

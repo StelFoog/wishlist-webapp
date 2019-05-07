@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 import db from "../wishlists/db";
 import { database } from "../firebase/";
 
 const { fetchWishlistByUid, _getWishlistRef } = db;
 
+=======
+import { fetchWishlistByUid, _getWishlistRef } from "../wishlists/db";
+import { database } from "../firebase/";
+
+>>>>>>> invite-users
 const addWishlistItem = async (uid, item) => {
   let wishlist = await fetchWishlistByUid(uid);
   wishlist.items.push(item);
@@ -25,11 +31,7 @@ async function removeWishlistItem(uid, index) {
   wishlist.items.splice(index, 1);
   _getWishlistRef(uid).set(wishlist);
 }
-/*
-function _getWishlistRef(uid) {
-  return database.collection("Wishlists").doc("" + uid);
-}
-*/
+
 const _getRefDoc = async ref => {
   return ref
     .get()
@@ -41,6 +43,7 @@ const _getRefDoc = async ref => {
     });
 };
 
+<<<<<<< HEAD
 const validateNewItem = item => item ? item : {};
 
 /*
@@ -55,6 +58,9 @@ const fetchWishlistByUid = async uid => {
 };
 */
 export default {
+=======
+export {
+>>>>>>> invite-users
   fetchWishlistByUid,
   addWishlistItem,
   editWishlistItem,

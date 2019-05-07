@@ -1,6 +1,9 @@
 import { createSelector } from "reselect";
 
-const getItems = ({ wishlist }) => wishlist.wishlists[0].items;
+const getItems = ({ wishlist }) => {
+  console.log(wishlist);
+  wishlist.wishlists[0].items;
+};
 
 const getItemsState = () =>
   createSelector(

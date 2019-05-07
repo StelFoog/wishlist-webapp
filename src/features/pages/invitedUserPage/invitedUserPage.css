@@ -1,0 +1,23 @@
+.invited-user-page {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  min-height: 100vh;
+}
+.invited-user-page * {
+  text-align: center;
+}
+.invited-user-page > * {
+  display: flex;
+  flex: 1;
+}
+.invited-user-page > div:first-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.invited-user-page > div:last-child {
+  display: flex;
+  align-items: flex-start;
+}

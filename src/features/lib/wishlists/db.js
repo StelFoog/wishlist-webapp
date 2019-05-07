@@ -46,11 +46,19 @@ const fetchWishlistByUid = async uid => {
   return { ...makeWishlist(), ...doc.data() };
 };
 
-const fetchAllWishlistsFromUser = async user => {
-  return await Promise.all(user.wishlists.map(fetchWishlistByUid));
+const editWishlist = (uid, wishlist) => {
+  const ref = _getWishlistRef(uid);
+  ref.get().then(doc => {
+    if (doc.exists) ref.set(wishlist);
+  });
 };
 
-export default {
+const fetchAllWishlistsFromUser = user => {
+  return Promise.all(user.wishlists.map(fetchWishlistByUid));
+};
+
+export {
+  editWishlist,
   _getWishlistRef,
   createWishlistWithOwner,
   fetchWishlistByUid,

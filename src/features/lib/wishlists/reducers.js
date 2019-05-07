@@ -37,6 +37,7 @@ const wishlistReducer = (state = initialState, action) => {
     case FETCH_WISHLISTS_ERROR:
       console.error("Error occurred while fetching wishlists.");
       return { ...nextState };
+<<<<<<< HEAD
 
     case EDIT_WISHLIST_ITEM_SUCCESS:
       const { wishlists } = nextState;
@@ -68,6 +69,8 @@ const wishlistReducer = (state = initialState, action) => {
       console.log(item);
       nextState.wishlists[wishlistIndex].items[index] = { item };
       return { ...nextState };
+=======
+>>>>>>> invite-users
     default:
       return { ...nextState };
   }

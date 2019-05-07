@@ -1,8 +1,9 @@
-function makeUser(name, uid, wishlists, groups) {
+function makeUser(name, uid, wishlists, ownedWishlists, groups) {
   return {
     name: name || null,
     uid: uid,
     wishlists: wishlists || [],
+    ownedWishlists: ownedWishlists || [],
     groups: groups || [],
     createdWishlists: 0
   };
@@ -27,9 +28,4 @@ function giveUserAccessToWishlist(user, wishlist) {
   return user;
 }
 
-export {
-  makeUser,
-  giveWishlistToUserAsOwner,
-  giveUserAccessToWishlist,
-  generateWishlistUid
-};
+export { makeUser, generateWishlistUid };

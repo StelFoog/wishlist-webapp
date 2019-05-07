@@ -1,13 +1,11 @@
 import { takeEvery, call, put, select, all } from "redux-saga/effects";
 import { getFormValues, reset } from "redux-form";
-import db from "./db";
+import { createWishlistWithOwner, fetchAllWishlistsFromUser } from "./db";
 import { getUser } from "../authentication/selectors";
 import { addNewWishlistIdToUser } from "../authentication/db";
 import wishlistTypes from "./types.js";
 import { types as authTypes } from "../authentication";
 import { types as dialogTypes } from "../../components/dialog";
-
-const { createWishlistWithOwner, fetchAllWishlistsFromUser } = db;
 
 const {
   CREATE_USER_WISHLIST,
@@ -56,12 +54,9 @@ function* watchFetchWishlists() {
 
 function* workFetchWishlists() {
   try {
-    console.log("hej1");
     const user = yield select(getUser);
-    console.log("hej2");
     console.log(user);
     const wishlists = yield call(fetchAllWishlistsFromUser, user);
-    console.log("hej3");
 
     yield put({
       type: FETCH_WISHLISTS_SUCCESS,
