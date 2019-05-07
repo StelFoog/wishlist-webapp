@@ -23,69 +23,19 @@ const Root = ({ store, history, persistor }) => (
       <ConnectedRouter history={history}>
         <Router>
           <Dialog />
-          <Route
-            path={"/"}
-            exact
-            render={props => {
-              return <HomePage {...props} />;
-            }}
-          />
-          <Route
-            path={"/dashboard/"}
-            render={props => {
-              return <Dashboard {...props} />;
-            }}
-          />
           <Switch>
             <Route
-              path={"/dashboard"}
+              path={"/"}
               exact
               render={props => {
-                return <LoggedInPage {...props} />;
+                return <HomePage {...props} />;
               }}
             />
             <Route
-              path={"/dashboard/wishlist/:uid"}
-              exact
+              path={"/dashboard/"}
               render={props => {
-                return <WishlistPage {...props} />;
+                return <Dashboard {...props} />;
               }}
-            />
-            <Route
-              path={"/wishlist/:uid/invite"}
-              exact
-              render={props => {
-                return <InvitedUserPage {...props} />;
-              }}
-            />
-            <Route
-              path={"/dashboard/guest/:uid"}
-              exact
-              render={props => {
-                return <InvitedWishlistPage {...props} />;
-              }}
-            />
-            <Route
-              exact
-              render={props => {
-                return <h1> 404 </h1>;
-              }}
-            />
-            <Route
-              path={"/dashboard/wishlist/:uid"}
-              exact
-              component={WishlistPageTest}
-            />
-            <Route
-              exact
-              render={props => {
-                return <h1> 404 </h1>;
-              }}
-            />
-            <Route
-              path={"/dashboard/wishlist/:uid"}
-              exact
-              component={WishlistPageTest}
             />
             <Route
               exact
@@ -94,15 +44,36 @@ const Root = ({ store, history, persistor }) => (
               }}
             />
           </Switch>
-          {/*
-            <Route
-              path={"/formtest"}
-              exact
-              render={props => {
-                return <NewWishlist {...props} />;
-              }}
-            />
-          */}
+
+          <Route
+            path={"/dashboard"}
+            exact
+            render={props => {
+              return <LoggedInPage {...props} />;
+            }}
+          />
+          <Route
+            path={"/dashboard/wishlist/:uid"}
+            exact
+            render={props => {
+              return <WishlistPage {...props} />;
+            }}
+          />
+          <Route
+            path={"/wishlist/:uid/invite"}
+            exact
+            render={props => {
+              return <InvitedUserPage {...props} />;
+            }}
+          />
+          <Route
+            path={"/dashboard/guest/:uid"}
+            exact
+            render={props => {
+              return <InvitedWishlistPage {...props} />;
+            }}
+          />
+
           <Route
             path={"/wishlistitem"}
             exact

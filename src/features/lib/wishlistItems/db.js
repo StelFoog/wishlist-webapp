@@ -1,7 +1,5 @@
-import { db as wishlistDb } from "../wishlists";
+import { fetchWishlistByUid, _getWishlistRef } from "../wishlists/db";
 import { database } from "../firebase/";
-
-const { fetchWishlistByUid, _getWishlistRef } = wishlistDb;
 
 const addWishlistItem = async (uid, item) => {
   let wishlist = await fetchWishlistByUid(uid);
@@ -24,11 +22,7 @@ async function removeWishlistItem(uid, index) {
   wishlist.items.splice(index, 1);
   _getWishlistRef(uid).set(wishlist);
 }
-/*
-function _getWishlistRef(uid) {
-  return database.collection("Wishlists").doc("" + uid);
-}
-*/
+
 const _getRefDoc = async ref => {
   return ref
     .get()
@@ -40,18 +34,7 @@ const _getRefDoc = async ref => {
     });
 };
 
-/*
-const fetchWishlistByUid = async uid => {
-  const ref = _getWishlistRef(uid);
-  const doc = await _getRefDoc(ref);
-  if (!doc.exists)
-    throw new Error(
-      "fetchWishlistByUid(): No wishlist with uid " + uid + " exists"
-    );
-  return { ...doc.data() };
-};
-*/
-export default {
+export {
   fetchWishlistByUid,
   addWishlistItem,
   editWishlistItem,

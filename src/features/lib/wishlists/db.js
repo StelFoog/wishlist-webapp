@@ -57,7 +57,7 @@ const fetchAllWishlistsFromUser = user => {
   return Promise.all(user.wishlists.map(fetchWishlistByUid));
 };
 
-export default {
+export {
   editWishlist,
   _getWishlistRef,
   createWishlistWithOwner,

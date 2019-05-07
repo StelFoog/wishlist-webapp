@@ -1,6 +1,6 @@
 import { database, firebase } from "../firebase/";
 import { makeUser } from "./user.js";
-import { getWishlistByUid, editWishlist } from "../wishlists/db.js";
+import { fetchWishlistByUid, editWishlist } from "../wishlists/db.js";
 
 const _getUserRef = uid => database.collection("Users").doc("" + uid);
 
@@ -37,19 +37,18 @@ const createUser = async user => {
 const editUser = async (uid, newUser) => {
   const ref = _getUserRef(uid);
   const doc = await _getRefDoc(ref);
-  if (!doc.exists)
-    throw new Error("editUser(): No user with UID " + uid + " exists");
+
   ref.set(newUser);
 };
 
 const logInAndCreateUserIfDoesNotExist = async firebaseUser => {
-  if (!userExistsWithUid(firebaseUser.uid))
-    makeUser(firebaseUser.displayName, firebaseUser.uid);
+  if (await !userExistsWithUid(firebaseUser.uid))
+    await createUser(makeUser(firebaseUser.displayName, firebaseUser.uid));
   const user = {
     ...makeUser(firebaseUser.displayName, firebaseUser.uid),
     ...(await getUser(firebaseUser.uid))
   };
-  editUser(user.uid, user);
+  await editUser(user.uid, user);
   return user;
 };
 
@@ -68,7 +67,7 @@ const giveWishlistToUserAsOwner = async (uid, wishlistId) => {
   user.ownedWishlists.push(wishlistId);
   editUser(uid, user);
 
-  let wishlist = await getWishlistByUid(wishlistId);
+  let wishlist = await fetchWishlistByUid(wishlistId);
   wishlist.owner = uid;
   editWishlist(wishlistId, wishlist);
 };
