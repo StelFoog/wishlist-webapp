@@ -52,15 +52,7 @@ class ListWishlists extends Component {
     return ownedWishlists.map(this.displayWishlist);
   }
   render() {
-    return (
-      <React.Fragment>
-        <div className="listWishlists">
-          <PageHeader title={"Your wishlists"} />
-          {/* Fetch users wishlists from database*/}
-          {this.getWishlists()}
-        </div>
-      </React.Fragment>
-    );
+    return <div className="listWishlists">{this.getWishlists()}</div>;
   }
 }
 

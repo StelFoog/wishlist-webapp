@@ -1,6 +1,28 @@
 .createWishlistButton {
   position: fixed;
-  right: 40px;
+  left: 0;
   bottom: 40px;
-  width: 100px;
+  max-width: 100vw;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.createWishlistButton > * {
+  margin-right: 1rem;
+}
+.logged-in-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+.react-swipeable-view-container {
+  flex: 1;
+}
+.page-tab {
+  max-width: 100vw;
+}
+@media (max-width: 600px) {
+  .logged-in-page {
+    min-height: calc(100% - 64px);
+  }
 }

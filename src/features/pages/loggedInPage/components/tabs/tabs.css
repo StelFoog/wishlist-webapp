@@ -1,83 +1,13 @@
-.tab-list {
-  position: absolute;
-  list-style: none;
+.tabs {
   display: flex;
-  padding: 0;
-  width: calc(100vw - 140px);
-  justify-content: space-evenly;
-}
-.tab-list > * {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  padding: 1rem 2rem;
+  justify-content: space-around;
 }
 
-.tab-list-item > * {
+.tab {
+  padding: 1rem;
   flex: 1;
 }
-.shared-wishlists {
-  padding: 3rem;
-}
-.tab-active {
-  -webkit-animation: slideFromLeft 1s;
-  animation: slideFromLeft 1s;
-}
-.createWishlistButton {
-  animation: fadeIn 2s;
-}
 
-.tab-content {
-  padding-top: 4rem;
-}
-@media (max-width: 600px) {
-  .tab-content {
-    padding-top: 3rem;
-  }
-  .tab-list {
-    width: 100vw;
-  }
-  .tab-list > * {
-    padding: 0.25rem 1rem;
-  }
-  .tab-list > * > * > * {
-    font-size: 0.75rem !important;
-  }
-  .tab-active {
-    min-height: calc(100vh - 64px);
-  }
-}
-
-@-webkit-keyframes slideFromLeft {
-  from {
-    -webkit-transform: translateX(-100%);
-    transform: translateX(-100%);
-  }
-  to {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideFromLeft {
-  from {
-    -webkit-transform: translateX(-100%);
-    transform: translateX(-100%);
-  }
-  to {
-    -webkit-transform: translateX(0);
-    transform: translateX(0);
-  }
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+.tab > {
+  flex: 1;
 }
