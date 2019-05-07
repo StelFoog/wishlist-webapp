@@ -49,19 +49,9 @@ const logInAndCreateUserIfDoesNotExist = async firebaseUser => {
     ...makeUser(firebaseUser.displayName, firebaseUser.uid),
     ...(await getUser(firebaseUser.uid))
   };
-};
-
-async function logInAndCreateUserIfDoesNotExist(firebaseUser) {
-  if (!userExistsWithUid(firebaseUser.uid))
-    makeUser(makeUser(firebaseUser.displayName, firebaseUser.uid));
-
-  const user = {
-    ...makeUser(firebaseUser.displayName, firebaseUser.uid),
-    ...(await getUser(firebaseUser.uid))
-  };
   editUser(user.uid, user);
   return user;
-}
+};
 
 const addNewWishlistIdToUser = async (uid, wishlistId) => {
   if (!(await userExistsWithUid(uid)))

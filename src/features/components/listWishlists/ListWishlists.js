@@ -18,12 +18,6 @@ function WishlistPageTest({ match }) {
 
 export { WishlistPageTest };
 
-import { Switch, Route } from "react-router";
-import { Link, BrowserRouter as Router } from "react-router-dom";
-import { ConnectedRouter, push } from "connected-react-router";
-import Dashboard from "../../pages/dashboard";
-import HomePage from "../../pages/homePage";
-
 const { fetchWishlists } = actions;
 
 const MAX_WISHLIST_AVATARS = 5;

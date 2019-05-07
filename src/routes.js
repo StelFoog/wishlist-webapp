@@ -23,42 +23,52 @@ const Root = ({ store, history, persistor }) => (
       <ConnectedRouter history={history}>
         <Router>
           <Dialog />
+          <Route
+            path={"/"}
+            exact
+            render={props => {
+              return <HomePage {...props} />;
+            }}
+          />
+          <Route
+            path={"/dashboard/"}
+            render={props => {
+              return <Dashboard {...props} />;
+            }}
+          />
           <Switch>
-            <Route
-              path={"/"}
-              exact
-              render={props => {
-                return <HomePage {...props} />;
-              }}
-            />
             <Route
               path={"/dashboard"}
               exact
               render={props => {
-                return <Dashboard {...props} />;
+                return <LoggedInPage {...props} />;
               }}
             />
-            {/*
             <Route
-              path={"/wishlist/:uid"}
+              path={"/dashboard/wishlist/:uid"}
               exact
               render={props => {
                 return <WishlistPage {...props} />;
               }}
             />
             <Route
-              path={"/formtest"}
+              path={"/wishlist/:uid/invite"}
               exact
               render={props => {
-                return <NewWishlist {...props} />;
+                return <InvitedUserPage {...props} />;
               }}
             />
-          */}
             <Route
-              path={"/wishlistitem"}
+              path={"/dashboard/guest/:uid"}
               exact
               render={props => {
-                return <WishlistItem {...props} />;
+                return <InvitedWishlistPage {...props} />;
+              }}
+            />
+            <Route
+              exact
+              render={props => {
+                return <h1> 404 </h1>;
               }}
             />
             <Route
@@ -84,6 +94,22 @@ const Root = ({ store, history, persistor }) => (
               }}
             />
           </Switch>
+          {/*
+            <Route
+              path={"/formtest"}
+              exact
+              render={props => {
+                return <NewWishlist {...props} />;
+              }}
+            />
+          */}
+          <Route
+            path={"/wishlistitem"}
+            exact
+            render={props => {
+              return <WishlistItem {...props} />;
+            }}
+          />
         </Router>
       </ConnectedRouter>
     </PersistGate>
