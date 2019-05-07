@@ -1,13 +1,15 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { push } from "connected-react-router";
 import { authWithFacebookAPI, authWithGoogleAPI } from "./auth.js";
+import { addInvitedUserToWishlist } from "./db";
 import types from "./types.js";
 
 const {
   AUTH_USER_FACEBOOK,
   AUTH_USER_GOOGLE,
   AUTH_USER_SUCCESS,
-  AUTH_USER_ERROR
+  AUTH_USER_ERROR,
+  ADD_INVITED_USER_TO_WISHLIST
 } = types;
 
 function* watchUserAuthFacebook() {
@@ -17,11 +19,31 @@ function* watchUserAuthGoogle() {
   yield takeEvery(AUTH_USER_GOOGLE, workUserAuthGoogle);
 }
 
+function* workInvitedUser({ checkIfInvite, result }) {
+  const wishlistURL = checkIfInvite[0].split("/invite")[0];
+
+  const wishlistID = wishlistURL.split("wishlist/")[1];
+  const { uid } = result;
+
+  yield call(addInvitedUserToWishlist, { wishlistID, uid });
+
+  yield put(push("/dashboard/guest/" + wishlistID));
+}
+
 function* workUserAuthFacebook() {
   try {
     let result = yield call(authWithFacebookAPI);
     yield put({ type: AUTH_USER_SUCCESS, userData: result });
-    yield put(push("/dashboard"));
+
+    const checkIfInvite = window.location.pathname.match(
+      /(wishlist\/[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\/invite)/g
+    );
+
+    if (checkIfInvite) {
+      yield call(workInvitedUser, { checkIfInvite, result });
+    } else {
+      yield put(push("/dashboard"));
+    }
   } catch (error) {
     yield put({ type: AUTH_USER_ERROR, error: error });
   }

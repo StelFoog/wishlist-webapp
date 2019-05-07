@@ -1,4 +1,4 @@
-import { database } from "../firebase/";
+import { database, firebase } from "../firebase/";
 import { makeUser } from "./user.js";
 import { getWishlistByUid, editWishlist } from "../wishlists/db.js";
 
@@ -40,7 +40,6 @@ const editUser = async (uid, newUser) => {
   if (!doc.exists)
     throw new Error("editUser(): No user with UID " + uid + " exists");
   ref.set(newUser);
-<<<<<<< HEAD
 };
 
 const logInAndCreateUserIfDoesNotExist = async firebaseUser => {
@@ -50,23 +49,19 @@ const logInAndCreateUserIfDoesNotExist = async firebaseUser => {
     ...makeUser(firebaseUser.displayName, firebaseUser.uid),
     ...(await getUser(firebaseUser.uid))
   };
-<<<<<<< HEAD
-=======
-}
+};
 
 async function logInAndCreateUserIfDoesNotExist(firebaseUser) {
-  if(!userExistsWithUid(firebaseUser.uid))
+  if (!userExistsWithUid(firebaseUser.uid))
     makeUser(makeUser(firebaseUser.displayName, firebaseUser.uid));
 
-  const user = {...makeUser(firebaseUser.displayName, firebaseUser.uid),
-                ...(await getUser(firebaseUser.uid))};
->>>>>>> Fixed bug in database regarding reading of user data
-=======
-
->>>>>>> Fixed bug in database regarding reading of user data
+  const user = {
+    ...makeUser(firebaseUser.displayName, firebaseUser.uid),
+    ...(await getUser(firebaseUser.uid))
+  };
   editUser(user.uid, user);
   return user;
-};
+}
 
 const addNewWishlistIdToUser = async (uid, wishlistId) => {
   if (!(await userExistsWithUid(uid)))
@@ -88,6 +83,13 @@ const giveWishlistToUserAsOwner = async (uid, wishlistId) => {
   editWishlist(wishlistId, wishlist);
 };
 
+const addInvitedUserToWishlist = ({ wishlistID, uid }) => {
+  database
+    .collection("Wishlists")
+    .doc(wishlistID)
+    .update({ members: firebase.firestore.FieldValue.arrayUnion(uid) });
+};
+
 export {
   giveWishlistToUserAsOwner,
   userExistsWithUid,
@@ -95,5 +97,6 @@ export {
   editUser,
   createUser,
   logInAndCreateUserIfDoesNotExist,
-  addNewWishlistIdToUser
+  addNewWishlistIdToUser,
+  addInvitedUserToWishlist
 };

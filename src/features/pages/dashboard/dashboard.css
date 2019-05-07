@@ -5,9 +5,8 @@
   }
 }
 
-.createWishlistButton {
-  position: fixed;
-  right: 40px;
-  bottom: 40px;
-  width: 100px;
+@media (max-width: 600px) {
+  .dashboard ~ * {
+    width: 100vw;
+  }
 }

@@ -135,14 +135,14 @@ class ListWishlists extends Component {
   }
   render() {
     return (
-      <div>
+      <React.Fragment>
         <Route path="/dashboard/nirb" exact component={Dashboard} />
         <div className="listWishlists">
           <PageHeader title={"Your wishlists"} />
           {/* Fetch users wishlists from database*/}
           {this.getWishlists()}
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
