@@ -1,5 +1,3 @@
-import React, { Component } from "react";
-import { actions } from "../../lib/chat";
 import { getUser } from "../../lib/authentication/selectors";
 import { connect } from "react-redux";
 import { onChatMessageReceived } from "../../lib/chat/db.js";
@@ -23,12 +21,8 @@ const createChatClick = (props) => {
 
 class Chat extends Component {
   componentDidMount() {
-    //this.props.handleChatSend(0, {uid: 0}, "#VÅTA DJUR");
-    this.props.handleChatLoad(0);
     onChatMessageReceived(0, ((props) => {
       return (chat) => {
-        console.log("Triple lambda says: ");
-        console.log(chat);
         props.handleChatUpdate(chat);
       }
     })(this.props));
@@ -52,7 +46,7 @@ class Chat extends Component {
             handleClick={createChatClick(this.props)}
             label="Create a new chat"
             variant="filled"
-            color="#439812"
+            color="#ff4f12"
           />
         </React.Fragment>
       </div>
