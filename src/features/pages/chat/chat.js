@@ -41,7 +41,7 @@ class Chat extends Component {
      <div>
         <React.Fragment>
           {this.props.messages.map((msg) =>
-            <p> {msg.sender}: "{msg.text}" at {timestampString(msg.timestamp)} </p>
+            <p> {msg.senderName}: "{msg.text}" at {timestampString(msg.timestamp)} </p>
           )}
           <input type="text" id="chatInput" />
           <Button
