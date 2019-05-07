@@ -1,6 +1,7 @@
 import { takeEvery, call, put, select, all } from "redux-saga/effects";
 import types from "./types.js";
 import { createNewChat, sendChatMessage, loadChatMessages } from "./db";
+import { getUser } from "../authentication/selectors";
 
 const {
   CREATE_CHAT,
@@ -50,9 +51,10 @@ function* workLoadChat(action) {
 }
 
 function* workSendChatMessage(action) {
-  const { id, user, message } = action;
+  const { id, message } = action;
+  const userValues = yield select(getUser);
   try {
-    const result = yield call(sendChatMessage, id, user, message);
+    const result = yield call(sendChatMessage, id, userValues, message);
     console.log("(SAGA)Chat message sent: " + result.text);
     yield put({ type: SEND_CHAT_MESSAGE_SUCCESS, messages: result });
   } catch (error) {

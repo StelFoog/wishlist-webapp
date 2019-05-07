@@ -19,7 +19,7 @@ const chatClick = (props) => {
     const elem = document.getElementById("chatInput");
     const text = elem.value;
     elem.value = "";
-    props.handleChatSend( 0, {uid: 0}, text);
+    props.handleChatSend( 0, text);
   };
 }
 
@@ -38,7 +38,7 @@ class Chat extends Component {
 
   render() {
     return (
-     <div> 
+     <div>
         <React.Fragment>
           {this.props.messages.map((msg) =>
             <p> {msg.sender}: "{msg.text}" at {timestampString(msg.timestamp)} </p>
@@ -62,7 +62,7 @@ class Chat extends Component {
 
 
 const mapDispatchToProps = dispatch => ({
-  handleChatSend: ( id, user, message ) => dispatch(sendChatMessage( id, user, message )),
+  handleChatSend: ( id, message ) => dispatch(sendChatMessage( id, message )),
   handleChatLoad: ( id ) => dispatch(loadChat( id )),
   handleChatUpdate: (messages) => dispatch(freebaseFuckeries( messages ))
 });
