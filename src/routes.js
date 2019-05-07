@@ -1,5 +1,3 @@
-import React from "react";
-import { ConnectedRouter } from "connected-react-router";
 import { Provider } from "react-redux";
 import { Route, Switch } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
@@ -8,6 +6,7 @@ import { PersistGate } from "redux-persist/integration/react";
 // Components
 import Dialog from "./features/components/dialog/DialogContainer";
 import { ItemAddition as WishlistItem } from "./features/components/wishListForm";
+import Chat from "./features/pages/chat";
 
 // Pages
 import HomePage from "./features/pages/homePage";
@@ -42,9 +41,11 @@ const Root = ({ store, history, persistor }) => (
               render={props => {
                 return <h1> 404 </h1>;
               }}
+            <Route
+              path="/chat"
+              exact
+              component={Chat}
             />
-          </Switch>
-
           <Route
             path={"/dashboard"}
             exact
