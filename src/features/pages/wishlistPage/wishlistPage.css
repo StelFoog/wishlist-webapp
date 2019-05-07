@@ -1,0 +1,15 @@
+
+.wishlistPage{
+  padding: 3rem;
+}
+.itemContent{
+  display: flex;
+  justify-content: space-between;
+}
+
+.createItemtButton {
+  position: fixed;
+  right: 40px;
+  bottom: 40px;
+  width: 100px;
+}

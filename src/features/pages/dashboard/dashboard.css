@@ -1,13 +1,12 @@
 @media (min-width: 601px) {
-  .dashboard {
+  .dashboard ~ * {
     margin-left: 140px;
-    width: 100%;
+    width: calc(100vw - 140px);
   }
 }
 
-.createWishlistButton {
-  position: fixed;
-  right: 40px;
-  bottom: 40px;
-  width: 100px;
+@media (max-width: 600px) {
+  .dashboard ~ * {
+    width: 100vw;
+  }
 }

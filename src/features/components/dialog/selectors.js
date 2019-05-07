@@ -2,6 +2,7 @@ import { createSelector } from "reselect";
 
 const getDialogOpened = ({ dialog }) => dialog.showDialog;
 const getDialogVariant = ({ dialog }) => dialog.variant;
+export const getDialogValues = ({ dialog }) => dialog.values;
 
 const getDialogOpenedState = () =>
   createSelector([getDialogOpened], dialogOpened => dialogOpened);
@@ -9,4 +10,7 @@ const getDialogOpenedState = () =>
 const getDialogVariantState = () =>
   createSelector([getDialogVariant], dialogVariant => dialogVariant);
 
-export default { getDialogOpenedState, getDialogVariantState };
+const getDialogValuesState = () =>
+  createSelector([getDialogValues], dialogValues => dialogValues);
+
+export default { getDialogOpenedState, getDialogVariantState, getDialogValuesState };
