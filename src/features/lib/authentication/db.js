@@ -46,6 +46,7 @@ const editUser = async (uid, newUser) => {
 const logInAndCreateUserIfDoesNotExist = async firebaseUser => {
   if (await !userExistsWithUid(firebaseUser.uid))
     await createUser(makeUser(firebaseUser.displayName, firebaseUser.uid));
+  console.log(firebaseUser);
   const user = {
     ...makeUser(firebaseUser.displayName, firebaseUser.uid),
     ...(await getUser(firebaseUser.uid))
@@ -60,7 +61,7 @@ const addNewWishlistIdToUser = async (uid, wishlistId) => {
       "addNewWishlistIdToUser: No user with UID " + uid + " exists"
     );
   let userData = await getUser(uid);
-  userData.wishlists.push(wishlistId);
+  userData.ownedWishlists.push(wishlistId);
   editUser(uid, userData);
 };
 
@@ -72,6 +73,15 @@ const giveWishlistToUserAsOwner = async (uid, wishlistId) => {
   let wishlist = await fetchWishlistByUid(wishlistId);
   wishlist.owner = uid;
   editWishlist(wishlistId, wishlist);
+};
+
+const addInvitedWishlistToUser = ({ wishlistID, uid }) => {
+  database
+    .collection("Users")
+    .doc(uid)
+    .update({
+      wishlists: firebase.firestore.FieldValue.arrayUnion(wishlistID)
+    });
 };
 
 const addInvitedUserToWishlist = ({ wishlistID, uid }) => {
@@ -89,5 +99,6 @@ export {
   createUser,
   logInAndCreateUserIfDoesNotExist,
   addNewWishlistIdToUser,
-  addInvitedUserToWishlist
+  addInvitedUserToWishlist,
+  addInvitedWishlistToUser
 };

@@ -4,6 +4,8 @@ import itemTypes from "../wishlistItems/types";
 const {
   CREATE_USER_WISHLIST_ERROR,
   CREATE_USER_WISHLIST_SUCCESS,
+  FETCH_OWNED_WISHLISTS_SUCCESS,
+  FETCH_OWNED_WISHLISTS_ERROR,
   FETCH_WISHLISTS_SUCCESS,
   FETCH_WISHLISTS_ERROR
 } = types;
@@ -16,7 +18,8 @@ const {
 } = itemTypes;
 
 const initialState = {
-  wishlists: []
+  wishlists: [],
+  ownedWishlists: []
 };
 
 const wishlistReducer = (state = initialState, action) => {
@@ -24,7 +27,6 @@ const wishlistReducer = (state = initialState, action) => {
   const { type, wishlistData, wishlistUid, index, itemData, error } = action;
   const { wishlists } = nextState;
   let item = itemData;
-
   switch (type) {
     case CREATE_USER_WISHLIST_ERROR:
       console.error(
@@ -32,7 +34,15 @@ const wishlistReducer = (state = initialState, action) => {
       );
       return { ...nextState };
     case CREATE_USER_WISHLIST_SUCCESS:
-      nextState.wishlists.push(wishlistData);
+      nextState.ownedWishlists.push(wishlistData);
+      return { ...nextState };
+    case FETCH_OWNED_WISHLISTS_SUCCESS:
+      console.log(wishlistData);
+      nextState.ownedWishlists = wishlistData;
+      console.log("Fetched owned wishlists!" + wishlistData);
+      return { ...nextState };
+    case FETCH_OWNED_WISHLISTS_ERROR:
+      console.error("Error occurred while fetching wishlists.");
       return { ...nextState };
     case FETCH_WISHLISTS_SUCCESS:
       nextState.wishlists = wishlistData;

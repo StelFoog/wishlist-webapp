@@ -1,7 +1,7 @@
 import { takeEvery, call, put } from "redux-saga/effects";
 import { push } from "connected-react-router";
 import { authWithFacebookAPI, authWithGoogleAPI } from "./auth.js";
-import { addInvitedUserToWishlist } from "./db";
+import { addInvitedUserToWishlist, addInvitedWishlistToUser } from "./db";
 import types from "./types.js";
 
 const {
@@ -25,6 +25,7 @@ function* workInvitedUser({ checkIfInvite, result }) {
   const wishlistID = wishlistURL.split("wishlist/")[1];
   const { uid } = result;
 
+  yield call(addInvitedWishlistToUser, { wishlistID, uid });
   yield call(addInvitedUserToWishlist, { wishlistID, uid });
 
   yield put(push("/dashboard/guest/" + wishlistID));

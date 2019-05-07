@@ -17,6 +17,7 @@
     "react-router-dom": "^5.0.0",
     "react-router-hash-link": "^1.2.1",
     "react-scripts": "1.1.5",
+    "react-swipeable-views": "^0.13.1",
     "redux": "^4.0.1",
     "redux-form": "^8.2.0",
     "redux-logger": "^3.0.6",

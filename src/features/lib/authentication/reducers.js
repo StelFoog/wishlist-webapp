@@ -33,7 +33,7 @@ const userReducer = (state = initialState, action) => {
       alert("logged out successfully");
       return { ...nextState };
     case ADD_WISHLIST_ID_TO_USER:
-      nextState.user.wishlists.push(wishlistId);
+      nextState.user.ownedWishlists.push(wishlistId);
       return { ...nextState };
     default:
       return { ...nextState };

@@ -7,12 +7,15 @@ import wishlistTypes from "./types.js";
 import { types as authTypes } from "../authentication";
 import { types as dialogTypes } from "../../components/dialog";
 
-const { createWishlistWithOwner, fetchAllWishlistsFromUser } = db;
+const { createWishlistWithOwner, fetchAllWishlistsFromUser, fetchAllOwnedWishlistsFromUser } = db;
 
 const {
   CREATE_USER_WISHLIST,
   CREATE_USER_WISHLIST_ERROR,
   CREATE_USER_WISHLIST_SUCCESS,
+  FETCH_OWNED_WISHLISTS,
+  FETCH_OWNED_WISHLISTS_ERROR,
+  FETCH_OWNED_WISHLISTS_SUCCESS,
   FETCH_WISHLISTS,
   FETCH_WISHLISTS_ERROR,
   FETCH_WISHLISTS_SUCCESS
@@ -57,7 +60,6 @@ function* watchFetchWishlists() {
 function* workFetchWishlists() {
   try {
     const user = yield select(getUser);
-    console.log(user);
     const wishlists = yield call(fetchAllWishlistsFromUser, user);
 
     yield put({
@@ -69,4 +71,26 @@ function* workFetchWishlists() {
   }
 }
 
-export default { watchCreateUserWishlist, watchFetchWishlists };
+function* watchFetchOwnedWishlists() {
+  yield takeEvery(FETCH_OWNED_WISHLISTS, workFetchOwnedWishlists);
+}
+
+function* workFetchOwnedWishlists() {
+  try {
+    const user = yield select(getUser);
+    const wishlists = yield call(fetchAllOwnedWishlistsFromUser, user);
+    console.log(wishlists);
+    yield put({
+      type: FETCH_OWNED_WISHLISTS_SUCCESS,
+      wishlistData: wishlists
+    });
+  } catch (error) {
+    yield put({ type: FETCH_OWNED_WISHLISTS_ERROR, error: error });
+  }
+}
+
+export default {
+  watchCreateUserWishlist,
+  watchFetchWishlists,
+  watchFetchOwnedWishlists
+};
