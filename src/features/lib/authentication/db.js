@@ -1,5 +1,6 @@
 import { database } from "../firebase/";
 import { makeUser } from "./user.js";
+import { getWishlistByUid, editWishlist } from "../wishlists/db.js";
 
 const _getUserRef = uid => database.collection("Users").doc("" + uid);
 
@@ -61,6 +62,16 @@ const addNewWishlistIdToUser = async (uid, wishlistId) => {
   userData.wishlists.push(wishlistId);
   editUser(uid, userData);
 };
+
+const giveWishlistToUserAsOwner = async (uid, wishlistId) => {
+  let user = await getUser(uid);
+  user.ownedWishlists.push(wishlistId);
+  editUser(uid, user);
+
+  let wishlist = await getWishlistByUid(wishlistId);
+  wishlist.owner = uid;
+  editWishlist(wishlistId, wishlist);
+}
 
 export {
   userExistsWithUid,
