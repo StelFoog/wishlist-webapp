@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import { actions } from "../../lib/chat";
 import { getUser } from "../../lib/authentication/selectors";
 import { connect } from "react-redux";
+import { Field, reduxForm } from "redux-form";
 
 const { sendChatMessage, loadChat } = actions;
 
-function  dateString(date) {
-  // Datetime function goes here
+function timestampString(date) {
+  return date;
 }
 
 class Chat extends Component {
@@ -17,8 +18,17 @@ class Chat extends Component {
 
   render() {
 
-    return this.props.messages.map((msg) => {
-      return <p> {msg.sender}: "{msg.text}" at {dateString(msg.timestamp)} </p>;
+    return 
+      <div>
+      {
+        this.props.messages.map((msg) => {
+          return <p> {msg.sender}: "{msg.text}" at 
+            {timestampString(msg.timestamp)} </p>;
+        }
+      }
+      <form onSubmit={submitMessage}>
+        <div>
+          
     });
   }
 }
