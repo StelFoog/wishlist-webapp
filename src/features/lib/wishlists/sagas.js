@@ -81,7 +81,7 @@ function* workFetchOwnedWishlists() {
   try {
     const user = yield select(getUser);
     const wishlists = yield call(fetchAllOwnedWishlistsFromUser, user);
-
+    console.log(wishlists);
     yield put({
       type: FETCH_OWNED_WISHLISTS_SUCCESS,
       wishlistData: wishlists

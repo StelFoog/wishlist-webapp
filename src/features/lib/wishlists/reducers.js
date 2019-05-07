@@ -24,7 +24,7 @@ const wishlistReducer = (state = initialState, action) => {
       );
       return { ...nextState };
     case CREATE_USER_WISHLIST_SUCCESS:
-      nextState.wishlists.push(wishlistData);
+      nextState.ownedWishlists.push(wishlistData);
       return { ...nextState };
     case FETCH_OWNED_WISHLISTS_SUCCESS:
       console.log(wishlistData);

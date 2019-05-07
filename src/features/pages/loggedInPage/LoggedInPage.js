@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import ListWishlists from "./components/listWishlists";
 import IconButton from "../../components/iconButton";
 import PlusIcon from "../../components/svgIcon/icons/PlusIcon";
@@ -6,6 +7,9 @@ import Tabs from "./components/tabs";
 import PageHeader from "../../components/pageHeader";
 import SharedWishlists from "./components/sharedWishlists";
 import "./loggedInPage.css";
+import { actions } from "../../components/dialog";
+
+const { openDialog } = actions;
 
 const LoggedInPage = ({ openForm }) => (
   <div className="page">
@@ -13,7 +17,7 @@ const LoggedInPage = ({ openForm }) => (
       <div label="Your wishlists">
         <ListWishlists />
         <div className="createWishlistButton">
-          <IconButton variant="filled">
+          <IconButton variant="filled" handleClick={openForm}>
             <PlusIcon size={50} />
           </IconButton>
         </div>
@@ -28,4 +32,8 @@ const LoggedInPage = ({ openForm }) => (
   </div>
 );
 
-export default LoggedInPage;
+const mapDispatchToProps = dispatch => ({
+  openForm: () => dispatch(openDialog("newWishlist"))
+});
+
+export default connect()(LoggedInPage);

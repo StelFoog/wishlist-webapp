@@ -59,7 +59,7 @@ const addNewWishlistIdToUser = async (uid, wishlistId) => {
       "addNewWishlistIdToUser: No user with UID " + uid + " exists"
     );
   let userData = await getUser(uid);
-  userData.wishlists.push(wishlistId);
+  userData.ownedWishlists.push(wishlistId);
   editUser(uid, userData);
 };
 
