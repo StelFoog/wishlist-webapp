@@ -4,23 +4,21 @@ import { getUser } from "../../lib/authentication/selectors";
 import { connect } from "react-redux";
 import { onChatMessageReceived } from "../../lib/chat/db.js";
 import Button from "../../components/button";
-
-const { sendChatMessage, loadChat, freebaseFuckeries } = actions;
-
-function timestampString(date) {
-  let d = new Date(0); // The 0 there is the key, which sets the date to the epoch
-  d.setUTCSeconds(date.seconds);
-  return d.getDate().toString() + "-" + d.getHours().toString() + "-" + d.getMinutes().toString() + "-" + d.getSeconds().toString();
-}
+const { sendChatMessage, updateLocalChat, createChat } = actions;
 
 const chatClick = (props) => {
   return () => {
-    // 100% pure and native solution
     const elem = document.getElementById("chatInput");
     const text = elem.value;
     elem.value = "";
     props.handleChatSend( 0, text);
   };
+}
+
+const createChatClick = (props) => {
+  return () => {
+    
+  }
 }
 
 class Chat extends Component {
@@ -45,26 +43,30 @@ class Chat extends Component {
           )}
           <input type="text" id="chatInput" />
           <Button
-            handleClick={chatClick(this.props)}
+            handleClick={submitClick(this.props)}
             label="Send message"
             variant="filled"
             color="#73359B"
           />
+          <Button
+            handleClick={createChatClick(this.props)}
+            label="Create a new chat"
+            variant="filled"
+            color="#439812"
+          />
         </React.Fragment>
       </div>
     )
-
   }
 }
 
-
-
-
-
 const mapDispatchToProps = dispatch => ({
-  handleChatSend: ( id, message ) => dispatch(sendChatMessage( id, message )),
-  handleChatLoad: ( id ) => dispatch(loadChat( id )),
-  handleChatUpdate: (messages) => dispatch(freebaseFuckeries( messages ))
+  handleChatSend: (id, user, message) => 
+    dispatch(sendChatMessage(id, user, message)),
+  handleChatUpdate: (messages) => 
+    dispatch(updateLocalChat(messages)),
+  handleCreateChat: (user) => 
+    dispatch(createChat(user))
 });
 
 const mapStateToProps = (state) => {
