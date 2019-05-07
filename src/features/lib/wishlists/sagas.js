@@ -1,15 +1,13 @@
 import { takeEvery, call, put, select, all } from "redux-saga/effects";
 import { getFormValues, reset } from "redux-form";
-import {
-  createWishlistWithOwner,
-  fetchAllWishlistsFromUser,
-  fetchAllOwnedWishlistsFromUser
-} from "./db";
+import db from "./db";
 import { getUser } from "../authentication/selectors";
 import { addNewWishlistIdToUser } from "../authentication/db";
 import wishlistTypes from "./types.js";
 import { types as authTypes } from "../authentication";
 import { types as dialogTypes } from "../../components/dialog";
+
+const { createWishlistWithOwner, fetchAllWishlistsFromUser, fetchAllOwnedWishlistsFromUser } = db;
 
 const {
   CREATE_USER_WISHLIST,

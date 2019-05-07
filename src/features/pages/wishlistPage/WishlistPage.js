@@ -5,10 +5,18 @@ import WishlistItem from "../../components/wishlistItem";
 import "./wishlistPage.css";
 import { firebase } from "../../lib/firebase";
 import { connect } from "react-redux";
-import { actions, selectors } from "../../lib/wishlistItems";
+import { selectors } from "../../lib/wishlists"
 
-const { fetchAllItems } = actions;
+import { actions as dialogActions } from "../../components/dialog";
 
+import IconButton from "../../components/iconButton";
+import PlusIcon from "../../components/svgIcon/icons/PlusIcon";
+
+const { openDialog } = dialogActions;
+
+// const { fetchAllItems } = actions;
+
+/*
 class WishlistPage extends Component {
   constructor(props) {
     super(props);
@@ -18,7 +26,6 @@ class WishlistPage extends Component {
       uid: props.match.params.uid
     };
   }
-
   getAllWishlistItems() {
     const { uid } = this.state;
     firebase
@@ -31,13 +38,16 @@ class WishlistPage extends Component {
           this.setState({ items: doc.data().items });
         }
       });
+    
   }
-
+  
   componentDidMount() {
     this.getAllWishlistItems();
   }
+  
 
   render() {
+    console.log("y9o");
     const { items } = this.state;
     return (
       <div className="wishlistPage">
@@ -45,7 +55,7 @@ class WishlistPage extends Component {
         {items.length > 0 && (
           <React.Fragment>
             {items.map((item, index) => (
-              <WishlistItem item={item} index={index} />
+              <WishlistItem item={item} index={index} wishlistUid={uid} />
             ))}
           </React.Fragment>
         )}
@@ -53,15 +63,45 @@ class WishlistPage extends Component {
     );
   }
 }
+*/
+
+const WishlistPage = ({ wishlists, pathname, createItem }) => {
+  const wishlistUid = pathname.split("wishlist/").pop();
+  const wishlist = wishlists.find((element) => element.uid == wishlistUid);
+  const { items } = wishlist;
+  return (
+    <div className="wishlistPage page">
+      <PageHeader title="Name of wishlist" />
+      {items.length > 0 && (
+        <React.Fragment>
+          {items.map((item, index) => (
+            <WishlistItem index={index} wishlistUid={wishlist.uid} />
+          ))}
+        </React.Fragment>
+      )}
+      <div className="createItemButton">
+        <IconButton variant="filled" handleClick={() => createItem(wishlist.uid)}>
+          <PlusIcon size={50} />
+        </IconButton>
+      </div>
+
+    </div>
+  )
+}
 
 const mapStateToProps = () => {
-  const getWishlistItems = selectors.getItemsState();
+  const getWishlists = selectors.getWishlistsState();
   return state => ({
-    items: getWishlistItems(state)
+    wishlists: getWishlists(state),
+    pathname: state.router.location.pathname
   });
 };
 
+const mapDispatchToProps = dispatch => ({
+  createItem: wishlistUid => dispatch(openDialog("createItem", { wishlistUid }))
+})
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(WishlistPage);

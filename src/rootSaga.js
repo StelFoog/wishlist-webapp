@@ -9,7 +9,8 @@ function* rootSaga() {
     wishlistSagas.watchCreateUserWishlist(),
     wishlistItemSagas.watchCreateWishlistItem(),
     wishlistSagas.watchFetchWishlists(),
-    wishlistSagas.watchFetchOwnedWishlists()
+    wishlistSagas.watchFetchOwnedWishlists(),
+    wishlistItemSagas.watchEditWishlistItem()
   ]);
 }
 
