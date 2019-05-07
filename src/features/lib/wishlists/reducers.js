@@ -9,6 +9,8 @@ const {
 } = types;
 
 const {
+  CREATE_WISHLIST_ITEM_SUCCESS,
+  CREATE_WISHLIST_ITEM_ERROR,
   EDIT_WISHLIST_ITEM_SUCCESS,
   EDIT_WISHLIST_ITEM_ERROR
 } = itemTypes;
@@ -20,6 +22,8 @@ const initialState = {
 const wishlistReducer = (state = initialState, action) => {
   let nextState = state;
   const { type, wishlistData, wishlistUid, index, itemData, error } = action;
+  const { wishlists } = nextState;
+  let item = itemData;
 
   switch (type) {
     case CREATE_USER_WISHLIST_ERROR:
@@ -38,13 +42,17 @@ const wishlistReducer = (state = initialState, action) => {
       console.error("Error occurred while fetching wishlists.");
       return { ...nextState };
 
-    case EDIT_WISHLIST_ITEM_SUCCESS:
-      const { wishlists } = nextState;
-      let item = itemData;
+    case CREATE_WISHLIST_ITEM_SUCCESS:
+
       // let item = itemData ? itemData : {};
-      const wishlistIndex = wishlists.findIndex(element => element.uid == wishlistUid);
-      item = { ...wishlists[wishlistIndex].items[index], ...item };
-      nextState.wishlists[wishlistIndex].items[index] = item;
+      const wishlistIndexCreate = wishlists.findIndex(element => element.uid == wishlistUid);
+      nextState.wishlists[wishlistIndexCreate].items.push(item);
+      return { ...nextState };
+    case EDIT_WISHLIST_ITEM_SUCCESS:
+      // let item = itemData ? itemData : {};
+      const wishlistIndexEdit = wishlists.findIndex(element => element.uid == wishlistUid);
+      item = { ...wishlists[wishlistIndexEdit].items[index], ...item };
+      nextState.wishlists[wishlistIndexEdit].items[index] = item;
       return { ...nextState };
 
     default:

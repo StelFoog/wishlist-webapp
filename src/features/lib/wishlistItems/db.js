@@ -39,6 +39,12 @@ const _getRefDoc = async ref => {
 
 const validateNewItem = item => item ? item : {};
 
+const makeItem = item => ({
+  price: "",
+  description: "",
+  ...item
+})
+
 /*
 const fetchWishlistByUid = async uid => {
   const ref = _getWishlistRef(uid);
@@ -54,5 +60,6 @@ export default {
   fetchWishlistByUid,
   addWishlistItem,
   editWishlistItem,
-  removeWishlistItem
+  removeWishlistItem,
+  makeItem
 };

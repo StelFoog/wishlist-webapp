@@ -10,7 +10,7 @@ import { getDialogValues } from "../../components/dialog/selectors";
 
 const { fetchWishlistByUid } = wishlistDb;
 
-const { addWishlistItem, editWishlistItem, validateNewItem } = wishlistItemDb;
+const { addWishlistItem, editWishlistItem, validateNewItem, makeItem } = wishlistItemDb;
 
 const {
   CREATE_WISHLIST_ITEM,
@@ -33,11 +33,18 @@ function* watchEditWishlistItem() {
   yield takeEvery(EDIT_WISHLIST_ITEM, workEditWishlistItem);
 }
 
-function* workCreateWishlistItem(wishlistUid) {
+function* workCreateWishlistItem() {
   try {
-    const itemForm = yield select(getFormValues("itemAdd"));
-    yield call(addWishlistItem, wishlistUid, itemForm);
-    yield put(reset("itemAdd"));
+    const itemForm = yield select(getFormValues("createItem"));
+    const metaData = yield select(getDialogValues);
+    const { wishlistUid } = metaData;
+    const itemData = yield call(makeItem, itemForm);
+    yield call(addWishlistItem, wishlistUid, itemData);
+    yield put({ type: CREATE_WISHLIST_ITEM_SUCCESS, itemData, wishlistUid })
+    yield all([
+      put({ type: CLOSE_DIALOG }),
+      put(reset("editItem"))
+    ])
   } catch (error) {
     yield put({ type: CREATE_WISHLIST_ITEM_ERROR, error });
   }
