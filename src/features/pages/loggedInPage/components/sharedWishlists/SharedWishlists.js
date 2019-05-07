@@ -43,14 +43,7 @@ class SharedWishlists extends React.Component {
   }
 
   render() {
-    return (
-      <React.Fragment>
-        <div className="listWishlists">
-          {/* Fetch users wishlists from database*/}
-          {this.getWishlists()}
-        </div>
-      </React.Fragment>
-    );
+    return <div className="listWishlists">{this.getWishlists()}</div>;
   }
 }
 
