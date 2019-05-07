@@ -8,7 +8,8 @@ function* rootSaga() {
     authSagas.watchUserAuthFacebook(),
     wishlistSagas.watchCreateUserWishlist(),
     wishlistItemSagas.watchCreateWishlistItem(),
-    wishlistSagas.watchFetchWishlists()
+    wishlistSagas.watchFetchWishlists(),
+    wishlistItemSagas.watchEditWishlistItem()
   ]);
 }
 

@@ -1,7 +1,7 @@
-import { db as wishlistDb } from "../wishlists";
+import db from "../wishlists/db";
 import { database } from "../firebase/";
 
-const { fetchWishlistByUid, _getWishlistRef } = wishlistDb;
+const { fetchWishlistByUid, _getWishlistRef } = db;
 
 const addWishlistItem = async (uid, item) => {
   let wishlist = await fetchWishlistByUid(uid);
@@ -13,7 +13,8 @@ async function editWishlistItem(uid, index, item) {
   let wishlist = await fetchWishlistByUid(uid);
   if (index < 0 || index >= wishlist.items.length)
     throw new Error("editWishlistItem(): Item index out of bounds");
-  wishlist.items[index] = item;
+  const oldItem = wishlist.items[index];
+  wishlist.items[index] = { ...oldItem, ...item };
   _getWishlistRef(uid).set(wishlist);
 }
 
@@ -39,6 +40,8 @@ const _getRefDoc = async ref => {
       throw error;
     });
 };
+
+const validateNewItem = item => item ? item : {};
 
 /*
 const fetchWishlistByUid = async uid => {

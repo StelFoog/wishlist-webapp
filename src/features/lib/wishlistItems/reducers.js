@@ -1,6 +1,6 @@
 import types from "./types.js";
 
-const { FETCH_ALL_ITEMS_SUCCESS, FETCH_ALL_ITEMS_ERROR } = types;
+const { FETCH_ALL_ITEMS_SUCCESS, FETCH_ALL_ITEMS_ERROR, EDIT_WISHLIST_ITEM_SUCCESS } = types;
 
 const initalState = {
   items: []
@@ -8,10 +8,9 @@ const initalState = {
 
 const wishlistItemReducer = (state = initalState, action) => {
   let nextState = state;
-  const { type, itemData, error } = action;
+  const { type, itemData, error, index } = action;
 
   switch (type) {
-
     case FETCH_ALL_ITEMS_SUCCESS:
       nextState.items = itemData;
       console.log("Fetched items!" + itemData);
