@@ -9,13 +9,13 @@ const submitClick = (props) => {
     const elem = document.getElementById("chatInput");
     const text = elem.value;
     elem.value = "";
-    props.handleChatSend( 0, text);
+    props.handleChatSend( 0, text );
   };
 }
 
 const createChatClick = (props) => {
   return () => {
-    
+    props.handleCreateChat( 0 );
   }
 }
 
