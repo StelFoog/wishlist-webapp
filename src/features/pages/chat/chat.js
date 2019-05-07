@@ -9,7 +9,9 @@ import Button from "../../components/button";
 const { sendChatMessage, loadChat } = actions;
 
 function timestampString(date) {
-  return date;
+  let d = new Date(0); // The 0 there is the key, which sets the date to the epoch
+  d.setUTCSeconds(date.seconds);
+  return d.getDate().toString() + "-" + d.getHours().toString() + "-" + d.getMinutes().toString() + "-" + d.getSeconds().toString();
 }
 
 const chatClick = (_this) => {
@@ -29,7 +31,7 @@ class Chat extends Component {
     return (
       <React.Fragment>
         {this.props.messages.map((msg) =>
-          <p> {msg.sender}: "{msg.text}" at {dateString(msg.timestamp)} </p>
+          <p> {msg.sender}: "{msg.text}" at {timestampString(msg.timestamp)} </p>
         )}
         <Button
           handleClick={chatClick(this)}
