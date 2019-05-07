@@ -31,6 +31,7 @@ function sendChatMessage(chatId, user, text) {
     messages.push(msg);
     ref.set({messages: messages});
   });
+  console.log("(DB)Message sent: " + msg);
   return msg;
 }
 
@@ -43,6 +44,9 @@ async function loadChatMessages(chatId) {
 
 function onChatMessageReceived(chatId, callback) {
   return _getChatRef(chatId).onSnapshot((doc) => {
+    console.log("(LISTENER)doc/data"); //TODO: Remove debug logging
+    console.log(doc);
+    console.log(doc.data());
     callback(doc.data());
   });
 }

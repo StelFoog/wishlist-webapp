@@ -24,9 +24,9 @@ const sendChatMessage = (id, user, message) => ({
   message
 });
 
-const freebaseFuckeries = (messages) => ({ // TODO: Descriptive action name
+const freebaseFuckeries = (chat) => ({ // TODO: Descriptive action name
   type: LOAD_CHAT_SUCCESS,
-  messages: messages
+  messages: chat.messages
 });
 
 export default {

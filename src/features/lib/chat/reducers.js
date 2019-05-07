@@ -37,7 +37,7 @@ const chatReducer = (state = initialState, action) => {
       console.error("(REDUX)chat message sending error: " + error.code + "-> " + error.message);
       return { ...nextState };
     case SEND_CHAT_MESSAGE_SUCCESS:
-      nextState.messages.push(messages);
+      nextState.messages.concat(messages);
       console.log("(REDUX)Chat message sent: " + messages.text + " #VåtaDjur"); //TODO: Remove debug logging
       return { ...nextState };
     default:

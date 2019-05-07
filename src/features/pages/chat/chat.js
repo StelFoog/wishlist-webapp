@@ -26,9 +26,13 @@ class Chat extends Component {
   componentDidMount() {
     //this.props.handleChatSend(0, {uid: 0}, "#VÅTA DJUR");
     this.props.handleChatLoad(0);
-    onChatMessageReceived(0, (chat) => {
-      this.props
-    })
+    onChatMessageReceived(0, ((props) => {
+      return (chat) => {
+        console.log("Triple lambda says: ");
+        console.log(chat);
+        props.handleChatUpdate(chat);
+      }
+    })(this.props));
   }
 
   render() {
