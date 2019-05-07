@@ -3,7 +3,8 @@ import types from "./types.js";
 const {
   CREATE_CHAT,
   LOAD_CHAT,
-  SEND_CHAT_MESSAGE
+  SEND_CHAT_MESSAGE,
+  LOAD_CHAT_SUCCESS
 } = types;
 
 const createChat = (id) => ({
@@ -23,8 +24,14 @@ const sendChatMessage = (id, user, message) => ({
   message
 });
 
+const freebaseFuckeries = (messages) => ({ // TODO: Descriptive action name
+  type: LOAD_CHAT_SUCCESS,
+  messages: messages
+});
+
 export default {
   createChat,
   loadChat,
-  sendChatMessage
+  sendChatMessage,
+  freebaseFuckeries
 };
