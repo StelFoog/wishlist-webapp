@@ -1,8 +1,14 @@
+import React from "react";
 import LoggedInPage from "./LoggedInPage";
 import { connect } from "react-redux";
 import { actions } from "../../components/dialog";
 
 const { openDialog } = actions;
+
+const LoggedInPageContainer = props => {
+  console.log(props);
+  return <LoggedInPage {...props} />;
+};
 
 const mapDispatchToProps = dispatch => ({
   openForm: () => dispatch(openDialog("newWishlist"))
@@ -11,4 +17,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   null,
   mapDispatchToProps
-)(LoggedInPage);
+)(LoggedInPageContainer);

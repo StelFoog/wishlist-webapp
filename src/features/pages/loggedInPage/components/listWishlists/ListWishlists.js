@@ -1,5 +1,4 @@
-import React, { Component } from "react";
-import PageHeader from "../../../../components/pageHeader";
+import React from "react";
 import CardContainer from "../../../../components/card/CardContainer";
 import { CardContent, CardHeader } from "../../../../components/card";
 import "./listWishlists.css";
@@ -10,7 +9,7 @@ import { getWishlistAvatars } from "./lib";
 
 const { fetchOwnedWishlists } = actions;
 
-class ListWishlists extends Component {
+class ListWishlists extends React.Component {
   constructor(props) {
     super(props);
 
@@ -52,15 +51,7 @@ class ListWishlists extends Component {
     return ownedWishlists.map(this.displayWishlist);
   }
   render() {
-    return (
-      <React.Fragment>
-        <div className="listWishlists">
-          <PageHeader title={"Your wishlists"} />
-          {/* Fetch users wishlists from database*/}
-          {this.getWishlists()}
-        </div>
-      </React.Fragment>
-    );
+    return <React.Fragment>{this.getWishlists()}</React.Fragment>;
   }
 }
 
