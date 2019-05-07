@@ -1,8 +1,8 @@
 import { database } from "../firebase";
 
-/* Chats are represented as 
+/* Chats are represented as
  * {messages: w}
- * Chat messages are represented as 
+ * Chat messages are represented as
  * {sender: x, timestamp: y, text: z}
  */
 
@@ -24,8 +24,8 @@ function sendChatMessage(chatId, user, text) {
   const msg = {sender: user.uid, timestamp: new Date(), text: text};
   ref.get().then((doc) => {
     if(!doc.exists)
-      throw new Error("sendChatMessage(): No chat with id " 
-                     + chatId 
+      throw new Error("sendChatMessage(): No chat with id "
+                     + chatId
                      + " exists");
     let messages = doc.data().messages;
     messages.push(msg);
@@ -34,11 +34,11 @@ function sendChatMessage(chatId, user, text) {
   return msg;
 }
 
-function loadChatMessages(chatId) {
+async function loadChatMessages(chatId) {
   const ref = _getChatRef(chatId);
-  return ref.get().then((doc) => {
+  return (await ref.get().then((doc) => {
     return doc.data();
-  }).messages;
+  })).messages;
 }
 
 export {

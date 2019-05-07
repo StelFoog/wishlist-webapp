@@ -56,6 +56,7 @@ function* workSendChatMessage(action) {
     console.log("(SAGA)Chat message sent: " + result.text);
     yield put({ type: SEND_CHAT_MESSAGE_SUCCESS, messages: result });
   } catch (error) {
+    console.log("(SAGA)Chat message error: " + id + user + message);
     yield put({ type: SEND_CHAT_MESSAGE_ERROR, error: error });
   }
 }
