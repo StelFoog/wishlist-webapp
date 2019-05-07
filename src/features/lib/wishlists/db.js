@@ -6,7 +6,7 @@ import { generateWishlistUid } from "../authentication/user";
 const _getWishlistRef = uid => database.collection("Wishlists").doc("" + uid);
 
 const _getRefDoc = async ref => {
-  await return ref
+  return await ref
     .get()
     .then(doc => {
       return doc;
