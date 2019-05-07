@@ -5,10 +5,12 @@ import WishlistItem from "../../components/wishlistItem";
 import "./wishlistPage.css";
 import { firebase } from "../../lib/firebase";
 import { connect } from "react-redux";
-import { actions, selectors } from "../../lib/wishlistItems";
+import { actions } from "../../lib/wishlistItems";
+import { selectors } from "../../lib/wishlists"
 
-const { fetchAllItems } = actions;
+// const { fetchAllItems } = actions;
 
+/*
 class WishlistPage extends Component {
   constructor(props) {
     super(props);
@@ -18,7 +20,6 @@ class WishlistPage extends Component {
       uid: props.match.params.uid
     };
   }
-
   getAllWishlistItems() {
     const { uid } = this.state;
     firebase
@@ -31,14 +32,15 @@ class WishlistPage extends Component {
           this.setState({ items: doc.data().items });
         }
       });
+    
   }
-
+  
   componentDidMount() {
     this.getAllWishlistItems();
   }
+  
 
   render() {
-    const { items } = this.state;
     console.log("y9o");
     return (
       <div className="wishlistPage">
@@ -46,7 +48,7 @@ class WishlistPage extends Component {
         {items.length > 0 && (
           <React.Fragment>
             {items.map((item, index) => (
-              <WishlistItem item={item} index={index} />
+              <WishlistItem item={item} index={index} wishlistUid={uid} />
             ))}
           </React.Fragment>
         )}
@@ -54,12 +56,38 @@ class WishlistPage extends Component {
     );
   }
 }
+*/
+
+const WishlistPage = ({ wishlists, pathname }) => {
+  const wishlistUid = pathname.split("wishlist/").pop();
+  const wishlist = wishlists.find((element) => element.uid == wishlistUid);
+  const { items } = wishlist;
+  return (
+    <div className="wishlistPage">
+      <PageHeader title="Name of wishlist" />
+      {items.length > 0 && (
+        <React.Fragment>
+          {items.map((item, index) => (
+            <WishlistItem index={index} wishlistUid={wishlist.uid} />
+          ))}
+        </React.Fragment>
+      )}
+    </div>
+  )
+}
 
 const mapStateToProps = () => {
+  const getWishlists = selectors.getWishlistsState();
+  return state => ({
+    wishlists: getWishlists(state),
+    pathname: state.router.location.pathname
+  });
+  /*
   const getWishlistItems = selectors.getItemsState();
   return state => ({
     items: getWishlistItems(state)
   });
+  */
 };
 
 const mapDispatchToProps = {};
