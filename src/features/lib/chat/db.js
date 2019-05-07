@@ -41,7 +41,14 @@ async function loadChatMessages(chatId) {
   })).messages;
 }
 
+function onChatMessageReceived(chatId, callback) {
+  return _getChatRef(chatId).onSnapshot((doc) => {
+    callback(doc.data());
+  });
+}
+
 export {
+  onChatMessageReceived,
   createNewChat,
   sendChatMessage,
   loadChatMessages
