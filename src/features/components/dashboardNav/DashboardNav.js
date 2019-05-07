@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import Button from "../button";
 import IconButton from "../iconButton";
 import ListIcon from "../svgIcon/icons/ListIcon.js";
@@ -9,13 +9,12 @@ import ProfilePicture from "../profilePicture";
 import "./dashboardNav.css";
 
 class DashboardNav extends Component {
-
   constructor(props) {
     super(props);
 
     this.state = {
       showSideNav: false
-    }
+    };
 
     this.setWrapperRef = this.setWrapperRef.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
@@ -23,15 +22,15 @@ class DashboardNav extends Component {
 
   toggleSideNav = () => {
     const show = this.state.showSideNav;
-    this.setState({ showSideNav: !show })
-  }
+    this.setState({ showSideNav: !show });
+  };
 
   componentDidMount() {
-    document.addEventListener('mousedown', this.handleClickOutside);
+    document.addEventListener("mousedown", this.handleClickOutside);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClickOutside);
+    document.removeEventListener("mousedown", this.handleClickOutside);
   }
 
   setWrapperRef(node) {
@@ -45,11 +44,15 @@ class DashboardNav extends Component {
   }
 
   render() {
-
     return (
       <React.Fragment>
-
-        <div ref={this.state.showSideNav ? this.setWrapperRef : ""} className={["dashboardNav", this.state.showSideNav ? "" : "hidden"].join(" ")}>
+        <div
+          ref={this.state.showSideNav ? this.setWrapperRef : ""}
+          className={[
+            "dashboardNav",
+            this.state.showSideNav ? "" : "hidden"
+          ].join(" ")}
+        >
           <div className="navProfilePicture">
             <ProfilePicture src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" />
           </div>
@@ -84,7 +87,6 @@ class DashboardNav extends Component {
               <SettingsIcon size={84} />
             </IconButton>
           </div>
-
         </div>
 
         <div className="mobileTopNav">
@@ -97,9 +99,8 @@ class DashboardNav extends Component {
           </IconButton>
         </div>
       </React.Fragment>
-    )
+    );
   }
 }
-
 
 export default DashboardNav;
