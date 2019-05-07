@@ -19,7 +19,5 @@ function generateWishlistUid(user) {
 
 export {
   makeUser,
-  giveWishlistToUserAsOwner,
-  giveUserAccessToWishlist,
   generateWishlistUid
 };

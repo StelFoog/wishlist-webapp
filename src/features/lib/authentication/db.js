@@ -74,6 +74,7 @@ const giveWishlistToUserAsOwner = async (uid, wishlistId) => {
 }
 
 export {
+  giveWishlistToUserAsOwner,
   userExistsWithUid,
   getUser,
   editUser,
