@@ -6,7 +6,7 @@ import { onChatMessageReceived } from "../../lib/chat/db.js";
 import Button from "../../components/button";
 const { sendChatMessage, updateLocalChat, createChat } = actions;
 
-const chatClick = (props) => {
+const submitClick = (props) => {
   return () => {
     const elem = document.getElementById("chatInput");
     const text = elem.value;
