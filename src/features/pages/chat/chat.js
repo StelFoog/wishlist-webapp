@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import { actions } from "../../lib/chat";
 import { getUser } from "../../lib/authentication/selectors";
 import { connect } from "react-redux";
-import { Field, reduxForm } from "redux-form";
 import { onChatMessageReceived } from "../../lib/chat/db.js";
-
 import Button from "../../components/button";
 
 const { sendChatMessage, loadChat, freebaseFuckeries } = actions;
@@ -17,8 +15,11 @@ function timestampString(date) {
 
 const chatClick = (props) => {
   return () => {
-    props.handleChatSend( 0, {uid: 0}, "SILLIZ");
-    //_this.props.handleChatLoad(0);
+    // 100% pure and native solution
+    const elem = document.getElementById("chatInput");
+    const text = elem.value;
+    elem.value = "";
+    props.handleChatSend( 0, {uid: 0}, text);
   };
 }
 
@@ -37,17 +38,20 @@ class Chat extends Component {
 
   render() {
     return (
-      <React.Fragment>
-        {this.props.messages.map((msg) =>
-          <p> {msg.sender}: "{msg.text}" at {timestampString(msg.timestamp)} </p>
-        )}
-        <Button
-          handleClick={chatClick(this.props)}
-          label="Send message"
-          variant="filled"
-          color="#73359B"
-        />
-      </React.Fragment>
+     <div> 
+        <React.Fragment>
+          {this.props.messages.map((msg) =>
+            <p> {msg.sender}: "{msg.text}" at {timestampString(msg.timestamp)} </p>
+          )}
+          <input type="text" id="chatInput" />
+          <Button
+            handleClick={chatClick(this.props)}
+            label="Send message"
+            variant="filled"
+            color="#73359B"
+          />
+        </React.Fragment>
+      </div>
     )
 
   }
