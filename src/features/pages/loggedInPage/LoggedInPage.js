@@ -1,5 +1,5 @@
 import React from "react";
-import ListWishlists from "../../components/listWishlists";
+import ListWishlists from "./components/listWishlists";
 import IconButton from "../../components/iconButton";
 import PlusIcon from "../../components/svgIcon/icons/PlusIcon";
 import Tabs from "./components/tabs";
