@@ -1,4 +1,4 @@
-import { database } from "../firebase/";
+import { database, firebase } from "../firebase/";
 import { makeUser } from "./user.js";
 
 const _getUserRef = uid => database.collection("Users").doc("" + uid);
@@ -63,11 +63,19 @@ const addNewWishlistIdToUser = async (uid, wishlistId) => {
   editUser(uid, userData);
 };
 
+const addInvitedUserToWishlist = ({ wishlistID, uid }) => {
+  database
+    .collection("Wishlists")
+    .doc(wishlistID)
+    .update({ members: firebase.firestore.FieldValue.arrayUnion(uid) });
+};
+
 export {
   userExistsWithUid,
   getUser,
   editUser,
   createUser,
   logInAndCreateUserIfDoesNotExist,
-  addNewWishlistIdToUser
+  addNewWishlistIdToUser,
+  addInvitedUserToWishlist
 };

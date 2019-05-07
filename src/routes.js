@@ -1,18 +1,21 @@
-import { ConnectedRouter } from "connected-react-router";
 import React from "react";
+import { ConnectedRouter } from "connected-react-router";
 import { Provider } from "react-redux";
 import { Route, Switch } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
+
+// Components
+import Dialog from "./features/components/dialog/DialogContainer";
+import { ItemAddition as WishlistItem } from "./features/components/wishListForm";
+
+// Pages
 import HomePage from "./features/pages/homePage";
 import Dashboard from "./features/pages/dashboard";
+import LoggedInPage from "./features/pages/loggedInPage";
 import WishlistPage from "./features/pages/wishlistPage";
-import Dialog from "./features/components/dialog/DialogContainer";
-// import { WishListTitle as NewWishlist } from "./features/components/wishListForm";
-import { ItemAddition as WishlistItem } from "./features/components/wishListForm";
-import ListWishlists, {
-  WishlistPageTest
-} from "./features/components/listWishlists/ListWishlists.js";
+import InvitedUserPage from "./features/pages/invitedUserPage";
+import InvitedWishlistPage from "./features/pages/invitedWishlistPage";
 
 const Root = ({ store, history, persistor }) => (
   <Provider store={store}>
@@ -38,7 +41,7 @@ const Root = ({ store, history, persistor }) => (
               path={"/dashboard"}
               exact
               render={props => {
-                return <ListWishlists {...props} />;
+                return <LoggedInPage {...props} />;
               }}
             />
             <Route
@@ -46,6 +49,20 @@ const Root = ({ store, history, persistor }) => (
               exact
               render={props => {
                 return <WishlistPage {...props} />;
+              }}
+            />
+            <Route
+              path={"/wishlist/:uid/invite"}
+              exact
+              render={props => {
+                return <InvitedUserPage {...props} />;
+              }}
+            />
+            <Route
+              path={"/dashboard/guest/:uid"}
+              exact
+              render={props => {
+                return <InvitedWishlistPage {...props} />;
               }}
             />
             <Route

@@ -1,15 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
+
 import PageHeader from "../../components/pageHeader";
 import WishlistItem from "../../components/wishlistItem";
 
-import "./wishlistPage.css";
 import { firebase } from "../../lib/firebase";
-import { connect } from "react-redux";
-import { actions, selectors } from "../../lib/wishlistItems";
 
-const { fetchAllItems } = actions;
-
-class WishlistPage extends Component {
+class InvitedWishlistPage extends React.Component {
   constructor(props) {
     super(props);
     console.log(props);
@@ -40,12 +36,12 @@ class WishlistPage extends Component {
   render() {
     const { items } = this.state;
     return (
-      <div className="wishlistPage">
+      <div>
         <PageHeader title="Name of wishlist" />
         {items.length > 0 && (
           <React.Fragment>
             {items.map((item, index) => (
-              <WishlistItem item={item} index={index} />
+              <WishlistItem item={item} index={index} isOwner={false} />
             ))}
           </React.Fragment>
         )}
@@ -54,14 +50,4 @@ class WishlistPage extends Component {
   }
 }
 
-const mapStateToProps = () => {
-  const getWishlistItems = selectors.getItemsState();
-  return state => ({
-    items: getWishlistItems(state)
-  });
-};
-
-export default connect(
-  mapStateToProps,
-  null
-)(WishlistPage);
+export default InvitedWishlistPage;
