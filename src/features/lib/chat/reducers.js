@@ -22,7 +22,6 @@ const chatReducer = (state = initialState, action) => {
       console.error("(REDUX)chat creation error: " + error.code + "-> " + error.message);
       return { ...nextState };
     case CREATE_CHAT_SUCCESS:
-      console.log("(REDUX)Chat created successfully #VåtaDjur"); //TODO: Remove debug logging
       return { ...nextState };
 
     case LOAD_CHAT_ERROR:
@@ -30,7 +29,6 @@ const chatReducer = (state = initialState, action) => {
       return { ...nextState };
     case LOAD_CHAT_SUCCESS:
       nextState.messages = messages;
-      console.log("(REDUX)Chat loaded successfully: " + messages[0].text + " #VåtaDjur"); //TODO: Remove debug logging
       return { ...nextState };
 
     case SEND_CHAT_MESSAGE_ERROR:
@@ -38,7 +36,6 @@ const chatReducer = (state = initialState, action) => {
       return { ...nextState };
     case SEND_CHAT_MESSAGE_SUCCESS:
       nextState.messages.concat(messages);
-      console.log("(REDUX)Chat message sent: " + messages.text + " #VåtaDjur"); //TODO: Remove debug logging
       return { ...nextState };
     default:
       return { ...nextState };

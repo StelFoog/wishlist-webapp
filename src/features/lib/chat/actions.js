@@ -23,7 +23,7 @@ const sendChatMessage = (id, message) => ({
   message
 });
 
-const freebaseFuckeries = (chat) => ({ // TODO: Descriptive action name
+const updateLocalChat = (chat) => ({ // TODO: Descriptive action name
   type: LOAD_CHAT_SUCCESS,
   messages: chat.messages
 });
@@ -32,5 +32,5 @@ export default {
   createChat,
   loadChat,
   sendChatMessage,
-  freebaseFuckeries
+  updateLocalChat
 };
