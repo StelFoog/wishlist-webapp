@@ -1,7 +1,7 @@
 import React from "react";
 
 import PageHeader from "../../components/pageHeader";
-import WishlistItem from "../../components/wishlistItem";
+import WishlistItem from "./components/wishlistItem";
 
 import { firebase } from "../../lib/firebase";
 
@@ -34,14 +34,14 @@ class InvitedWishlistPage extends React.Component {
   }
 
   render() {
-    const { items } = this.state;
+    const { items, uid } = this.state;
     return (
       <div>
         <PageHeader title="Name of wishlist" />
         {items.length > 0 && (
           <React.Fragment>
             {items.map((item, index) => (
-              <WishlistItem item={item} index={index} isOwner={false} />
+              <WishlistItem index={index} isOwner={false} wishlistUid={uid} />
             ))}
           </React.Fragment>
         )}
