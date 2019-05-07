@@ -41,11 +41,8 @@ class WishlistPage extends Component {
   
 
   render() {
-<<<<<<< HEAD
     console.log("y9o");
-=======
     const { items } = this.state;
->>>>>>> invite-users
     return (
       <div className="wishlistPage">
         <PageHeader title="Name of wishlist" />

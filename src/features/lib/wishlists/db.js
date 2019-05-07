@@ -1,6 +1,6 @@
 import { database } from "../firebase/";
 import { makeWishlist } from "./wishlist";
-import { editUser } from "../authentication/db";
+//import { editUser } from "../authentication/db";
 import { generateWishlistUid } from "../authentication/user";
 
 const _getWishlistRef = uid => database.collection("Wishlists").doc("" + uid);
@@ -57,7 +57,7 @@ const fetchAllWishlistsFromUser = user => {
   return Promise.all(user.wishlists.map(fetchWishlistByUid));
 };
 
-export {
+export default {
   editWishlist,
   _getWishlistRef,
   createWishlistWithOwner,
