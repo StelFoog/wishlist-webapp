@@ -1,7 +1,9 @@
+import React, { Component } from "react";
 import { getUser } from "../../lib/authentication/selectors";
 import { connect } from "react-redux";
 import { onChatMessageReceived } from "../../lib/chat/db.js";
 import Button from "../../components/button";
+import { actions  } from "../../lib/chat";
 const { sendChatMessage, updateLocalChat, createChat } = actions;
 
 const submitClick = (props) => {
@@ -48,7 +50,7 @@ class Chat extends Component {
      <div>
         <React.Fragment>
           {this.props.messages.map((msg) =>
-            <p> {msg.senderName}: "{msg.text}" at {timestampString(msg.timestamp)} </p>
+            <p> {msg.senderName}: "{msg.text}" at {formatTimestamp(msg.timestamp)} </p>
           )}
           <input type="text" id="chatInput" />
           <Button

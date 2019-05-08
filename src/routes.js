@@ -1,4 +1,6 @@
+import React from "react";
 import { Provider } from "react-redux";
+import { ConnectedRouter } from "connected-react-router";
 import { Route, Switch } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { PersistGate } from "redux-persist/integration/react";
@@ -31,6 +33,11 @@ const Root = ({ store, history, persistor }) => (
               }}
             />
             <Route
+              path="/chat"
+              exact
+              component={Chat}
+            />
+            <Route
               path={"/dashboard/"}
               render={props => {
                 return <Dashboard {...props} />;
@@ -41,11 +48,8 @@ const Root = ({ store, history, persistor }) => (
               render={props => {
                 return <h1> 404 </h1>;
               }}
-            <Route
-              path="/chat"
-              exact
-              component={Chat}
             />
+          </Switch>
           <Route
             path={"/dashboard"}
             exact
