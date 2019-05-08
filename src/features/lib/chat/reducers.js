@@ -35,7 +35,7 @@ const chatReducer = (state = initialState, action) => {
       console.error("(REDUX)chat message sending error: " + error.code + "-> " + error.message);
       return { ...nextState };
     case SEND_CHAT_MESSAGE_SUCCESS:
-      nextState.messages.concat(messages);
+      // No nees to push to state since client listens to and fetches DB changes anyway
       return { ...nextState };
     default:
       return { ...nextState };
