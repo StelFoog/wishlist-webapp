@@ -116,5 +116,6 @@ function* workClaimWishlistItem(action) {
 export default {
   watchCreateWishlistItem,
   watchFetchAllItems,
-  watchEditWishlistItem
+  watchEditWishlistItem,
+  watchClaimWishlistItem
 };

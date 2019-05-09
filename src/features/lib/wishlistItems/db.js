@@ -7,7 +7,7 @@ const addWishlistItem = async (wishlistId, item) => {
   /*let wishlist = await fetchWishlistByUid(uid);
   wishlist.items.push(item);
   _getWishlistRef(uid).set(wishlist);*/
-  await modifyWishlistItems(wishlistId, (items) => {
+  await modifyWishlistItems(wishlistId, items => {
     items.unshift(item);
     return items;
   });
@@ -20,11 +20,11 @@ const editWishlistItem = async (wishlistId, index, item) => {
   const oldItem = wishlist.items[index];
   wishlist.items[index] = { ...oldItem, ...item };
   _getWishlistRef(uid).set(wishlist);*/
-  await modifyWishlistItems(wishlistId, (items) => {
-    items[index] = {...items[index], ...item};
+  await modifyWishlistItems(wishlistId, items => {
+    items[index] = { ...items[index], ...item };
     return items;
   });
-}
+};
 
 const removeWishlistItem = async (index, wishlistId) => {
   /*let wishlist = await fetchWishlistByUid(uid);
@@ -33,11 +33,11 @@ const removeWishlistItem = async (index, wishlistId) => {
   wishlist.items.splice(index, 1);
   _getWishlistRef(uid).set(wishlist);
   */
-  await modifyWishlistItems(wishlistId, (items) => {
+  await modifyWishlistItems(wishlistId, items => {
     items.splice(index, 1);
     return items;
   });
-}
+};
 
 const claimWishlistItem = async (userId, index, wishlistId) => {
   /*const ref = _getWishlistRef(wishlistId);
@@ -49,18 +49,18 @@ const claimWishlistItem = async (userId, index, wishlistId) => {
     await _getWishlistRef(wishlistId).set(wishlist);
   }*/
 
-  await modifyWishlistItems(wishlistId, (items) => {
-    if(!items[index].claimedBy.includes(userId))
+  await modifyWishlistItems(wishlistId, items => {
+    if (!items[index].claimedBy.includes(userId))
       items[index].claimedBy.push(userId);
     return items;
   });
-}
+};
 
 const modifyWishlistItems = async (wishlistId, lambda) => {
   let wishlist = await fetchWishlistByUid(wishlistId);
   wishlist.items = lambda(wishlist.items);
-  await _getWishlistRef.set(wishlist);
-}
+  await _getWishlistRef(wishlistId).set(wishlist);
+};
 
 // ?
 const makeItem = item => ({
