@@ -1,87 +1,59 @@
 import { database, firebase } from "../firebase/";
-import { makeUser } from "./user.js";
+import { defaultUser } from "./user.js";
 import db from "../wishlists/db";
 
 const { fetchWishlistByUid, editWishlist } = db;
 
 const _getUserRef = uid => database.collection("Users").doc("" + uid);
 
-const _getRefDoc = ref =>
-  ref
-    .get()
-    .then(doc => {
-      return doc;
-    })
-    .catch(error => {
-      throw error;
-    });
-
-const _getUserDoc = uid => _getRefDoc(_getUserRef(uid));
-
-const userExistsWithUid = async uid => (await _getUserDoc(uid)).exists;
+const userExistsWithUid = async uid => {
+  return (await getUser(uid)) !== null;
+}
 
 const getUser = async uid => {
-  const doc = await _getUserDoc(uid);
-
-  return !doc.exists ? null : { ...makeUser(), ...doc.data() };
+  return await _getUserRef(uid).get().then((doc) => {
+    return doc.exists ? doc.data() : null;
+  });
 };
 
-const createUser = async user => {
-  const ref = _getUserRef(user.uid);
-  const doc = await _getRefDoc(ref);
-  if (doc.exists)
-    throw new Error(
-      "createUser(): User with UID " + user.uid + " already exists"
-    );
-  ref.set(user);
-};
-
-const editUser = async (uid, newUser) => {
-  const ref = _getUserRef(uid);
-  const doc = await _getRefDoc(ref);
-
-  ref.set(newUser);
-};
-
-const logInAndCreateUserIfDoesNotExist = async firebaseUser => {
-  if (await !userExistsWithUid(firebaseUser.uid))
-    await createUser(makeUser(firebaseUser.displayName, firebaseUser.uid));
-  console.log(firebaseUser);
+const createUser = async (firebaseUser) => {
   const user = {
-    ...makeUser(firebaseUser.displayName, firebaseUser.uid),
-    ...(await getUser(firebaseUser.uid))
+    ...defaultUser, 
+    ...{name: firebaseUser.displayName, uid: firebaseUser.uid}
   };
-  await editUser(user.uid, user);
+  await _getUserRef(firebaseUser.uid).set(user);
+
   return user;
 };
 
-const addNewWishlistIdToUser = async (uid, wishlistId) => {
-  if (!(await userExistsWithUid(uid)))
-    throw new Error(
-      "addNewWishlistIdToUser: No user with UID " + uid + " exists"
-    );
-  let userData = await getUser(uid);
-  userData.ownedWishlists.push(wishlistId);
-  editUser(uid, userData);
+const setUser = (uid, user) => {
+  _getUserRef(uid).set(user);
+}
+
+const logInAndCreateUserIfDoesNotExist = async firebaseUser => {
+  if (await !userExistsWithUid(firebaseUser.uid))
+    await createUser(firebaseUser);
+
+  const user = {...defaultUser, ...(await getUser(firebaseUser.uid))}
+  // Update database incase any fields are missing
+  setUser(user.uid, user);
+  return user;
 };
 
 const giveWishlistToUserAsOwner = async (uid, wishlistId) => {
-  let user = await getUser(uid);
-  user.ownedWishlists.push(wishlistId);
-  editUser(uid, user);
-
-  let wishlist = await fetchWishlistByUid(wishlistId);
-  wishlist.owner = uid;
-  editWishlist(wishlistId, wishlist);
+  setUserProperty(uid, {
+    ownedWishlists: firebase.firestore.FieldValue.arrayUnion(wishlistId)
+  });
 };
 
-const addInvitedWishlistToUser = ({ wishlistID, uid }) => {
-  database
-    .collection("Users")
-    .doc(uid)
-    .update({
-      wishlists: firebase.firestore.FieldValue.arrayUnion(wishlistID)
-    });
+const setUserProperty = (uid, prop) => {
+  _getUserRef(uid).update(prop);
+}
+
+const addInvitedWishlistToUser = ({ wishlistId, uid }) => {
+  setUserProperty(uid, {
+    wishlists: firebase.firestore.FieldValue.arrayUnion(wishlistId)
+  });
 };
 
 const addInvitedUserToWishlist = ({ wishlistID, uid }) => {
@@ -91,12 +63,14 @@ const addInvitedUserToWishlist = ({ wishlistID, uid }) => {
     .update({ members: firebase.firestore.FieldValue.arrayUnion(uid) });
 };
 
+const addNewWishlistIdToUser = (uid, wishlistId) => {
+  addInvitedWishlistToUser({wishlistId, uid});
+}
+
 export {
   giveWishlistToUserAsOwner,
   userExistsWithUid,
   getUser,
-  editUser,
-  createUser,
   logInAndCreateUserIfDoesNotExist,
   addNewWishlistIdToUser,
   addInvitedUserToWishlist,
