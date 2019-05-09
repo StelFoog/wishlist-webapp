@@ -16,7 +16,7 @@ const userFromFirebaseUser = (firebaseUser) => {
     ...{
       name: firebaseUser.displayName,
       uid: firebaseUser.uid,
-      profilePictureUrl: (firebaseUser.photoURL + "?height=100")
+      profilePictureUrl: firebaseUser.photoURL
     }
   };
 }

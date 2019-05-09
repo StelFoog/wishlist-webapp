@@ -8,7 +8,7 @@ const defaultUser = {
   profilePictureUrl: null
 };
 
-function generateWishlistOrGroupUid(user) {
+const generateWishlistOrGroupUid = (user) => {
   let uid;
   do {
     uid = user.uid + "-" + Math.floor(Math.random() * 0x7fffffff);
@@ -19,4 +19,13 @@ function generateWishlistOrGroupUid(user) {
 
 const generateWishlistUid = generateWishlistOrGroupUid;
 
-export { defaultUser, generateWishlistUid, generateWishlistOrGroupUid };
+const getUserProfilePictureUrl = (user, height = 100) => {
+  return user.profilePictureUrl + "?height=" + height;
+}
+
+export { 
+  getUserProfilePictureUrl,
+  defaultUser, 
+  generateWishlistUid, 
+  generateWishlistOrGroupUid 
+};
