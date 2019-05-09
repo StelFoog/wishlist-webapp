@@ -10,6 +10,16 @@ const userExistsWithUid = async uid => {
   return (await getUser(uid)) !== null;
 }
 
+const userFromFirebaseUser = (firebaseUser) => {
+  return {
+    ...defaultUser,
+    ...{
+      name: firebaseUser.displayName,
+      uid: firebaseUser.uid,
+      profilePictureUrl: (firebaseUser.photoURL + "?height=100")
+    }
+}
+
 const getUser = async uid => {
   return await _getUserRef(uid).get().then((doc) => {
     return doc.exists ? doc.data() : null;
@@ -17,16 +27,7 @@ const getUser = async uid => {
 };
 
 const createUser = async (firebaseUser) => {
-  const uid = firebaseUser.uid;
-  const user = {
-    ...defaultUser, 
-    ...{name: firebaseUser.displayName, 
-        uid: uid,
-        profilePictureUrl: firebaseUser.photoURL
-    }
-  };
-  await _getUserRef(uid).set(user);
-
+  await _getUserRef(uid).set(userFromFirebaseUser(firebaseUser));
   return user;
 };
 
@@ -40,11 +41,8 @@ const logInAndCreateUserIfDoesNotExist = async firebaseUser => {
     await createUser(firebaseUser);
 
   const user = {
-    ...defaultUser, 
     ...(await getUser(uid)), 
-    ...{
-      profilePictureUrl: firebaseUser.photoURL,
-      name: firebaseUser.displayName
+    ...userFromFirebaseUser(firebaseUser)
     }
   };
   // Update database incase any fields are missing
