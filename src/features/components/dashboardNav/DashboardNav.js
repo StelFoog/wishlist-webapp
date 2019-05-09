@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Button from "../button";
 import IconButton from "../iconButton";
 import ListIcon from "../svgIcon/icons/ListIcon.js";
@@ -7,6 +8,7 @@ import SettingsIcon from "../svgIcon/icons/SettingsIcon.js";
 import MenuIcon from "../svgIcon/icons/MenuIcon.js";
 import ProfilePicture from "../profilePicture";
 import "./dashboardNav.css";
+import { getUser } from "../../lib/authentication/selectors.js";
 
 class DashboardNav extends Component {
   constructor(props) {
@@ -54,7 +56,12 @@ class DashboardNav extends Component {
           ].join(" ")}
         >
           <div className="navProfilePicture">
-            <ProfilePicture src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" />
+            <ProfilePicture
+              src={
+                this.props.user
+                  .profilePictureUrl /*TODO: Refactor to not define picture inline?*/
+              }
+            />
           </div>
 
           <div className="navButton">
@@ -103,4 +110,13 @@ class DashboardNav extends Component {
   }
 }
 
-export default DashboardNav;
+const mapStateToProps = () => {
+  return state => ({
+    user: getUser(state)
+  });
+};
+
+export default connect(
+  mapStateToProps,
+  null
+)(DashboardNav);
