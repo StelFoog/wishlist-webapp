@@ -75,6 +75,7 @@ class DashboardNav extends React.Component {
             <ProfilePicture
               src={getUserProfilePictureUrl(this.props.user, 100)}
             />
+            <ProfilePicture width="60px" src={null} />
             <div className="names">
               <span>{user.name}</span>
             </div>
@@ -147,13 +148,4 @@ class DashboardNav extends React.Component {
   }
 }
 
-const mapStateToProps = () => {
-  return state => ({
-    user: getUser(state)
-  });
-};
-
-export default connect(
-  mapStateToProps,
-  null
-)(DashboardNav);
+export default DashboardNav;
