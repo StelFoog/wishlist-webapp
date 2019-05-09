@@ -1,0 +1,36 @@
+.chatWindow {
+  position: fixed;
+  height: 100vh;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat {
+  padding-bottom: 1rem;
+  flex: 1;
+  overflow-y: scroll;
+}
+
+.chat,
+.chat-input,
+.chat-input input {
+  width: 100%;
+}
+
+@media (min-width: 901px) {
+  .chatWindow {
+    top: 0;
+    right: 0;
+    width: 500px;
+  }
+}
+
+@media (max-width: 900px) {
+  .chatWindow {
+    top: 0;
+    right: -100%;
+    width: 100%;
+    z-index: 999;
+  }
+}
