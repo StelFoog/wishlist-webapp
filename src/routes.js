@@ -49,7 +49,7 @@ const Root = ({ store, history, persistor }) => (
               path={"/bubbleTest"}
               exact
               render={props => {
-                return <ChatBubble {...props} />;
+                return <ChatBubble  {...props} />;
               }}
             />
 
