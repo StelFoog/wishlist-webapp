@@ -1,0 +1,18 @@
+@media (min-width: 901px) {
+  .invitedPageContainer {
+    margin-right: 500px;
+    width: calc(100vw - 170px - 500px);
+  }
+}
+
+@media (max-width: 900px) {
+  .invitedPageContainer {
+    width: calc(100vw - 170px);
+  }
+}
+
+@media (max-width: 600px) {
+  .invitedPageContainer {
+    width: 100vw;
+  }
+}
