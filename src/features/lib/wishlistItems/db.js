@@ -26,40 +26,30 @@ async function removeWishlistItem(uid, index) {
   _getWishlistRef(uid).set(wishlist);
 }
 
-const _getRefDoc = async ref => {
-  return ref
-    .get()
-    .then(doc => {
-      return doc;
-    })
-    .catch(error => {
-      throw error;
-    });
-};
+const claimWishlistItem = async (userId, index, wishlistId) => {
+  const ref = _getWishlistRef(wishlistId);
 
-const validateNewItem = item => item ? item : {};
+  let wishlist = await fetchWishlistByUid(wishlistId);
+  
+  if(!wishlist.items[index].claimedBy.includes(userId)) {
+    wishlist.items[index].claimedBy.push(userId);
+    await _getWishlistRef(wishlistId).set(wishlist);
+  }
+}
 
+// ?
 const makeItem = item => ({
   price: "",
   description: "",
   ...item
 })
 
-/*
-const fetchWishlistByUid = async uid => {
-  const ref = _getWishlistRef(uid);
-  const doc = await _getRefDoc(ref);
-  if (!doc.exists)
-    throw new Error(
-      "fetchWishlistByUid(): No wishlist with uid " + uid + " exists"
-    );
-  return { ...doc.data() };
-};
-*/
+
 export default {
   fetchWishlistByUid,
   addWishlistItem,
   editWishlistItem,
   removeWishlistItem,
-  makeItem
+  makeItem,
+  claimWishlistItem
 };
