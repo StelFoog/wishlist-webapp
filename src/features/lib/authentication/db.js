@@ -39,7 +39,14 @@ const logInAndCreateUserIfDoesNotExist = async firebaseUser => {
   if (!(await userExistsWithUid(uid)))
     await createUser(firebaseUser);
 
-  const user = {...defaultUser, ...(await getUser(uid))};
+  const user = {
+    ...defaultUser, 
+    ...(await getUser(uid)), 
+    ...{
+      profilePictureUrl: firebaseUser.photoURL,
+      name: firebaseUser.displayName
+    }
+  };
   // Update database incase any fields are missing
   await setUser(user.uid, user);
   return user;
