@@ -8,6 +8,7 @@ import SettingsIcon from "../svgIcon/icons/SettingsIcon.js";
 import MenuIcon from "../svgIcon/icons/MenuIcon.js";
 import ProfilePicture from "../profilePicture";
 import "./dashboardNav.css";
+import { getUserProfilePictureUrl } from "../../lib/authentication/user.js";
 import { getUser } from "../../lib/authentication/selectors.js";
 
 class DashboardNav extends Component {
@@ -57,10 +58,7 @@ class DashboardNav extends Component {
         >
           <div className="navProfilePicture">
             <ProfilePicture
-              src={
-                this.props.user
-                  .profilePictureUrl /*TODO: Refactor to not define picture inline?*/
-              }
+              src={getUserProfilePictureUrl(this.props.user, 100)}
             />
           </div>
 
