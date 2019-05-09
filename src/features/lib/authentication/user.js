@@ -5,7 +5,7 @@ const defaultUser = {
   wishlists: [],
   ownedWishlists: [],
   groups: [],
-  profilePicture: null
+  profilePictureUrl: null
 };
 
 function generateWishlistOrGroupUid(user) {
