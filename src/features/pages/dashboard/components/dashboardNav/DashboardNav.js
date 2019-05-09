@@ -1,15 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 import IconButton from "../../../../components/iconButton";
-import ListIcon from "../../../../components/svgIcon/icons/ListIcon.js";
-import GroupIcon from "../../../../components/svgIcon/icons/GroupIcon.js";
-import SettingsIcon from "../../../../components/svgIcon/icons/SettingsIcon.js";
 import Ripple from "../../../../components/ripple";
-import MenuIcon from "../../../../components/svgIcon/icons/MenuIcon.js";
+import {
+  GroupIcon,
+  MenuIcon,
+  RoundKeyboardArrowDown,
+  SettingsIcon,
+  ListIcon
+} from "../../../../components/svgIcon";
 import ProfilePicture from "../../../../components/profilePicture";
-import RoundKeyboardArrowDown from "../../../../components/svgIcon/icons/RoundKeyboardArrowDown";
 import "./dashboardNav.css";
 
-class DashboardNav extends Component {
+class DashboardNav extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -60,7 +62,7 @@ class DashboardNav extends Component {
   render() {
     const activeTab = this.getActivePage();
     const { showSideNav, groupDropdown } = this.state;
-    const { navigate } = this.props;
+    const { navigate, user } = this.props;
     return (
       <React.Fragment>
         <div
@@ -68,10 +70,10 @@ class DashboardNav extends Component {
           className={`dashboardNav ${showSideNav ? "" : "hidden"}`}
         >
           <div className="navProfilePicture">
-            <ProfilePicture
-              width="60px"
-              src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
-            />
+            <ProfilePicture width="60px" src={null} />
+            <div className="names">
+              <span>{user.name}</span>
+            </div>
           </div>
           <hr className="navDivider" />
           <div className={`active-${activeTab}`}>
@@ -98,11 +100,22 @@ class DashboardNav extends Component {
                 <RoundKeyboardArrowDown size={30} color="var(--color-light)" />
               </div>
             </div>
-            {groupDropdown && (
-              <div className="groupDropdown">
-                <div className="group">hej</div>
+            <div
+              className={`groupDropdown ${groupDropdown ? "show" : "hidden"}`}
+            >
+              <div className="group">
+                <Ripple />
+                <span>Group name</span>
               </div>
-            )}
+              <div className="group">
+                <Ripple />
+                <span>Group name</span>
+              </div>
+              <div className="group">
+                <Ripple />
+                <span>Group name</span>
+              </div>
+            </div>
           </div>
           <div
             className="navButton navButtonBottom"

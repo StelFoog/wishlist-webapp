@@ -4,7 +4,7 @@
 
 .dashboardNav {
   height: 100%;
-  width: 140px;
+  width: 170px;
 
   position: fixed;
   left: 0;
@@ -15,18 +15,6 @@
   box-shadow: 1px 0 2px 0 var(--color-dark);
   display: flex;
   flex-direction: column;
-}
-
-.dropdownArrow.open {
-  transform: rotate(-180deg);
-}
-
-.dropdownArrow {
-  margin-right: 5px;
-  position: absolute;
-  right: 0;
-  display: flex;
-  transition: transform 0.1s linear;
 }
 
 .navDivider {
@@ -45,12 +33,9 @@
   margin-bottom: 0.25rem;
 }
 .navProfilePicture .names {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  color: var(--color-light);
+  display: none;
 }
-
+.group,
 .navButton {
   cursor: pointer;
   padding: 0.75rem;
@@ -62,6 +47,7 @@
 
 .active-0 > div:first-child,
 .active-1 > div:nth-child(2),
+.group:hover,
 .navButton:hover {
   background: rgba(255, 255, 255, 0.2);
 }
@@ -79,11 +65,45 @@
   margin-top: auto;
 }
 
+/* Group dropdown styles */
+
+.dropdownArrow.open {
+  transform: rotate(-180deg);
+}
+
+.dropdownArrow {
+  margin-right: 5px;
+  position: absolute;
+  right: 0;
+  display: flex;
+  transition: transform 0.18s linear;
+}
+.group > span,
+.groupDropdown {
+  transition: height 0.2s linear;
+  overflow: hidden;
+}
+.groupDropdown.show {
+  height: 100%;
+}
+.groupDropdown.hidden {
+  height: 0;
+}
+.group {
+  position: relative;
+  color: var(--color-light);
+}
+
 /* Mobile version of navbar */
 
 @media (max-width: 600px) {
   body {
     margin-left: 0;
+  }
+
+  .group,
+  .navButton {
+    font-size: 1.1rem;
   }
   .navProfilePicture {
     flex-direction: row;
@@ -91,6 +111,12 @@
   .navProfilePicture .profilePicture {
     margin-bottom: 0;
     margin-right: 0.75rem;
+  }
+  .navProfilePicture .names {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    color: var(--color-light);
   }
   .mobileTopNav {
     width: 100%;
