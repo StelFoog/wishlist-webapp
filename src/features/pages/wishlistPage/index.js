@@ -1,6 +1,4 @@
 import React from "react";
-import DashboardNav from "../../components/dashboardNav";
-import Button from "../../components/button";
 import WishlistPage from "./WishlistPage";
 
 const wishLIstPageContainer = ({ goToForm, ...rest }) => (
