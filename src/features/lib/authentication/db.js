@@ -18,6 +18,7 @@ const userFromFirebaseUser = (firebaseUser) => {
       uid: firebaseUser.uid,
       profilePictureUrl: (firebaseUser.photoURL + "?height=100")
     }
+  };
 }
 
 const getUser = async uid => {
@@ -27,7 +28,8 @@ const getUser = async uid => {
 };
 
 const createUser = async (firebaseUser) => {
-  await _getUserRef(uid).set(userFromFirebaseUser(firebaseUser));
+  const user = userFromFirebaseUser(firebaseUser);
+  await _getUserRef(user.uid).set(user);
   return user;
 };
 
@@ -43,12 +45,11 @@ const logInAndCreateUserIfDoesNotExist = async firebaseUser => {
   const user = {
     ...(await getUser(uid)), 
     ...userFromFirebaseUser(firebaseUser)
-    }
   };
   // Update database incase any fields are missing
   await setUser(user.uid, user);
   return user;
-};
+}
 
 const giveWishlistToUserAsOwner = async (uid, wishlistId) => {
   setUserProperty(uid, {
