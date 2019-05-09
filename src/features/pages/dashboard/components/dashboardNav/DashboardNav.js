@@ -1,21 +1,13 @@
 import React, { Component } from "react";
-<<<<<<< HEAD:src/features/components/dashboardNav/DashboardNav.js
-import { connect } from "react-redux";
-import Button from "../button";
-import IconButton from "../iconButton";
-import ListIcon from "../svgIcon/icons/ListIcon.js";
-import GroupIcon from "../svgIcon/icons/GroupIcon.js";
-import SettingsIcon from "../svgIcon/icons/SettingsIcon.js";
-import MenuIcon from "../svgIcon/icons/MenuIcon.js";
-import ProfilePicture from "../profilePicture";
-=======
+
 import IconButton from "../../../../components/iconButton";
 import ListIcon from "../../../../components/svgIcon/icons/ListIcon.js";
 import GroupIcon from "../../../../components/svgIcon/icons/GroupIcon.js";
 import SettingsIcon from "../../../../components/svgIcon/icons/SettingsIcon.js";
+import Ripple from "../../../../components/ripple";
 import MenuIcon from "../../../../components/svgIcon/icons/MenuIcon.js";
 import ProfilePicture from "../../../../components/profilePicture";
->>>>>>> Moved dashboardNav as a component in dashboard:src/features/pages/dashboard/components/dashboardNav/DashboardNav.js
+import RoundKeyboardArrowDown from "../../../../components/svgIcon/icons/RoundKeyboardArrowDown";
 import "./dashboardNav.css";
 import { getUserProfilePictureUrl } from "../../lib/authentication/user.js";
 import { getUser } from "../../lib/authentication/selectors.js";
@@ -23,9 +15,9 @@ import { getUser } from "../../lib/authentication/selectors.js";
 class DashboardNav extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      showSideNav: false
+      showSideNav: false,
+      groupDropdown: false
     };
 
     this.setWrapperRef = this.setWrapperRef.bind(this);
@@ -36,6 +28,19 @@ class DashboardNav extends Component {
     const show = this.state.showSideNav;
     this.setState({ showSideNav: !show });
   };
+
+  getActivePage() {
+    const { pathname } = this.props.location;
+    if (
+      pathname.indexOf("wishlist") > 0 ||
+      pathname === "/dashboard/" ||
+      pathname === "/dashboard"
+    ) {
+      return 0;
+    } else if (pathname.indexOf("groups") > 0) {
+      return 1;
+    } else return -1;
+  }
 
   componentDidMount() {
     document.addEventListener("mousedown", this.handleClickOutside);
@@ -56,57 +61,67 @@ class DashboardNav extends Component {
   }
 
   render() {
+    const activeTab = this.getActivePage();
+    const { showSideNav, groupDropdown } = this.state;
+    const { navigate } = this.props;
     return (
       <React.Fragment>
         <div
           ref={this.state.showSideNav ? this.setWrapperRef : ""}
-          className={[
-            "dashboardNav",
-            this.state.showSideNav ? "" : "hidden"
-          ].join(" ")}
+          className={`dashboardNav ${showSideNav ? "" : "hidden"}`}
         >
           <div className="navProfilePicture">
             <ProfilePicture
               src={getUserProfilePictureUrl(this.props.user, 100)}
             />
           </div>
+          <hr className="navDivider" />
+          <div className={`active-${activeTab}`}>
+            <div className="navButton" onClick={() => navigate("")}>
+              <Ripple />
+              <div className="icon">
+                <ListIcon size={30} color="var(--color-light)" />
+              </div>
+              <span>Wishlists</span>
+            </div>
 
-          <div className="navButton">
-            <IconButton
-              className={"navButton"}
-              variant={"filled"}
-              label={"L"}
-              color={"var(--color-light)"}
+            <div
+              className="navButton"
+              onClick={() => this.setState({ groupDropdown: !groupDropdown })}
             >
-              <ListIcon size={84} />
-            </IconButton>
+              <Ripple />
+              <div className="icon">
+                <GroupIcon size={30} color="var(--color-light)" />
+              </div>
+              <span>Groups</span>
+              <div
+                className={`dropdownArrow ${groupDropdown ? "open" : "closed"}`}
+              >
+                <RoundKeyboardArrowDown size={30} color="var(--color-light)" />
+              </div>
+            </div>
+            {groupDropdown && (
+              <div className="groupDropdown">
+                <div className="group">hej</div>
+              </div>
+            )}
           </div>
-
-          <div className="navButton">
-            <IconButton
-              className={"navButton"}
-              variant={"filled"}
-              color={"var(--color-light)"}
-            >
-              <GroupIcon size={84} />
-            </IconButton>
-          </div>
-
-          <div className="navButtonBottom">
-            <IconButton
-              className={"navButtonBottom"}
-              variant={"clear"}
-              color={"var(--color-light)"}
-            >
-              <SettingsIcon size={84} />
-            </IconButton>
+          <div
+            className="navButton navButtonBottom"
+            onClick={() => navigate("settings")}
+          >
+            <Ripple />
+            <div className="icon">
+              <SettingsIcon size={30} />
+            </div>
+            <span>Settings</span>
           </div>
         </div>
 
         <div className="mobileTopNav">
           <IconButton
             variant={"clear"}
-            color={"var(--color-light)"}
+            color={"transparent"}
             handleClick={this.toggleSideNav}
           >
             <MenuIcon size={48} />
