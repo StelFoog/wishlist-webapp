@@ -12,22 +12,21 @@ function _getChatRef(uid) {
 
 function createNewChat(id) {
   const ref = _getChatRef(id);
-  ref.get().then((doc) => {
-    if(!doc.exists)
-      ref.set({messages: []});
+  ref.get().then(doc => {
+    if (!doc.exists) ref.set({ messages: [] });
   });
   return id;
 }
 
 function sendChatMessage(chatId, user, text) {
-  if(text === "")
-    return;
+  if (text === "") return;
 
   const ref = _getChatRef(chatId);
   const msg = {
-    senderId: user.uid, 
-    senderName: user.name, 
-    timestamp: new Date(), 
+    senderId: user.uid,
+    senderName: user.name,
+    photoURL: user.profilePictureUrl,
+    timestamp: new Date(),
     text: text
   };
   _getChatRef(chatId).update({
@@ -38,13 +37,13 @@ function sendChatMessage(chatId, user, text) {
 
 async function loadChatMessages(chatId) {
   const ref = _getChatRef(chatId);
-  return (await ref.get().then((doc) => {
+  return (await ref.get().then(doc => {
     return doc.data();
   })).messages;
 }
 
 function onChatMessageReceived(chatId, callback) {
-  return _getChatRef(chatId).onSnapshot((doc) => {
+  return _getChatRef(chatId).onSnapshot(doc => {
     callback(doc.data());
   });
 }
@@ -54,4 +53,4 @@ export {
   createNewChat,
   sendChatMessage,
   loadChatMessages
-}
+};
