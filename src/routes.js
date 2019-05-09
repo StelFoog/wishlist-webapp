@@ -19,7 +19,6 @@ import WishlistPage from "./features/pages/wishlistPage";
 import InvitedUserPage from "./features/pages/invitedUserPage";
 import InvitedWishlistPage from "./features/pages/invitedWishlistPage";
 
-
 const Root = ({ store, history, persistor }) => (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
@@ -34,11 +33,7 @@ const Root = ({ store, history, persistor }) => (
                 return <HomePage {...props} />;
               }}
             />
-            <Route
-              path="/chat"
-              exact
-              component={Chat}
-            />
+            <Route path="/chat" exact component={Chat} />
             <Route
               path={"/dashboard/"}
               render={props => {
@@ -49,7 +44,7 @@ const Root = ({ store, history, persistor }) => (
               path={"/bubbleTest"}
               exact
               render={props => {
-                return <ChatBubble  {...props} />;
+                return <ChatBubble {...props} />;
               }}
             />
 
