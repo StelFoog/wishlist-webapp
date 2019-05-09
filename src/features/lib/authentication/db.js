@@ -8,9 +8,9 @@ const _getUserRef = uid => database.collection("Users").doc("" + uid);
 
 const userExistsWithUid = async uid => {
   return (await getUser(uid)) !== null;
-}
+};
 
-const userFromFirebaseUser = (firebaseUser) => {
+const userFromFirebaseUser = firebaseUser => {
   return {
     ...defaultUser,
     ...{
@@ -19,15 +19,17 @@ const userFromFirebaseUser = (firebaseUser) => {
       profilePictureUrl: firebaseUser.photoURL
     }
   };
-}
-
-const getUser = async uid => {
-  return await _getUserRef(uid).get().then((doc) => {
-    return doc.exists ? doc.data() : null;
-  });
 };
 
-const createUser = async (firebaseUser) => {
+const getUser = async uid => {
+  return await _getUserRef(uid)
+    .get()
+    .then(doc => {
+      return doc.exists ? doc.data() : null;
+    });
+};
+
+const createUser = async firebaseUser => {
   const user = userFromFirebaseUser(firebaseUser);
   await _getUserRef(user.uid).set(user);
   return user;
@@ -35,21 +37,20 @@ const createUser = async (firebaseUser) => {
 
 const setUser = async (uid, user) => {
   await _getUserRef(uid).set(user);
-}
+};
 
 const logInAndCreateUserIfDoesNotExist = async firebaseUser => {
   const uid = firebaseUser.uid;
-  if (!(await userExistsWithUid(uid)))
-    await createUser(firebaseUser);
+  if (!(await userExistsWithUid(uid))) await createUser(firebaseUser);
 
   const user = {
-    ...(await getUser(uid)), 
-    ...userFromFirebaseUser(firebaseUser)
+    ...userFromFirebaseUser(firebaseUser),
+    ...(await getUser(uid))
   };
   // Update database incase any fields are missing
   await setUser(user.uid, user);
   return user;
-}
+};
 
 const giveWishlistToUserAsOwner = async (uid, wishlistId) => {
   setUserProperty(uid, {
@@ -59,7 +60,7 @@ const giveWishlistToUserAsOwner = async (uid, wishlistId) => {
 
 const setUserProperty = (uid, prop) => {
   _getUserRef(uid).update(prop);
-}
+};
 
 const addInvitedWishlistToUser = ({ wishlistId, uid }) => {
   setUserProperty(uid, {
@@ -75,8 +76,8 @@ const addInvitedUserToWishlist = ({ wishlistID, uid }) => {
 };
 
 const addNewWishlistIdToUser = (uid, wishlistId) => {
-  addInvitedWishlistToUser({wishlistId, uid});
-}
+  giveWishlistToUserAsOwner(uid, wishlistId);
+};
 
 export {
   giveWishlistToUserAsOwner,
