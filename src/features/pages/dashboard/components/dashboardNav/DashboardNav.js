@@ -9,9 +9,8 @@ import {
   ListIcon
 } from "../../../../components/svgIcon";
 import ProfilePicture from "../../../../components/profilePicture";
+import { getUserProfilePictureUrl } from "../../../../lib/authentication/user.js";
 import "./dashboardNav.css";
-import { getUserProfilePictureUrl } from "../../lib/authentication/user.js";
-import { getUser } from "../../lib/authentication/selectors.js";
 
 class DashboardNav extends React.Component {
   constructor(props) {
@@ -73,9 +72,9 @@ class DashboardNav extends React.Component {
         >
           <div className="navProfilePicture">
             <ProfilePicture
-              src={getUserProfilePictureUrl(this.props.user, 100)}
+              width="80px"
+              src={getUserProfilePictureUrl(user, 80)}
             />
-            <ProfilePicture width="60px" src={null} />
             <div className="names">
               <span>{user.name}</span>
             </div>
