@@ -39,7 +39,7 @@ const formatTimestamp = timestamp => {
 
 class Chat extends Component {
   componentDidMount() {
-    onChatMessageReceived(
+    this.unlisten = onChatMessageReceived(
       0,
       (props => {
         return chat => {
@@ -47,6 +47,10 @@ class Chat extends Component {
         };
       })(this.props)
     );
+  }
+
+  componentWillUnmount() {
+    this.unlisten();
   }
 
   render() {
