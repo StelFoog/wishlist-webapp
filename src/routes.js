@@ -9,6 +9,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import Dialog from "./features/components/dialog/DialogContainer";
 import { ItemAddition as WishlistItem } from "./features/components/wishListForm";
 import Chat from "./features/pages/chat";
+import ChatBubble from "./features/components/chatBubble";
 
 // Pages
 import HomePage from "./features/pages/homePage";
@@ -17,6 +18,7 @@ import LoggedInPage from "./features/pages/loggedInPage";
 import WishlistPage from "./features/pages/wishlistPage";
 import InvitedUserPage from "./features/pages/invitedUserPage";
 import InvitedWishlistPage from "./features/pages/invitedWishlistPage";
+
 
 const Root = ({ store, history, persistor }) => (
   <Provider store={store}>
@@ -43,6 +45,14 @@ const Root = ({ store, history, persistor }) => (
                 return <Dashboard {...props} />;
               }}
             />
+            <Route
+              path={"/bubbleTest"}
+              exact
+              render={props => {
+                return <ChatBubble {...props} />;
+              }}
+            />
+
             <Route
               exact
               render={props => {
