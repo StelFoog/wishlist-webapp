@@ -12,9 +12,8 @@ function _getChatRef(uid) {
 
 function createNewChat(id) {
   const ref = _getChatRef(id);
-  ref.get().then((doc) => {
-    if(!doc.exists)
-      ref.set({messages: []});
+  ref.get().then(doc => {
+    if (!doc.exists) ref.set({ messages: [] });
   });
   return id;
 }
@@ -22,32 +21,33 @@ function createNewChat(id) {
 function sendChatMessage(chatId, user, text) {
   const ref = _getChatRef(chatId);
   const msg = {
-    senderId: user.uid, 
-    senderName: user.name, 
-    timestamp: new Date(), 
+    senderId: user.uid,
+    senderName: user.name,
+    photoURL: user.profilePictureUrl,
+    timestamp: new Date(),
     text: text
   };
-  ref.get().then((doc) => {
-    if(!doc.exists)
-      throw new Error("sendChatMessage(): No chat with id "
-                     + chatId
-                     + " exists");
+  ref.get().then(doc => {
+    if (!doc.exists)
+      throw new Error(
+        "sendChatMessage(): No chat with id " + chatId + " exists"
+      );
     let messages = doc.data().messages;
     messages.push(msg);
-    ref.set({messages: messages});
+    ref.set({ messages: messages });
   });
   return msg;
 }
 
 async function loadChatMessages(chatId) {
   const ref = _getChatRef(chatId);
-  return (await ref.get().then((doc) => {
+  return (await ref.get().then(doc => {
     return doc.data();
   })).messages;
 }
 
 function onChatMessageReceived(chatId, callback) {
-  return _getChatRef(chatId).onSnapshot((doc) => {
+  return _getChatRef(chatId).onSnapshot(doc => {
     callback(doc.data());
   });
 }
@@ -57,4 +57,4 @@ export {
   createNewChat,
   sendChatMessage,
   loadChatMessages
-}
+};
