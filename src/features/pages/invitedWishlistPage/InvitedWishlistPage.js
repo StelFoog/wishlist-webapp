@@ -11,6 +11,7 @@ class InvitedWishlistPage extends React.Component {
     console.log(props);
     this.state = {
       items: [],
+      name: "",
       uid: props.match.params.uid
     };
   }
@@ -24,7 +25,7 @@ class InvitedWishlistPage extends React.Component {
       .get()
       .then(doc => {
         if (doc.data()) {
-          this.setState({ items: doc.data().items });
+          this.setState({ items: doc.data().items, name: doc.data().title });
         }
       });
   }
@@ -34,10 +35,11 @@ class InvitedWishlistPage extends React.Component {
   }
 
   render() {
-    const { items, uid } = this.state;
+    const { items, uid, name } = this.state;
+    console.log(name);
     return (
       <div>
-        <PageHeader title="Name of wishlist" />
+        <PageHeader title={name} />
         {items.length > 0 && (
           <React.Fragment>
             {items.map((item, index) => (

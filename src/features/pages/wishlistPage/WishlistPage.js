@@ -66,13 +66,12 @@ class WishlistPage extends Component {
 */
 
 const WishlistPage = ({ wishlists, pathname, createItem }) => {
-  console.log(wishlists);
   const wishlistUid = pathname.split("wishlist/").pop();
   const wishlist = wishlists.find(element => element.uid == wishlistUid);
   const { items } = wishlist;
   return (
     <div className="wishlistPage page">
-      <PageHeader title="Name of wishlist" />
+      <PageHeader title={wishlist.title} />
       {items.length > 0 && (
         <React.Fragment>
           {items.map((item, index) => (
