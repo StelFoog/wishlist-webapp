@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import Button from "../button";
-import IconButton from "../iconButton";
-import ListIcon from "../svgIcon/icons/ListIcon.js";
-import GroupIcon from "../svgIcon/icons/GroupIcon.js";
-import SettingsIcon from "../svgIcon/icons/SettingsIcon.js";
-import MenuIcon from "../svgIcon/icons/MenuIcon.js";
-import ProfilePicture from "../profilePicture";
+import IconButton from "../../../../components/iconButton";
+import ListIcon from "../../../../components/svgIcon/icons/ListIcon.js";
+import GroupIcon from "../../../../components/svgIcon/icons/GroupIcon.js";
+import SettingsIcon from "../../../../components/svgIcon/icons/SettingsIcon.js";
+import MenuIcon from "../../../../components/svgIcon/icons/MenuIcon.js";
+import ProfilePicture from "../../../../components/profilePicture";
 import "./dashboardNav.css";
 
 class DashboardNav extends Component {
