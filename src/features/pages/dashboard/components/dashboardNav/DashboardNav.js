@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+<<<<<<< HEAD:src/features/components/dashboardNav/DashboardNav.js
 import { connect } from "react-redux";
 import Button from "../button";
 import IconButton from "../iconButton";
@@ -7,6 +8,14 @@ import GroupIcon from "../svgIcon/icons/GroupIcon.js";
 import SettingsIcon from "../svgIcon/icons/SettingsIcon.js";
 import MenuIcon from "../svgIcon/icons/MenuIcon.js";
 import ProfilePicture from "../profilePicture";
+=======
+import IconButton from "../../../../components/iconButton";
+import ListIcon from "../../../../components/svgIcon/icons/ListIcon.js";
+import GroupIcon from "../../../../components/svgIcon/icons/GroupIcon.js";
+import SettingsIcon from "../../../../components/svgIcon/icons/SettingsIcon.js";
+import MenuIcon from "../../../../components/svgIcon/icons/MenuIcon.js";
+import ProfilePicture from "../../../../components/profilePicture";
+>>>>>>> Moved dashboardNav as a component in dashboard:src/features/pages/dashboard/components/dashboardNav/DashboardNav.js
 import "./dashboardNav.css";
 import { getUserProfilePictureUrl } from "../../lib/authentication/user.js";
 import { getUser } from "../../lib/authentication/selectors.js";
