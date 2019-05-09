@@ -3,55 +3,61 @@ import { getUser } from "../../lib/authentication/selectors";
 import { connect } from "react-redux";
 import { onChatMessageReceived } from "../../lib/chat/db.js";
 import Button from "../../components/button";
-import { actions  } from "../../lib/chat";
+import { actions } from "../../lib/chat";
 const { sendChatMessage, updateLocalChat, createChat } = actions;
 
-const submitClick = (props) => {
+const submitClick = props => {
   return () => {
     const elem = document.getElementById("chatInput");
     const text = elem.value;
     elem.value = "";
-    props.handleChatSend( 0, text );
+    props.handleChatSend(0, text);
   };
-}
+};
 
-const createChatClick = (props) => {
+const createChatClick = props => {
   return () => {
-    props.handleCreateChat( 0 );
-  }
-}
+    props.handleCreateChat(0);
+  };
+};
 
-const formatTimestamp = (timestamp) => {
+const formatTimestamp = timestamp => {
   let time = new Date(0);
-  time.setUTCSeconds(timestamp.seconds)
-  return time.getHours() 
-       + ":" 
-       + time.getMinutes() 
-       + ", " 
-       + time.getFullYear() 
-       + "/" 
-       + (time.getMonth() + 1)
-       + "/" 
-       + (time.getDay() + 5)
-  ;
-}
+  time.setUTCSeconds(timestamp.seconds);
+  return (
+    time.getHours() +
+    ":" +
+    time.getMinutes() +
+    ", " +
+    time.getFullYear() +
+    "/" +
+    (time.getMonth() + 1) +
+    "/" +
+    time.getDate()
+  );
+};
 
 class Chat extends Component {
   componentDidMount() {
-    onChatMessageReceived(0, ((props) => {
-      return (chat) => {
-        props.handleChatUpdate(chat);
-      }
-    })(this.props));
+    onChatMessageReceived(
+      0,
+      (props => {
+        return chat => {
+          props.handleChatUpdate(chat);
+        };
+      })(this.props)
+    );
   }
 
   render() {
     return (
-     <div>
+      <div>
         <React.Fragment>
-          {this.props.messages.map((msg) =>
-            <p> {msg.senderName}: "{msg.text}" at {formatTimestamp(msg.timestamp)} </p>
-          )}
+          {this.props.messages.map(msg => (
+            <p>
+              {msg.senderName}: "{msg.text}" at {formatTimestamp(msg.timestamp)}
+            </p>
+          ))}
           <input type="text" id="chatInput" />
           <Button
             handleClick={submitClick(this.props)}
@@ -67,22 +73,20 @@ class Chat extends Component {
           />
         </React.Fragment>
       </div>
-    )
+    );
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  handleChatSend: (id, user, message) => 
+  handleChatSend: (id, user, message) =>
     dispatch(sendChatMessage(id, user, message)),
-  handleChatUpdate: (messages) => 
-    dispatch(updateLocalChat(messages)),
-  handleCreateChat: (user) => 
-    dispatch(createChat(user))
+  handleChatUpdate: messages => dispatch(updateLocalChat(messages)),
+  handleCreateChat: user => dispatch(createChat(user))
 });
 
-const mapStateToProps = (state) => {
-  const { chat } = state
-  return { messages: chat.messages }
+const mapStateToProps = state => {
+  const { chat } = state;
+  return { messages: chat.messages };
 };
 
 export default connect(
