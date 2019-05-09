@@ -1,4 +1,4 @@
-import { database } from "../firebase";
+import { firebase, database } from "../firebase";
 
 /* Chats are represented as
  * {messages: u}
@@ -20,6 +20,9 @@ function createNewChat(id) {
 }
 
 function sendChatMessage(chatId, user, text) {
+  if(text === "")
+    return;
+
   const ref = _getChatRef(chatId);
   const msg = {
     senderId: user.uid, 
@@ -27,14 +30,8 @@ function sendChatMessage(chatId, user, text) {
     timestamp: new Date(), 
     text: text
   };
-  ref.get().then((doc) => {
-    if(!doc.exists)
-      throw new Error("sendChatMessage(): No chat with id "
-                     + chatId
-                     + " exists");
-    let messages = doc.data().messages;
-    messages.push(msg);
-    ref.set({messages: messages});
+  _getChatRef(chatId).update({
+    messages: firebase.firestore.FieldValue.arrayUnion(msg)
   });
   return msg;
 }
