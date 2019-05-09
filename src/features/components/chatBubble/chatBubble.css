@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 
 .messageContent {
   display: flex;
@@ -7,35 +8,69 @@
 .messageContentSent {
   display: flex;
   flex-direction: row-reverse;
+=======
+.tempBackground{
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  background-color: white;
+  padding: 50px;
+}
+
+.messageContent {
+  display: flex;
+>>>>>>> 722664b6c56a1e595fd077286eab72381eab9450
 }
 
 .imageContainer {
   display: flex;
   align-items: flex-end;
+<<<<<<< HEAD
   margin: 0 8px;
 }
 
 .chatNameContainer p {
   margin: 0;
   padding: 0;
+=======
+  margin-right: 8px;
+>>>>>>> 722664b6c56a1e595fd077286eab72381eab9450
 }
 
 .chatBubble{
   max-width: 300px;
+<<<<<<< HEAD
   padding: 6px 10px;
   border-radius: 15px;
+=======
+  padding: 6px;
+  border-radius: 10px;
+>>>>>>> 722664b6c56a1e595fd077286eab72381eab9450
   background-color: var(--color-light);
   font-weight: lighter;
   word-wrap: break-word;
 }
 
+<<<<<<< HEAD
 .chatBubbleSent {
   background-color: var(--color-secondary-light)
 }
 
+=======
+>>>>>>> 722664b6c56a1e595fd077286eab72381eab9450
 .chatBubble p {
   font-weight: 300;
   font-size: 18px;
   margin: 0;
+<<<<<<< HEAD
   padding: 0;
 }
+=======
+}
+
+h1{
+  margin: 0;
+  padding: 0;
+}
+>>>>>>> 722664b6c56a1e595fd077286eab72381eab9450
