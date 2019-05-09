@@ -2,7 +2,7 @@ const defaultItem = {
   name: null,
   description: null,
   price: null,
-  link: null,
+  link: null
   claimedBy: []
 };
 
