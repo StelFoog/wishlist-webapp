@@ -13,7 +13,8 @@ const {
   addWishlistItem,
   editWishlistItem,
   validateNewItem,
-  makeItem
+  makeItem,
+  claimWishlistItem
 } = wishlistItemDb;
 
 const {
@@ -99,12 +100,12 @@ function* workFetchAllItems() {
   }
 }
 
-function* workClaimWishlistItem() {
+function* workClaimWishlistItem(action) {
   try {
+    const { index, wishlistId } = action;
     const user = yield select(getUser);
-    //yield call(editWishlistItem, wishlistUid, index, item);
 
-    // Call DB function to claim wishlist for user
+    yield call(claimWishlistItem, user.uid, index, wishlistId);
 
     yield put({ type: CLAIM_WISHLIST_ITEM_SUCCESS });
   } catch (error) {

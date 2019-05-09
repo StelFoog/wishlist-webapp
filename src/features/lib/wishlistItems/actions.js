@@ -19,8 +19,9 @@ const editWishlistItem = () => ({
   type: EDIT_WISHLIST_ITEM
 });
 
-const claimWishlistItem = index => ({
+const claimWishlistItem = (wishlistId, index) => ({
   type: EDIT_WISHLIST_ITEM,
+  wishlistId,
   index
 });
 

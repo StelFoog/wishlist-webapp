@@ -43,8 +43,8 @@ const claimWishlistItem = async (userId, index, wishlistId) => {
   /*const ref = _getWishlistRef(wishlistId);
 
   let wishlist = await fetchWishlistByUid(wishlistId);
-  
-  if(!wishlist.items[index].claimedBy.includes(userId)) {
+
+  if (!wishlist.items[index].claimedBy.includes(userId)) {
     wishlist.items[index].claimedBy.push(userId);
     await _getWishlistRef(wishlistId).set(wishlist);
   }*/
@@ -67,7 +67,7 @@ const makeItem = item => ({
   price: "",
   description: "",
   ...item
-})
+});
 
 export default {
   fetchWishlistByUid,
