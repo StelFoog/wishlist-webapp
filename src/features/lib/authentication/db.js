@@ -39,7 +39,7 @@ const logInAndCreateUserIfDoesNotExist = async firebaseUser => {
   if (!(await userExistsWithUid(uid)))
     await createUser(firebaseUser);
 
-  const user = await getUser(uid);
+  const user = {...defaultUser, ...(await getUser(uid))};
   // Update database incase any fields are missing
   await setUser(user.uid, user);
   return user;
