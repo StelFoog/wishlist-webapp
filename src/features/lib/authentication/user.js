@@ -1,31 +1,31 @@
-function makeUser(name, uid, wishlists, ownedWishlists, groups) {
-  return {
-    name: name || null,
-    uid: uid,
-    wishlists: wishlists || [],
-    ownedWishlists: ownedWishlists || [],
-    groups: groups || [],
-    createdWishlists: 0
-  };
-}
 
-function generateWishlistUid(user) {
+const defaultUser = {
+  name: null,
+  uid: null,
+  wishlists: [],
+  ownedWishlists: [],
+  groups: [],
+  profilePictureUrl: null
+};
+
+const generateWishlistOrGroupUid = (user) => {
   let uid;
   do {
     uid = user.uid + "-" + Math.floor(Math.random() * 0x7fffffff);
-  } while (user.wishlists.includes(uid));
+  }while(user.ownedWishlists.includes(uid) || user.groups.includes(uid));
 
   return uid;
 }
 
-function giveWishlistToUserAsOwner(user, wishlist) {
-  user.createdWishlists++;
-  return giveUserAccessToWishlist(user, wishlist);
+const generateWishlistUid = generateWishlistOrGroupUid;
+
+const getUserProfilePictureUrl = (user, height = 100) => {
+  return user.profilePictureUrl + "?height=" + height;
 }
 
-function giveUserAccessToWishlist(user, wishlist) {
-  user.wishlists.push(wishlist);
-  return user;
-}
-
-export { makeUser, generateWishlistUid };
+export { 
+  getUserProfilePictureUrl,
+  defaultUser, 
+  generateWishlistUid, 
+  generateWishlistOrGroupUid 
+};
