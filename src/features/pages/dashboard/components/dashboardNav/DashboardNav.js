@@ -10,6 +10,7 @@ import {
 } from "../../../../components/svgIcon";
 import ProfilePicture from "../../../../components/profilePicture";
 import { getUserProfilePictureUrl } from "../../../../lib/authentication/user.js";
+import GroupList from "./components/groupList";
 import "./dashboardNav.css";
 
 class DashboardNav extends React.Component {
@@ -63,7 +64,7 @@ class DashboardNav extends React.Component {
   render() {
     const activeTab = this.getActivePage();
     const { showSideNav, groupDropdown } = this.state;
-    const { navigate, user } = this.props;
+    const { navigate, user, createGroup } = this.props;
     return (
       <React.Fragment>
         <div
@@ -107,18 +108,7 @@ class DashboardNav extends React.Component {
             <div
               className={`groupDropdown ${groupDropdown ? "show" : "hidden"}`}
             >
-              <div className="group">
-                <Ripple />
-                <span>Group name</span>
-              </div>
-              <div className="group">
-                <Ripple />
-                <span>Group name</span>
-              </div>
-              <div className="group">
-                <Ripple />
-                <span>Group name</span>
-              </div>
+              <GroupList groups={user.groups} navigate={navigate} />
             </div>
           </div>
           <div
