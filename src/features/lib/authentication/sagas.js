@@ -56,11 +56,8 @@ function* workUserAuthFacebook() {
     const checkIfInvite = window.location.pathname.match(
       /(wishlist\/[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\/invite)/g
     );
-    console.log("Regex found: " + checkIfInvite);
-    const wishlistUid = checkIfInvite.toString().split("/")[1]; // Get wishlist Uid from URL (please shoot me)
-    console.log("Extracted Uid: " + wishlistUid);
 
-    if (checkIfInvite) {
+    if (checkIfInvite !== null) {
       const wishlistUid = checkIfInvite.toString().split("/")[1]; // Get wishlist Uid from URL (please shoot me)
 
       // Login via invite link
