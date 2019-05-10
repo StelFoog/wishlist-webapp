@@ -32,17 +32,14 @@ const Root = ({ store, history, persistor }) => (
                 return <HomePage {...props} />;
               }}
             />
-            <Route
-              path="/chat"
-              exact
-              component={Chat}
-            />
+            <Route path="/chat" exact component={Chat} />
             <Route
               path={"/dashboard/"}
               render={props => {
                 return <Dashboard {...props} />;
               }}
             />
+
             <Route
               exact
               render={props => {

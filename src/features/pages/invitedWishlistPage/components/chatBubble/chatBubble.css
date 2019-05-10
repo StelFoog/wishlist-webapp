@@ -1,0 +1,56 @@
+.messageContent {
+  display: flex;
+}
+
+.messageContentSent {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.imageContainer {
+  display: flex;
+  align-items: flex-end;
+  margin: 0 8px;
+}
+.chatNameContainer {
+  display: flex;
+  flex-direction: column;
+}
+.chatNameContainer p {
+  margin: 0;
+  padding: 0;
+}
+.messageContentSent .chatBubbleContainer {
+  justify-content: flex-end;
+}
+.chatBubbleContainer {
+  display: inline-flex;
+  padding: 0.125rem 0;
+}
+.chatBubble {
+  max-width: 300px;
+  padding: 6px 10px;
+  border-radius: 1rem;
+  background-color: var(--color-light);
+  font-weight: lighter;
+  word-wrap: break-word;
+}
+.imageContainer.noPicture {
+  padding-right: 40px;
+}
+
+.chatBubbleSent {
+  background-color: #09f;
+  color: #fff;
+}
+.messageContentSent span {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.chatBubble p {
+  font-weight: 300;
+  font-size: 18px;
+  margin: 0;
+  padding: 0;
+}

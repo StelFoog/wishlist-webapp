@@ -5,6 +5,7 @@ import db from "./db";
 import { getUser } from "../authentication/selectors";
 import { addNewWishlistIdToUser } from "../authentication/db";
 import wishlistTypes from "./types.js";
+import chatTypes from "../chat/types";
 import { types as authTypes } from "../authentication";
 import { types as dialogTypes } from "../../components/dialog";
 
@@ -29,6 +30,8 @@ const {
   EDIT_WISHLIST_PROPERTIES_ERROR,
   EDIT_WISHLIST_PROPERTIES_SUCCESS
 } = wishlistTypes;
+
+const { CREATE_CHAT } = chatTypes;
 
 const { ADD_WISHLIST_ID_TO_USER } = authTypes;
 
@@ -59,9 +62,11 @@ function* workCreateUserWishlist() {
       userValues,
       wishlistForm.title
     );
+
     yield all([
       call(addNewWishlistIdToUser, userValues.uid, result.uid),
-      put({ type: ADD_WISHLIST_ID_TO_USER, wishlistId: result.uid })
+      put({ type: ADD_WISHLIST_ID_TO_USER, wishlistId: result.uid }),
+      put({ type: CREATE_CHAT, id: result.uid })
     ]);
     // TODO: add the wishlist to the user obejct
     yield all([
