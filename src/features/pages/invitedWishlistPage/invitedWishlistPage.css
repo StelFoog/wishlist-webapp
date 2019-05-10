@@ -8,7 +8,7 @@
 @media (max-width: 900px) {
   .invitedPageContainer {
     width: calc(100vw - 170px);
-    transition: margin-left 0.2s linear;
+    transition: margin-left 0.2s ease-in-out;
   }
   .invitedPageContainer.pageLeft {
     margin-left: -100%;
