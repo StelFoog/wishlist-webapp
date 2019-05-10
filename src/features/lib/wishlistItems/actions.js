@@ -20,7 +20,7 @@ const editWishlistItem = () => ({
 });
 
 const claimWishlistItem = (wishlistId, index) => ({
-  type: EDIT_WISHLIST_ITEM,
+  type: CLAIM_WISHLIST_ITEM,
   wishlistId,
   index
 });
