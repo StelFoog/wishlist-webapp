@@ -8,6 +8,7 @@ import { sagas as groupSagas } from "./features/lib/groups";
 function* rootSaga() {
   yield all([
     authSagas.watchUserAuthFacebook(),
+    authSagas.watchAddUserToWishlist(),
     wishlistSagas.watchCreateUserWishlist(),
     wishlistItemSagas.watchCreateWishlistItem(),
     wishlistSagas.watchFetchWishlists(),
