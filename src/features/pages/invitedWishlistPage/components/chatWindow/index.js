@@ -1,12 +1,12 @@
 import ChatWindow from "./ChatWindow";
 import { connect } from "react-redux";
 import { actions } from "../../../../lib/chat";
-
+import { getUser } from "../../../../lib/authentication/selectors";
 const { sendChatMessage, updateLocalChat, createChat } = actions;
 
 const mapStateToProps = state => {
   const { chat } = state;
-  return { messages: chat.messages };
+  return { messages: chat.messages, user: getUser(state) };
 };
 
 const mapDispatchToProps = dispatch => ({
