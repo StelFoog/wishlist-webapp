@@ -1,65 +1,59 @@
 import db from "../wishlists/db";
 import { database } from "../firebase/";
+import defaultItem from "./item.js";
 
 const { fetchWishlistByUid, _getWishlistRef } = db;
 
-const addWishlistItem = async (uid, item) => {
-  let wishlist = await fetchWishlistByUid(uid);
-  wishlist.items.push(item);
-  _getWishlistRef(uid).set(wishlist);
+const addWishlistItem = async (wishlistId, item) => {
+  await modifyWishlistItems(wishlistId, items => {
+    items.push(item);
+    return items;
+  });
 };
 
-async function editWishlistItem(uid, index, item) {
-  let wishlist = await fetchWishlistByUid(uid);
-  if (index < 0 || index >= wishlist.items.length)
-    throw new Error("editWishlistItem(): Item index out of bounds");
-  const oldItem = wishlist.items[index];
-  wishlist.items[index] = { ...oldItem, ...item };
-  _getWishlistRef(uid).set(wishlist);
-}
-
-async function removeWishlistItem(uid, index) {
-  let wishlist = await fetchWishlistByUid(uid);
-  if (index < 0 || index >= wishlist.items.length)
-    throw new Error("removeWishlistItem(): Item index out of bounds");
-  wishlist.items.splice(index, 1);
-  _getWishlistRef(uid).set(wishlist);
-}
-
-const _getRefDoc = async ref => {
-  return ref
-    .get()
-    .then(doc => {
-      return doc;
-    })
-    .catch(error => {
-      throw error;
-    });
+const editWishlistItem = async (wishlistId, index, item) => {
+  await modifyWishlistItems(wishlistId, items => {
+    items[index] = { ...items[index], ...item };
+    return items;
+  });
 };
 
-const validateNewItem = item => item ? item : {};
+const removeWishlistItem = async (index, wishlistId) => {
+  await modifyWishlistItems(wishlistId, items => {
+    items.splice(index, 1);
+    return items;
+  });
+};
 
+const claimWishlistItem = async (userId, index, wishlistId) => {
+  await modifyWishlistItems(wishlistId, items => {
+    if (!items[index].claimedBy.includes(userId))
+      items[index].claimedBy.push(userId);
+    return items;
+  });
+};
+
+const modifyWishlistItems = async (wishlistId, lambda) => {
+  let wishlist = await fetchWishlistByUid(wishlistId);
+  wishlist.items = lambda(wishlist.items);
+  await _getWishlistRef(wishlistId).set(wishlist);
+};
+
+// ?
 const makeItem = item => ({
-  price: "",
-  description: "",
+  ...defaultItem,
+  ...{
+    name: "",
+    description: ""
+  },
   ...item
-})
+});
 
-/*
-const fetchWishlistByUid = async uid => {
-  const ref = _getWishlistRef(uid);
-  const doc = await _getRefDoc(ref);
-  if (!doc.exists)
-    throw new Error(
-      "fetchWishlistByUid(): No wishlist with uid " + uid + " exists"
-    );
-  return { ...doc.data() };
-};
-*/
 export default {
   fetchWishlistByUid,
   addWishlistItem,
   editWishlistItem,
   removeWishlistItem,
-  makeItem
+  makeItem,
+  claimWishlistItem
 };

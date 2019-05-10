@@ -1,6 +1,11 @@
 import types from "./types";
 
-const { CREATE_WISHLIST_ITEM, FETCH_ALL_WISHLISTS, EDIT_WISHLIST_ITEM } = types;
+const {
+  CREATE_WISHLIST_ITEM,
+  FETCH_ALL_WISHLISTS,
+  EDIT_WISHLIST_ITEM,
+  CLAIM_WISHLIST_ITEM
+} = types;
 
 const createWishlistItem = () => ({
   type: CREATE_WISHLIST_ITEM
@@ -12,10 +17,17 @@ const fetchAllItems = () => ({
 
 const editWishlistItem = () => ({
   type: EDIT_WISHLIST_ITEM
-})
+});
+
+const claimWishlistItem = (wishlistId, index) => ({
+  type: CLAIM_WISHLIST_ITEM,
+  wishlistId,
+  index
+});
 
 export default {
   createWishlistItem,
   fetchAllItems,
-  editWishlistItem
+  editWishlistItem,
+  claimWishlistItem
 };
