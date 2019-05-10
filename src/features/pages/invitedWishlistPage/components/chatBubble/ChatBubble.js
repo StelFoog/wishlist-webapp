@@ -15,12 +15,13 @@ const ChatBubble = ({
       <div className={`imageContainer ${sameSender ? "noPicture" : ""}`}>
         {!sameSender && <ProfilePicture width={40} src={userProfilePicture} />}
       </div>
-      <div className="chatNameContiner">
+      <div className="chatNameContainer">
         {!sameSender && <span>{username}</span>}
-        <div className={`chatBubble ${sent ? "chatBubbleSent" : ""}`}>
-          {text.map(value => (
-            <p key={`${value} ${username}`}>{value}</p>
-          ))}
+        <div className="chatBubbleContainer">
+          <div className={`chatBubble ${sent ? "chatBubbleSent" : ""}`}>
+            {text &&
+              text.map(value => <p key={`${value} ${username}`}>{value}</p>)}
+          </div>
         </div>
       </div>
     </div>
