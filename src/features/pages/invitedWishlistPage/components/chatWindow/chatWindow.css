@@ -17,6 +17,7 @@
   width: 100%;
 }
 .chat-input {
+  border-top: var(--color-primary) solid 1px;
   display: flex;
   padding: 0 0.25rem;
 }
@@ -37,7 +38,7 @@
 
 @media (max-width: 900px) {
   .chatWindow {
-    transition: right 0.2s linear;
+    transition: right 0.2s ease-in-out;
     top: 0;
     right: -100%;
     width: calc(100vw - 170px);
