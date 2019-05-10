@@ -1,56 +1,33 @@
 import { database } from "../firebase/";
-import { makeWishlist } from "./wishlist";
-//import { editUser } from "../authentication/db";
+import { defaultWishlist } from "./wishlist";
 import { generateWishlistUid } from "../authentication/user";
 
 const _getWishlistRef = uid => database.collection("Wishlists").doc("" + uid);
 
-const _getRefDoc = async ref => {
-  return await ref
-    .get()
-    .then(doc => {
-      return doc;
-    })
-    .catch(error => {
-      throw error;
-    });
-};
-
-const addWishlistItem = (uid, item) => {
-  let wishlist = fetchWishlistByUid(uid);
-  wishlist.items.push(item);
-  _getWishlistRef(uid).set(wishlist);
-};
-
 const createWishlistWithOwner = async (user, wishlistName) => {
   const uid = generateWishlistUid(user);
-  const ref = _getWishlistRef(uid);
-  const doc = await _getRefDoc(ref);
-  if (doc.exists)
-    throw new Error(
-      "createWishlistWithOwner(): Wishlist with uid " + uid + " already exists"
-    );
-  const wishlist = makeWishlist(wishlistName, user.uid, uid);
-  console.log(wishlist);
-  ref.set(wishlist);
+  const wishlist = {
+    ...defaultWishlist, 
+    ...{
+      title: wishlistName,
+      uid: uid,
+      owner: user.uid
+    }
+  };
+
+  await _getWishlistRef(uid).set(wishlist);
+
   return wishlist;
 };
 
 const fetchWishlistByUid = async uid => {
-  const ref = _getWishlistRef(uid);
-  const doc = await _getRefDoc(ref);
-  if (!doc.exists)
-    throw new Error(
-      "fetchWishlistByUid(): No wishlist with uid " + uid + " exists"
-    );
-  return { ...makeWishlist(), ...doc.data() };
+  return _getWishlistRef(uid).get().then((doc) => {
+    return { ...defaultWishlist, ...doc.data() };
+  });
 };
 
-const editWishlist = (uid, wishlist) => {
-  const ref = _getWishlistRef(uid);
-  ref.get().then(doc => {
-    if (doc.exists) ref.set(wishlist);
-  });
+const editWishlistProperties = async (uid, fields) => {
+  await _getWishlistRef(uid).update(fields);
 };
 
 const fetchAllWishlistsFromUser = user => {
@@ -62,7 +39,7 @@ const fetchAllOwnedWishlistsFromUser = user => {
 };
 
 export default {
-  editWishlist,
+  editWishlistProperties,
   _getWishlistRef,
   createWishlistWithOwner,
   fetchWishlistByUid,

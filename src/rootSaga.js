@@ -11,6 +11,7 @@ function* rootSaga() {
     wishlistItemSagas.watchCreateWishlistItem(),
     wishlistSagas.watchFetchWishlists(),
     wishlistSagas.watchFetchOwnedWishlists(),
+    wishlistSagas.watchEditWishlistProperties(),
     wishlistItemSagas.watchEditWishlistItem(),
     wishlistItemSagas.watchClaimWishlistItem(),
     chatSagas.watchCreateChat(),

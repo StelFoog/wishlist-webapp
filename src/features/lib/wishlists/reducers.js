@@ -7,7 +7,9 @@ const {
   FETCH_OWNED_WISHLISTS_SUCCESS,
   FETCH_OWNED_WISHLISTS_ERROR,
   FETCH_WISHLISTS_SUCCESS,
-  FETCH_WISHLISTS_ERROR
+  FETCH_WISHLISTS_ERROR,
+  EDIT_WISHLIST_PROPERTIES_ERROR,
+  EDIT_WISHLIST_PROPERTIES_SUCCESS
 } = types;
 
 const {
@@ -36,20 +38,36 @@ const wishlistReducer = (state = initialState, action) => {
     case CREATE_USER_WISHLIST_SUCCESS:
       nextState.ownedWishlists.push(wishlistData);
       return { ...nextState };
+
     case FETCH_OWNED_WISHLISTS_SUCCESS:
       console.log(wishlistData);
       nextState.ownedWishlists = wishlistData;
       console.log("Fetched owned wishlists!" + wishlistData);
       return { ...nextState };
     case FETCH_OWNED_WISHLISTS_ERROR:
-      console.error("Error occurred while fetching wishlists.");
+      console.error(
+        "Wishlist fetching error: " + error.code + "-> " + error.message
+      );
       return { ...nextState };
+
     case FETCH_WISHLISTS_SUCCESS:
       nextState.wishlists = wishlistData;
       console.log("Fetched wishlists!" + wishlistData);
       return { ...nextState };
     case FETCH_WISHLISTS_ERROR:
-      console.error("Error occurred while fetching wishlists.");
+      console.error(
+        "Wishlist fetching error: " + error.code + "-> " + error.message
+      );
+      return { ...nextState };
+
+    case EDIT_WISHLIST_PROPERTIES_SUCCESS:
+      // EDIT: Either push new version to state, or implement db listening for change like in chat
+      console.log("Edited Wishlist!");
+      return { ...nextState };
+    case EDIT_WISHLIST_PROPERTIES_ERROR:
+      console.error(
+        "Wishlist editing error: " + error.code + "-> " + error.message
+      );
       return { ...nextState };
 
     case CREATE_WISHLIST_ITEM_SUCCESS:
