@@ -2,33 +2,35 @@ import React from "react";
 import { onChatMessageReceived } from "../../../../lib/chat/db.js";
 import Button from "../../../../components/button";
 
+import Paper from "../../../../components/paper";
+import InputBase from "@material-ui/core/InputBase";
 import { formatTimeStamp } from "./lib";
+import { InsertEmoji } from "../../../../components/svgIcon";
 import ChatBubble from "../chatBubble";
-
+import EmojiSelector from "./EmojiSelector";
 import "./chatWindow.css";
 
-const submitClick = props => {
-  return () => {
-    const elem = document.getElementById("chatInput");
-    const text = elem.value;
-    elem.value = "";
-    props.handleChatSend(0, text);
-  };
-};
-
-const createChatClick = props => {
-  return () => {
-    props.handleCreateChat(0);
-  };
-};
-
 class ChatWindow extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.addEmoji = this.addEmoji.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+
+    this.state = {
+      input: "",
+      showEmojiKeyboard: false
+    };
+  }
+
   componentDidMount() {
+    const { wishlistUid } = this.props;
     document
       .querySelector(".chat")
       .scrollTo(0, document.querySelector(".chat").scrollHeight);
+
     this.unlisten = onChatMessageReceived(
-      0,
+      wishlistUid,
       (props => {
         return chat => {
           props.handleChatUpdate(chat);
@@ -41,34 +43,81 @@ class ChatWindow extends React.Component {
     this.unlisten();
   }
 
+  submitClick() {
+    const { handleChatSend, wishlistUid } = this.props;
+    let { input } = this.state;
+
+    if (input !== "") {
+      this.setState({ input: "", showEmojiKeyboard: false });
+      handleChatSend(wishlistUid, input);
+    }
+  }
+
+  addEmoji(data) {
+    const { native } = data;
+    const { input } = this.state;
+    this.setState({ input: input + native });
+  }
+
+  handleChange(event) {
+    this.setState({ input: event.target.value });
+  }
+
+  handleKeyDown = e => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      this.submitClick();
+    }
+  };
+
   render() {
-    const { messages } = this.props;
+    const { messages, user } = this.props;
+    const { showEmojiKeyboard } = this.state;
+    let prevMsgSender = "",
+      sameSender = false;
     return (
       <div className="chatWindow">
         <div className="chat">
-          {messages.map(msg => (
-            <ChatBubble
-              username={msg.senderName}
-              messageText={msg.text}
-              userProfilePicture={msg.photoURL}
+          {messages &&
+            messages.map((msg, index) => {
+              sameSender = prevMsgSender === msg.senderName ? true : false;
+
+              prevMsgSender = msg.senderName;
+              return (
+                <ChatBubble
+                  key={`msg ${index}`}
+                  sameSender={sameSender}
+                  username={msg.senderName}
+                  messageText={msg.text}
+                  userProfilePicture={msg.photoURL}
+                  sent={msg.senderId === user.uid ? true : false}
+                />
+              );
+            })}
+        </div>
+        <Paper>
+          <div className="chat-input">
+            <InputBase
+              id="chatInput"
+              className="chat-input-field"
+              placeholder="Aa"
+              label="chat-input"
+              onChange={this.handleChange}
+              value={this.state.input}
+              onKeyDown={this.handleKeyDown}
+              multiline={true}
             />
-          ))}
-        </div>
-        <div className="chat-input">
-          <input type="text" id="chatInput" />
-          <Button
-            handleClick={submitClick(this.props)}
-            label="Send message"
-            variant="filled"
-            color="#73359B"
-          />
-          <Button
-            handleClick={createChatClick(this.props)}
-            label="Create a new chat"
-            variant="filled"
-            color="#ff4f12"
-          />
-        </div>
+            <div
+              style={{ display: "flex" }}
+              onClick={() =>
+                this.setState({ showEmojiKeyboard: !showEmojiKeyboard })
+              }
+            >
+              <InsertEmoji color="var(--color-dark)" />
+            </div>
+          </div>
+        </Paper>
+        {showEmojiKeyboard && <EmojiSelector onSelect={this.addEmoji} />}
       </div>
     );
   }
