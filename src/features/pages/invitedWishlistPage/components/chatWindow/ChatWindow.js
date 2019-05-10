@@ -26,15 +26,14 @@ class ChatWindow extends React.Component {
 
   componentDidMount() {
     const { wishlistUid } = this.props;
-    document
-      .querySelector(".chat")
-      .scrollTo(0, document.querySelector(".chat").scrollHeight);
-
     this.unlisten = onChatMessageReceived(
       wishlistUid,
       (props => {
         return chat => {
           props.handleChatUpdate(chat);
+          document
+            .querySelector(".chat")
+            .scrollTo(0, document.querySelector(".chat").scrollHeight);
         };
       })(this.props)
     );
