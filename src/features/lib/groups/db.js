@@ -40,6 +40,10 @@ const fetchGroupByUid = (groupId) => {
   return _getGroupRef(groupId).get().then();
 }
 
+const fetchAllGroupsFromUser = (user) => {
+  return Promise.all(user.groups.map(fetchGroupByUid));
+}
+
 export {
   createGroupWithOwner,
   addUserToGroup,
