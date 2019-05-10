@@ -11,12 +11,19 @@ const {
   REMOVE_USER_FROM_GROUP_SUCCESS
 } = types;
 
-const groupReducer = (state, action) => {
+const initialState = {
+  groups: []
+};
+
+const groupReducer = (state = initialState, action) => {
   const { type, value, error } = action;
   let nextState = state;
 
+  const groupData = action.value;
   switch (type) {
     case types.CREATE_GROUP_SUCCESS:
+      nextState.groups.push(groupData);
+
       break;
     case types.CREATE_GROUP_ERROR:
       console.error(
