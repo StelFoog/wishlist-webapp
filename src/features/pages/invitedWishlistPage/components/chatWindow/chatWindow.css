@@ -24,6 +24,10 @@
 .chat-input-field {
   flex: 1;
 }
+.chat-input-field textarea {
+  flex: 1;
+  padding: 1px;
+}
 
 @media (min-width: 901px) {
   .chatWindow {
