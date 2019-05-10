@@ -26,9 +26,17 @@
   font-weight: lighter;
   word-wrap: break-word;
 }
+.imageContainer.noPicture {
+  padding-right: 40px;
+}
 
 .chatBubbleSent {
-  background-color: var(--color-secondary-light);
+  background-color: #09f;
+  color: #fff;
+}
+.messageContentSent span {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .chatBubble p {
