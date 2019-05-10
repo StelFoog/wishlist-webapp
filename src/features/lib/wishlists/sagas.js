@@ -11,7 +11,8 @@ import { types as dialogTypes } from "../../components/dialog";
 const {
   createWishlistWithOwner,
   fetchAllWishlistsFromUser,
-  fetchAllOwnedWishlistsFromUser
+  fetchAllOwnedWishlistsFromUser,
+  editWishlistProperties
 } = db;
 
 const {
@@ -23,7 +24,10 @@ const {
   FETCH_OWNED_WISHLISTS_SUCCESS,
   FETCH_WISHLISTS,
   FETCH_WISHLISTS_ERROR,
-  FETCH_WISHLISTS_SUCCESS
+  FETCH_WISHLISTS_SUCCESS,
+  EDIT_WISHLIST_PROPERTIES,
+  EDIT_WISHLIST_PROPERTIES_ERROR,
+  EDIT_WISHLIST_PROPERTIES_SUCCESS
 } = wishlistTypes;
 
 const { ADD_WISHLIST_ID_TO_USER } = authTypes;
@@ -32,6 +36,18 @@ const { CLOSE_DIALOG } = dialogTypes;
 
 function* watchCreateUserWishlist() {
   yield takeEvery(CREATE_USER_WISHLIST, workCreateUserWishlist);
+}
+
+function* watchFetchWishlists() {
+  yield takeEvery(FETCH_WISHLISTS, workFetchWishlists);
+}
+
+function* watchFetchOwnedWishlists() {
+  yield takeEvery(FETCH_OWNED_WISHLISTS, workFetchOwnedWishlists);
+}
+
+function* watchEditWishlistProperties() {
+  yield takeEvery(EDIT_WISHLIST_PROPERTIES, workEditWishlistProperties);
 }
 
 function* workCreateUserWishlist() {
@@ -60,10 +76,6 @@ function* workCreateUserWishlist() {
   }
 }
 
-function* watchFetchWishlists() {
-  yield takeEvery(FETCH_WISHLISTS, workFetchWishlists);
-}
-
 function* workFetchWishlists() {
   try {
     const user = yield select(getUser);
@@ -76,10 +88,6 @@ function* workFetchWishlists() {
   } catch (error) {
     yield put({ type: FETCH_WISHLISTS_ERROR, error: error });
   }
-}
-
-function* watchFetchOwnedWishlists() {
-  yield takeEvery(FETCH_OWNED_WISHLISTS, workFetchOwnedWishlists);
 }
 
 function* workFetchOwnedWishlists() {
@@ -96,8 +104,27 @@ function* workFetchOwnedWishlists() {
   }
 }
 
+function* workEditWishlistProperties() {
+  try {
+    const wishlistForm = yield select(getFormValues("WishlistEditForm")); // TODO: Create this form!
+    const uid = ""; // TODO: Get edited wishlist's UID somehow. Send with form maybe?
+    let result = yield call(editWishlistProperties, uid, wishlistForm);
+
+    yield all([
+      put({ type: EDIT_WISHLIST_PROPERTIES_SUCCESS }),
+      put(reset("WishlistEditForm"))
+    ]);
+    yield put({ type: CLOSE_DIALOG });
+    yield put(push("/dashboard/temp"));
+    yield put(push("/dashboard"));
+  } catch (error) {
+    yield put({ type: EDIT_WISHLIST_PROPERTIES_ERROR, error: error });
+  }
+}
+
 export default {
   watchCreateUserWishlist,
   watchFetchWishlists,
-  watchFetchOwnedWishlists
+  watchFetchOwnedWishlists,
+  watchEditWishlistProperties
 };
