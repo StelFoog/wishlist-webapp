@@ -1,45 +1,56 @@
 import types from "./types";
 
-const groupReducer = (state, action) => {
-  const {type, value} = action;
-  let nextState = {...state};
+const {
+  FETCH_ALL_USER_GROUPS_ERROR,
+  FETCH_ALL_USER_GROUPS_SUCCESS,
+  CREATE_GROUP_ERROR,
+  CREATE_GROUP_SUCCESS,
+  INVITE_USER_TO_GROUP_ERROR,
+  INVITE_USER_TO_GROUP_SUCCESS,
+  REMOVE_USER_FROM_GROUP_ERROR,
+  REMOVE_USER_FROM_GROUP_SUCCESS
+} = types;
 
-  switch(type) {
-    case types.CREATE_GROUP:
-      break;
+const groupReducer = (state, action) => {
+  const { type, value, error } = action;
+  let nextState = state;
+
+  switch (type) {
     case types.CREATE_GROUP_SUCCESS:
       break;
     case types.CREATE_GROUP_ERROR:
-      console.log("CREATE_GROUP_ERROR: ");
-      console.log(value);
+      console.error(
+        "CREATE_GROUP_ERROR: " + error.code + "-> " + error.message
+      );
       break;
-    case types.FETCH_ALL_USER_GROUPS:
-      break;
+
     case types.FETCH_ALL_USER_GROUPS_SUCCESS:
       break;
     case types.FETCH_ALL_USER_GROUPS_ERROR:
-      console.log("FETCH_ALL_USER_GROUPS_ERROR: ");
-      console.log(value);
+      console.error(
+        "FETCH_ALL_USER_GROUPS_ERROR: " + error.code + "-> " + error.message
+      );
       break;
-    case types.INVITE_USER_TO_GROUP:
-      break;
+
     case types.INVITE_USER_TO_GROUP_SUCCESS:
       break;
     case types.INVITE_USER_TO_GROUP_ERROR:
-      console.log("INVITE_USER_TO_GROUP_ERROR: ");
-      console.log(value);
+      console.error(
+        "INVITE_USER_TO_GROUP_ERROR: " + error.code + "-> " + error.message
+      );
       break;
-    case types.REMOVE_USER_FROM_GROUP:
-      break;
+
     case types.REMOVE_USER_FROM_GROUP_SUCCESS:
       break;
     case types.REMOVE_USER_FROM_GROUP_ERROR:
-      console.log("REMOVE_USER_FROM_GROUP_ERROR: ");
-      console.log(value);
+      console.error(
+        "REMOVE_USER_FROM_GROUP_ERROR: " + error.code + "-> " + error.message
+      );
       break;
+    default:
   }
-  return nextState;
-}
+  return { ...nextState };
+};
 
 export default {
   groupReducer

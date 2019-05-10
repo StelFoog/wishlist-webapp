@@ -66,13 +66,13 @@ const addGroupToUser = (userId, groupId) => {
   setUserProperty(userId, {
     groups: firebase.firestore.FieldValue.arrayUnion(groupId)
   });
-}
+};
 
 const removeGroupFromUser = (userId, groupId) => {
   setUserProperty(userId, {
     groups: firebase.firestore.FieldValue.arrayRemove(groupId)
   });
-}
+};
 
 const addInvitedWishlistToUser = ({ wishlistId, uid }) => {
   setUserProperty(uid, {
@@ -98,5 +98,7 @@ export {
   logInAndCreateUserIfDoesNotExist,
   addNewWishlistIdToUser,
   addInvitedUserToWishlist,
-  addInvitedWishlistToUser
+  addInvitedWishlistToUser,
+  addGroupToUser,
+  removeGroupFromUser
 };

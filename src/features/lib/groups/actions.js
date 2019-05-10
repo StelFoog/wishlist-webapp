@@ -1,24 +1,29 @@
 import types from "./types";
 
-const fetchAllUserGroups = user => ({
-  type: types.FETCH_ALL_USER_GROUPS,
-  user: user
+const {
+  FETCH_ALL_USER_GROUPS,
+  CREATE_GROUP,
+  INVITE_USER_TO_GROUP,
+  REMOVE_USER_FROM_GROUP
+} = types;
+
+const fetchAllUserGroups = () => ({
+  type: FETCH_ALL_USER_GROUPS
 });
 
-const createGroup = (user, groupName) => ({
-  type: types.CREATE_GROUP,
-  user: user,
+const createGroup = groupName => ({
+  type: CREATE_GROUP,
   groupName: groupName
 });
 
 const addUserToGroup = (groupId, userId) => ({
-  type: types.ADD_USER_TO_GROUP,
+  type: INVITE_USER_TO_GROUP,
   groupId: groupId,
   userId: userId
 });
 
 const removeUserFromGroup = (groupId, userId) => ({
-  type: types.REMOVE_USER_FROM_GROUP;
+  type: REMOVE_USER_FROM_GROUP
 });
 
 export default {

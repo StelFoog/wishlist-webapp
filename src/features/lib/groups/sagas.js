@@ -1,76 +1,93 @@
-import { takeEvery, put } from "redux-saga/effects";
+import { takeEvery, put, select, call } from "redux-saga/effects";
 import { getUser } from "../authentication/selectors.js";
 import {
-  createGroupWithOwner, 
-  inviteUserToGroup, 
-  removeUserFromGroup, 
-  fetchAllUserGroups
+  createGroupWithOwner,
+  addUserToGroup,
+  removeUserFromGroup,
+  fetchAllGroupsFromUser
 } from "./db.js";
 import types from "./types";
 import { addGroupToUser, removeGroupFromUser } from "../authentication/db.js";
 
+const {
+  FETCH_ALL_USER_GROUPS,
+  FETCH_ALL_USER_GROUPS_ERROR,
+  FETCH_ALL_USER_GROUPS_SUCCESS,
+  CREATE_GROUP,
+  CREATE_GROUP_ERROR,
+  CREATE_GROUP_SUCCESS,
+  INVITE_USER_TO_GROUP,
+  INVITE_USER_TO_GROUP_ERROR,
+  INVITE_USER_TO_GROUP_SUCCESS,
+  REMOVE_USER_FROM_GROUP,
+  REMOVE_USER_FROM_GROUP_ERROR,
+  REMOVE_USER_FROM_GROUP_SUCCESS
+} = types;
+
 function* watchFetchAllUserGroups() {
-  yield takeEvery(types.FETCH_ALL_USER_GROUPS, workFetchAllUserGroups);
+  yield takeEvery(FETCH_ALL_USER_GROUPS, workFetchAllUserGroups);
 }
 
 function* watchCreateGroup() {
-  yield takeEvery(types.CREATE_GROUP, workCreateGroup);
+  yield takeEvery(CREATE_GROUP, workCreateGroup);
 }
 
 function* watchInviteUserToGroup() {
-  yield takeEvery(types.INVITE_USER_TO_GROUP, workInviteUserToGroup);
+  yield takeEvery(INVITE_USER_TO_GROUP, workInviteUserToGroup);
 }
 
 function* watchRemoveUserFromGroup() {
-  yield takeEvery(types.INVITE_USER_TO_GROUP, workRemoveUserFromGroup);
+  yield takeEvery(REMOVE_USER_FROM_GROUP, workRemoveUserFromGroup);
 }
 
-function* workFetchAllUserGroups(action) {
+function* workFetchAllUserGroups() {
   try {
-    const {type, user} = action;
-    const result = yield call(fetchAllUserGroups, user);
-    yield put({type: types.FETCH_ALL_USER_GROUPS_SUCCESS, value: result});
-  }catch(error) {
-    yield put({type: types.FETCH_ALL_USER_GROUPS_ERROR, value: error});
+    const user = yield select(getUser);
+    const result = yield call(fetchAllGroupsFromUser, user);
+    yield put({ type: FETCH_ALL_USER_GROUPS_SUCCESS, value: result });
+  } catch (error) {
+    yield put({ type: FETCH_ALL_USER_GROUPS_ERROR, error: error });
   }
 }
 
 function* workCreateGroup(action) {
   try {
-    const {type, user, groupName} = action;
+    const user = yield select(getUser);
+    const userUid = user.uid;
+    const { type, groupName } = action;
     const result = yield call(createGroupWithOwner, user, groupName);
-    yield call(addGroupToUser, userId, result);
-    yield put({type: types.CREATE_GROUP_SUCCESS, value: result});
-  }catch(error) {
-    yield put({type: types.CREATE_GROUP_ERROR, value: error});
+    yield call(addGroupToUser, userUid, result);
+    yield put({ type: CREATE_GROUP_SUCCESS, value: result });
+  } catch (error) {
+    yield put({ type: CREATE_GROUP_ERROR, error: error });
   }
 }
 
 function* workInviteUserToGroup(action) {
   try {
-    const {groupId, userId} = action;
-    yield call(inviteUserToGroup, groupId, userId);
+    const { groupId, userId } = action;
+    yield call(addUserToGroup, groupId, userId);
     yield call(addGroupToUser, userId, groupId);
-    yield put({type: types.INVITE_USER_TO_GROUP_SUCCESS});
-  }catch(error) {
-    yield put({type: types.INVITE_USER_TO_GROUP_ERROR, value: error});
+    yield put({ type: INVITE_USER_TO_GROUP_SUCCESS });
+  } catch (error) {
+    yield put({ type: INVITE_USER_TO_GROUP_ERROR, error: error });
   }
 }
 
-function* workRemoveUserFromGroup() {
+function* workRemoveUserFromGroup(action) {
   try {
-    const {groupId, userId} = action;
+    const { groupId, userId } = action;
     yield call(removeUserFromGroup, groupId, userId);
     yield call(removeGroupFromUser, userId, groupId);
-    yield put({type: REMOVE_USER_FROM_GROUP_SUCCESS});
-  }catch(error) {
-    yield put({type: REMOVE_USER_FROM_GROUP_ERROR, value: error});
+    yield put({ type: REMOVE_USER_FROM_GROUP_SUCCESS });
+  } catch (error) {
+    yield put({ type: REMOVE_USER_FROM_GROUP_ERROR, error: error });
   }
 }
 
 export default {
-  watchFetchAllUserGroups
-  watchCreateGroup
-  watchInviteUserToGroup
+  watchFetchAllUserGroups,
+  watchCreateGroup,
+  watchInviteUserToGroup,
   watchRemoveUserFromGroup
 };
