@@ -1,14 +1,15 @@
 import React from "react";
 
 import Card from "../card";
-import { NewWishlist, EditItem, CreateItem } from "./variants";
+import { NewWishlist, EditItem, CreateItem, CreateGroup } from "./variants";
 
 import "./dialog.css";
 
 const DIALOG_VARIANTS = {
   newWishlist: NewWishlist,
   editItem: EditItem,
-  createItem: CreateItem
+  createItem: CreateItem,
+  createGroup: CreateGroup
 };
 
 const Dialog = ({ variant, showDialog, handleClose, ...rest }) => {
