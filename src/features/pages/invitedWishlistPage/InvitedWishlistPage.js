@@ -50,7 +50,7 @@ class InvitedWishlistPage extends React.Component {
             </React.Fragment>
           )}
         </div>
-        <ChatWindow />
+        <ChatWindow wishlistUid={uid} />
       </React.Fragment>
     );
   }
