@@ -7,6 +7,7 @@ const ChatBubble = ({
   sameSender = false,
   userProfilePicture,
   messageText,
+  timestamp,
   sent = false
 }) => {
   let text = messageText.split(/(?:\r\n|\r|\n)/g);
@@ -20,7 +21,15 @@ const ChatBubble = ({
         <div className="chatBubbleContainer">
           <div className={`chatBubble ${sent ? "chatBubbleSent" : ""}`}>
             {text &&
-              text.map(value => <p key={`${value} ${username}`}>{value}</p>)}
+              text.map((value, index) => (
+                <p
+                  key={`${timestamp.seconds} ${
+                    timestamp.nanoseconds
+                  } ${username} ${index}`}
+                >
+                  {value}
+                </p>
+              ))}
           </div>
         </div>
       </div>
