@@ -61,11 +61,8 @@ function* workUserAuthFacebook() {
     console.log("Extracted Uid: " + wishlistUid);
 
     if (checkIfInvite) {
-<<<<<<< HEAD
       const wishlistUid = checkIfInvite.toString().split("/")[1]; // Get wishlist Uid from URL (please shoot me)
 
-=======
->>>>>>> f8b403d6c3873d0fcc05637e5f140255b2915ec5
       // Login via invite link
       yield call(addUserToWishlist, wishlistUid);
       yield put(push("/dashboard/guest/" + wishlistUid));
