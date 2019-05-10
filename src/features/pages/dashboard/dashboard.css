@@ -1,7 +1,6 @@
 @media (min-width: 601px) {
   .dashboard ~ * {
     margin-left: 170px;
-    width: calc(100vw - 170px);
   }
 }
 

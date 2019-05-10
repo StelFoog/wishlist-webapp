@@ -50,11 +50,6 @@ class LoggedInPage extends React.Component {
           <div className="page-tab page-tab-1">
             <PageHeader title="Your wishlists" />
             <ListWishlists />
-            <div className="createWishlistButton">
-              <IconButton variant="filled" handleClick={openForm}>
-                <PlusIcon size={50} />
-              </IconButton>
-            </div>
           </div>
           <div className="page-tab page-tab-2">
             <div className="shared-wishlists">
@@ -63,6 +58,13 @@ class LoggedInPage extends React.Component {
             </div>
           </div>
         </SwipeableViews>
+        <div
+          className={`createWishlistButton ${index === 0 ? "shown" : "hidden"}`}
+        >
+          <IconButton variant="filled" handleClick={openForm}>
+            <PlusIcon size={50} />
+          </IconButton>
+        </div>
       </div>
     );
   }
