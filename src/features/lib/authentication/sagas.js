@@ -52,6 +52,7 @@ function* workUserAuthFacebook() {
     let result = yield call(authWithFacebookAPI);
     yield put({ type: AUTH_USER_SUCCESS, userData: result });
 
+    // This code is used to detect and handle login/redirection for a user that has arrived through an invite link
     const checkIfInvite = window.location.pathname.match(
       /(wishlist\/[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\/invite)/g
     );
@@ -60,9 +61,11 @@ function* workUserAuthFacebook() {
     console.log("Extracted Uid: " + wishlistUid);
 
     if (checkIfInvite) {
+      // Login via invite link
       yield call(addUserToWishlist, wishlistUid);
       yield put(push("/dashboard/guest/" + wishlistUid));
     } else {
+      // Login via regular front page
       yield put(push("/dashboard"));
     }
   } catch (error) {
@@ -70,22 +73,7 @@ function* workUserAuthFacebook() {
   }
 }
 
-function* workUserAuthGoogle() {
-  /*
-  let result = undefined;
-
-  try {
-    alert("Saga preparing to access database");
-    result = yield call( () => ( authWithGoogleAPI() ));
-    alert("Saga extracted " + result.uid + " from database");
-
-    yield put({type: AUTH_USER_SUCCESS, value: result});
-  } catch(error) {
-    result = error;
-    yield put({type: AUTH_USER_ERROR, value: result});
-  }
-  */
-}
+function* workUserAuthGoogle() {}
 
 export default {
   watchUserAuthFacebook,
