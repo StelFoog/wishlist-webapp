@@ -3,6 +3,7 @@ import { sagas as authSagas } from "./features/lib/authentication";
 import { sagas as wishlistSagas } from "./features/lib/wishlists";
 import { sagas as wishlistItemSagas } from "./features/lib/wishlistItems";
 import { sagas as chatSagas } from "./features/lib/chat";
+import { sagas as groupSagas } from "./features/lib/groups";
 
 function* rootSaga() {
   yield all([
@@ -16,7 +17,11 @@ function* rootSaga() {
     wishlistItemSagas.watchClaimWishlistItem(),
     chatSagas.watchCreateChat(),
     chatSagas.watchLoadChat(),
-    chatSagas.watchSendChatMessage()
+    chatSagas.watchSendChatMessage(),
+    groupSagas.watchFetchAllUserGroups(),
+    groupSagas.watchCreateGroup(),
+    groupSagas.watchInviteUserToGroup(),
+    groupSagas.watchRemoveUserFromGroup()
   ]);
 }
 
