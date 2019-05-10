@@ -14,7 +14,8 @@ const nextHigherString = (string) => {
 }
 
 const searchForUsersWithName = async (name, start, end) => {
-  return (await database.collection("Users")
+  return Promise.all((await 
+    database.collection("Users")
     .orderBy("name")
     .where("name", ">=", name)
     .where("name", "<", nextHigherString(name))
@@ -22,7 +23,7 @@ const searchForUsersWithName = async (name, start, end) => {
     .get()
     .then())
       .docs
-      .map(doc => doc.data());
+      .map(doc => doc.data()));
 }
 
 const userFromFirebaseUser = firebaseUser => {
