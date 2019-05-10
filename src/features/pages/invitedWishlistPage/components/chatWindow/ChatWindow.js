@@ -77,7 +77,6 @@ class ChatWindow extends React.Component {
 
     let prevMsgSender = "",
       sameSender = false;
-
     return (
       <div
         className={`chatWindow ${
@@ -96,6 +95,7 @@ class ChatWindow extends React.Component {
               sameSender = prevMsgSender === msg.senderName ? true : false;
 
               prevMsgSender = msg.senderName;
+              console.log(msg);
               return (
                 <ChatBubble
                   key={`msg ${index}`}
