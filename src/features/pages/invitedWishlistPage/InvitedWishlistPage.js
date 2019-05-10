@@ -54,7 +54,12 @@ class InvitedWishlistPage extends React.Component {
           {items.length > 0 && (
             <React.Fragment>
               {items.map((item, index) => (
-                <WishlistItem index={index} isOwner={false} wishlistUid={uid} />
+                <WishlistItem
+                  key={`${item} ${index}`}
+                  index={index}
+                  isOwner={false}
+                  wishlistUid={uid}
+                />
               ))}
             </React.Fragment>
           )}
