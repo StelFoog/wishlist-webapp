@@ -1,10 +1,11 @@
 import React from "react";
 import { onChatMessageReceived } from "../../../../lib/chat/db.js";
-import Button from "../../../../components/button";
 
+import { RoundKeyboardArrowLeft } from "../../../../components/svgIcon";
 import Paper from "../../../../components/paper";
 import InputBase from "@material-ui/core/InputBase";
 import { formatTimeStamp } from "./lib";
+import Ripple from "../../../../components/ripple";
 import { InsertEmoji } from "../../../../components/svgIcon";
 import ChatBubble from "../chatBubble";
 import EmojiSelector from "./EmojiSelector";
@@ -71,12 +72,24 @@ class ChatWindow extends React.Component {
   };
 
   render() {
-    const { messages, user } = this.props;
+    const { messages, user, showChat, toggleChatWindow } = this.props;
     const { showEmojiKeyboard } = this.state;
+
     let prevMsgSender = "",
       sameSender = false;
+
     return (
-      <div className="chatWindow">
+      <div
+        className={`chatWindow ${
+          showChat ? "mobile-visible" : "mobile-hidden"
+        }`}
+      >
+        <div className="chat-mobile-header">
+          <div className="chat-back-button" onClick={toggleChatWindow}>
+            <Ripple />
+            <RoundKeyboardArrowLeft color="var(--color-primary)" />
+          </div>
+        </div>
         <div className="chat">
           {messages &&
             messages.map((msg, index) => {

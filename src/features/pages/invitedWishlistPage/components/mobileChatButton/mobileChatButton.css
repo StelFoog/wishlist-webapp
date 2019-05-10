@@ -1,0 +1,11 @@
+.mobileChatButtonContainer {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+}
+
+@media (min-width: 901px) {
+  .mobileChatButtonContainer {
+    display: none;
+  }
+}

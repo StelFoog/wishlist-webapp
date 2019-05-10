@@ -8,6 +8,10 @@
 @media (max-width: 900px) {
   .invitedPageContainer {
     width: calc(100vw - 170px);
+    transition: margin-left 0.2s linear;
+  }
+  .invitedPageContainer.pageLeft {
+    margin-left: -100%;
   }
 }
 
