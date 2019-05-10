@@ -1,11 +1,29 @@
 import { database, firebase } from "../firebase/";
 import { defaultUser } from "./user.js";
 
-const _getUserRef = uid => database.collection("Users").doc("" + uid);
+const _getUserRef = uid => database.collection("Users").doc(uid.toString());
 
 const userExistsWithUid = async uid => {
   return (await getUser(uid)) !== null;
 };
+
+const nextHigherString = (string) => {
+  let seq = Array.from(string);
+  ++seq[seq.length-1];
+  return seq.join("");
+}
+
+const searchForUsersWithName = async (name, start, end) => {
+  return (await database.collection("Users")
+    .orderBy("name")
+    .where("name", ">=" name)
+    .where("name", "<" nextHigherString(name))
+    .limit(20)
+    .get()
+    .then())
+      .docs
+      .map(doc => doc.data());
+}
 
 const userFromFirebaseUser = firebaseUser => {
   return {
@@ -98,5 +116,6 @@ export {
   addInvitedUserToWishlist,
   addInvitedWishlistToUser,
   addGroupToUser,
-  removeGroupFromUser
+  removeGroupFromUser,
+  searchForUsersWithName
 };
