@@ -7,6 +7,7 @@ import { sagas as chatSagas } from "./features/lib/chat";
 function* rootSaga() {
   yield all([
     authSagas.watchUserAuthFacebook(),
+    authSagas.watchAddUserToWishlist(),
     wishlistSagas.watchCreateUserWishlist(),
     wishlistItemSagas.watchCreateWishlistItem(),
     wishlistSagas.watchFetchWishlists(),

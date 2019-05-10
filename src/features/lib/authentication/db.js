@@ -68,6 +68,7 @@ const addInvitedWishlistToUser = ({ wishlistId, uid }) => {
   });
 };
 
+// Should really be moved to woshlists/db.js, but it was fucking with importing so I didn't
 const addInvitedUserToWishlist = ({ wishlistID, uid }) => {
   database
     .collection("Wishlists")
