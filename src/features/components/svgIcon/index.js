@@ -4,6 +4,7 @@ import ListIcon from "./icons/ListIcon";
 import MenuIcon from "./icons/MenuIcon";
 import PlusIcon from "./icons/PlusIcon";
 import SettingsIcon from "./icons/SettingsIcon";
+import InsertEmoji from "./icons/InsertEmoji";
 
 import SvgIcon from "./SvgIcon";
 
@@ -13,7 +14,8 @@ export {
   ListIcon,
   MenuIcon,
   PlusIcon,
-  SettingsIcon
+  SettingsIcon,
+  InsertEmoji
 };
 
 export default SvgIcon;
