@@ -8,11 +8,13 @@ import { connect } from "react-redux";
 import { selectors } from "../../lib/wishlists";
 
 import { actions as dialogActions } from "../../components/dialog";
+import { actions as miscActions } from "../../lib/misc";
 
 import IconButton from "../../components/iconButton";
 import PlusIcon from "../../components/svgIcon/icons/PlusIcon";
 
 const { openDialog } = dialogActions;
+const { setCurrentWishlistOrGroup } = miscActions;
 
 // const { fetchAllItems } = actions;
 
@@ -65,10 +67,11 @@ class WishlistPage extends Component {
 }
 */
 
-const WishlistPage = ({ wishlists, pathname, createItem }) => {
+const WishlistPage = ({ wishlists, pathname, createItem, setCurrentPage }) => {
   const wishlistUid = pathname.split("wishlist/").pop();
   const wishlist = wishlists.find(element => element.uid == wishlistUid);
   const { items } = wishlist;
+  setCurrentPage(wishlist.uid);
   return (
     <div className="wishlistPage page">
       <PageHeader title={wishlist.title} />
@@ -100,7 +103,10 @@ const mapStateToProps = () => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  createItem: wishlistUid => dispatch(openDialog("createItem", { wishlistUid }))
+  createItem: wishlistUid =>
+    dispatch(openDialog("createItem", { wishlistUid })),
+  setCurrentPage: wishlistUid =>
+    dispatch(setCurrentWishlistOrGroup(wishlistUid))
 });
 
 export default connect(
