@@ -4,7 +4,6 @@ import { onChatMessageReceived } from "../../../../lib/chat/db.js";
 import { RoundKeyboardArrowLeft } from "../../../../components/svgIcon";
 import Paper from "../../../../components/paper";
 import InputBase from "@material-ui/core/InputBase";
-import { formatTimeStamp } from "./lib";
 import Ripple from "../../../../components/ripple";
 import { InsertEmoji } from "../../../../components/svgIcon";
 import ChatBubble from "../chatBubble";
@@ -17,6 +16,7 @@ class ChatWindow extends React.Component {
 
     this.addEmoji = this.addEmoji.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.closeEmojiKeyboard = this.closeEmojiKeyboard.bind(this);
 
     this.state = {
       input: "",
@@ -71,6 +71,10 @@ class ChatWindow extends React.Component {
     }
   };
 
+  closeEmojiKeyboard() {
+    this.setState({ showEmojiKeyboard: false });
+  }
+
   render() {
     const { messages, user, showChat, toggleChatWindow } = this.props;
     const { showEmojiKeyboard } = this.state;
@@ -78,37 +82,37 @@ class ChatWindow extends React.Component {
     let prevMsgSender = "",
       sameSender = false;
     return (
-      <div
-        className={`chatWindow ${
-          showChat ? "mobile-visible" : "mobile-hidden"
-        }`}
-      >
-        <div className="chat-mobile-header">
-          <div className="chat-back-button" onClick={toggleChatWindow}>
-            <Ripple />
-            <RoundKeyboardArrowLeft color="var(--color-primary)" />
+      <Paper elevation={2}>
+        <div
+          className={`chatWindow ${
+            showChat ? "mobile-visible" : "mobile-hidden"
+          }`}
+        >
+          <div className="chat-mobile-header">
+            <div className="chat-back-button" onClick={toggleChatWindow}>
+              <Ripple />
+              <RoundKeyboardArrowLeft color="var(--color-primary)" />
+            </div>
           </div>
-        </div>
-        <div className="chat">
-          {messages &&
-            messages.map((msg, index) => {
-              sameSender = prevMsgSender === msg.senderName ? true : false;
+          <div className="chat">
+            {messages &&
+              messages.map((msg, index) => {
+                sameSender = prevMsgSender === msg.senderName ? true : false;
 
-              prevMsgSender = msg.senderName;
-              console.log(msg);
-              return (
-                <ChatBubble
-                  key={`msg ${index}`}
-                  sameSender={sameSender}
-                  username={msg.senderName}
-                  messageText={msg.text}
-                  userProfilePicture={msg.photoURL}
-                  sent={msg.senderId === user.uid ? true : false}
-                />
-              );
-            })}
-        </div>
-        <Paper>
+                prevMsgSender = msg.senderName;
+                return (
+                  <ChatBubble
+                    key={`msg ${index}`}
+                    sameSender={sameSender}
+                    username={msg.senderName}
+                    messageText={msg.text}
+                    timestamp={msg.timestamp}
+                    userProfilePicture={msg.photoURL}
+                    sent={msg.senderId === user.uid ? true : false}
+                  />
+                );
+              })}
+          </div>
           <div className="chat-input">
             <InputBase
               id="chatInput"
@@ -122,16 +126,21 @@ class ChatWindow extends React.Component {
             />
             <div
               style={{ display: "flex" }}
-              onClick={() =>
-                this.setState({ showEmojiKeyboard: !showEmojiKeyboard })
-              }
+              onClick={() => {
+                this.setState({ showEmojiKeyboard: true });
+              }}
             >
               <InsertEmoji color="var(--color-dark)" />
             </div>
           </div>
-        </Paper>
-        {showEmojiKeyboard && <EmojiSelector onSelect={this.addEmoji} />}
-      </div>
+          {showEmojiKeyboard && (
+            <EmojiSelector
+              onSelect={this.addEmoji}
+              toggleEmojiKeyboard={this.closeEmojiKeyboard}
+            />
+          )}
+        </div>
+      </Paper>
     );
   }
 }
