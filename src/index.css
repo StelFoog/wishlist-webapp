@@ -21,6 +21,10 @@ body {
   font-family: "Noto Sans SC", sans-serif;
 }
 
+#root {
+  width: 100%;
+}
+
 input,
 textarea,
 select,

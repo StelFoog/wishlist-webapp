@@ -7,6 +7,13 @@
   display: flex;
   justify-content: flex-end;
 }
+.createWishlistButton.shown {
+  animation: showButton 0.75s;
+}
+.createWishlistButton.hidden {
+  opacity: 0;
+}
+
 .createWishlistButton > * {
   margin-right: 1rem;
 }
@@ -24,5 +31,17 @@
 @media (max-width: 600px) {
   .logged-in-page {
     min-height: calc(100% - 64px);
+  }
+}
+
+@keyframes showButton {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
