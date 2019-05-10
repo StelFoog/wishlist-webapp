@@ -16,8 +16,8 @@ const nextHigherString = (string) => {
 const searchForUsersWithName = async (name, start, end) => {
   return (await database.collection("Users")
     .orderBy("name")
-    .where("name", ">=" name)
-    .where("name", "<" nextHigherString(name))
+    .where("name", ">=", name)
+    .where("name", "<", nextHigherString(name))
     .limit(20)
     .get()
     .then())
