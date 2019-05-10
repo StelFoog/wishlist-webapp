@@ -4,7 +4,8 @@ const {
   AUTH_USER_ERROR,
   AUTH_USER_SUCCESS,
   AUTH_LOGOUT,
-  ADD_WISHLIST_ID_TO_USER
+  ADD_USER_TO_WISHLIST_ERROR,
+  ADD_USER_TO_WISHLIST_SUCCESS
 } = types;
 
 const initialState = {
@@ -14,7 +15,7 @@ const initialState = {
 
 const userReducer = (state = initialState, action) => {
   let nextState = state;
-  const { type, userData, error, wishlistId } = action;
+  const { type, userData, error, wishlistUid } = action;
 
   switch (type) {
     case AUTH_USER_ERROR:
@@ -32,8 +33,13 @@ const userReducer = (state = initialState, action) => {
       nextState.user = null;
       alert("logged out successfully");
       return { ...nextState };
-    case ADD_WISHLIST_ID_TO_USER:
-      nextState.user.ownedWishlists.push(wishlistId);
+    case ADD_USER_TO_WISHLIST_ERROR:
+      console.error(
+        "Wishlist invitation error: " + error.code + "-> " + error.message
+      );
+      return { ...nextState };
+    case ADD_USER_TO_WISHLIST_SUCCESS:
+      nextState.user.wishlists.push(wishlistUid);
       return { ...nextState };
     default:
       return { ...nextState };
