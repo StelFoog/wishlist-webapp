@@ -1,6 +1,5 @@
 import { database } from "../firebase/";
 import { defaultWishlist } from "./wishlist";
-//import { editUser } from "../authentication/db";
 import { generateWishlistUid } from "../authentication/user";
 
 const _getWishlistRef = uid => database.collection("Wishlists").doc("" + uid);
@@ -16,19 +15,19 @@ const createWishlistWithOwner = async (user, wishlistName) => {
     }
   };
 
-  _getWishlistRef(uid).set(wishlist);
+  await _getWishlistRef(uid).set(wishlist);
 
   return wishlist;
 };
 
 const fetchWishlistByUid = async uid => {
-  return await _getWishlistRef(uid).get().then((doc) => {
+  return _getWishlistRef(uid).get().then((doc) => {
     return { ...defaultWishlist, ...doc.data() };
   });
 };
 
-const editWishlist = (uid, fields) => {
-  _getWishlistRef(uid).update(fields);
+const editWishlistProperties = async (uid, fields) => {
+  await _getWishlistRef(uid).update(fields);
 };
 
 const fetchAllWishlistsFromUser = user => {
@@ -40,7 +39,7 @@ const fetchAllOwnedWishlistsFromUser = user => {
 };
 
 export default {
-  editWishlist,
+  editWishlistProperties,
   _getWishlistRef,
   createWishlistWithOwner,
   fetchWishlistByUid,
