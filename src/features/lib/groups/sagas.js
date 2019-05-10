@@ -7,6 +7,7 @@ import {
   fetchAllUserGroups
 } from "./db.js";
 import types from "./types";
+import { addGroupToUser, removeGroupFromUser } from "../authentication/db.js";
 
 function* watchFetchAllUserGroups() {
   yield takeEvery(types.FETCH_ALL_USER_GROUPS, workFetchAllUserGroups);
@@ -38,6 +39,7 @@ function* workCreateGroup(action) {
   try {
     const {type, user, groupName} = action;
     const result = yield call(createGroupWithOwner, user, groupName);
+    yield call(addGroupToUser, userId, result);
     yield put({type: types.CREATE_GROUP_SUCCESS, value: result});
   }catch(error) {
     yield put({type: types.CREATE_GROUP_ERROR, value: error});
@@ -48,6 +50,7 @@ function* workInviteUserToGroup(action) {
   try {
     const {groupId, userId} = action;
     yield call(inviteUserToGroup, groupId, userId);
+    yield call(addGroupToUser, userId, groupId);
     yield put({type: types.INVITE_USER_TO_GROUP_SUCCESS});
   }catch(error) {
     yield put({type: types.INVITE_USER_TO_GROUP_ERROR, value: error});
@@ -58,6 +61,7 @@ function* workRemoveUserFromGroup() {
   try {
     const {groupId, userId} = action;
     yield call(removeUserFromGroup, groupId, userId);
+    yield call(removeGroupFromUser, userId, groupId);
     yield put({type: REMOVE_USER_FROM_GROUP_SUCCESS});
   }catch(error) {
     yield put({type: REMOVE_USER_FROM_GROUP_ERROR, value: error});
