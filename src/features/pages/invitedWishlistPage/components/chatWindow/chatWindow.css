@@ -30,13 +30,40 @@
     right: 0;
     width: 500px;
   }
+  .chat-mobile-header {
+    display: none;
+  }
 }
 
 @media (max-width: 900px) {
   .chatWindow {
+    transition: right 0.2s linear;
     top: 0;
     right: -100%;
-    width: 100%;
+    width: calc(100vw - 170px);
     z-index: 999;
+  }
+  .chat-back-button {
+    border-radius: 5rem;
+    padding: 0.25rem;
+    display: flex;
+    position: relative;
+    cursor: pointer;
+  }
+  .chat-mobile-header {
+    display: flex;
+    padding: 0.25rem;
+    background: var(--color-light);
+  }
+  .chatWindow.mobile-visible {
+    right: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .chatWindow {
+    height: calc(100vh - 64px);
+    top: 64px;
+    width: 100%;
   }
 }
