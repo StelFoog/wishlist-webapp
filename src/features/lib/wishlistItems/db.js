@@ -1,5 +1,6 @@
 import db from "../wishlists/db";
 import { database } from "../firebase/";
+import defaultItem from "./item.js";
 
 const { fetchWishlistByUid, _getWishlistRef } = db;
 
@@ -40,8 +41,11 @@ const modifyWishlistItems = async (wishlistId, lambda) => {
 
 // ?
 const makeItem = item => ({
-  price: "",
-  description: "",
+  ...defaultItem,
+  ...{
+    name: "",
+    description: ""
+  },
   ...item
 });
 
