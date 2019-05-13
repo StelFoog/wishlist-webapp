@@ -10,38 +10,34 @@ import { actions } from "../../../lib/wishlistItems";
 
 const { createWishlistItem } = actions;
 
-const CreateItem = ({ handleSubmit, handleClose, values, performSubmit }) => {
-  const { item } = values;
-  console.log(item);
-  return (
-    <React.Fragment>
-      <CardHeader>{"Create new wishlist item"}</CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit}>
-          <label>Name:</label>
-          <Field
-            name="name"
-            component={renderField}
-            type="text"
-            validate={required}
-          />
-          <label>Price:</label>
-          <Field name="price" component={renderField} type="number" />
-          <label>Description:</label>
-          <Field name="description" component={renderField} type="text" />
-        </form>
-      </CardContent>
-      <CardActions>
-        <Button
-          label="SUBMIT"
-          color="green"
-          variant="filled"
-          handleClick={performSubmit}
+const CreateItem = ({ handleSubmit, handleClose, values, performSubmit }) => (
+  <React.Fragment>
+    <CardHeader>{"Create new wishlist item"}</CardHeader>
+    <CardContent>
+      <form onSubmit={handleSubmit}>
+        <label>Name:</label>
+        <Field
+          name="name"
+          component={renderField}
+          type="text"
+          validate={required}
         />
-      </CardActions>
-    </React.Fragment>
-  );
-};
+        <label>Price:</label>
+        <Field name="price" component={renderField} type="number" />
+        <label>Description:</label>
+        <Field name="description" component={renderField} type="text" />
+      </form>
+    </CardContent>
+    <CardActions>
+      <Button
+        label="SUBMIT"
+        color="green"
+        variant="filled"
+        handleClick={performSubmit}
+      />
+    </CardActions>
+  </React.Fragment>
+);
 
 const mapStateToProps = () => {
   const getDialogValues = selectors.getDialogValuesState();
