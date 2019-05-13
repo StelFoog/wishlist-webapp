@@ -17,12 +17,15 @@ class MemberList extends React.Component {
   }
 
   render() {
-    const { users, openForm, uid } = this.props;
+    const { users, openForm, uid, navigate } = this.props;
     return (
       <div className="memberBar">
         <div className="memberContainer">
           {users.map(user => (
-            <div className="memberCard">
+            <div
+              className="memberCard"
+              onClick={() => navigate(`group/${uid}/${user.uid}`)}
+            >
               <Ripple />
               <div className="memberPicture">
                 <ProfilePicture src={user.profilePictureUrl} width={30} />

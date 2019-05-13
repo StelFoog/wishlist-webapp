@@ -8,12 +8,14 @@ class GroupList extends React.Component {
   }
 
   render() {
-    const { navigate, groups } = this.props;
-
+    const { navigate, groups, user } = this.props;
     return (
       <React.Fragment>
         {groups.map(group => (
-          <div className="group" onClick={() => navigate(`group/${group.uid}`)}>
+          <div
+            className="group"
+            onClick={() => navigate(`group/${group.uid}/${user.uid}`)}
+          >
             <Ripple />
             <span> {group.title}</span>
           </div>

@@ -3,12 +3,14 @@ import {
   selectors as groupSelector,
   actions as groupActions
 } from "../../../../../../lib/groups";
+import { getUser } from "../../../../../../lib/authentication/selectors";
 import GroupList from "./GroupList";
 
 const mapStateToProps = () => {
   const getGroups = groupSelector.getGroupsState();
   return state => ({
-    groups: getGroups(state)
+    groups: getGroups(state),
+    user: getUser(state)
   });
 };
 
