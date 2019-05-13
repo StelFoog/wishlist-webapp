@@ -4,6 +4,7 @@ import "../";
 import { selectors } from "../";
 import Button from "../../button";
 import { submit, reduxForm, Field } from "redux-form";
+import { SEARCH_FOR_USERS_WITH_NAME } from "../../../lib/authentication/types.js";
 
 import { CardHeader, CardContent, CardActions } from "../../card";
 
@@ -57,7 +58,11 @@ const mapStateToProps = () => {
 
 const mapDispatchToProps = dispatch => ({
   handleSubmit: () => console.log("submitted"),
-  handleSearch: (name) => console.log("searching for " + name)
+  handleSearch: (name) => {
+    let users = [];
+    dispatch(SEARCH_FOR_USERS_WITH_NAME, name, users);
+    console.log(users);
+  }
 });
 
 const tempSubmit = (values, dispatch) => console.log(values);
