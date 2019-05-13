@@ -1,11 +1,16 @@
 import React from "react";
 import { WishlistTitle } from "./components";
 import WishlistItem from "../../components/wishlistItem";
+import { connect } from "react-redux";
 
 import "./wishlistPage.css";
 
 import IconButton from "../../components/iconButton";
 import PlusIcon from "../../components/svgIcon/icons/PlusIcon";
+import Button from "../../components/button";
+import dialogActions from "../../components/dialog/actions.js";
+
+const { openDialog } = dialogActions;
 
 const WishlistPage = ({
   wishlists,
@@ -13,7 +18,8 @@ const WishlistPage = ({
   setCurrentPage,
   match,
   editing,
-  editWishlistProperties
+  editWishlistProperties,
+  shareWishlist
 }) => {
   const { uid } = match.params;
   setCurrentPage(uid);
@@ -27,6 +33,14 @@ const WishlistPage = ({
         editWishlistProperties={editWishlistProperties}
         uid={uid}
       />
+      <div className="shareWishlistButton">
+        <Button
+          variant="filled"
+          label="Share"
+          color="var(--color-primary)"
+          handleClick={() => (shareWishlist(wishlist.uid))}
+        />
+      </div>
       <div className="wishlistPage">
         {items.length > 0 && (
           <React.Fragment>
@@ -46,6 +60,18 @@ const WishlistPage = ({
       </div>
     </div>
   );
-};
+}
 
-export default WishlistPage;
+const mapStateToProps = () => {};
+
+const mapDispatchToProps = dispatch => ({
+  createItem: wishlistUid =>
+    dispatch(openDialog("createItem", { wishlistUid })),
+  shareWishlist: wishlistUid =>
+    dispatch(openDialog("share", {wishlistUid}))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WishlistPage);
