@@ -6,6 +6,8 @@
   height: 100%;
   width: 170px;
 
+  overflow-x: hidden;
+  overflow-y: auto;
   position: fixed;
   left: 0;
   top: 0;

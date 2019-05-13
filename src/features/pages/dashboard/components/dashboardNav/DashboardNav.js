@@ -108,7 +108,7 @@ class DashboardNav extends React.Component {
             <div
               className={`groupDropdown ${groupDropdown ? "show" : "hidden"}`}
             >
-              <GroupList groups={user.groups} navigate={navigate} />
+              <GroupList navigate={navigate} />
             </div>
           </div>
           <div
