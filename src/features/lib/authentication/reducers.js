@@ -5,7 +5,8 @@ const {
   AUTH_USER_SUCCESS,
   AUTH_LOGOUT,
   ADD_USER_TO_WISHLIST_ERROR,
-  ADD_USER_TO_WISHLIST_SUCCESS
+  ADD_USER_TO_WISHLIST_SUCCESS,
+  ADD_WISHLIST_ID_TO_USER
 } = types;
 
 const initialState = {
@@ -40,6 +41,10 @@ const userReducer = (state = initialState, action) => {
       return { ...nextState };
     case ADD_USER_TO_WISHLIST_SUCCESS:
       nextState.user.wishlists.push(wishlistUid);
+      return { ...nextState };
+    case ADD_WISHLIST_ID_TO_USER:
+      console.log(wishlistUid);
+      nextState.user.ownedWishlists.push(wishlistUid);
       return { ...nextState };
     default:
       return { ...nextState };

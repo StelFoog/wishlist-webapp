@@ -1,6 +1,6 @@
 import { takeEvery, call, put, select, all } from "redux-saga/effects";
 import { getFormValues, reset } from "redux-form";
-import { push } from "connected-react-router";
+import { push, goBack } from "connected-react-router";
 import db from "./db";
 import { getUser } from "../authentication/selectors";
 import { addNewWishlistIdToUser } from "../authentication/db";
@@ -65,7 +65,7 @@ function* workCreateUserWishlist() {
 
     yield all([
       call(addNewWishlistIdToUser, userValues.uid, result.uid),
-      put({ type: ADD_WISHLIST_ID_TO_USER, wishlistId: result.uid }),
+      put({ type: ADD_WISHLIST_ID_TO_USER, wishlistUid: result.uid }),
       put({ type: CREATE_CHAT, id: result.uid })
     ]);
     // TODO: add the wishlist to the user obejct
@@ -75,7 +75,7 @@ function* workCreateUserWishlist() {
     ]);
     yield put({ type: CLOSE_DIALOG });
     yield put(push("/dashboard/temp"));
-    yield put(push("/dashboard"));
+    yield put(goBack());
   } catch (error) {
     yield put({ type: CREATE_USER_WISHLIST_ERROR, error: error });
   }
@@ -85,7 +85,6 @@ function* workFetchWishlists() {
   try {
     const user = yield select(getUser);
     const wishlists = yield call(fetchAllWishlistsFromUser, user);
-
     yield put({
       type: FETCH_WISHLISTS_SUCCESS,
       wishlistData: wishlists
