@@ -6,11 +6,8 @@ const {
   AUTH_LOGOUT,
   ADD_USER_TO_WISHLIST_ERROR,
   ADD_USER_TO_WISHLIST_SUCCESS,
-<<<<<<< HEAD
-  ADD_WISHLIST_ID_TO_USER
-=======
+  ADD_WISHLIST_ID_TO_USER,
   ADD_GROUP_ID_TO_USER
->>>>>>> fixed group creation bugs
 } = types;
 
 const initialState = {
@@ -49,6 +46,7 @@ const userReducer = (state = initialState, action) => {
     case ADD_WISHLIST_ID_TO_USER:
       console.log(wishlistUid);
       nextState.user.ownedWishlists.push(wishlistUid);
+      return { ...nextState };
     case ADD_GROUP_ID_TO_USER:
       nextState.user.groups.push(groupId);
       return { ...nextState };

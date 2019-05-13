@@ -1,6 +1,6 @@
 import types from "./types.js";
 
-const { GET_USERS_WITH_UID_SUCCESS, GET_USERS_WITH_UID_ERROR } = types;
+const { GET_USERS_WITH_UID_SUCCESS } = types;
 
 const initialState = {
   users: []

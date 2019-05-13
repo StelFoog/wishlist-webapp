@@ -10,7 +10,6 @@ import {
 import groupTypes from "./types";
 import { types as authTypes } from "../authentication";
 import { addGroupToUser, removeGroupFromUser } from "../authentication/db.js";
-import { getPathname } from "../router/selectors";
 import { replace, push } from "connected-react-router";
 
 const {
