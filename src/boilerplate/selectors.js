@@ -1,3 +1,5 @@
+// Selectors are used to get data from the store.
+
 import { createSelector } from "reselect";
 
 const getFoo = ({ bolier }) => boiler.foo;
