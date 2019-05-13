@@ -1,5 +1,6 @@
 import MemberList from "./MemberList";
 import { connect } from "react-redux";
+import { actions as dialogActions } from "../../../../components/dialog";
 import {
   actions as usersActions,
   selectors as usersSelectors
@@ -11,8 +12,10 @@ const mapStateToProps = () => {
     users: getUsers(state)
   });
 };
+
 const mapDispatchToProps = dispatch => ({
-  getUsersWithUid: users => dispatch(usersActions.getUsersWithUid(users))
+  getUsersWithUid: users => dispatch(usersActions.getUsersWithUid(users)),
+  openForm: uid => dispatch(dialogActions.openDialog("addMember", { uid: uid }))
 });
 
 export default connect(

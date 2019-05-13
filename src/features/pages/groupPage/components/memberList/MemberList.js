@@ -17,7 +17,7 @@ class MemberList extends React.Component {
   }
 
   render() {
-    const { users } = this.props;
+    const { users, openForm, uid } = this.props;
     return (
       <div className="memberBar">
         <div className="memberContainer">
@@ -31,7 +31,7 @@ class MemberList extends React.Component {
             </div>
           ))}
         </div>
-        <AddUser />
+        <AddUser openForm={openForm} uid={uid} />
       </div>
     );
   }

@@ -21,7 +21,7 @@ class GroupPage extends React.Component {
       >
         <PageHeader title={group.title} />
         <div className="groupPage">
-          <MemberList members={group.members} />
+          <MemberList members={group.members} uid={uid} />
         </div>
       </div>
     );
