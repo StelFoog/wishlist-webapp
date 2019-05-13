@@ -1,6 +1,6 @@
 import { takeEvery, call, put, select, all } from "redux-saga/effects";
 import { getFormValues, reset } from "redux-form";
-import { push, goBack } from "connected-react-router";
+import { replace } from "connected-react-router";
 import db from "./db";
 import { getUser } from "../authentication/selectors";
 import { addNewWishlistIdToUser } from "../authentication/db";
@@ -8,6 +8,7 @@ import wishlistTypes from "./types.js";
 import chatTypes from "../chat/types";
 import { types as authTypes } from "../authentication";
 import { types as dialogTypes } from "../../components/dialog";
+import { getPathname } from "../router/selectors";
 
 const {
   createWishlistWithOwner,
@@ -74,8 +75,9 @@ function* workCreateUserWishlist() {
       put(reset("WishlistCreateForm"))
     ]);
     yield put({ type: CLOSE_DIALOG });
-    yield put(push("/dashboard/temp"));
-    yield put(goBack());
+    const pathname = yield select(getPathname);
+    yield put(replace("/temp"));
+    yield put(replace(pathname));
   } catch (error) {
     yield put({ type: CREATE_USER_WISHLIST_ERROR, error: error });
   }
@@ -119,8 +121,9 @@ function* workEditWishlistProperties() {
       put(reset("WishlistEditForm"))
     ]);
     yield put({ type: CLOSE_DIALOG });
-    yield put(push("/dashboard/temp"));
-    yield put(push("/dashboard"));
+    const pathname = yield select(getPathname);
+    yield put(replace("/temp"));
+    yield put(replace(pathname));
   } catch (error) {
     yield put({ type: EDIT_WISHLIST_PROPERTIES_ERROR, error: error });
   }
