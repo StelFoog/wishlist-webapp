@@ -1,5 +1,8 @@
 import React from "react";
-
+import ProfilePicture from "../../../../components/profilePicture";
+import Ripple from "../../../../components/ripple";
+import AddUser from "./AddUser";
+import "./memberList.css";
 class MemberList extends React.Component {
   componentDidMount() {
     const { getUsersWithUid, members } = this.props;
@@ -15,13 +18,21 @@ class MemberList extends React.Component {
 
   render() {
     const { users } = this.props;
-
     return (
-      <React.Fragment>
-        {users.map(el => (
-          <div>{el.name}</div>
-        ))}
-      </React.Fragment>
+      <div className="memberBar">
+        <div className="memberContainer">
+          {users.map(user => (
+            <div className="memberCard">
+              <Ripple />
+              <div className="memberPicture">
+                <ProfilePicture src={user.profilePictureUrl} width={30} />
+              </div>
+              <div clasName="memberName">{user.name}</div>
+            </div>
+          ))}
+        </div>
+        <AddUser />
+      </div>
     );
   }
 }
