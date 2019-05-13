@@ -4,6 +4,7 @@ import { sagas as wishlistSagas } from "./features/lib/wishlists";
 import { sagas as wishlistItemSagas } from "./features/lib/wishlistItems";
 import { sagas as chatSagas } from "./features/lib/chat";
 import { sagas as groupSagas } from "./features/lib/groups";
+import { sagas as usersSagas } from "./features/lib/users";
 
 function* rootSaga() {
   yield all([
@@ -22,7 +23,8 @@ function* rootSaga() {
     groupSagas.watchFetchAllUserGroups(),
     groupSagas.watchCreateGroup(),
     groupSagas.watchInviteUserToGroup(),
-    groupSagas.watchRemoveUserFromGroup()
+    groupSagas.watchRemoveUserFromGroup(),
+    usersSagas.watchGetUserWithUid()
   ]);
 }
 
