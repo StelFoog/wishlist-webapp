@@ -6,7 +6,6 @@ import { actions } from "../../components/dialog";
 const { openDialog } = actions;
 
 const LoggedInPageContainer = props => {
-  console.log(props);
   return <LoggedInPage {...props} />;
 };
 
