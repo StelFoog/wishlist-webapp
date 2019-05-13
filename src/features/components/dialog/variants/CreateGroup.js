@@ -36,13 +36,6 @@ const CreateGroup = ({ performSubmit }) => {
   );
 };
 
-const mapStateToProps = () => {
-  const getDialogValues = selectors.getDialogValuesState();
-  return state => ({
-    values: getDialogValues(state)
-  });
-};
-
 const mapDispatchToProps = dispatch => ({
   performSubmit: () => dispatch(submit("createGroup"))
 });
@@ -52,7 +45,7 @@ export default reduxForm({
   onSubmit: (values, dispatch) => dispatch(createGroup(values.name))
 })(
   connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps
   )(CreateGroup)
 );
