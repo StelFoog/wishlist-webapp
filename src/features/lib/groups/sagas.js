@@ -1,5 +1,6 @@
 import { takeEvery, put, select, call } from "redux-saga/effects";
 import { getUser } from "../authentication/selectors.js";
+import { getDialogValues } from "../../components/dialog/selectors";
 import {
   createGroupWithOwner,
   addUserToGroup,
@@ -74,7 +75,10 @@ function* workCreateGroup(action) {
 
 function* workInviteUserToGroup(action) {
   try {
-    const { groupId, userId } = action;
+    const { userId } = action;
+    const { uid } = yield select(getDialogValues);
+    const groupId = uid;
+    console.log(groupId);
     yield call(addUserToGroup, groupId, userId);
     yield call(addGroupToUser, userId, groupId);
     yield put({ type: INVITE_USER_TO_GROUP_SUCCESS });
