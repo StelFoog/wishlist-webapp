@@ -9,21 +9,20 @@ const userExistsWithUid = async uid => {
 
 const nextHigherString = (string) => {
   let seq = Array.from(string);
-  ++seq[seq.length-1];
+  seq[seq.length-1] = String.fromCharCode(string.charCodeAt(seq.length-1)+1);
   return seq.join("");
 }
 
-const searchForUsersWithName = async (name, start, end) => {
-  return Promise.all((await 
+const searchForUsersWithName = async (name) => {
+  const users = (await 
     database.collection("Users")
     .orderBy("name")
     .where("name", ">=", name)
     .where("name", "<", nextHigherString(name))
     .limit(20)
-    .get()
-    .then())
-      .docs
-      .map(doc => doc.data()));
+    .get().then((docArray) =>
+      docArray.docs.map((doc) => doc.data())));
+  return users;
 }
 
 const userFromFirebaseUser = firebaseUser => {

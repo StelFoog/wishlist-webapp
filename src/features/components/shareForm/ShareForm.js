@@ -6,7 +6,7 @@ const renderField = ({input,
                       type,
                       handleSearch 
 }) => {
-  if(input.value.length >= 3)
+  if(input.value.length >= 1)
     handleSearch(input.value);
   return(
     <div>

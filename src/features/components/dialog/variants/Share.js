@@ -4,15 +4,22 @@ import "../";
 import { selectors } from "../";
 import Button from "../../button";
 import { submit, reduxForm, Field } from "redux-form";
-import { SEARCH_FOR_USERS_WITH_NAME } from "../../../lib/authentication/types.js";
-
+import types from "../../../lib/authentication/types.js";
 import { CardHeader, CardContent, CardActions } from "../../card";
-
 import renderField from "../../shareForm/ShareForm.js";
+import actions from "../../../lib/authentication/actions.js";
+
+const { searchForUsersWithName } = actions;
+
+const { SEARCH_FOR_USERS_WITH_NAME } = types;
 
 const performSubmit = console.log;
 
 class Share extends Component {
+  componentDidMount() {
+
+  }
+
   render() {
     return(
       <React.Fragment>
@@ -26,6 +33,14 @@ class Share extends Component {
               component={renderField}
             />
           </form>
+          <p> Before </p>
+          {
+            __searchedUsers == [] || __searchedUsers === undefined
+          ? <p> None to show </p>
+          : __searchedUsers.map((user) => 
+            <p> {user.name} </p>)
+          }
+          <p> After </p>
         </CardContent>
         <CardActions>
           <Button
@@ -56,12 +71,15 @@ const mapStateToProps = () => {
   });
 }
 
+var __searchedUsers = [];
+
 const mapDispatchToProps = dispatch => ({
   handleSubmit: () => console.log("submitted"),
   handleSearch: (name) => {
-    let users = [];
-    dispatch(SEARCH_FOR_USERS_WITH_NAME, name, users);
-    console.log(users);
+    __searchedUsers = [];
+    dispatch(searchForUsersWithName(name, __searchedUsers));
+    console.log("RESULTS OF SEARCH:");
+    console.log(__searchedUsers);
   }
 });
 

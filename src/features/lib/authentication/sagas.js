@@ -37,10 +37,15 @@ function* watchSearchForUsersWithName() {
 }
 
 function* workSearchForUsersWithName(action) {
-  const { type, name, list } = action;
-  const users = yield call(searchForUsersWithName, name);
-  for(let i = 0; i < users.length; ++i) {
-    list.push(users[i]);
+  try {
+    const { type, name, list } = action;
+    const users = yield call(searchForUsersWithName, name);
+    for(let i = 0; i < users.length; ++i) {
+      list.push(users[i]);
+    }
+    yield put({type: true});
+  }catch(error) {
+    yield put({type: false});
   }
 }
 
