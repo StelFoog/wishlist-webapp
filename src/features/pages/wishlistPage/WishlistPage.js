@@ -1,9 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import PageHeader from "../../components/pageHeader";
 import WishlistItem from "../../components/wishlistItem";
 
 import "./wishlistPage.css";
-import { firebase } from "../../lib/firebase";
 import { connect } from "react-redux";
 import { selectors } from "../../lib/wishlists";
 
@@ -69,7 +68,7 @@ class WishlistPage extends Component {
 
 const WishlistPage = ({ wishlists, pathname, createItem, setCurrentPage }) => {
   const wishlistUid = pathname.split("wishlist/").pop();
-  const wishlist = wishlists.find(element => element.uid == wishlistUid);
+  const wishlist = wishlists.find(element => element.uid === wishlistUid);
   const { items } = wishlist;
   setCurrentPage(wishlist.uid);
   return (

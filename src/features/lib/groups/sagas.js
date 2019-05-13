@@ -54,7 +54,7 @@ function* workCreateGroup(action) {
   try {
     const user = yield select(getUser);
     const userUid = user.uid;
-    const { type, groupName } = action;
+    const { groupName } = action;
     const result = yield call(createGroupWithOwner, user, groupName);
     yield call(addGroupToUser, userUid, result);
     yield put({ type: CREATE_GROUP_SUCCESS, value: result });

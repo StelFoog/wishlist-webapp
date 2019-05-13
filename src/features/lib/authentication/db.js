@@ -1,8 +1,5 @@
 import { database, firebase } from "../firebase/";
 import { defaultUser } from "./user.js";
-import db from "../wishlists/db";
-
-const { fetchWishlistByUid, editWishlist } = db;
 
 const _getUserRef = uid => database.collection("Users").doc("" + uid);
 

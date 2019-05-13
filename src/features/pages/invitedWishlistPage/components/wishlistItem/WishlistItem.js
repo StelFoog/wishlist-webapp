@@ -7,7 +7,7 @@ import CardContainer, {
 import { selectors } from "../../../../lib/wishlists";
 
 const wishListItem = ({ wishlists, index, editItem, wishlistUid }) => {
-  const wishlist = wishlists.find(element => element.uid == wishlistUid);
+  const wishlist = wishlists.find(element => element.uid === wishlistUid);
   const item = wishlist.items[index];
   console.log(item);
   const { name, description, price } = item;

@@ -117,7 +117,7 @@ function* workEditWishlistProperties() {
     let result = yield call(editWishlistProperties, uid, wishlistForm);
 
     yield all([
-      put({ type: EDIT_WISHLIST_PROPERTIES_SUCCESS }),
+      put({ type: EDIT_WISHLIST_PROPERTIES_SUCCESS, result }),
       put(reset("WishlistEditForm"))
     ]);
     yield put({ type: CLOSE_DIALOG });

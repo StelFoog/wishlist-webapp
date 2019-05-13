@@ -4,7 +4,7 @@ import "./tabs.css";
 
 class Tabs extends React.Component {
   render() {
-    const { fullWidth = false, children } = this.props;
+    const { /* fullWidth = false, */ children } = this.props;
     return <div className="tabs">{children}</div>;
   }
 }

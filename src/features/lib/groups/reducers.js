@@ -1,18 +1,18 @@
 import types from "./types";
 
-const {
-  FETCH_ALL_USER_GROUPS_ERROR,
-  FETCH_ALL_USER_GROUPS_SUCCESS,
-  CREATE_GROUP_ERROR,
-  CREATE_GROUP_SUCCESS,
-  INVITE_USER_TO_GROUP_ERROR,
-  INVITE_USER_TO_GROUP_SUCCESS,
-  REMOVE_USER_FROM_GROUP_ERROR,
-  REMOVE_USER_FROM_GROUP_SUCCESS
-} = types;
+// const {
+//   FETCH_ALL_USER_GROUPS_ERROR,
+//   FETCH_ALL_USER_GROUPS_SUCCESS,
+//   CREATE_GROUP_ERROR,
+//   CREATE_GROUP_SUCCESS,
+//   INVITE_USER_TO_GROUP_ERROR,
+//   INVITE_USER_TO_GROUP_SUCCESS,
+//   REMOVE_USER_FROM_GROUP_ERROR,
+//   REMOVE_USER_FROM_GROUP_SUCCESS
+// } = types;
 
 const groupReducer = (state, action) => {
-  const { type, value, error } = action;
+  const { type, /* value, */ error } = action;
   let nextState = state;
 
   switch (type) {

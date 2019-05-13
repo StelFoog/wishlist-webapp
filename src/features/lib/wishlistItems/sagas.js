@@ -14,7 +14,6 @@ const { fetchWishlistByUid } = wishlistDb;
 const {
   addWishlistItem,
   editWishlistItem,
-  validateNewItem,
   makeItem,
   claimWishlistItem
 } = wishlistItemDb;

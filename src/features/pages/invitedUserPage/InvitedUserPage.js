@@ -1,7 +1,6 @@
 import React from "react";
 import PageHeader from "../../components/pageHeader";
 import Button from "../../components/button";
-import { push } from "connected-react-router";
 
 import { connect } from "react-redux";
 

@@ -14,9 +14,9 @@ const {
 
 const {
   CREATE_WISHLIST_ITEM_SUCCESS,
-  CREATE_WISHLIST_ITEM_ERROR,
-  EDIT_WISHLIST_ITEM_SUCCESS,
-  EDIT_WISHLIST_ITEM_ERROR
+  // CREATE_WISHLIST_ITEM_ERROR, To be readded when implemented properly
+  EDIT_WISHLIST_ITEM_SUCCESS
+  // EDIT_WISHLIST_ITEM_ERROR    –––––––––––––––– || –––––––––––––––––––
 } = itemTypes;
 
 const initialState = {
@@ -26,7 +26,15 @@ const initialState = {
 
 const wishlistReducer = (state = initialState, action) => {
   let nextState = state;
-  const { type, wishlistData, wishlistUid, index, itemData, error } = action;
+  const {
+    type,
+    wishlistData,
+    wishlistUid,
+    index,
+    itemData,
+    // result, tobe readded when EDIT_WISHLIST_PROPERTIES_SUCCESS is implemented
+    error
+  } = action;
   const { ownedWishlists } = nextState;
   let item = itemData;
   switch (type) {
@@ -73,14 +81,14 @@ const wishlistReducer = (state = initialState, action) => {
     case CREATE_WISHLIST_ITEM_SUCCESS:
       // let item = itemData ? itemData : {};
       const wishlistIndexCreate = ownedWishlists.findIndex(
-        element => element.uid == wishlistUid
+        element => element.uid === wishlistUid
       );
       nextState.ownedWishlists[wishlistIndexCreate].items.push(item);
       return { ...nextState };
     case EDIT_WISHLIST_ITEM_SUCCESS:
       // let item = itemData ? itemData : {};
       const wishlistIndexEdit = ownedWishlists.findIndex(
-        element => element.uid == wishlistUid
+        element => element.uid === wishlistUid
       );
       item = { ...ownedWishlists[wishlistIndexEdit].items[index], ...item };
       nextState.ownedWishlists[wishlistIndexEdit].items[index] = item;

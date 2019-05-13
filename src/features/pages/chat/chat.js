@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getUser } from "../../lib/authentication/selectors";
+// import { getUser } from "../../lib/authentication/selectors";
 import { connect } from "react-redux";
 import { onChatMessageReceived } from "../../lib/chat/db.js";
 import Button from "../../components/button";
