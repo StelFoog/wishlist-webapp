@@ -1,0 +1,91 @@
+
+.wishlistItem {
+
+  /*
+  display: flex; 
+  justify-content: space-between;
+  */
+  width: 100%;
+  height: 12vh;
+  box-sizing: border-box;
+  padding: 10px;
+
+  display: grid;
+  grid-template-columns: 20% 40% 15% 25%;
+
+  border-bottom: 2px solid white;
+
+
+}
+
+.itemContent {
+  margin: 0 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.itemPrice > h3 {
+  margin: 0;
+  padding: 0;
+}
+
+.itemPrice {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+.itemDescription{
+  overflow: auto;
+
+}
+
+.itemDescription > p {
+  margin: 0;
+  padding: 0;
+}
+
+.itemClaim {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.itemClaim > h3 {
+  margin: 0;
+  padding: 0;
+}
+
+.claimUsers{
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+}
+
+.userWhoClaimed {
+  padding: 5px;
+  margin: 0;
+}
+
+.userWhoClaimedName {
+  display: none;
+  position: absolute;
+
+  opacity: 0.6;
+  background-color: black;
+  color: white;
+}
+
+.userWhoClaimedName > p {
+  margin: 0;
+  padding: 0;
+}
+
+.userWhoClaimed:hover > .userWhoClaimedName {
+  display: block;
+}
