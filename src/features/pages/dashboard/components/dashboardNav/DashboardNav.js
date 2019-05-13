@@ -6,10 +6,12 @@ import {
   MenuIcon,
   RoundKeyboardArrowDown,
   SettingsIcon,
-  ListIcon
+  ListIcon,
+  PlusIcon
 } from "../../../../components/svgIcon";
 import ProfilePicture from "../../../../components/profilePicture";
 import { getUserProfilePictureUrl } from "../../../../lib/authentication/user.js";
+import GroupList from "./components/groupList";
 import "./dashboardNav.css";
 
 class DashboardNav extends React.Component {
@@ -37,7 +39,7 @@ class DashboardNav extends React.Component {
       pathname === "/dashboard"
     ) {
       return 0;
-    } else if (pathname.indexOf("groups") > 0) {
+    } else if (pathname.indexOf("group") > 0) {
       return 1;
     } else return -1;
   }
@@ -63,7 +65,7 @@ class DashboardNav extends React.Component {
   render() {
     const activeTab = this.getActivePage();
     const { showSideNav, groupDropdown } = this.state;
-    const { navigate, user } = this.props;
+    const { navigate, user, createGroup, openForm } = this.props;
     return (
       <React.Fragment>
         <div
@@ -80,7 +82,7 @@ class DashboardNav extends React.Component {
             </div>
           </div>
           <hr className="navDivider" />
-          <div className={`active-${activeTab}`}>
+          <div className={`navButtonContainer active-${activeTab}`}>
             <div className="navButton" onClick={() => navigate("")}>
               <Ripple />
               <div className="icon">
@@ -104,20 +106,19 @@ class DashboardNav extends React.Component {
                 <RoundKeyboardArrowDown size={30} color="var(--color-light)" />
               </div>
             </div>
-            <div
-              className={`groupDropdown ${groupDropdown ? "show" : "hidden"}`}
-            >
-              <div className="group">
-                <Ripple />
-                <span>Group name</span>
-              </div>
-              <div className="group">
-                <Ripple />
-                <span>Group name</span>
-              </div>
-              <div className="group">
-                <Ripple />
-                <span>Group name</span>
+            <div className="groupDropdownContainer">
+              <div
+                className={`groupDropdown ${groupDropdown ? "show" : "hidden"}`}
+              >
+                <div className="navButton" onClick={openForm}>
+                  <div className="icon">
+                    <PlusIcon size={30} />
+                  </div>
+                  <Ripple />
+                  <span>Add new group</span>
+                </div>
+
+                <GroupList navigate={navigate} />
               </div>
             </div>
           </div>

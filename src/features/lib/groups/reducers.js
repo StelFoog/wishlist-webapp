@@ -11,38 +11,44 @@ const {
   REMOVE_USER_FROM_GROUP_SUCCESS
 } = types;
 
-const groupReducer = (state, action) => {
-  const { type, value, error } = action;
+const initialState = {
+  groups: []
+};
+
+const groupReducer = (state = initialState, action) => {
+  const { type, error, value } = action;
   let nextState = state;
 
   switch (type) {
-    case types.CREATE_GROUP_SUCCESS:
+    case CREATE_GROUP_SUCCESS:
+      nextState.groups.push(value);
       break;
-    case types.CREATE_GROUP_ERROR:
+    case CREATE_GROUP_ERROR:
       console.error(
         "CREATE_GROUP_ERROR: " + error.code + "-> " + error.message
       );
       break;
 
-    case types.FETCH_ALL_USER_GROUPS_SUCCESS:
+    case FETCH_ALL_USER_GROUPS_SUCCESS:
+      nextState.groups = value;
       break;
-    case types.FETCH_ALL_USER_GROUPS_ERROR:
+    case FETCH_ALL_USER_GROUPS_ERROR:
       console.error(
         "FETCH_ALL_USER_GROUPS_ERROR: " + error.code + "-> " + error.message
       );
       break;
 
-    case types.INVITE_USER_TO_GROUP_SUCCESS:
+    case INVITE_USER_TO_GROUP_SUCCESS:
       break;
-    case types.INVITE_USER_TO_GROUP_ERROR:
+    case INVITE_USER_TO_GROUP_ERROR:
       console.error(
         "INVITE_USER_TO_GROUP_ERROR: " + error.code + "-> " + error.message
       );
       break;
 
-    case types.REMOVE_USER_FROM_GROUP_SUCCESS:
+    case REMOVE_USER_FROM_GROUP_SUCCESS:
       break;
-    case types.REMOVE_USER_FROM_GROUP_ERROR:
+    case REMOVE_USER_FROM_GROUP_ERROR:
       console.error(
         "REMOVE_USER_FROM_GROUP_ERROR: " + error.code + "-> " + error.message
       );

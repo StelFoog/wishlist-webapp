@@ -6,6 +6,7 @@ import { reducers as wishlistReducers } from "./features/lib/wishlists";
 import { reducers as chatReducers } from "./features/lib/chat";
 import { reducers as miscReducers } from "./features/lib/misc";
 import { reducers as groupReducers } from "./features/lib/groups";
+import { reducers as usersReducers } from "./features/lib/users";
 
 const appReducer = combineReducers({
   auth: authReducers.userReducer,
@@ -14,7 +15,8 @@ const appReducer = combineReducers({
   form: formReducer,
   chat: chatReducers.chatReducer,
   misc: miscReducers.miscReducer,
-  group: groupReducers.groupReducer
+  group: groupReducers.groupReducer,
+  users: usersReducers
 });
 
 const rootReducer = (state, action) => {
