@@ -50,5 +50,6 @@ const submit = (values, dispatch) => dispatch(createUserWishlist());
 
 export default reduxForm({
   form: "WishlistCreateForm",
-  onSubmit: submit
+  onSubmit: submit,
+  destroyOnUnmount: false
 })(WishlistCreateForm);

@@ -17,9 +17,7 @@ const CreateItem = ({ handleSubmit, handleClose, values, performSubmit }) => {
     <React.Fragment>
       <CardHeader>{"Create new wishlist item"}</CardHeader>
       <CardContent>
-
         <form onSubmit={handleSubmit}>
-
           <label>Name:</label>
           <Field
             name="name"
@@ -28,34 +26,29 @@ const CreateItem = ({ handleSubmit, handleClose, values, performSubmit }) => {
             validate={required}
           />
           <label>Price:</label>
-          <Field
-            name="price"
-            component={renderField}
-            type="number"
-
-          />
+          <Field name="price" component={renderField} type="number" />
           <label>Description:</label>
-          <Field
-            name="description"
-            component={renderField}
-            type="text"
-          />
+          <Field name="description" component={renderField} type="text" />
         </form>
-
       </CardContent>
       <CardActions>
-        <Button label="SUBMIT" color="green" variant="filled" handleClick={performSubmit}></Button>
+        <Button
+          label="SUBMIT"
+          color="green"
+          variant="filled"
+          handleClick={performSubmit}
+        />
       </CardActions>
     </React.Fragment>
   );
-}
+};
 
 const mapStateToProps = () => {
   const getDialogValues = selectors.getDialogValuesState();
   return state => ({
     values: getDialogValues(state)
-  })
-}
+  });
+};
 
 const tempSubmit = (values, dispatch) => dispatch(createWishlistItem());
 
@@ -65,7 +58,8 @@ const mapDispatchToProps = dispatch => ({
 
 export default reduxForm({
   form: "createItem",
-  onSubmit: tempSubmit
+  onSubmit: tempSubmit,
+  destroyOnUnmount: false
 })(
   connect(
     mapStateToProps,
