@@ -37,10 +37,11 @@ const editGroupProperties = async (groupId, fields) => {
   await _getGroupRef(groupId).update(fields);
 };
 
-const fetchGroupByUid = groupId => {
-  return _getGroupRef(groupId)
+const fetchGroupByUid = async group => {
+  const { uid } = group;
+  return _getGroupRef(uid)
     .get()
-    .then();
+    .then(doc => doc.data());
 };
 
 const fetchAllGroupsFromUser = user => {

@@ -6,6 +6,8 @@
   height: 100%;
   width: 170px;
 
+  overflow-x: hidden;
+  overflow-y: auto;
   position: fixed;
   left: 0;
   top: 0;
@@ -14,6 +16,12 @@
   background-color: var(--color-primary-dark);
   box-shadow: 1px 0 2px 0 var(--color-dark);
   display: flex;
+  flex-direction: column;
+}
+
+.navButtonContainer {
+  display: flex;
+  flex: 1;
   flex-direction: column;
 }
 
@@ -66,11 +74,22 @@
 }
 
 /* Group dropdown styles */
+.groupDropdownContainer {
+  display: flex;
+  flex: 1;
+}
 
 .dropdownArrow.open {
   transform: rotate(-180deg);
 }
+.groupDropdown::-webkit-scrollbar {
+  width: 0 !important;
+}
 
+.groupDropdown {
+  overflow-y: auto;
+  flex: 1;
+}
 .dropdownArrow {
   margin-right: 5px;
   position: absolute;
@@ -81,7 +100,6 @@
 .group > span,
 .groupDropdown {
   transition: height 0.2s linear;
-  overflow: hidden;
 }
 .groupDropdown.show {
   height: 100%;

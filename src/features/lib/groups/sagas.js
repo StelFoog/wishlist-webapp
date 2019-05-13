@@ -1,13 +1,16 @@
 import { takeEvery, put, select, call } from "redux-saga/effects";
 import { getUser } from "../authentication/selectors.js";
+import { getDialogValues } from "../../components/dialog/selectors";
 import {
   createGroupWithOwner,
   addUserToGroup,
   removeUserFromGroup,
   fetchAllGroupsFromUser
 } from "./db.js";
-import types from "./types";
+import groupTypes from "./types";
+import { types as authTypes } from "../authentication";
 import { addGroupToUser, removeGroupFromUser } from "../authentication/db.js";
+import { replace, push } from "connected-react-router";
 
 const {
   FETCH_ALL_USER_GROUPS,
@@ -22,7 +25,9 @@ const {
   REMOVE_USER_FROM_GROUP,
   REMOVE_USER_FROM_GROUP_ERROR,
   REMOVE_USER_FROM_GROUP_SUCCESS
-} = types;
+} = groupTypes;
+
+const { ADD_GROUP_ID_TO_USER } = authTypes;
 
 function* watchFetchAllUserGroups() {
   yield takeEvery(FETCH_ALL_USER_GROUPS, workFetchAllUserGroups);
@@ -56,8 +61,12 @@ function* workCreateGroup(action) {
     const userUid = user.uid;
     const { groupName } = action;
     const result = yield call(createGroupWithOwner, user, groupName);
-    yield call(addGroupToUser, userUid, result);
+    const groupId = result.uid;
+    yield call(addGroupToUser, userUid, groupId);
     yield put({ type: CREATE_GROUP_SUCCESS, value: result });
+    yield put({ type: ADD_GROUP_ID_TO_USER, groupId });
+    yield put(replace("/temp"));
+    yield put(push(`/dashboard/group/${groupId}`));
   } catch (error) {
     yield put({ type: CREATE_GROUP_ERROR, error: error });
   }
@@ -65,7 +74,10 @@ function* workCreateGroup(action) {
 
 function* workInviteUserToGroup(action) {
   try {
-    const { groupId, userId } = action;
+    const { userId } = action;
+    const { uid } = yield select(getDialogValues);
+    const groupId = uid;
+    console.log(groupId);
     yield call(addUserToGroup, groupId, userId);
     yield call(addGroupToUser, userId, groupId);
     yield put({ type: INVITE_USER_TO_GROUP_SUCCESS });

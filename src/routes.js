@@ -17,6 +17,7 @@ import LoggedInPage from "./features/pages/loggedInPage";
 import WishlistPage from "./features/pages/wishlistPage";
 import InvitedUserPage from "./features/pages/invitedUserPage";
 import InvitedWishlistPage from "./features/pages/invitedWishlistPage";
+import GroupPage from "./features/pages/groupPage";
 
 const Root = ({ store, history, persistor }) => (
   <Provider store={store}>
@@ -39,7 +40,6 @@ const Root = ({ store, history, persistor }) => (
                 return <Dashboard {...props} />;
               }}
             />
-
             <Route
               exact
               render={props => {
@@ -69,13 +69,20 @@ const Root = ({ store, history, persistor }) => (
             }}
           />
           <Route
+            path={"/dashboard/group/:uid/:user"}
+            exact
+            render={props => {
+              return <GroupPage {...props} />;
+            }}
+          />
+
+          <Route
             path={"/dashboard/guest/:uid"}
             exact
             render={props => {
               return <InvitedWishlistPage {...props} />;
             }}
           />
-
           <Route
             path={"/wishlistitem"}
             exact
