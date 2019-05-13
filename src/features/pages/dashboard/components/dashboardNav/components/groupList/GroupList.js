@@ -8,7 +8,8 @@ class GroupList extends React.Component {
   }
 
   render() {
-    const { openForm, navigate, groups } = this.props;
+    const { navigate, groups } = this.props;
+
     return (
       <React.Fragment>
         {groups.map(group => (
@@ -17,10 +18,6 @@ class GroupList extends React.Component {
             <span> {group.title}</span>
           </div>
         ))}
-        <div className="group" onClick={openForm}>
-          <Ripple />
-          <span>Add new group</span>
-        </div>
       </React.Fragment>
     );
   }
