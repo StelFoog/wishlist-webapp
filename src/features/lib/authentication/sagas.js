@@ -1,7 +1,8 @@
 import { takeEvery, call, put, select, all } from "redux-saga/effects";
 import { push } from "connected-react-router";
 import { authWithFacebookAPI /* authWithGoogleAPI */ } from "./auth.js";
-import { addInvitedWishlistToUser, addInvitedUserToWishlist } from "./db";
+import { addInvitedWishlistToUser, addInvitedUserToWishlist,
+ searchForUsersWithName } from "./db";
 import types from "./types.js";
 import { getUser } from "./selectors";
 import actions from "./actions.js";
@@ -15,7 +16,8 @@ const {
   AUTH_USER_ERROR,
   ADD_USER_TO_WISHLIST,
   ADD_USER_TO_WISHLIST_ERROR,
-  ADD_USER_TO_WISHLIST_SUCCESS
+  ADD_USER_TO_WISHLIST_SUCCESS,
+  SEARCH_FOR_USERS_WITH_NAME
 } = types;
 
 function* watchUserAuthFacebook() {
@@ -28,6 +30,18 @@ function* watchUserAuthGoogle() {
 
 function* watchAddUserToWishlist() {
   yield takeEvery(ADD_USER_TO_WISHLIST, workAddUserToWishlist);
+}
+
+function* watchSearchForUsersWithName() {
+  yield takeEvery(SEARCH_FOR_USERS_WITH_NAME, workSearchForUsersWithName);
+}
+
+function* workSearchForUsersWithName(action) {
+  const { type, name, list } = action;
+  const users = yield call(searchForUsersWithName, name);
+  for(let i = 0; i < users.length; ++i) {
+    list.push(users[i]);
+  }
 }
 
 function* workAddUserToWishlist(action) {
@@ -77,5 +91,6 @@ function* workUserAuthGoogle() {}
 export default {
   watchUserAuthFacebook,
   watchUserAuthGoogle,
-  watchAddUserToWishlist
+  watchAddUserToWishlist,
+  watchSearchForUsersWithName
 };

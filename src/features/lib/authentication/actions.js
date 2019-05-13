@@ -1,6 +1,7 @@
 import types from "./types.js";
 
 const {
+  SEARCH_FOR_USERS_WITH_NAME,
   AUTH_LOGOUT,
   AUTH_USER_FACEBOOK,
   AUTH_USER_GOOGLE,
@@ -24,9 +25,16 @@ const addUserToWishlist = wishlistUid => ({
   wishlistUid
 });
 
+const searchForUsersWithName = (name, list) => ({
+  type: SEARCH_FOR_USERS_WITH_NAME,
+  name,
+  list
+});
+
 export default {
   authenticateFacebook,
   authenticateGoogle,
   logout,
-  addUserToWishlist
+  addUserToWishlist,
+  searchForUsersWithName
 };
