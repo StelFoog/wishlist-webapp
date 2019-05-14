@@ -16,12 +16,20 @@ class MemberList extends React.Component {
     }
   }
 
+  getFilteredUsers(filter, users) {
+    let array = [];
+    filter.forEach(element => {
+      users[element] && array.push(users[element]);
+    });
+    return array;
+  }
+
   render() {
-    const { users, openForm, uid, navigate } = this.props;
+    const { users, openForm, uid, navigate, members } = this.props;
     return (
       <div className="memberBar">
         <div className="memberContainer">
-          {users.map(user => (
+          {this.getFilteredUsers(members, users).map(user => (
             <div
               className="memberCard"
               onClick={() => navigate(`group/${uid}/${user.uid}`)}

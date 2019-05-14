@@ -16,7 +16,7 @@ const appReducer = combineReducers({
   chat: chatReducers.chatReducer,
   misc: miscReducers.miscReducer,
   group: groupReducers.groupReducer,
-  users: usersReducers
+  users: usersReducers.usersReducer
 });
 
 const rootReducer = (state, action) => {

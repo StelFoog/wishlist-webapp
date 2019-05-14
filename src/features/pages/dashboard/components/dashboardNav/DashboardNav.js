@@ -65,7 +65,7 @@ class DashboardNav extends React.Component {
   render() {
     const activeTab = this.getActivePage();
     const { showSideNav, groupDropdown } = this.state;
-    const { navigate, user, openForm } = this.props;
+    const { navigate, user, createGroup, openForm } = this.props;
     return (
       <React.Fragment>
         <div

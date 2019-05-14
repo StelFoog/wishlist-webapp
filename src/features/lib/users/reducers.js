@@ -1,20 +1,34 @@
 import types from "./types.js";
 
-const { GET_USERS_WITH_UID_SUCCESS } = types;
+const { GET_USERS_WITH_UID_SUCCESS, GET_USERS_WITH_UID_ERROR } = types;
 
 const initialState = {
-  users: []
+  users: {}
 };
 const usersReducer = (state = initialState, action) => {
   const { type, users } = action;
   let nextState = state;
   switch (type) {
     case GET_USERS_WITH_UID_SUCCESS:
-      nextState.users = users;
+      //nextState.users = nextState.users.concat(users);
+      nextState = addUsers(nextState, users);
+
+      /*nextState.users = users.reduce(function(a, b) {
+        if(a.indexOf(b.uid) == -1) {
+          a.push(b.uid)
+        }
+      })*/
       return { ...nextState };
     default:
       return { ...nextState };
   }
 };
 
-export default usersReducer;
+const addUsers = (nextState, users) => {
+  users.forEach(user => nextState.users[user.uid] = user);
+  return nextState;
+}
+
+export default {
+  usersReducer
+};
