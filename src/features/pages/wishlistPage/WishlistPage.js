@@ -19,7 +19,8 @@ const WishlistPage = ({
   wishlists,
   createItem,
   setCurrentPage,
-  match,firebase
+  match,
+  firebase,
   editing,
   editWishlistProperties,
   shareWishlist
