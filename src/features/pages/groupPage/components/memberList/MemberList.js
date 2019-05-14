@@ -3,6 +3,7 @@ import ProfilePicture from "../../../../components/profilePicture";
 import Ripple from "../../../../components/ripple";
 import AddUser from "./AddUser";
 import "./memberList.css";
+
 class MemberList extends React.Component {
   componentDidMount() {
     const { getUsersWithUid, members } = this.props;
@@ -11,7 +12,7 @@ class MemberList extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { members, getUsersWithUid } = this.props;
-    if (members !== prevProps.members) {
+    if (JSON.stringify(members) !== JSON.stringify(prevProps.members)) {
       getUsersWithUid(members);
     }
   }
