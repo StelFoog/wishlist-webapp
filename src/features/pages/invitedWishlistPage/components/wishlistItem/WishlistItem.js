@@ -3,7 +3,10 @@ import { connect } from "react-redux";
 import Button from "../../../../components/button";
 import { selectors } from "../../../../lib/wishlists";
 import { actions as wishlistActions } from "../../../../lib/wishlistItems";
-import { actions as userActions, selectors as userSelectors } from "../../../../lib/users";
+import {
+  actions as userActions,
+  selectors as userSelectors
+} from "../../../../lib/users";
 import "./wishlistItem.css";
 import ProfilePicture from "../../../../components/profilePicture/ProfilePicture";
 import usersReducer from "../../../../lib/users/reducers";
@@ -12,8 +15,6 @@ const { claimWishlistItem } = wishlistActions;
 const { getUsersWithUid } = userActions;
 
 class WishlistItem extends React.Component {
-
-
   constructor(props) {
     super(props);
 
@@ -24,13 +25,11 @@ class WishlistItem extends React.Component {
 
     this.state = {
       item,
-      wishlist,
-
-    }
+      wishlist
+    };
   }
 
   getClaimedByUser(user) {
-
     const { name, profilePictureUrl } = user;
 
     return (
@@ -48,13 +47,12 @@ class WishlistItem extends React.Component {
   getClaimedUsers(claimedBy, users) {
     let array = [];
     claimedBy.forEach(claim => {
-      users[claim] ? array.push(users[claim]) : null
-    })
+      users[claim] && array.push(users[claim]);
+    });
     return array;
   }
 
   getClaimContent(wishlistUid, index, claimedBy) {
-
     if (claimedBy === undefined || claimedBy.length == 0) {
       return (
         <div className="itemContent itemClaim">
@@ -66,32 +64,14 @@ class WishlistItem extends React.Component {
           />
         </div>
       );
-    }
-    else {
+    } else {
       return (
         <div className="itemContent itemClaim">
           <h3>Claimed by:</h3>
           <div className="claimUsers">
-            {
-              this.getClaimedUsers(claimedBy, this.props.users).map(user =>
-                this.getClaimedByUser(user)
-              )
-              // console.log(Object.keys(this.props.users)
-              //   .filter(key => claimedBy.includes(key))
-              //   .reduce((obj, key) => {
-              //     obj[key] = this.props.users[key];
-              //    return obj;
-              //   }, {}))
-              //.values()
-              //.map(user =>
-              //  this.getClaimedByUser(user)
-              //)
-            }
-            {/*this.props.users.filter(user =>
-              claimedBy.includes(user.uid)).map(user =>
-                this.getClaimedByUser(user)
-              )
-              */}
+            {this.getClaimedUsers(claimedBy, this.props.users).map(user =>
+              this.getClaimedByUser(user)
+            )}
           </div>
         </div>
       );
@@ -112,17 +92,19 @@ class WishlistItem extends React.Component {
     const item = wishlist.items[index];
     const { name, description, price, claimedBy, link } = item;
 
-
     return (
-
       <React.Fragment>
         <div className="wishlistItem">
-          <div className="itemContent itemTitle"><h2>{name}</h2></div>
+          <div className="itemContent itemTitle">
+            <h2>{name}</h2>
+          </div>
           <div className="itemContent itemDescription">
             <p>{description}</p>
           </div>
           <div className="itemContent">
-            <div className="itemPrice"><h3>{price}:-</h3></div>
+            <div className="itemPrice">
+              <h3>{price}:-</h3>
+            </div>
             <div className="itemLink">
               <Button
                 variant="filled"
@@ -150,8 +132,9 @@ const mapStateToProps = () => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  claimItem: (wishlistUid, index) => dispatch(claimWishlistItem(wishlistUid, index)),
-  getUsers: (claimedBy) => dispatch(getUsersWithUid(claimedBy))
+  claimItem: (wishlistUid, index) =>
+    dispatch(claimWishlistItem(wishlistUid, index)),
+  getUsers: claimedBy => dispatch(getUsersWithUid(claimedBy))
 });
 
 export default connect(
