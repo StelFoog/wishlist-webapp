@@ -11,9 +11,9 @@ class ShareDialog extends Component {
   render() {
     return(
       <React.Fragment>
-        <CardHeader>{"Share wishlist"}</CardHeader>
+        <CardHeader>Share wishlist</CardHeader>
         <CardContent>
-          <ShareForm />
+          <ShareForm callback={this.props.callback} />
         </CardContent>
         <CardActions>
           <Button

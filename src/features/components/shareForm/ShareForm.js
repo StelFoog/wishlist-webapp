@@ -7,7 +7,14 @@ import { connect } from "react-redux";
 const { SEARCH_FOR_USERS_WITH_NAME } = types;
 const { searchForUsersWithName } = actions;
 
-const displayUser = (user) => { return <p> user.name </p>; }
+const displayUser = (user) => { 
+  return(
+    <userCard 
+      user={user} 
+      onShare={() => console.log("shared")}
+    />
+  );
+}
 
 const renderField = ({input}) => {
     return(
@@ -19,8 +26,7 @@ const renderField = ({input}) => {
 
 const handleInputWith = (component) => {
   return (changeEvent, currValue, prevValue) => {
-    component.results = component.props.search(currValue);
-    component.forceUpdate();
+    component.props.search(currValue);
   }
 }
 
@@ -32,40 +38,41 @@ class ShareForm extends Component {
   }
 
   render() {
+    console.log("HELOJAIUJS");
+    console.log(this.props.searchResults);
     return(
       <div className="shareForm">
-        <Field
-          name="Username"
-          component={renderField}
-          onChange={handleInputWith(this)}
-        />
-        <h3> Results </h3>
-        {this.results.map(displayUser)}
-        <h3> Share with </h3>
-        {this.unselected.map(displayUser)}
+        <div>
+          <Field
+            name="Username"
+            component={renderField}
+            onChange={handleInputWith(this)}
+          />
+          <h3> Results </h3>
+          {/*this.props.searchResults.map(displayUser)*/}
+        </div>
         <h3> Shared with </h3>
         {this.selected.map(displayUser)}
       </div>
     );
   }
+}
 
-  componentDidMount() {
-    console.log("Helo i am mount");
-  }
+const mapStateToProps = () => {
+  return state => ({
+    searchResults: state.auth.searchResults
+  });
 }
 
 const mapDispatchToProps = dispatch => ({
   search: (name) => {
-    let results = [];
-    if(name.length >= 3)
-      dispatch(searchForUsersWithName(name, results));
-    console.log("Search results for " + name + ":");
-    console.log(results);
-    return results;
+    if(name.length >= 3) {
+      dispatch(searchForUsersWithName(name));
+    }
   }
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(ShareForm);
