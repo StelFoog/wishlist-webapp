@@ -44,10 +44,10 @@ class WishlistItem extends React.Component {
     );
   }
 
-  getClaimedUsers(claimedBy, users) {
+  getFilteredUsers(filter, users) {
     let array = [];
-    claimedBy.forEach(claim => {
-      users[claim] && array.push(users[claim]);
+    filter.forEach(element => {
+      users[element] && array.push(users[element]);
     });
     return array;
   }
@@ -69,7 +69,7 @@ class WishlistItem extends React.Component {
         <div className="itemContent itemClaim">
           <h3>Claimed by:</h3>
           <div className="claimUsers">
-            {this.getClaimedUsers(claimedBy, this.props.users).map(user =>
+            {this.getFilteredUsers(claimedBy, this.props.users).map(user =>
               this.getClaimedByUser(user)
             )}
           </div>

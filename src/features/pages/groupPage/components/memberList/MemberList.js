@@ -16,10 +16,10 @@ class MemberList extends React.Component {
     }
   }
 
-  getUsersInGroup(members, users) {
+  getFilteredUsers(filter, users) {
     let array = [];
-    members.forEach(member => {
-      users[member] && array.push(users[member]);
+    filter.forEach(element => {
+      users[element] && array.push(users[element]);
     });
     return array;
   }
@@ -29,7 +29,7 @@ class MemberList extends React.Component {
     return (
       <div className="memberBar">
         <div className="memberContainer">
-          {this.getUsersInGroup(members, users).map(user => (
+          {this.getFilteredUsers(members, users).map(user => (
             <div
               className="memberCard"
               onClick={() => navigate(`group/${uid}/${user.uid}`)}
