@@ -4,7 +4,9 @@ const {
   CREATE_USER_WISHLIST,
   FETCH_WISHLISTS,
   FETCH_OWNED_WISHLISTS,
-  EDIT_WISHLIST_PROPERTIES
+  EDIT_WISHLIST_PROPERTIES,
+  TOGGLE_EDIT,
+  DELETE_WISHLIST
 } = types;
 
 const createUserWishlist = () => ({
@@ -19,13 +21,28 @@ const fetchWishlists = () => ({
   type: FETCH_WISHLISTS
 });
 
-const editWishlistProperties = () => ({
-  type: EDIT_WISHLIST_PROPERTIES
+const editToggle = () => ({
+  type: TOGGLE_EDIT
+});
+
+const editWishlistProperties = (uid, field, data) => ({
+  type: EDIT_WISHLIST_PROPERTIES,
+  uid,
+  field,
+  data
+});
+
+const deleteWishlist = (uid, user) => ({
+  type: DELETE_WISHLIST,
+  uid,
+  user
 });
 
 export default {
   createUserWishlist,
   fetchWishlists,
   fetchOwnedWishlists,
-  editWishlistProperties
+  editWishlistProperties,
+  deleteWishlist,
+  editToggle
 };
