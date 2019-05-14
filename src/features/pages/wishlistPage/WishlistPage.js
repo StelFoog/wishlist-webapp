@@ -25,9 +25,8 @@ const WishlistPage = ({
   editWishlistProperties,
   shareWishlist
 }) => {
-  const wishlistUid = match.params.uid;
-  const uid = wishlistUid;
-  const wishlist = wishlists.find(element => element.uid == wishlistUid);
+  const {uid} = match.params;
+  const wishlist = wishlists.find(element => element.uid == uid);
   const { items } = wishlist;
 
   return (
