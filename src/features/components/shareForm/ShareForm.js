@@ -72,7 +72,8 @@ class ShareForm extends Component {
 
   render() {
     this.unselected = this.props.searchResults.filter((x) => 
-      !deepIncludes(this.selected, x));
+      !deepIncludes(this.selected, x) 
+      && (this.props.showIf !== undefined ? this.props.showIf(x) : true));
 
     this.props.storeSelected(this.selected);
 
