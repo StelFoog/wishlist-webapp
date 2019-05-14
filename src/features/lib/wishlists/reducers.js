@@ -18,8 +18,10 @@ const {
 const {
   CREATE_WISHLIST_ITEM_SUCCESS,
   // CREATE_WISHLIST_ITEM_ERROR, To be readded when implemented properly
-  EDIT_WISHLIST_ITEM_SUCCESS
-  // EDIT_WISHLIST_ITEM_ERROR    –––––––––––––––– || –––––––––––––––––––
+  EDIT_WISHLIST_ITEM_SUCCESS,
+  // EDIT_WISHLIST_ITEM_ERROR,   –––––––––––––––– || –––––––––––––––––––
+  CLAIM_WISHLIST_ITEM_SUCCESS,
+  CLAIM_WISHLIST_ITEM_ERROR
 } = itemTypes;
 
 const initialState = {
@@ -36,6 +38,7 @@ const wishlistReducer = (state = initialState, action) => {
     wishlistUid,
     index,
     itemData,
+    userUid,
     // result, tobe readded when EDIT_WISHLIST_PROPERTIES_SUCCESS is implemented
     error
   } = action;
@@ -106,8 +109,15 @@ const wishlistReducer = (state = initialState, action) => {
       item = { ...ownedWishlists[wishlistIndexEdit].items[index], ...item };
       nextState.ownedWishlists[wishlistIndexEdit].items[index] = item;
       return { ...nextState };
+
+    case CLAIM_WISHLIST_ITEM_SUCCESS:
+      const wishlistClaimIndex = nextState.wishlists.findIndex(function (element) {
+        return element.uid === wishlistUid
+      });
+      nextState.wishlists[wishlistClaimIndex].items[index].claimedBy.push(userUid);
+      return { ...nextState }
       
-    case DELETE_WISHLIST_SUCCESS:
+     case DELETE_WISHLIST_SUCCESS:
       const wishlistIndexDelete = ownedWishlists.findIndex(
         element => element.uid === wishlistUid
       );

@@ -114,7 +114,12 @@ function* workClaimWishlistItem(action) {
 
     yield call(claimWishlistItem, user.uid, index, wishlistId);
 
-    yield put({ type: CLAIM_WISHLIST_ITEM_SUCCESS });
+    yield put({
+      type: CLAIM_WISHLIST_ITEM_SUCCESS,
+      wishlistUid: wishlistId,
+      index,
+      userUid: user.uid
+    });
   } catch (error) {
     yield put({ type: CLAIM_WISHLIST_ITEM_ERROR, error });
   }
