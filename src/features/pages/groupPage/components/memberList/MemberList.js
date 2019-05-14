@@ -19,7 +19,7 @@ class MemberList extends React.Component {
   getUsersInGroup(members, users) {
     let array = [];
     members.forEach(member => {
-      users[member] ? array.push(users[member]) : null;
+      users[member] && array.push(users[member]);
     });
     return array;
   }
@@ -41,18 +41,6 @@ class MemberList extends React.Component {
               <div clasName="memberName">{user.name}</div>
             </div>
           ))}
-          {/*users.map(user => (
-            <div
-              className="memberCard"
-              onClick={() => navigate(`group/${uid}/${user.uid}`)}
-            >
-              <Ripple />
-              <div className="memberPicture">
-                <ProfilePicture src={user.profilePictureUrl} width={30} />
-              </div>
-              <div clasName="memberName">{user.name}</div>
-            </div>
-          ))*/}
         </div>
         <AddUser openForm={openForm} uid={uid} />
       </div>
