@@ -67,8 +67,6 @@ const WishlistPage = ({
   );
 }
 
-const mapStateToProps = () => {};
-
 const mapDispatchToProps = dispatch => ({
   createItem: wishlistUid =>
     dispatch(openDialog("createItem", { wishlistUid })),
@@ -81,6 +79,6 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(WishlistPage);
