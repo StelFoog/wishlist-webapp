@@ -31,7 +31,7 @@ const initialState = {
 };
 
 const wishlistReducer = (state = initialState, action) => {
-  let nextState = state;
+  let nextState = JSON.parse(JSON.stringify(state)); // Deep copy
   const {
     type,
     wishlistData,

@@ -6,8 +6,9 @@ const initialState = {
   users: {}
 };
 const usersReducer = (state = initialState, action) => {
+  let nextState = JSON.parse(JSON.stringify(state)); // Deep copy
   const { type, users } = action;
-  let nextState = state;
+
   switch (type) {
     case GET_USERS_WITH_UID_SUCCESS:
       //nextState.users = nextState.users.concat(users);

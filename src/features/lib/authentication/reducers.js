@@ -20,7 +20,7 @@ const initialState = {
 };
 
 const userReducer = (state = initialState, action) => {
-  let nextState = state;
+  let nextState = JSON.parse(JSON.stringify(state)); // Deep copy
   const { type, userData, error, wishlistUid, groupId, searchResults } = action;
 
   switch (type) {

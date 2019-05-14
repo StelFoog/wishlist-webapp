@@ -16,7 +16,7 @@ const initialState = {
 };
 
 const chatReducer = (state = initialState, action) => {
-  let nextState = { ...state };
+  let nextState = JSON.parse(JSON.stringify(state)); // Deep copy
   const { type, messages, error } = action;
 
   switch (type) {
