@@ -43,7 +43,7 @@ function* watchSearchForUsersWithName() {
 
 function* workSearchForUsersWithName(action) {
   try {
-    const { type, name } = action;
+    const { name } = action;
     const searchResults = yield call(searchForUsersWithName, name);
 
     yield put({
@@ -57,7 +57,7 @@ function* workSearchForUsersWithName(action) {
 
 function* workAddUserToWishlist(action) {
   try {
-    const { type, wishlistUid, user } = action;
+    const { wishlistUid, user } = action;
     const addedUser = user || (yield select(getUser));
     const userUid = addedUser.uid;
     
