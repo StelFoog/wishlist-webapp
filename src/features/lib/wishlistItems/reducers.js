@@ -7,7 +7,7 @@ const {
   FETCH_ALL_ITEMS_ERROR,
   // EDIT_WISHLIST_ITEM_SUCCESS,
   EDIT_WISHLIST_ITEM_ERROR,
-  // CLAIM_WISHLIST_ITEM_SUCCESS,
+  CLAIM_WISHLIST_ITEM_SUCCESS,
   CLAIM_WISHLIST_ITEM_ERROR
 } = types;
 
@@ -17,7 +17,7 @@ const initalState = {
 
 const wishlistItemReducer = (state = initalState, action) => {
   let nextState = state;
-  const { type, itemData, error /*, index */ } = action;
+  const { type, itemData, error, index, userId } = action;
 
   switch (type) {
     case CREATE_WISHLIST_ITEM_ERROR:
@@ -43,6 +43,9 @@ const wishlistItemReducer = (state = initalState, action) => {
       );
       return { ...nextState };
 
+    case CLAIM_WISHLIST_ITEM_SUCCESS:
+      nextState.items[index].claimedBy.push(userId);
+      return { ...nextState };
     case CLAIM_WISHLIST_ITEM_ERROR:
       console.error(
         "Wishlist item claiming error: " + error.code + "->" + error.message
