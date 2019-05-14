@@ -19,16 +19,16 @@ const usersReducer = (state = initialState, action) => {
           a.push(b.uid)
         }
       })*/
-      return { ...nextState };
+      return nextState;
     default:
-      return { ...nextState };
+      return nextState;
   }
 };
 
 const addUsers = (nextState, users) => {
-  users.forEach(user => nextState.users[user.uid] = user);
+  users.forEach(user => (nextState.users[user.uid] = user));
   return nextState;
-}
+};
 
 export default {
   usersReducer

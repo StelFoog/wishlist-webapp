@@ -55,7 +55,7 @@ const groupReducer = (state = initialState, action) => {
       break;
     default:
   }
-  return { ...nextState };
+  return nextState;
 };
 
 export default {

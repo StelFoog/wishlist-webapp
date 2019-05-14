@@ -24,36 +24,36 @@ const wishlistItemReducer = (state = initalState, action) => {
       console.error(
         "Wishlist item creation error: " + error.code + "->" + error.message
       );
-      return { ...nextState };
+      return nextState;
 
     case FETCH_ALL_ITEMS_SUCCESS:
       nextState.items = itemData;
       console.log("Fetched items!" + itemData);
-      return { ...nextState };
+      return nextState;
 
     case FETCH_ALL_ITEMS_ERROR:
       console.error(
         "Wishlist item fetching error: " + error.code + "->" + error.message
       );
-      return { ...nextState };
+      return nextState;
 
     case EDIT_WISHLIST_ITEM_ERROR:
       console.error(
         "Wishlist item editing error: " + error.code + "->" + error.message
       );
-      return { ...nextState };
+      return nextState;
 
     case CLAIM_WISHLIST_ITEM_SUCCESS:
       nextState.items[index].claimedBy.push(userId);
-      return { ...nextState };
+      return nextState;
     case CLAIM_WISHLIST_ITEM_ERROR:
       console.error(
         "Wishlist item claiming error: " + error.code + "->" + error.message
       );
-      return { ...nextState };
+      return nextState;
 
     default:
-      return { ...nextState };
+      return nextState;
   }
 };
 
