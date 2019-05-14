@@ -11,7 +11,7 @@ const displayUserSharedWith = (component) => {
   return user => (
     <UserCard
       user={user}
-      buttonText="Remove"
+      buttonText="- Remove"
       buttonColor="#9f003f"
       onClick={() => {
         component.selected = component.selected.filter((x) =>
@@ -27,7 +27,7 @@ const displayUserNotSharedWith = (component) => {
   return user => (
     <UserCard 
       user={user} 
-      buttonText="Add"
+      buttonText="+ Add"
       buttonColor="#009f3f"
       onClick={() => {
         component.selected.push(user);
@@ -71,9 +71,10 @@ class ShareForm extends Component {
   }
 
   render() {
-    this.unselected = this.props.searchResults.filter((x) => 
-      !deepIncludes(this.selected, x) 
-      && (this.props.showIf !== undefined ? this.props.showIf(x) : true));
+    this.unselected = this.props.searchResults.filter((x) => {
+      return !deepIncludes(this.selected, x) 
+              && (this.props.showIf === undefined || this.props.showIf(x));
+    });
 
     this.props.storeSelected(this.selected);
 

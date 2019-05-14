@@ -23,12 +23,13 @@ const WishlistPage = ({
   firebase,
   editing,
   editWishlistProperties,
-  shareWishlist
+  shareWishlist,
+  user
 }) => {
   const { uid } = match.params;
   const wishlist = wishlists.find(element => element.uid === uid);
   const { items } = wishlist;
-
+  
   return (
     <div className="page">
       <WishlistTitle
@@ -42,7 +43,7 @@ const WishlistPage = ({
           variant="filled"
           label="Share"
           color="var(--color-primary)"
-          handleClick={() => (shareWishlist(wishlist.uid))}
+          handleClick={() => (shareWishlist(wishlist, user))}
         />
       </div>
       <div className="wishlistPage">
@@ -66,18 +67,34 @@ const WishlistPage = ({
   );
 }
 
+const mapStateToProps = () => {
+  return state => ({
+    user: state.auth,
+  })
+}
+
 const mapDispatchToProps = dispatch => ({
   createItem: wishlistUid =>
     dispatch(openDialog("createItem", { wishlistUid })),
-  shareWishlist: wishlistUid =>
-    dispatch(openDialog("share", {share: (users) => {
-      users.forEach((user) => {
-        dispatch(addUserToWishlist(wishlistUid, user));
-      });
-  }}))
+  /* With each UID; invite the users to the wishlist
+   * Only show users that are a) not yourself and b) not already
+   * members of the wishlist
+   */
+  shareWishlist: (currentWishlist, currentUser) =>
+    dispatch(openDialog("share", {
+      share: (users) => {
+        users.forEach((user) => {
+            dispatch(addUserToWishlist(currentWishlist.uid, user));
+        })
+      },
+      showIf: (user) => {
+        return user.uid !== currentUser.uid 
+            && !currentWishlist.members.includes(user.uid);
+      }
+    }))
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(WishlistPage);

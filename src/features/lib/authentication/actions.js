@@ -5,11 +5,16 @@ const {
   AUTH_LOGOUT,
   AUTH_USER_FACEBOOK,
   AUTH_USER_GOOGLE,
-  ADD_USER_TO_WISHLIST
+  ADD_USER_TO_WISHLIST,
+  CLEAR_SEARCH
 } = types;
 
 const authenticateFacebook = () => ({
   type: AUTH_USER_FACEBOOK
+});
+
+const clearSearch = () => ({
+  type: CLEAR_SEARCH
 });
 
 const authenticateGoogle = () => ({
@@ -36,5 +41,6 @@ export default {
   authenticateGoogle,
   logout,
   addUserToWishlist,
-  searchForUsersWithName
+  searchForUsersWithName,
+  clearSearch
 };

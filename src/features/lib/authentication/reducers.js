@@ -10,7 +10,8 @@ const {
   REMOVE_WISHLIST_ID_FROM_USER,
   ADD_GROUP_ID_TO_USER,
   SEARCH_FOR_USERS_WITH_NAME_ERROR,
-  SEARCH_FOR_USERS_WITH_NAME_SUCCESS
+  SEARCH_FOR_USERS_WITH_NAME_SUCCESS,
+  CLEAR_SEARCH
 } = types;
 
 const initialState = {
@@ -50,7 +51,10 @@ const userReducer = (state = initialState, action) => {
 
     case ADD_USER_TO_WISHLIST_SUCCESS:
       nextState.user.wishlists.push(wishlistUid);
-      return nextState;
+      return { ...nextState };
+    case CLEAR_SEARCH:
+      nextState.searchResults = [];
+      return { ...nextState };
 
     case ADD_WISHLIST_ID_TO_USER:
       console.log(wishlistUid);
