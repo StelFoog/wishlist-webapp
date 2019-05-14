@@ -106,6 +106,7 @@ const wishlistReducer = (state = initialState, action) => {
       item = { ...ownedWishlists[wishlistIndexEdit].items[index], ...item };
       nextState.ownedWishlists[wishlistIndexEdit].items[index] = item;
       return { ...nextState };
+      
     case DELETE_WISHLIST_SUCCESS:
       const wishlistIndexDelete = ownedWishlists.findIndex(
         element => element.uid === wishlistUid
@@ -118,9 +119,11 @@ const wishlistReducer = (state = initialState, action) => {
         "Wishlist deleting error: " + error.code + "-> " + error.message
       );
       return { ...nextState };
+      
     case TOGGLE_EDIT:
       nextState.editing = !nextState.editing;
       return { ...nextState };
+      
     default:
       return { ...nextState };
   }
