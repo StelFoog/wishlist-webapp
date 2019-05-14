@@ -9,10 +9,11 @@ const { searchForUsersWithName } = actions;
 
 const displayUser = (user) => { 
   return(
-    <userCard 
+    /*<userCard 
       user={user} 
       onShare={() => console.log("shared")}
-    />
+    />*/
+    <p> {user.name} </p>
   );
 }
 
@@ -49,7 +50,7 @@ class ShareForm extends Component {
             onChange={handleInputWith(this)}
           />
           <h3> Results </h3>
-          {/*this.props.searchResults.map(displayUser)*/}
+          {this.props.searchResults.map(displayUser)}
         </div>
         <h3> Shared with </h3>
         {this.selected.map(displayUser)}
