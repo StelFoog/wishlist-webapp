@@ -1,24 +1,34 @@
 import React from "react";
 import { WishlistTitle } from "./components";
 import WishlistItem from "../../components/wishlistItem";
+import actions from "../../lib/authentication/actions.js";
+
+import { connect } from "react-redux";
 
 import "./wishlistPage.css";
 
 import IconButton from "../../components/iconButton";
 import PlusIcon from "../../components/svgIcon/icons/PlusIcon";
+import Button from "../../components/button";
+import dialogActions from "../../components/dialog/actions.js";
+
+const { addUserToWishlist } = actions;
+const { openDialog } = dialogActions;
 
 const WishlistPage = ({
   wishlists,
   createItem,
   setCurrentPage,
   match,
+  firebase,
   editing,
-  editWishlistProperties
+  editWishlistProperties,
+  shareWishlist
 }) => {
   const { uid } = match.params;
-  setCurrentPage(uid);
   const wishlist = wishlists.find(element => element.uid === uid);
   const { items } = wishlist;
+
   return (
     <div className="page">
       <WishlistTitle
@@ -27,6 +37,14 @@ const WishlistPage = ({
         editWishlistProperties={editWishlistProperties}
         uid={uid}
       />
+      <div className="shareWishlistButton">
+        <Button
+          variant="filled"
+          label="Share"
+          color="var(--color-primary)"
+          handleClick={() => (shareWishlist(wishlist.uid))}
+        />
+      </div>
       <div className="wishlistPage">
         {items.length > 0 && (
           <React.Fragment>
@@ -46,6 +64,20 @@ const WishlistPage = ({
       </div>
     </div>
   );
-};
+}
 
-export default WishlistPage;
+const mapDispatchToProps = dispatch => ({
+  createItem: wishlistUid =>
+    dispatch(openDialog("createItem", { wishlistUid })),
+  shareWishlist: wishlistUid =>
+    dispatch(openDialog("share", {share: (users) => {
+      users.forEach((user) => {
+        dispatch(addUserToWishlist(wishlistUid, user));
+      });
+  }}))
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(WishlistPage);
