@@ -5,6 +5,7 @@ import { CardContent, CardHeader } from "../card";
 import Button from "../button";
 import { actions } from "../dialog";
 import { selectors } from "../../lib/wishlists";
+import "./wishlistItem.css";
 
 const { openDialog } = actions;
 
@@ -14,6 +15,8 @@ const wishListItem = ({ wishlists, index, editItem, wishlistUid }) => {
   console.log(item);
   const { name, description, price } = item;
   return (
+
+    /*
     <CardContainer key={name}>
       <div className="itemContent">
         <div className="itemText">
@@ -34,6 +37,45 @@ const wishListItem = ({ wishlists, index, editItem, wishlistUid }) => {
         </div>
       </div>
     </CardContainer>
+    */
+
+    <React.Fragment>
+      <div className="wishlistItem">
+
+        <div className="itemContent itemTitle">
+          <h2>{name}</h2>
+        </div>
+
+        <div className="itemContent itemDescription">
+          <p>{description}</p>
+        </div>
+
+        <div className="itemContent">
+          <div className="itemPrice">
+            <h3>{price}:-</h3>
+          </div>
+          <div className="itemLink">
+            <Button
+              variant="filled"
+              label="Link"
+              className="itemLinkButton"
+              padding="0"
+              color="var(--color-primary)"
+            />
+          </div>
+        </div>
+
+        <div className="itemContent">
+          <Button
+            variant={"filled"}
+            label={"Edit"}
+            color={"var(--color-primary"}
+            handleClick={() => editItem({ item, index, wishlistUid })}
+          />
+        </div>
+
+      </div>
+    </React.Fragment>
   );
 };
 
