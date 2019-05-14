@@ -60,9 +60,6 @@ function* workCreateWishlistItem() {
     yield call(addWishlistItem, wishlistUid, itemData);
     yield put({ type: CREATE_WISHLIST_ITEM_SUCCESS, itemData, wishlistUid });
     yield all([put({ type: CLOSE_DIALOG }), put(reset("createItem"))]);
-    const pathname = yield select(getPathname);
-    yield put(replace("/temp"));
-    yield put(replace(pathname));
   } catch (error) {
     yield put({ type: CREATE_WISHLIST_ITEM_ERROR, error });
   }
@@ -83,9 +80,6 @@ function* workEditWishlistItem() {
       itemData: itemForm
     });
     yield all([put(reset("editItem")), put({ type: CLOSE_DIALOG })]);
-    const pathname = yield select(getPathname);
-    yield put(replace("/temp"));
-    yield put(replace(pathname));
   } catch (error) {
     yield put({ type: EDIT_WISHLIST_ITEM_ERROR, error });
   }
@@ -120,7 +114,6 @@ function* workClaimWishlistItem(action) {
       wishlistUid: wishlistId,
       index,
       userUid: user.uid
-
     });
   } catch (error) {
     yield put({ type: CLAIM_WISHLIST_ITEM_ERROR, error });

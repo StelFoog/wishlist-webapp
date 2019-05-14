@@ -65,8 +65,7 @@ function* workCreateGroup(action) {
     yield call(addGroupToUser, userUid, groupId);
     yield put({ type: CREATE_GROUP_SUCCESS, value: result });
     yield put({ type: ADD_GROUP_ID_TO_USER, groupId });
-    yield put(replace("/temp"));
-    yield put(push(`/dashboard/group/${groupId}`));
+    //yield put(push(`/dashboard/group/${groupId}`));
   } catch (error) {
     yield put({ type: CREATE_GROUP_ERROR, error: error });
   }

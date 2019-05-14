@@ -84,9 +84,6 @@ function* workCreateUserWishlist() {
       put(reset("WishlistCreateForm"))
     ]);
     yield put({ type: CLOSE_DIALOG });
-    const pathname = yield select(getPathname);
-    yield put(replace("/temp"));
-    yield put(replace(pathname));
   } catch (error) {
     yield put({ type: CREATE_USER_WISHLIST_ERROR, error: error });
   }
