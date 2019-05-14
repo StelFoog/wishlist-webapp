@@ -31,7 +31,7 @@ const initialState = {
 };
 
 const wishlistReducer = (state = initialState, action) => {
-  let nextState = state;
+  let nextState = JSON.parse(JSON.stringify(state)); // Deep copy
   const {
     type,
     wishlistData,
@@ -49,34 +49,34 @@ const wishlistReducer = (state = initialState, action) => {
       console.error(
         "wishlist creation error: " + error.code + "-> " + error.message
       );
-      return { ...nextState };
+      return nextState;
 
     case CREATE_USER_WISHLIST_SUCCESS:
       nextState.ownedWishlists.push(wishlistData);
-      return { ...nextState };
+      return nextState;
 
     case FETCH_OWNED_WISHLISTS_SUCCESS:
       console.log(wishlistData);
       nextState.ownedWishlists = wishlistData;
       console.log("Fetched owned wishlists!" + wishlistData);
-      return { ...nextState };
+      return nextState;
 
     case FETCH_OWNED_WISHLISTS_ERROR:
       console.error(
         "Wishlist fetching error: " + error.code + "-> " + error.message
       );
-      return { ...nextState };
+      return nextState;
 
     case FETCH_WISHLISTS_SUCCESS:
       nextState.wishlists = wishlistData;
       console.log("Fetched wishlists!" + wishlistData);
-      return { ...nextState };
+      return nextState;
 
     case FETCH_WISHLISTS_ERROR:
       console.error(
         "Wishlist fetching error: " + error.code + "-> " + error.message
       );
-      return { ...nextState };
+      return nextState;
 
     case EDIT_WISHLIST_PROPERTIES_SUCCESS:
       const wishlistIndex = ownedWishlists.findIndex(
@@ -85,13 +85,13 @@ const wishlistReducer = (state = initialState, action) => {
       nextState.ownedWishlists[wishlistIndex] = wishlistData;
 
       console.log("Edited Wishlist!");
-      return { ...nextState };
+      return nextState;
 
     case EDIT_WISHLIST_PROPERTIES_ERROR:
       console.error(
         "Wishlist editing error: " + error.code + "-> " + error.message
       );
-      return { ...nextState };
+      return nextState;
 
     case CREATE_WISHLIST_ITEM_SUCCESS:
       // let item = itemData ? itemData : {};
@@ -99,7 +99,7 @@ const wishlistReducer = (state = initialState, action) => {
         element => element.uid === wishlistUid
       );
       nextState.ownedWishlists[wishlistIndexCreate].items.push(item);
-      return { ...nextState };
+      return nextState;
 
     case EDIT_WISHLIST_ITEM_SUCCESS:
       // let item = itemData ? itemData : {};
@@ -108,34 +108,38 @@ const wishlistReducer = (state = initialState, action) => {
       );
       item = { ...ownedWishlists[wishlistIndexEdit].items[index], ...item };
       nextState.ownedWishlists[wishlistIndexEdit].items[index] = item;
-      return { ...nextState };
+      return nextState;
 
     case CLAIM_WISHLIST_ITEM_SUCCESS:
-      const wishlistClaimIndex = nextState.wishlists.findIndex(function (element) {
-        return element.uid === wishlistUid
+      const wishlistClaimIndex = nextState.wishlists.findIndex(function(
+        element
+      ) {
+        return element.uid === wishlistUid;
       });
-      nextState.wishlists[wishlistClaimIndex].items[index].claimedBy.push(userUid);
-      return { ...nextState }
-      
-     case DELETE_WISHLIST_SUCCESS:
+      nextState.wishlists[wishlistClaimIndex].items[index].claimedBy.push(
+        userUid
+      );
+      return { ...nextState };
+
+    case DELETE_WISHLIST_SUCCESS:
       const wishlistIndexDelete = ownedWishlists.findIndex(
         element => element.uid === wishlistUid
       );
       nextState.ownedWishlists.splice(wishlistIndexDelete, 1);
-      return { ...nextState };
+      return nextState;
 
     case DELETE_WISHLIST_ERROR:
       console.error(
         "Wishlist deleting error: " + error.code + "-> " + error.message
       );
-      return { ...nextState };
-      
+      return nextState;
+
     case TOGGLE_EDIT:
       nextState.editing = !nextState.editing;
-      return { ...nextState };
-      
+      return nextState;
+
     default:
-      return { ...nextState };
+      return nextState;
   }
 };
 

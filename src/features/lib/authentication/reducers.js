@@ -20,7 +20,7 @@ const initialState = {
 };
 
 const userReducer = (state = initialState, action) => {
-  let nextState = state;
+  let nextState = JSON.parse(JSON.stringify(state)); // Deep copy
   const { type, userData, error, wishlistUid, groupId, searchResults } = action;
 
   switch (type) {
@@ -28,34 +28,34 @@ const userReducer = (state = initialState, action) => {
       console.error(
         "authentication error: " + error.code + "-> " + error.message
       );
-      return { ...nextState };
+      return nextState;
 
     case AUTH_USER_SUCCESS:
       nextState.loggedIn = true;
       nextState.user = userData;
       console.log("Logged in!" + userData);
-      return { ...nextState };
+      return nextState;
 
     case AUTH_LOGOUT:
       nextState.loggedIn = false;
       nextState.user = null;
       alert("logged out successfully");
-      return { ...nextState };
+      return nextState;
 
     case ADD_USER_TO_WISHLIST_ERROR:
       console.error(
         "Wishlist invitation error: " + error.code + "-> " + error.message
       );
-      return { ...nextState };
+      return nextState;
 
     case ADD_USER_TO_WISHLIST_SUCCESS:
       nextState.user.wishlists.push(wishlistUid);
-      return { ...nextState };
+      return nextState;
 
     case ADD_WISHLIST_ID_TO_USER:
       console.log(wishlistUid);
       nextState.user.ownedWishlists.push(wishlistUid);
-      return { ...nextState };
+      return nextState;
 
     case REMOVE_WISHLIST_ID_FROM_USER:
       const wishlistIndexDelete = nextState.user.ownedWishlists.findIndex(
@@ -64,21 +64,21 @@ const userReducer = (state = initialState, action) => {
       if (wishlistIndexDelete > -1)
         nextState.user.ownedWishlists.splice(wishlistIndexDelete, 1);
 
-      return { ...nextState };
+      return nextState;
 
     case ADD_GROUP_ID_TO_USER:
       nextState.user.groups.push(groupId);
-      return { ...nextState };
+      return nextState;
 
     default:
-      return { ...nextState };
+      return nextState;
 
     case SEARCH_FOR_USERS_WITH_NAME_ERROR:
       console.error("User search error: " + error.code + "-> " + error.message);
-      return { ...nextState };
+      return nextState;
     case SEARCH_FOR_USERS_WITH_NAME_SUCCESS:
       nextState.searchResults = searchResults;
-      return { ...nextState };
+      return nextState;
   }
 };
 

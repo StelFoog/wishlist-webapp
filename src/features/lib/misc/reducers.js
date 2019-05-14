@@ -7,15 +7,15 @@ const initialState = {
 };
 
 const miscReducer = (state = initialState, action) => {
-  let nextState = state;
+  let nextState = JSON.parse(JSON.stringify(state)); // Deep copy
   const { type, uid } = action;
   switch (type) {
     case SET_CURRENT_WISHLIST_OR_GROUP:
       nextState.currentWishlistOrGroup = uid;
-      return { ...nextState };
+      return nextState;
 
     default:
-      return { ...nextState };
+      return nextState;
   }
 };
 

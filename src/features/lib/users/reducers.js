@@ -6,8 +6,9 @@ const initialState = {
   users: {}
 };
 const usersReducer = (state = initialState, action) => {
+  let nextState = JSON.parse(JSON.stringify(state)); // Deep copy
   const { type, users } = action;
-  let nextState = state;
+
   switch (type) {
     case GET_USERS_WITH_UID_SUCCESS:
       //nextState.users = nextState.users.concat(users);
@@ -18,16 +19,16 @@ const usersReducer = (state = initialState, action) => {
           a.push(b.uid)
         }
       })*/
-      return { ...nextState };
+      return nextState;
     default:
-      return { ...nextState };
+      return nextState;
   }
 };
 
 const addUsers = (nextState, users) => {
-  users.forEach(user => nextState.users[user.uid] = user);
+  users.forEach(user => (nextState.users[user.uid] = user));
   return nextState;
-}
+};
 
 export default {
   usersReducer

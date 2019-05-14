@@ -16,8 +16,8 @@ const initialState = {
 };
 
 const groupReducer = (state = initialState, action) => {
+  let nextState = JSON.parse(JSON.stringify(state)); // Deep copy
   const { type, error, value } = action;
-  let nextState = state;
 
   switch (type) {
     case CREATE_GROUP_SUCCESS:
@@ -55,7 +55,7 @@ const groupReducer = (state = initialState, action) => {
       break;
     default:
   }
-  return { ...nextState };
+  return nextState;
 };
 
 export default {
