@@ -3,7 +3,6 @@ import { WishlistTitle } from "./components";
 import WishlistItem from "../../components/wishlistItem";
 import actions from "../../lib/authentication/actions.js";
 
-import { firebase } from "../../lib/firebase";
 import { connect } from "react-redux";
 
 import "./wishlistPage.css";
@@ -20,7 +19,7 @@ const WishlistPage = ({
   wishlists,
   createItem,
   setCurrentPage,
-  match,
+  match,firebase
   editing,
   editWishlistProperties,
   shareWishlist
