@@ -1,7 +1,11 @@
 import { takeEvery, call, put, select, all } from "redux-saga/effects";
 import { push } from "connected-react-router";
 import { authWithFacebookAPI /* authWithGoogleAPI */ } from "./auth.js";
-import { addInvitedWishlistToUser, addInvitedUserToWishlist } from "./db";
+import {
+  addInvitedWishlistToUser,
+  addInvitedUserToWishlist,
+  searchForUsersWithName
+} from "./db";
 import types from "./types.js";
 import { getUser } from "./selectors";
 import actions from "./actions.js";
@@ -15,7 +19,10 @@ const {
   AUTH_USER_ERROR,
   ADD_USER_TO_WISHLIST,
   ADD_USER_TO_WISHLIST_ERROR,
-  ADD_USER_TO_WISHLIST_SUCCESS
+  ADD_USER_TO_WISHLIST_SUCCESS,
+  SEARCH_FOR_USERS_WITH_NAME,
+  SEARCH_FOR_USERS_WITH_NAME_ERROR,
+  SEARCH_FOR_USERS_WITH_NAME_SUCCESS
 } = types;
 
 function* watchUserAuthFacebook() {
@@ -30,15 +37,33 @@ function* watchAddUserToWishlist() {
   yield takeEvery(ADD_USER_TO_WISHLIST, workAddUserToWishlist);
 }
 
+function* watchSearchForUsersWithName() {
+  yield takeEvery(SEARCH_FOR_USERS_WITH_NAME, workSearchForUsersWithName);
+}
+
+function* workSearchForUsersWithName(action) {
+  try {
+    const { name } = action;
+    const searchResults = yield call(searchForUsersWithName, name);
+
+    yield put({
+      type: SEARCH_FOR_USERS_WITH_NAME_SUCCESS,
+      searchResults: searchResults
+    });
+  } catch (error) {
+    yield put({ type: SEARCH_FOR_USERS_WITH_NAME_ERROR, error: error });
+  }
+}
+
 function* workAddUserToWishlist(action) {
   try {
-    const { wishlistUid } = action;
-    const user = yield select(getUser);
-    const userUid = user.uid;
-
+    const { wishlistUid, user } = action;
+    const addedUser = user || (yield select(getUser));
+    const userUid = addedUser.uid;
+    
     yield all([
-      call(addInvitedWishlistToUser, wishlistUid, userUid),
-      call(addInvitedUserToWishlist, wishlistUid, userUid)
+      call(addInvitedWishlistToUser, {wishlistId: wishlistUid, uid: userUid}),
+      call(addInvitedUserToWishlist, {wishlistId: wishlistUid, uid: userUid})
     ]);
 
     yield put({ type: ADD_USER_TO_WISHLIST_SUCCESS, wishlistUid: wishlistUid });
@@ -77,5 +102,6 @@ function* workUserAuthGoogle() {}
 export default {
   watchUserAuthFacebook,
   watchUserAuthGoogle,
-  watchAddUserToWishlist
+  watchAddUserToWishlist,
+  watchSearchForUsersWithName
 };

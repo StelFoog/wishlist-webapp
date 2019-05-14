@@ -1,6 +1,11 @@
 import { takeEvery, call, put, select } from "redux-saga/effects";
 import types from "./types.js";
-import { createNewChat, sendChatMessage, loadChatMessages } from "./db";
+import {
+  createNewChat,
+  sendChatMessage,
+  loadChatMessages,
+  deleteChatFromDB
+} from "./db";
 import { getUser } from "../authentication/selectors";
 
 const {
@@ -12,7 +17,10 @@ const {
   LOAD_CHAT_SUCCESS,
   SEND_CHAT_MESSAGE,
   SEND_CHAT_MESSAGE_ERROR,
-  SEND_CHAT_MESSAGE_SUCCESS
+  SEND_CHAT_MESSAGE_SUCCESS,
+  DELETE_CHAT,
+  DELETE_CHAT_ERROR,
+  DELETE_CHAT_SUCCESS
 } = types;
 
 function* watchCreateChat() {
@@ -25,6 +33,10 @@ function* watchLoadChat() {
 
 function* watchSendChatMessage() {
   yield takeEvery(SEND_CHAT_MESSAGE, workSendChatMessage);
+}
+
+function* watchDeleteChat() {
+  yield takeEvery(DELETE_CHAT, workDeleteChat);
 }
 
 function* workCreateChat(action) {
@@ -58,8 +70,18 @@ function* workSendChatMessage(action) {
   }
 }
 
+function* workDeleteChat({ uid }) {
+  try {
+    yield call(deleteChatFromDB, uid);
+    yield put({ type: DELETE_CHAT_SUCCESS });
+  } catch (error) {
+    yield put({ type: DELETE_CHAT_ERROR, error: error });
+  }
+}
+
 export default {
   watchCreateChat,
   watchLoadChat,
-  watchSendChatMessage
+  watchSendChatMessage,
+  watchDeleteChat
 };
