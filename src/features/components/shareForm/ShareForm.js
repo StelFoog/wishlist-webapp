@@ -5,7 +5,6 @@ import types from "../../lib/authentication/types.js";
 import { connect } from "react-redux";
 import UserCard from "./UserCard.js"
 
-const { SEARCH_FOR_USERS_WITH_NAME } = types;
 const { searchForUsersWithName } = actions;
 
 const displayUserSharedWith = (component) => {
