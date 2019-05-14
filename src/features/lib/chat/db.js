@@ -47,9 +47,16 @@ function onChatMessageReceived(chatId, callback) {
   });
 }
 
+const deleteChatFromDB = async uid => {
+  await _getChatRef(uid)
+    .delete()
+    .then(() => console.log("Chat deleted"));
+};
+
 export {
   onChatMessageReceived,
   createNewChat,
   sendChatMessage,
-  loadChatMessages
+  loadChatMessages,
+  deleteChatFromDB
 };

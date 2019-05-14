@@ -1,20 +1,22 @@
 import { takeEvery, call, put, select, all } from "redux-saga/effects";
 import { getFormValues, reset } from "redux-form";
-import { replace } from "connected-react-router";
+import { replace, push } from "connected-react-router";
 import db from "./db";
 import { getUser } from "../authentication/selectors";
 import { addNewWishlistIdToUser } from "../authentication/db";
 import wishlistTypes from "./types.js";
-import chatTypes from "../chat/types";
 import { types as authTypes } from "../authentication";
 import { types as dialogTypes } from "../../components/dialog";
+import { types as chatTypes } from "../chat";
 import { getPathname } from "../router/selectors";
 
 const {
   createWishlistWithOwner,
   fetchAllWishlistsFromUser,
   fetchAllOwnedWishlistsFromUser,
-  editWishlistProperties
+  editWishlistProperties,
+  deleteWishlistFromDB,
+  deleteWishlistFromUser
 } = db;
 
 const {
@@ -29,12 +31,15 @@ const {
   FETCH_WISHLISTS_SUCCESS,
   EDIT_WISHLIST_PROPERTIES,
   EDIT_WISHLIST_PROPERTIES_ERROR,
-  EDIT_WISHLIST_PROPERTIES_SUCCESS
+  EDIT_WISHLIST_PROPERTIES_SUCCESS,
+  DELETE_WISHLIST,
+  DELETE_WISHLIST_ERROR,
+  DELETE_WISHLIST_SUCCESS
 } = wishlistTypes;
 
-const { CREATE_CHAT } = chatTypes;
+const { CREATE_CHAT, DELETE_CHAT } = chatTypes;
 
-const { ADD_WISHLIST_ID_TO_USER } = authTypes;
+const { ADD_WISHLIST_ID_TO_USER, REMOVE_WISHLIST_ID_FROM_USER } = authTypes;
 
 const { CLOSE_DIALOG } = dialogTypes;
 
@@ -52,6 +57,10 @@ function* watchFetchOwnedWishlists() {
 
 function* watchEditWishlistProperties() {
   yield takeEvery(EDIT_WISHLIST_PROPERTIES, workEditWishlistProperties);
+}
+
+function* watchDeleteWishlist() {
+  yield takeEvery(DELETE_WISHLIST, workDeleteWishlist);
 }
 
 function* workCreateUserWishlist() {
@@ -87,6 +96,7 @@ function* workFetchWishlists() {
   try {
     const user = yield select(getUser);
     const wishlists = yield call(fetchAllWishlistsFromUser, user);
+    console.log(wishlists);
     yield put({
       type: FETCH_WISHLISTS_SUCCESS,
       wishlistData: wishlists
@@ -100,7 +110,6 @@ function* workFetchOwnedWishlists() {
   try {
     const user = yield select(getUser);
     const wishlists = yield call(fetchAllOwnedWishlistsFromUser, user);
-    console.log(wishlists);
     yield put({
       type: FETCH_OWNED_WISHLISTS_SUCCESS,
       wishlistData: wishlists
@@ -110,22 +119,33 @@ function* workFetchOwnedWishlists() {
   }
 }
 
-function* workEditWishlistProperties() {
+function* workEditWishlistProperties({ uid, field, data }) {
   try {
-    const wishlistForm = yield select(getFormValues("WishlistEditForm")); // TODO: Create this form!
-    const uid = ""; // TODO: Get edited wishlist's UID somehow. Send with form maybe?
-    let result = yield call(editWishlistProperties, uid, wishlistForm);
+    const result = yield call(editWishlistProperties, uid, field, data);
 
-    yield all([
-      put({ type: EDIT_WISHLIST_PROPERTIES_SUCCESS, result }),
-      put(reset("WishlistEditForm"))
-    ]);
-    yield put({ type: CLOSE_DIALOG });
-    const pathname = yield select(getPathname);
-    yield put(replace("/temp"));
-    yield put(replace(pathname));
+    yield put({
+      type: EDIT_WISHLIST_PROPERTIES_SUCCESS,
+      wishlistData: result,
+      wishlistUid: uid
+    });
   } catch (error) {
     yield put({ type: EDIT_WISHLIST_PROPERTIES_ERROR, error: error });
+  }
+}
+
+function* workDeleteWishlist({ uid, user }) {
+  try {
+    yield all([
+      call(deleteWishlistFromDB, uid),
+      call(deleteWishlistFromUser, uid, user),
+      put({ type: REMOVE_WISHLIST_ID_FROM_USER, wishlistUid: uid }),
+      put({ type: DELETE_CHAT, uid })
+    ]);
+
+    yield put({ type: DELETE_WISHLIST_SUCCESS, wishlistUid: uid });
+    yield put(push("/dashboard"));
+  } catch (error) {
+    yield put({ type: DELETE_WISHLIST_ERROR, error: error });
   }
 }
 
@@ -133,5 +153,6 @@ export default {
   watchCreateUserWishlist,
   watchFetchWishlists,
   watchFetchOwnedWishlists,
-  watchEditWishlistProperties
+  watchEditWishlistProperties,
+  watchDeleteWishlist
 };
