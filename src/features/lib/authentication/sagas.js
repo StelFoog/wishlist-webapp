@@ -1,6 +1,6 @@
 import { takeEvery, call, put, select, all } from "redux-saga/effects";
 import { push } from "connected-react-router";
-import { authWithFacebookAPI, authWithGoogleAPI } from "./auth.js";
+import { authWithFacebookAPI /* authWithGoogleAPI */ } from "./auth.js";
 import { addInvitedWishlistToUser, addInvitedUserToWishlist } from "./db";
 import types from "./types.js";
 import { getUser } from "./selectors";
@@ -32,7 +32,7 @@ function* watchAddUserToWishlist() {
 
 function* workAddUserToWishlist(action) {
   try {
-    const { type, wishlistUid } = action;
+    const { wishlistUid } = action;
     const user = yield select(getUser);
     const userUid = user.uid;
 

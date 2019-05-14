@@ -1,13 +1,13 @@
 import types from "./types.js";
 
 const {
-  CREATE_WISHLIST_ITEM_SUCCESS,
+  // CREATE_WISHLIST_ITEM_SUCCESS,
   CREATE_WISHLIST_ITEM_ERROR,
   FETCH_ALL_ITEMS_SUCCESS,
   FETCH_ALL_ITEMS_ERROR,
-  EDIT_WISHLIST_ITEM_SUCCESS,
+  // EDIT_WISHLIST_ITEM_SUCCESS,
   EDIT_WISHLIST_ITEM_ERROR,
-  CLAIM_WISHLIST_ITEM_SUCCESS,
+  // CLAIM_WISHLIST_ITEM_SUCCESS,
   CLAIM_WISHLIST_ITEM_ERROR
 } = types;
 
@@ -17,7 +17,7 @@ const initalState = {
 
 const wishlistItemReducer = (state = initalState, action) => {
   let nextState = state;
-  const { type, itemData, error, index } = action;
+  const { type, itemData, error /*, index */ } = action;
 
   switch (type) {
     case CREATE_WISHLIST_ITEM_ERROR:

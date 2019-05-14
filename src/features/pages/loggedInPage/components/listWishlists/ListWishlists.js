@@ -10,48 +10,39 @@ import { getWishlistAvatars } from "./lib";
 const { fetchOwnedWishlists } = actions;
 
 class ListWishlists extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.displayWishlist = this.displayWishlist.bind(this);
-  }
-
-  displayWishlist(wishlist) {
-    return (
-      <div onClick={() => this.props.goToWishlist(wishlist)}>
-        <CardContainer
-          children={
-            <div className="cardContent">
-              <CardHeader children={wishlist.title} />
-              <hr />
-              <CardContent
-                children={
-                  <div className="wishlistCard">
-                    <p className="wishlistText">...</p>
-                    <div className="wishlistAvatarList">
-                      {getWishlistAvatars(wishlist)}
-                    </div>
-                  </div>
-                }
-              />
-            </div>
-          }
-        />
-      </div>
-    );
-  }
-
   componentDidMount() {
     const { fetchOwnedWishlists } = this.props;
     fetchOwnedWishlists();
   }
 
-  getWishlists() {
-    const { ownedWishlists } = this.props;
-    return ownedWishlists.map(this.displayWishlist);
-  }
   render() {
-    return <React.Fragment>{this.getWishlists()}</React.Fragment>;
+    const { ownedWishlists } = this.props;
+    return (
+      <React.Fragment>
+        {ownedWishlists.map(wishlist => (
+          <div onClick={() => this.props.goToWishlist(wishlist)}>
+            <CardContainer
+              children={
+                <div className="cardContent">
+                  <CardHeader children={wishlist.title} />
+                  <hr />
+                  <CardContent
+                    children={
+                      <div className="wishlistCard">
+                        <p className="wishlistText">...</p>
+                        <div className="wishlistAvatarList">
+                          {getWishlistAvatars(wishlist)}
+                        </div>
+                      </div>
+                    }
+                  />
+                </div>
+              }
+            />
+          </div>
+        ))}
+      </React.Fragment>
+    );
   }
 }
 

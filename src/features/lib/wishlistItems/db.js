@@ -1,5 +1,5 @@
 import db from "../wishlists/db";
-import { database } from "../firebase/";
+// import { database } from "../firebase/";
 import defaultItem from "./item.js";
 
 const { fetchWishlistByUid, _getWishlistRef } = db;

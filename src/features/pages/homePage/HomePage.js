@@ -9,7 +9,7 @@ import Guide from "./Guide";
 
 import "./homePage.css";
 
-const HomePage = ({}) => (
+const HomePage = () => (
   <React.Fragment>
     <div className="homePage">
       <StartScreen />

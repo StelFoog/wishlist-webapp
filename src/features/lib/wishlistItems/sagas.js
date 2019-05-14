@@ -1,18 +1,19 @@
 import { takeEvery, put, select, call, all } from "redux-saga/effects";
 import { getFormValues, reset } from "redux-form";
+import { replace } from "connected-react-router";
 import { getUser } from "../authentication/selectors";
 import wishlistItemDb from "./db.js";
 import types from "./types.js";
 import { types as dialogTypes } from "../../components/dialog";
 import wishlistDb from "../wishlists/db";
 import { getDialogValues } from "../../components/dialog/selectors";
+import { getPathname } from "../router/selectors";
 
 const { fetchWishlistByUid } = wishlistDb;
 
 const {
   addWishlistItem,
   editWishlistItem,
-  validateNewItem,
   makeItem,
   claimWishlistItem
 } = wishlistItemDb;
@@ -58,7 +59,10 @@ function* workCreateWishlistItem() {
     const itemData = yield call(makeItem, itemForm);
     yield call(addWishlistItem, wishlistUid, itemData);
     yield put({ type: CREATE_WISHLIST_ITEM_SUCCESS, itemData, wishlistUid });
-    yield all([put({ type: CLOSE_DIALOG }), put(reset("editItem"))]);
+    yield all([put({ type: CLOSE_DIALOG }), put(reset("createItem"))]);
+    const pathname = yield select(getPathname);
+    yield put(replace("/temp"));
+    yield put(replace(pathname));
   } catch (error) {
     yield put({ type: CREATE_WISHLIST_ITEM_ERROR, error });
   }
@@ -79,6 +83,9 @@ function* workEditWishlistItem() {
       itemData: itemForm
     });
     yield all([put(reset("editItem")), put({ type: CLOSE_DIALOG })]);
+    const pathname = yield select(getPathname);
+    yield put(replace("/temp"));
+    yield put(replace(pathname));
   } catch (error) {
     yield put({ type: EDIT_WISHLIST_ITEM_ERROR, error });
   }

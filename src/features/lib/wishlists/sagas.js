@@ -1,6 +1,6 @@
 import { takeEvery, call, put, select, all } from "redux-saga/effects";
 import { getFormValues, reset } from "redux-form";
-import { push } from "connected-react-router";
+import { replace } from "connected-react-router";
 import db from "./db";
 import { getUser } from "../authentication/selectors";
 import { addNewWishlistIdToUser } from "../authentication/db";
@@ -8,6 +8,7 @@ import wishlistTypes from "./types.js";
 import chatTypes from "../chat/types";
 import { types as authTypes } from "../authentication";
 import { types as dialogTypes } from "../../components/dialog";
+import { getPathname } from "../router/selectors";
 
 const {
   createWishlistWithOwner,
@@ -65,7 +66,7 @@ function* workCreateUserWishlist() {
 
     yield all([
       call(addNewWishlistIdToUser, userValues.uid, result.uid),
-      put({ type: ADD_WISHLIST_ID_TO_USER, wishlistId: result.uid }),
+      put({ type: ADD_WISHLIST_ID_TO_USER, wishlistUid: result.uid }),
       put({ type: CREATE_CHAT, id: result.uid })
     ]);
     // TODO: add the wishlist to the user obejct
@@ -74,8 +75,9 @@ function* workCreateUserWishlist() {
       put(reset("WishlistCreateForm"))
     ]);
     yield put({ type: CLOSE_DIALOG });
-    yield put(push("/dashboard/temp"));
-    yield put(push("/dashboard"));
+    const pathname = yield select(getPathname);
+    yield put(replace("/temp"));
+    yield put(replace(pathname));
   } catch (error) {
     yield put({ type: CREATE_USER_WISHLIST_ERROR, error: error });
   }
@@ -85,7 +87,6 @@ function* workFetchWishlists() {
   try {
     const user = yield select(getUser);
     const wishlists = yield call(fetchAllWishlistsFromUser, user);
-
     yield put({
       type: FETCH_WISHLISTS_SUCCESS,
       wishlistData: wishlists
@@ -116,12 +117,13 @@ function* workEditWishlistProperties() {
     let result = yield call(editWishlistProperties, uid, wishlistForm);
 
     yield all([
-      put({ type: EDIT_WISHLIST_PROPERTIES_SUCCESS }),
+      put({ type: EDIT_WISHLIST_PROPERTIES_SUCCESS, result }),
       put(reset("WishlistEditForm"))
     ]);
     yield put({ type: CLOSE_DIALOG });
-    yield put(push("/dashboard/temp"));
-    yield put(push("/dashboard"));
+    const pathname = yield select(getPathname);
+    yield put(replace("/temp"));
+    yield put(replace(pathname));
   } catch (error) {
     yield put({ type: EDIT_WISHLIST_PROPERTIES_ERROR, error: error });
   }

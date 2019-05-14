@@ -21,7 +21,6 @@ function createNewChat(id) {
 function sendChatMessage(chatId, user, text) {
   if (text === "") return;
 
-  const ref = _getChatRef(chatId);
   const msg = {
     senderId: user.uid,
     senderName: user.name,

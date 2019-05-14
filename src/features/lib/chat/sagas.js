@@ -1,4 +1,4 @@
-import { takeEvery, call, put, select, all } from "redux-saga/effects";
+import { takeEvery, call, put, select } from "redux-saga/effects";
 import types from "./types.js";
 import { createNewChat, sendChatMessage, loadChatMessages } from "./db";
 import { getUser } from "../authentication/selectors";
@@ -26,7 +26,6 @@ function* watchLoadChat() {
 function* watchSendChatMessage() {
   yield takeEvery(SEND_CHAT_MESSAGE, workSendChatMessage);
 }
-
 
 function* workCreateChat(action) {
   const { id } = action;

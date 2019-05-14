@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { selectors } from "../";
 import { CardHeader, CardContent, CardActions } from "../../card";
 import { Field, reduxForm, submit } from "redux-form";
-import renderField, { required } from "../../wishListForm/validate";
+import renderField from "../../wishListForm/validate";
 import Button from "../../button";
 import { actions } from "../../../lib/wishlistItems";
 
@@ -17,37 +17,26 @@ const EditItem = ({ handleSubmit, handleClose, values, performSubmit }) => {
     <React.Fragment>
       <CardHeader>{"Edit wishlist item"}</CardHeader>
       <CardContent>
-
         <form onSubmit={handleSubmit}>
-
           <label>Name:</label>
-          <Field
-            name="name"
-            component={renderField}
-            type="text"
-          />
+          <Field name="name" component={renderField} type="text" />
           <label>Price:</label>
-          <Field
-            name="price"
-            component={renderField}
-            type="number"
-
-          />
+          <Field name="price" component={renderField} type="number" />
           <label>Description:</label>
-          <Field
-            name="description"
-            component={renderField}
-            type="text"
-          />
+          <Field name="description" component={renderField} type="text" />
         </form>
-
       </CardContent>
       <CardActions>
-        <Button label="SUBMIT" color="green" variant="filled" handleClick={performSubmit}></Button>
+        <Button
+          label="SUBMIT"
+          color="green"
+          variant="filled"
+          handleClick={performSubmit}
+        />
       </CardActions>
     </React.Fragment>
   );
-}
+};
 /*
 function editItem() {
   const val = document.getElementById("editItemName").value;
@@ -56,13 +45,12 @@ function editItem() {
 }
 */
 
-
 const mapStateToProps = () => {
   const getDialogValues = selectors.getDialogValuesState();
   return state => ({
     values: getDialogValues(state)
-  })
-}
+  });
+};
 
 const tempSubmit = (values, dispatch) => dispatch(editWishlistItem());
 
@@ -72,7 +60,8 @@ const mapDispatchToProps = dispatch => ({
 
 export default reduxForm({
   form: "editItem",
-  onSubmit: tempSubmit
+  onSubmit: tempSubmit,
+  destroyOnUnmount: false
 })(
   connect(
     mapStateToProps,

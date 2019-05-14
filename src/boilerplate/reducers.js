@@ -1,4 +1,6 @@
 // Reducers listen to all incoming actions and augment the state acordingly.
+// Important: Remember to add the reducers to rootReducer or they won't be able
+// to find the actions.
 
 import types from "./types";
 

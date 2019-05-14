@@ -69,7 +69,7 @@ const Root = ({ store, history, persistor }) => (
             }}
           />
           <Route
-            path={"/dashboard/group/:uid"}
+            path={"/dashboard/group/:uid/:user"}
             exact
             render={props => {
               return <GroupPage {...props} />;
