@@ -1,11 +1,35 @@
-import React from "react";
 import WishlistPage from "./WishlistPage";
 
-const wishLIstPageContainer = ({ goToForm, ...rest }) => (
-  <div className="page">
-    {/* Here we place whatever dashboard page user is on, currently listWishlists as placeholder */}
-    <WishlistPage {...rest} />
-  </div>
-);
+import { connect } from "react-redux";
+import { selectors } from "../../lib/wishlists";
 
-export default wishLIstPageContainer;
+import { actions as dialogActions } from "../../components/dialog";
+import { actions as miscActions } from "../../lib/misc";
+import { actions as wishlistActions } from "../../lib/wishlists";
+
+const { openDialog } = dialogActions;
+const { setCurrentWishlistOrGroup } = miscActions;
+const { editWishlistProperties } = wishlistActions;
+
+const mapStateToProps = () => {
+  const getOwnedWishlists = selectors.getOwnedWishlistsState();
+  const getEdit = selectors.getEditState();
+  return state => ({
+    editing: getEdit(state),
+    wishlists: getOwnedWishlists(state)
+  });
+};
+
+const mapDispatchToProps = dispatch => ({
+  createItem: wishlistUid =>
+    dispatch(openDialog("createItem", { wishlistUid })),
+  setCurrentPage: wishlistUid =>
+    dispatch(setCurrentWishlistOrGroup(wishlistUid)),
+  editWishlistProperties: (wishlistUid, field, data) =>
+    dispatch(editWishlistProperties(wishlistUid, field, data))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WishlistPage);
