@@ -111,10 +111,10 @@ const wishlistReducer = (state = initialState, action) => {
       return { ...nextState };
 
     case CLAIM_WISHLIST_ITEM_SUCCESS:
-      const wishlistIndex = nextState.wishlists.findIndex(function (element) {
+      const wishlistClaimIndex = nextState.wishlists.findIndex(function (element) {
         return element.uid === wishlistUid
       });
-      nextState.wishlists[wishlistIndex].items[index].claimedBy.push(userUid);
+      nextState.wishlists[wishlistClaimIndex].items[index].claimedBy.push(userUid);
       return { ...nextState }
       
      case DELETE_WISHLIST_SUCCESS:
