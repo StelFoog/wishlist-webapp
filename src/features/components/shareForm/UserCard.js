@@ -1,6 +1,6 @@
 import React from "react";
 import CardContainer from "../card/CardContainer";
-import { CardContent, CardHeader } from "../card";
+import { CardContent } from "../card";
 import ProfilePicture from "../profilePicture/ProfilePicture.js";
 import Button from "../button";
 
