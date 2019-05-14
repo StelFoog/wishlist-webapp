@@ -9,6 +9,7 @@ import {
 } from "./db.js";
 import groupTypes from "./types";
 import { types as authTypes } from "../authentication";
+import { types as dialogTypes } from "../../components/dialog";
 import { addGroupToUser, removeGroupFromUser } from "../authentication/db.js";
 import { replace, push } from "connected-react-router";
 
@@ -28,6 +29,8 @@ const {
 } = groupTypes;
 
 const { ADD_GROUP_ID_TO_USER } = authTypes;
+
+const { CLOSE_DIALOG } = dialogTypes;
 
 function* watchFetchAllUserGroups() {
   yield takeEvery(FETCH_ALL_USER_GROUPS, workFetchAllUserGroups);
@@ -65,6 +68,7 @@ function* workCreateGroup(action) {
     yield call(addGroupToUser, userUid, groupId);
     yield put({ type: CREATE_GROUP_SUCCESS, value: result });
     yield put({ type: ADD_GROUP_ID_TO_USER, groupId });
+    yield put({ type: CLOSE_DIALOG });
     //yield put(push(`/dashboard/group/${groupId}`));
   } catch (error) {
     yield put({ type: CREATE_GROUP_ERROR, error: error });
