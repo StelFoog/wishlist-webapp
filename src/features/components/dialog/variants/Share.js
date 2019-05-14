@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import "../";
 import { selectors } from "../";
 import Button from "../../button";
-import { submit, reduxForm, Field } from "redux-form";
+import { reduxForm } from "redux-form";
 import { CardHeader, CardContent, CardActions } from "../../card";
-import ShareForm, { renderField } from "../../shareForm/ShareForm.js";
+import ShareForm from "../../shareForm/ShareForm.js";
 
 class ShareDialog extends Component {
   render() {
