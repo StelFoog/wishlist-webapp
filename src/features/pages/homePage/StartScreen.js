@@ -14,22 +14,30 @@ const { authenticateFacebook } = actions;
 
 const StartScreen = ({ handleDownClick, handleFacebookCLick }) => (
   <div className="startScreen">
+    <div className="startBackground" />
     <div className="homeTitle">
-      <h1>Wishlists</h1>
+      <div className="titleContainer">
+        <h1>Wishlists</h1>
+        <h5>Where all your wishes come true</h5>
+      </div>
     </div>
     <div className="authButtonContainer">
       <Button
         handleClick={handleFacebookCLick}
         label="Log in with Facebook"
-        variant="filled"
-        color="#73359B"
+        variant="outlined"
+        color="var(--color-lighter)"
       />
-      <Button label="Log in with Google" variant="outlined" color="#73359B" />
+      <Button
+        label="Log in with Google"
+        variant="outlined"
+        color="var(--color-lighter)"
+      />
     </div>
     <div className="downArrowContainer">
       <NavLink to="#intro" smooth>
         <SvgIcon className="downArrow" handleCLick={handleDownClick}>
-          <RoundKeyboardArrowDown size={100} />
+          <RoundKeyboardArrowDown size={100} color="var(--color-lighter)" />
         </SvgIcon>
       </NavLink>
     </div>
