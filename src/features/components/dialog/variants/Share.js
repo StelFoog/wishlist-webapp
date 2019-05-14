@@ -9,11 +9,12 @@ import ShareForm, { renderField } from "../../shareForm/ShareForm.js";
 
 class ShareDialog extends Component {
   render() {
+    console.log(this.props.value.share);
     return(
       <React.Fragment>
         <CardHeader>Share wishlist</CardHeader>
         <CardContent>
-          <ShareForm callback={this.props.callback} />
+          <ShareForm storeSelected={(x) => (this.selected = x)} />
         </CardContent>
         <CardActions>
           <Button
@@ -26,7 +27,7 @@ class ShareDialog extends Component {
             variant="filled"
             label="Done"
             handleClick={() => {
-              this.props.handleSubmit()
+              this.props.value.share(this.selected);
               this.props.handleClose();
             }}
           color="#003f9f"
@@ -48,14 +49,9 @@ const mapDispatchToProps = dispatch => ({
   handleSubmit: () => console.log("handleSubmit()"),
 });
 
-const tempSubmit = (values, dispatch) => {
-  console.log("tempSubmit()");
-  console.log(values);
-}
-
 export default reduxForm({
   form: "share",
-  onSubmit: tempSubmit ,
+  onSubmit: () => {},
   destroyOnUnmount: true
 })(connect(
   mapStateToProps,

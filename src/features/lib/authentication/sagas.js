@@ -57,13 +57,13 @@ function* workSearchForUsersWithName(action) {
 
 function* workAddUserToWishlist(action) {
   try {
-    const { wishlistUid } = action;
-    const user = yield select(getUser);
-    const userUid = user.uid;
-
+    const { type, wishlistUid, user } = action;
+    const addedUser = user || (yield select(getUser));
+    const userUid = addedUser.uid;
+    
     yield all([
-      call(addInvitedWishlistToUser, wishlistUid, userUid),
-      call(addInvitedUserToWishlist, wishlistUid, userUid)
+      call(addInvitedWishlistToUser, {wishlistId: wishlistUid, uid: userUid}),
+      call(addInvitedUserToWishlist, {wishlistId: wishlistUid, uid: userUid})
     ]);
 
     yield put({ type: ADD_USER_TO_WISHLIST_SUCCESS, wishlistUid: wishlistUid });

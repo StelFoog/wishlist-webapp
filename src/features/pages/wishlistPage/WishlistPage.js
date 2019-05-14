@@ -1,6 +1,9 @@
 import React from "react";
 import { WishlistTitle } from "./components";
 import WishlistItem from "../../components/wishlistItem";
+import actions from "../../lib/authentication/actions.js";
+
+import { firebase } from "../../lib/firebase";
 import { connect } from "react-redux";
 
 import "./wishlistPage.css";
@@ -10,6 +13,7 @@ import PlusIcon from "../../components/svgIcon/icons/PlusIcon";
 import Button from "../../components/button";
 import dialogActions from "../../components/dialog/actions.js";
 
+const { addUserToWishlist } = actions;
 const { openDialog } = dialogActions;
 
 const WishlistPage = ({
@@ -69,7 +73,11 @@ const mapDispatchToProps = dispatch => ({
   createItem: wishlistUid =>
     dispatch(openDialog("createItem", { wishlistUid })),
   shareWishlist: wishlistUid =>
-    dispatch(openDialog("share", {wishlistUid}))
+    dispatch(openDialog("share", {share: (users) => {
+      users.forEach((user) => {
+        dispatch(addUserToWishlist(wishlistUid, user));
+      });
+  }}))
 });
 
 export default connect(

@@ -3,6 +3,8 @@ import { defaultUser } from "./user.js";
 
 const _getUserRef = uid => database.collection("Users").doc(uid.toString());
 
+const ordered = database.collection("Users").orderBy("name");
+
 const userExistsWithUid = async uid => {
   return (await getUser(uid)) !== null;
 };
@@ -15,8 +17,9 @@ const nextHigherString = (string) => {
 
 const searchForUsersWithName = async (name) => {
   const users = (await 
-    database.collection("Users")
-    .orderBy("name")
+    /*database.collection("Users")
+    .orderBy("name")*/
+    ordered
     .where("name", ">=", name)
     .where("name", "<", nextHigherString(name))
     .limit(20)
@@ -96,10 +99,10 @@ const addInvitedWishlistToUser = ({ wishlistId, uid }) => {
 };
 
 // Should really be moved to woshlists/db.js, but it was fucking with importing so I didn't
-const addInvitedUserToWishlist = ({ wishlistID, uid }) => {
+const addInvitedUserToWishlist = ({ wishlistId, uid }) => {
   database
     .collection("Wishlists")
-    .doc(wishlistID)
+    .doc(wishlistId)
     .update({ members: firebase.firestore.FieldValue.arrayUnion(uid) });
 };
 

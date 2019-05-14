@@ -20,9 +20,10 @@ const logout = () => ({
   type: AUTH_LOGOUT
 });
 
-const addUserToWishlist = wishlistUid => ({
+const addUserToWishlist = (wishlistUid, user) => ({
   type: ADD_USER_TO_WISHLIST,
-  wishlistUid
+  wishlistUid,
+  user
 });
 
 const searchForUsersWithName = name => ({
