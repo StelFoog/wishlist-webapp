@@ -16,13 +16,24 @@ class MemberList extends React.Component {
     }
   }
 
+  getUsersInGroup(members, users) {
+    let array = [];
+    members.forEach(member => {
+      users[member] ? array.push(users[member]) : null;
+    });
+    return array;
+  }
+
   render() {
-    const { users } = this.props;
+    const { users, openForm, uid, navigate, members } = this.props;
     return (
       <div className="memberBar">
         <div className="memberContainer">
-          {users.map(user => (
-            <div className="memberCard">
+          {this.getUsersInGroup(members, users).map(user => (
+            <div
+              className="memberCard"
+              onClick={() => navigate(`group/${uid}/${user.uid}`)}
+            >
               <Ripple />
               <div className="memberPicture">
                 <ProfilePicture src={user.profilePictureUrl} width={30} />
@@ -30,8 +41,20 @@ class MemberList extends React.Component {
               <div clasName="memberName">{user.name}</div>
             </div>
           ))}
+          {/*users.map(user => (
+            <div
+              className="memberCard"
+              onClick={() => navigate(`group/${uid}/${user.uid}`)}
+            >
+              <Ripple />
+              <div className="memberPicture">
+                <ProfilePicture src={user.profilePictureUrl} width={30} />
+              </div>
+              <div clasName="memberName">{user.name}</div>
+            </div>
+          ))*/}
         </div>
-        <AddUser />
+        <AddUser openForm={openForm} uid={uid} />
       </div>
     );
   }
