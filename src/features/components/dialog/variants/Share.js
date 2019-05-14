@@ -4,43 +4,16 @@ import "../";
 import { selectors } from "../";
 import Button from "../../button";
 import { submit, reduxForm, Field } from "redux-form";
-import types from "../../../lib/authentication/types.js";
 import { CardHeader, CardContent, CardActions } from "../../card";
-import renderField from "../../shareForm/ShareForm.js";
-import actions from "../../../lib/authentication/actions.js";
+import ShareForm, { renderField } from "../../shareForm/ShareForm.js";
 
-const { searchForUsersWithName } = actions;
-
-const { SEARCH_FOR_USERS_WITH_NAME } = types;
-
-const performSubmit = console.log;
-
-class Share extends Component {
-  componentDidMount() {
-
-  }
-
+class ShareDialog extends Component {
   render() {
     return(
       <React.Fragment>
         <CardHeader>{"Share wishlist"}</CardHeader>
         <CardContent>
-          <form onSubmit={this.props.handleSubmit}>
-            <Field
-              name="Name"
-              type="text"
-              handleSearch={this.props.handleSearch}
-              component={renderField}
-            />
-          </form>
-          <p> Before </p>
-          {
-            __searchedUsers == [] || __searchedUsers === undefined
-          ? <p> None to show </p>
-          : __searchedUsers.map((user) => 
-            <p> {user.name} </p>)
-          }
-          <p> After </p>
+          <ShareForm />
         </CardContent>
         <CardActions>
           <Button
@@ -71,19 +44,14 @@ const mapStateToProps = () => {
   });
 }
 
-var __searchedUsers = [];
-
 const mapDispatchToProps = dispatch => ({
-  handleSubmit: () => console.log("submitted"),
-  handleSearch: (name) => {
-    __searchedUsers = [];
-    dispatch(searchForUsersWithName(name, __searchedUsers));
-    console.log("RESULTS OF SEARCH:");
-    console.log(__searchedUsers);
-  }
+  handleSubmit: () => console.log("handleSubmit()"),
 });
 
-const tempSubmit = (values, dispatch) => console.log(values);
+const tempSubmit = (values, dispatch) => {
+  console.log("tempSubmit()");
+  console.log(values);
+}
 
 export default reduxForm({
   form: "share",
@@ -91,5 +59,5 @@ export default reduxForm({
   destroyOnUnmount: true
 })(connect(
   mapStateToProps,
-  mapDispatchToProps
-)(Share));
+  mapDispatchToProps,
+)(ShareDialog));
