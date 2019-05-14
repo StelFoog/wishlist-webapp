@@ -8,17 +8,20 @@ const {
   ADD_USER_TO_WISHLIST_SUCCESS,
   ADD_WISHLIST_ID_TO_USER,
   REMOVE_WISHLIST_ID_FROM_USER,
-  ADD_GROUP_ID_TO_USER
+  ADD_GROUP_ID_TO_USER,
+  SEARCH_FOR_USERS_WITH_NAME_ERROR,
+  SEARCH_FOR_USERS_WITH_NAME_SUCCESS
 } = types;
 
 const initialState = {
   user: null,
-  loggedIn: false
+  loggedIn: false,
+  searchResults: []
 };
 
 const userReducer = (state = initialState, action) => {
   let nextState = state;
-  const { type, userData, error, wishlistUid, groupId } = action;
+  const { type, userData, error, wishlistUid, groupId, searchResults } = action;
 
   switch (type) {
     case AUTH_USER_ERROR:
@@ -68,6 +71,13 @@ const userReducer = (state = initialState, action) => {
       return { ...nextState };
 
     default:
+      return { ...nextState };
+
+    case SEARCH_FOR_USERS_WITH_NAME_ERROR:
+      console.error("User search error: " + error.code + "-> " + error.message);
+      return { ...nextState };
+    case SEARCH_FOR_USERS_WITH_NAME_SUCCESS:
+      nextState.searchResults = searchResults;
       return { ...nextState };
   }
 };

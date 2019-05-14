@@ -25,10 +25,9 @@ const addUserToWishlist = wishlistUid => ({
   wishlistUid
 });
 
-const searchForUsersWithName = (name, list) => ({
+const searchForUsersWithName = name => ({
   type: SEARCH_FOR_USERS_WITH_NAME,
-  name,
-  list
+  name
 });
 
 export default {

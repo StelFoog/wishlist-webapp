@@ -1,8 +1,11 @@
 import { takeEvery, call, put, select, all } from "redux-saga/effects";
 import { push } from "connected-react-router";
 import { authWithFacebookAPI /* authWithGoogleAPI */ } from "./auth.js";
-import { addInvitedWishlistToUser, addInvitedUserToWishlist,
- searchForUsersWithName } from "./db";
+import {
+  addInvitedWishlistToUser,
+  addInvitedUserToWishlist,
+  searchForUsersWithName
+} from "./db";
 import types from "./types.js";
 import { getUser } from "./selectors";
 import actions from "./actions.js";
@@ -17,7 +20,9 @@ const {
   ADD_USER_TO_WISHLIST,
   ADD_USER_TO_WISHLIST_ERROR,
   ADD_USER_TO_WISHLIST_SUCCESS,
-  SEARCH_FOR_USERS_WITH_NAME
+  SEARCH_FOR_USERS_WITH_NAME,
+  SEARCH_FOR_USERS_WITH_NAME_ERROR,
+  SEARCH_FOR_USERS_WITH_NAME_SUCCESS
 } = types;
 
 function* watchUserAuthFacebook() {
@@ -38,14 +43,15 @@ function* watchSearchForUsersWithName() {
 
 function* workSearchForUsersWithName(action) {
   try {
-    const { type, name, list } = action;
-    const users = yield call(searchForUsersWithName, name);
-    for(let i = 0; i < users.length; ++i) {
-      list.push(users[i]);
-    }
-    yield put({type: true});
-  }catch(error) {
-    yield put({type: false});
+    const { type, name } = action;
+    const searchResults = yield call(searchForUsersWithName, name);
+
+    yield put({
+      type: SEARCH_FOR_USERS_WITH_NAME_SUCCESS,
+      searchResults: searchResults
+    });
+  } catch (error) {
+    yield put({ type: SEARCH_FOR_USERS_WITH_NAME_ERROR, error: error });
   }
 }
 
