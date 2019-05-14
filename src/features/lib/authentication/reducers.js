@@ -7,6 +7,7 @@ const {
   ADD_USER_TO_WISHLIST_ERROR,
   ADD_USER_TO_WISHLIST_SUCCESS,
   ADD_WISHLIST_ID_TO_USER,
+  REMOVE_WISHLIST_ID_FROM_USER,
   ADD_GROUP_ID_TO_USER
 } = types;
 
@@ -25,31 +26,47 @@ const userReducer = (state = initialState, action) => {
         "authentication error: " + error.code + "-> " + error.message
       );
       return { ...nextState };
+
     case AUTH_USER_SUCCESS:
       nextState.loggedIn = true;
       nextState.user = userData;
       console.log("Logged in!" + userData);
       return { ...nextState };
+
     case AUTH_LOGOUT:
       nextState.loggedIn = false;
       nextState.user = null;
       alert("logged out successfully");
       return { ...nextState };
+
     case ADD_USER_TO_WISHLIST_ERROR:
       console.error(
         "Wishlist invitation error: " + error.code + "-> " + error.message
       );
       return { ...nextState };
+
     case ADD_USER_TO_WISHLIST_SUCCESS:
       nextState.user.wishlists.push(wishlistUid);
       return { ...nextState };
+
     case ADD_WISHLIST_ID_TO_USER:
       console.log(wishlistUid);
       nextState.user.ownedWishlists.push(wishlistUid);
       return { ...nextState };
+
+    case REMOVE_WISHLIST_ID_FROM_USER:
+      const wishlistIndexDelete = nextState.user.ownedWishlists.findIndex(
+        element => element === wishlistUid
+      );
+      if (wishlistIndexDelete > -1)
+        nextState.user.ownedWishlists.splice(wishlistIndexDelete, 1);
+
+      return { ...nextState };
+
     case ADD_GROUP_ID_TO_USER:
       nextState.user.groups.push(groupId);
       return { ...nextState };
+
     default:
       return { ...nextState };
   }
