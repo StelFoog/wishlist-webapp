@@ -116,6 +116,13 @@ const wishlistReducer = (state = initialState, action) => {
       });
       nextState.wishlists[wishlistIndex].items[index].claimedBy.push(userUid);
       return { ...nextState }
+      
+     case DELETE_WISHLIST_SUCCESS:
+      const wishlistIndexDelete = ownedWishlists.findIndex(
+        element => element.uid === wishlistUid
+      );
+      nextState.ownedWishlists.splice(wishlistIndexDelete, 1);
+      return { ...nextState };
 
     case DELETE_WISHLIST_ERROR:
       console.error(
