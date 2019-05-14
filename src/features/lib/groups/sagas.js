@@ -83,6 +83,7 @@ function* workInviteUserToGroup(action) {
     console.log(groupId);
     yield call(addUserToGroup, groupId, userId);
     yield call(addGroupToUser, userId, groupId);
+    yield put({ type: CLOSE_DIALOG });
     yield put({ type: INVITE_USER_TO_GROUP_SUCCESS });
   } catch (error) {
     yield put({ type: INVITE_USER_TO_GROUP_ERROR, error: error });
