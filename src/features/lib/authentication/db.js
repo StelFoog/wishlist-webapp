@@ -3,7 +3,7 @@ import { defaultUser } from "./user.js";
 
 const _getUserRef = uid => database.collection("Users").doc(uid.toString());
 
-const ordered = database.collection("Users").orderBy("name");
+const ordered = database.collection("Users").orderBy("nameLowerCase");
 
 const userExistsWithUid = async uid => {
   return (await getUser(uid)) !== null;
@@ -20,8 +20,8 @@ const searchForUsersWithName = async (name) => {
     /*database.collection("Users")
     .orderBy("name")*/
     ordered
-    .where("name", ">=", name)
-    .where("name", "<", nextHigherString(name))
+    .where("nameLowerCase", ">=", name.toLowerCase())
+    .where("nameLowerCase", "<", nextHigherString(name))
     .limit(20)
     .get().then((docArray) =>
       docArray.docs.map((doc) => doc.data())));
@@ -33,6 +33,7 @@ const userFromFirebaseUser = firebaseUser => {
     ...defaultUser,
     ...{
       name: firebaseUser.displayName,
+      nameLowerCase: firebaseUser.displayName.toLowerCase(),
       uid: firebaseUser.uid,
       profilePictureUrl: firebaseUser.photoURL
     }

@@ -26,7 +26,15 @@ class MemberList extends React.Component {
   }
 
   render() {
-    const { users, openForm, uid, navigate, members } = this.props;
+    const { 
+      users, 
+      openForm, 
+      uid, 
+      navigate, 
+      members, 
+      currentGroup 
+    } = this.props;
+
     return (
       <div className="memberBar">
         <div className="memberContainer">
@@ -39,11 +47,11 @@ class MemberList extends React.Component {
               <div className="memberPicture">
                 <ProfilePicture src={user.profilePictureUrl} width={30} />
               </div>
-              <div clasName="memberName">{user.name}</div>
+              <div className="memberName">{user.name}</div>
             </div>
           ))}
         </div>
-        <AddUser openForm={openForm} uid={uid} />
+        <AddUser currentUserUid={uid} currentGroup={currentGroup} />
       </div>
     );
   }

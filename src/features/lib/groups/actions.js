@@ -16,9 +16,10 @@ const createGroup = groupName => ({
   groupName: groupName
 });
 
-const addUserToGroup = userId => ({
+const addUserToGroup = (userId, maybeGroupId) => ({
   type: INVITE_USER_TO_GROUP,
-  userId: userId
+  userId: userId,
+  maybeGroupId: maybeGroupId
 });
 
 const removeUserFromGroup = (groupId, userId) => ({

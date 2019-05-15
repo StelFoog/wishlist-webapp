@@ -1,6 +1,7 @@
 
 const defaultUser = {
   name: null,
+  nameLowerCase: null,
   uid: null,
   wishlists: [],
   ownedWishlists: [],
