@@ -29,8 +29,7 @@ const fetchWishlistByUid = async (uid, user) => {
         console.log(
           "(DB) user wishlist doesn't exist: " + uid + ", " + user.name
         );
-        deleteWishlistFromUser(uid, user);
-        return undefined; // Will be pruned from local store by Redux
+        return uid; // Hacky, but it lets the Saga know which wishlist to prune
       }
     });
 };
@@ -41,9 +40,7 @@ const editWishlistProperties = async (uid, field, data) => {
 };
 
 const fetchAllWishlistsFromUser = user => {
-  return Promise.all(
-    user.wishlists.map(uid => fetchWishlistByUid(uid, user))
-  ).then(list => list.filter(wishlist => (wishlist ? true : false)));
+  return Promise.all(user.wishlists.map(uid => fetchWishlistByUid(uid, user)));
 };
 
 const fetchAllOwnedWishlistsFromUser = user => {

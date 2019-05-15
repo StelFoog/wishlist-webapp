@@ -62,11 +62,17 @@ const userReducer = (state = initialState, action) => {
       return nextState;
 
     case REMOVE_WISHLIST_ID_FROM_USER:
-      const wishlistIndexDelete = nextState.user.ownedWishlists.findIndex(
+      let wishlistIndexDelete = nextState.user.ownedWishlists.findIndex(
         element => element === wishlistUid
       );
-      if (wishlistIndexDelete > -1)
+      if (wishlistIndexDelete)
         nextState.user.ownedWishlists.splice(wishlistIndexDelete, 1);
+
+      wishlistIndexDelete = nextState.user.wishlists.findIndex(
+        element => element === wishlistUid
+      );
+      if (wishlistIndexDelete)
+        nextState.user.wishlists.splice(wishlistIndexDelete, 1);
 
       return nextState;
 
