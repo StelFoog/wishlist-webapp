@@ -82,6 +82,7 @@ const mapDispatchToProps = dispatch => ({
    */
   shareWishlist: (currentWishlist, currentUser) =>
     dispatch(openDialog("share", {
+      title: "Share wishlist",
       share: (users) => {
         users.forEach((user) => {
             dispatch(addUserToWishlist(currentWishlist.uid, user));

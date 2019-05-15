@@ -16,7 +16,7 @@ class ShareDialog extends Component {
   render() {
     return(
       <React.Fragment>
-        <CardHeader>Share wishlist</CardHeader>
+        <CardHeader>{this.props.value.title}</CardHeader>
         <CardContent>
           <ShareForm 
             storeSelected={(x) => (this.selected = x)}

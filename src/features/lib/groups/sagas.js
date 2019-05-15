@@ -77,9 +77,9 @@ function* workCreateGroup(action) {
 
 function* workInviteUserToGroup(action) {
   try {
-    const { userId } = action;
+    const { userId, maybeGroupId } = action;
     const { uid } = yield select(getDialogValues);
-    const groupId = uid;
+    const groupId = maybeGroupId || uid;
     console.log(groupId);
     yield call(addUserToGroup, groupId, userId);
     yield call(addGroupToUser, userId, groupId);
