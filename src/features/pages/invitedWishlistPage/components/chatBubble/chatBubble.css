@@ -40,7 +40,7 @@
 }
 
 .chatBubbleSent {
-  background-color: #09f;
+  background-color: var(--color-primary);
   color: #fff;
 }
 .messageContentSent span {
