@@ -30,7 +30,6 @@ const StartScreen = ({ handleDownClick, handleFacebookCLick }) => (
           variant="outlined"
           color="var(--color-lighter)"
         />
-
       </div>
       <div className="downArrowContainer">
         <NavLink to="#intro" smooth>
