@@ -56,9 +56,9 @@ const wishlistReducer = (state = initialState, action) => {
       return nextState;
 
     case FETCH_OWNED_WISHLISTS_SUCCESS:
-      console.log(wishlistData);
-      nextState.ownedWishlists = wishlistData;
-      console.log("Fetched owned wishlists!" + wishlistData);
+      nextState.ownedWishlists = wishlistData.filter(function(wishlist) {
+        return wishlist !== undefined; // Prunes undefined wishlists locally, done in DB by DB functions
+      });
       return nextState;
 
     case FETCH_OWNED_WISHLISTS_ERROR:
@@ -68,8 +68,9 @@ const wishlistReducer = (state = initialState, action) => {
       return nextState;
 
     case FETCH_WISHLISTS_SUCCESS:
-      nextState.wishlists = wishlistData;
-      console.log("Fetched wishlists!" + wishlistData);
+      nextState.wishlists = wishlistData.filter(function(wishlist) {
+        return wishlist !== undefined; // Prunes undefined wishlists locally, done in DB by DB functions
+      });
       return nextState;
 
     case FETCH_WISHLISTS_ERROR:

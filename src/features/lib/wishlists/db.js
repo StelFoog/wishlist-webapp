@@ -20,12 +20,18 @@ const createWishlistWithOwner = async (user, wishlistName) => {
   return wishlist;
 };
 
-const fetchWishlistByUid = async uid => {
+const fetchWishlistByUid = async (uid, user) => {
   return _getWishlistRef(uid)
     .get()
     .then(doc => {
       if (doc.data()) return { ...defaultWishlist, ...doc.data() };
-      else return;
+      else {
+        console.log(
+          "(DB) user wishlist doesn't exist: " + uid + ", " + user.name
+        );
+        deleteWishlistFromUser(uid, user);
+        return undefined; // Will be pruned from local store by Redux
+      }
     });
 };
 
@@ -35,22 +41,29 @@ const editWishlistProperties = async (uid, field, data) => {
 };
 
 const fetchAllWishlistsFromUser = user => {
-  return Promise.all(user.wishlists.map(fetchWishlistByUid)).then(list =>
-    list.filter(wishlist => (wishlist ? true : false))
-  );
+  return Promise.all(
+    user.wishlists.map(uid => fetchWishlistByUid(uid, user))
+  ).then(list => list.filter(wishlist => (wishlist ? true : false)));
 };
 
 const fetchAllOwnedWishlistsFromUser = user => {
-  return Promise.all(user.ownedWishlists.map(fetchWishlistByUid));
+  return Promise.all(
+    user.ownedWishlists.map(uid => fetchWishlistByUid(uid, user))
+  );
 };
 
 const deleteWishlistFromUser = async (uid, user) => {
   const _ref = database.collection("Users").doc("" + user.uid);
 
+  console.log("(DB) deleting wishlist from user: " + uid + ", " + user.name);
+
   await _ref.get().then(doc => {
-    _ref.update({
-      ownedWishlists: doc.data().ownedWishlists.filter(id => id !== uid)
-    });
+    return _ref
+      .update({
+        ownedWishlists: doc.data().ownedWishlists.filter(id => id !== uid),
+        wishlists: doc.data().wishlists.filter(id => id !== uid)
+      })
+      .then();
   });
 };
 
