@@ -12,7 +12,6 @@ import "./startScreen.css";
 
 const { authenticateFacebook } = actions;
 
-
 const StartScreen = ({ handleDownClick, handleFacebookCLick }) => (
   <div className="startScreen">
     <div className="startBackground" />
@@ -30,7 +29,6 @@ const StartScreen = ({ handleDownClick, handleFacebookCLick }) => (
           variant="outlined"
           color="var(--color-lighter)"
         />
-
       </div>
       <div className="downArrowContainer">
         <NavLink to="#intro" smooth>

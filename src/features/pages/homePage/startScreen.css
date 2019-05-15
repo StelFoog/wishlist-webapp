@@ -26,7 +26,7 @@
 
 .startContent {
   position: relative;
-  
+
   text-align: center;
   display: flex;
   flex: 1;
@@ -37,7 +37,7 @@
   animation-name: fadeIn;
   animation-duration: 1s;
 
-
+  width: 100vw;
 }
 
 .authButtonContainer,
@@ -160,12 +160,12 @@
 /* Fade in and animation for startpage content */
 
 @keyframes fadeIn {
-  from{ 
-    transform: translatey(100px); 
-    opacity: 0; 
+  from {
+    transform: translatey(100px);
+    opacity: 0;
   }
-  to { 
-    transform: translatey(0); 
+  to {
+    transform: translatey(0);
     opacity: 1;
   }
 }
