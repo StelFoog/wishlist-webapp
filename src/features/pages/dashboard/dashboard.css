@@ -1,0 +1,11 @@
+@media (min-width: 601px) {
+  .dashboard ~ * {
+    margin-left: 170px;
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard ~ * {
+    max-width: 100vw;
+  }
+}

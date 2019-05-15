@@ -1,5 +1,5 @@
 import { connectRouter, routerMiddleware } from "connected-react-router";
-import { createHashHistory } from "history";
+import { createBrowserHistory } from "history";
 import { applyMiddleware, compose, createStore } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
@@ -8,11 +8,12 @@ import storage from "redux-persist/lib/storage";
 import rootReducer from "./rootReducer";
 import rootSaga from "./rootSaga";
 
-export const history = createHashHistory({ hashType: "slash" });
+export const history = createBrowserHistory();
 const sagaMiddleware = createSagaMiddleware();
 
 const persistConfig = {
   key: "root",
+  blacklist: ["dialog"],
   storage
 };
 

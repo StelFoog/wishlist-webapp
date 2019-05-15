@@ -1,0 +1,36 @@
+.introCard {
+  background: #fff;
+  display: flex;
+  flex: 1;
+  min-height: 50vh;
+}
+
+.introCard > div {
+  display: flex;
+  flex: 1;
+}
+
+@media (max-width: 600px) {
+  .introCard {
+    flex-direction: column;
+    min-height: 100vh;
+  }
+}
+
+/* Intro image */
+.introImage {
+  background: black;
+}
+
+/* Intro text */
+.introText {
+  justify-content: center;
+  flex-direction: column;
+  padding: 0.25rem 1.5rem;
+}
+
+.introText h3 {
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+  font-size: 2rem;
+}

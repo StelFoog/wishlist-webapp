@@ -1,0 +1,41 @@
+.memberBar {
+  background: var(--color-primary);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.memberCard {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 1rem 0.75rem;
+  color: var(--color-light);
+  border-bottom: 1px solid var(--color-dark);
+}
+
+.memberPicture {
+  margin-right: 0.5rem;
+}
+
+.memberContainer {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 100%;
+}
+.memberContainer::-webkit-scrollbar {
+  width: 0 !important;
+}
+
+.addUserButtonContainer {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid var(--color-dark);
+  border-bottom: 0;
+  margin-top: auto;
+}
+.addUserButtonContainer > span {
+  margin-left: 0.25rem;
+}

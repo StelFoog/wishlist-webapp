@@ -1,0 +1,12 @@
+.listWishlists {
+  align-items: flex-start;
+}
+
+.wishlistCard {
+  display: flex;
+}
+
+.wishlistAvatarList {
+  align-items: right;
+  margin-left: auto;
+}

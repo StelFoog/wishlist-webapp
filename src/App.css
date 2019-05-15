@@ -1,5 +1,19 @@
+#root {
+  display: flex;
+  flex: 1;
+}
+
+@media (max-width: 600px) {
+  .App {
+    flex-direction: column;
+  }
+}
 .App {
+  justify-content: space-around;
+  align-items: center;
+  display: flex;
   text-align: center;
+  flex: 1;
 }
 
 .App-logo {
@@ -23,6 +37,10 @@
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

@@ -1,6 +1,48 @@
+:root {
+  --border-radius: 0.4rem;
+  --color-primary: #73359b;
+  --color-primary-light: #a463cd;
+  --color-primary-dark: #43026c;
+  --color-secondary: #457eac;
+  --color-secondary-light: #78adde;
+  --color-secondary-dark: #00527d;
+  --color-light: #d3d3d3;
+  --color-lighter: #f2f2f2;
+  --color-dark: #292929;
+  --color-dark-gray: #616161;
+  --color-error: #c0392b;
+}
+
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
-  background-color: #333;
+  background-color: var(--color-lighter);
+  min-height: 100vh;
+  display: flex;
+  font-family: "Noto Sans SC", sans-serif;
+}
+
+#root {
+  width: 100%;
+}
+
+input,
+textarea,
+select,
+button {
+  font-family: "Noto Sans SC", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+p {
+  font-size: 1.25rem;
+  font-weight: 300;
 }

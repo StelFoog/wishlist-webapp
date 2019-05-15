@@ -1,0 +1,133 @@
+/* General styles for start screen */
+
+.startScreen {
+  text-align: center;
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.startBackground {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  left: 0;
+  filter: blur(0.5px) grayscale(25%);
+  background-image: url("/static/front-page-background.jpg");
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+.authButtonContainer,
+.homeTitle,
+.downArrowContainer {
+  display: flex;
+}
+
+.homeTitle,
+.downArrowContainer {
+  flex: 1;
+}
+
+.homeTitle,
+.downArrowContainer {
+  justify-content: center;
+}
+
+/* Home title styles */
+
+.homeTitle {
+  align-items: center;
+}
+
+.titleContainer h1 {
+  color: var(--color-lighter);
+  font-size: 4rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.titleContainer h5 {
+  color: var(--color-light);
+  font-size: 1.5rem;
+  margin: 0.5rem 0;
+  font-weight: 600;
+}
+
+/* Arrow styles */
+
+.downArrowContainer {
+  align-items: flex-end;
+}
+.downArrow {
+  position: relative;
+  border-radius: 5rem;
+  cursor: pointer;
+  -moz-animation: jump 2s infinite ease-in-out;
+  -webkit-animation: jump 2s infinite ease-in-out;
+}
+.downArrow svg {
+  vertical-align: middle;
+}
+
+/* Media queries for responsiveness */
+
+@media (min-width: 601px) {
+  .homeTitle .titleContainer {
+    padding: 1rem 5rem;
+    margin: 0 5rem;
+    border-radius: var(--border-radius);
+  }
+  .authButtonContainer {
+    justify-content: space-around;
+  }
+}
+
+@media (max-width: 600px) {
+  .homeTitle .titleContainer {
+    width: 100%;
+    padding: 1rem;
+  }
+  .authButtonContainer {
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 1rem;
+  }
+  .authButtonContainer .buttonContainer:not(:last-child) {
+    margin-bottom: 0.25rem;
+  }
+  .authButtonContainer .buttonContainer:not(:first-child) {
+    margin-top: 0.25rem;
+  }
+}
+
+/* Keyframes for jumping animation */
+
+@-moz-keyframes jump {
+  0% {
+    bottom: 0;
+  }
+  50% {
+    bottom: 10px;
+  }
+  100% {
+    bottom: 30px;
+  }
+}
+
+@-webkit-keyframes jump {
+  0% {
+    bottom: 0;
+  }
+  50% {
+    bottom: 20px;
+  }
+  100% {
+    bottom: 0;
+  }
+}

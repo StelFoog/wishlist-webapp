@@ -1,0 +1,99 @@
+/* Card container */
+
+.card-container > div:not(.card-media) {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.card-container > div:first-child:not(.card-media) {
+  padding-top: 1rem;
+}
+
+.card-container > div:not(:last-child) {
+  margin-bottom: 0.5rem;
+}
+
+.card-container > div:last-child:not(.card-media) {
+  padding-bottom: 1rem;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+@media (min-width: 601px) {
+  .card-container {
+    margin: 4rem;
+  }
+}
+
+.card-edge {
+  border-radius: var(--border-radius);
+}
+
+/* Card header */
+
+.card-header h2 {
+  margin-top: 0;
+  margin-bottom: -0.25rem;
+  color: var(--color-dark);
+}
+
+.card-header + .card-content {
+}
+
+/* Card content */
+
+.card-content * {
+  margin-bottom: 0.25rem !important;
+}
+
+.card-content {
+  color: var(--color-dark-gray);
+}
+
+/* Card media */
+
+.card-media:first-child {
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+}
+
+.card-media:last-child {
+  border-bottom-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+}
+
+.card-media {
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+.card-actions {
+  float: right;
+  display: inline-flex;
+}
+
+/* Elavation */
+
+.card-1 {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.card-2 {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.card-3 {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.card-4 {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.card-5 {
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
