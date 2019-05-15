@@ -21,6 +21,24 @@
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover; /* Resize the background image to cover the entire container */
+  background-attachment: fixed;
+}
+
+.startContent {
+  position: relative;
+  
+  text-align: center;
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  flex-direction: column;
+  min-height: 100vh;
+
+  animation-name: fadeIn;
+  animation-duration: 1s;
+
+  width: 100vw;
+
 }
 
 .authButtonContainer,
@@ -129,5 +147,18 @@
   }
   100% {
     bottom: 0;
+  }
+}
+
+/* Fade in and animation for startpage content */
+
+@keyframes fadeIn {
+  from{ 
+    top: 100px; 
+    opacity: 0; 
+  }
+  to { 
+    top: 0;
+    opacity: 1;
   }
 }
