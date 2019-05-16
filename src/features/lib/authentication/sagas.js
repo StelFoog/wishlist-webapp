@@ -108,7 +108,7 @@ function* workUserAuthGoogle() {}
 
 function* workLogout() {
   try {
-    logout();
+    yield call(logout);
     yield put({ type: AUTH_LOGOUT_SUCCESS });
   }catch(error) {
     yield put({ type: AUTH_LOGOUT_ERROR, error: error });

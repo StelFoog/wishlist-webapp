@@ -40,7 +40,7 @@ const userReducer = (state = initialState, action) => {
       return nextState;
 
     case AUTH_LOGOUT_ERROR:
-      console.log("Error logging out " + error.code + ": " + error.message);
+      console.log("Error logging out " + error);
       break;
     case AUTH_LOGOUT_SUCCESS:
       nextState.loggedIn = false;
@@ -90,9 +90,6 @@ const userReducer = (state = initialState, action) => {
         element => element === groupId
       );
       if (groupIndexDelete) nextState.user.groups.splice(groupIndexDelete, 1);
-      return nextState;
-
-    default:
       return nextState;
 
     case SEARCH_FOR_USERS_WITH_NAME_ERROR:

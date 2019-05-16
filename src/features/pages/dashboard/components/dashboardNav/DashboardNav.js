@@ -1,7 +1,10 @@
 import React from "react";
-import { 
+import { connect } from "react-redux";
+import { push } from "connected-react-router";
 import IconButton from "../../../../components/iconButton";
 import Ripple from "../../../../components/ripple";
+import { actions as dialogActions } from "../../../../components/dialog";
+
 import {
   GroupIcon,
   MenuIcon,
@@ -15,6 +18,11 @@ import ProfilePicture from "../../../../components/profilePicture";
 import { getUserProfilePictureUrl } from "../../../../lib/authentication/user.js";
 import GroupList from "./components/groupList";
 import "./dashboardNav.css";
+
+import authActions from "../../../../lib/authentication/actions.js";
+
+const { logout } = authActions;
+const { openDialog } = dialogActions;
 
 class DashboardNav extends React.Component {
   constructor(props) {
@@ -67,7 +75,7 @@ class DashboardNav extends React.Component {
   render() {
     const activeTab = this.getActivePage();
     const { showSideNav, groupDropdown } = this.state;
-    const { navigate, user, createGroup, openForm } = this.props;
+    const { navigate, user, createGroup, openForm, askLogout } = this.props;
     return (
       <React.Fragment>
         <div
@@ -126,7 +134,7 @@ class DashboardNav extends React.Component {
           </div>
           <div
             className="navButton navButtonBottom"
-            onClick={() => navigate("/")}
+            onClick={askLogout}
           >
             <Ripple />
             <div className="icon">
@@ -161,9 +169,18 @@ class DashboardNav extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  dispatchLogout: () => {
-    
+  askLogout: () => {
+    dispatch(openDialog("yesNo", {
+      title: "Are you sure you want to log out?",
+      onYes: () => {
+        dispatch(logout());
+        dispatch(push("/"));
+      }
+    }));
   }
-})
+});
 
-export default DashboardNav;
+export default connect(
+  null,
+  mapDispatchToProps
+)(DashboardNav);

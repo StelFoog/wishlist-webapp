@@ -1,16 +1,18 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import Button from "../../button";
 import { CardHeader, CardActions } from "../../card";
+import { selectors } from "../";
 
-const YesNoDialog = ({ handleClose, values }) => {
-  const { title, onYes } = values;
+const YesNoDialog = ({ handleClose, value }) => {
+  const { title, onYes } = value;
   return(
     <React.Fragment>
       <CardHeader>{title}</CardHeader>
       <CardActions>
         <Button
-          variant="filled"
+          variant="text"
           label="No"
           color="red"
           handleClick={handleClose}
@@ -18,7 +20,7 @@ const YesNoDialog = ({ handleClose, values }) => {
         <Button
           variant="filled"
           label="Yes"
-          color="green"
+          color="#003f9f"
           handleClick={() => {
             onYes()
             handleClose()
@@ -29,4 +31,14 @@ const YesNoDialog = ({ handleClose, values }) => {
   );
 }
 
-export default YesNoDialog;
+const mapStateToProps = () => {
+  const getDialogValues = selectors.getDialogValuesState();
+  return state => ({
+    value: getDialogValues(state)
+  });
+}
+
+export default connect(
+  mapStateToProps,
+  null
+)(YesNoDialog);
