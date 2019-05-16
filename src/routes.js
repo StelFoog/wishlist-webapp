@@ -8,7 +8,6 @@ import { PersistGate } from "redux-persist/integration/react";
 // Components
 import Dialog from "./features/components/dialog/DialogContainer";
 import { ItemAddition as WishlistItem } from "./features/components/wishListForm";
-import Chat from "./features/pages/chat";
 
 // Pages
 import HomePage from "./features/pages/homePage";
@@ -33,7 +32,6 @@ const Root = ({ store, history, persistor }) => (
                 return <HomePage {...props} />;
               }}
             />
-            <Route path="/chat" exact component={Chat} />
             <Route
               path={"/dashboard/"}
               render={props => {
