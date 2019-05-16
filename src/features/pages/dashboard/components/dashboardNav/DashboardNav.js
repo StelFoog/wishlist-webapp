@@ -12,7 +12,8 @@ import {
   SettingsIcon,
   ListIcon,
   PlusIcon,
-  LogoutIcon
+  LogoutIcon,
+  HelpIcon
 } from "../../../../components/svgIcon";
 import ProfilePicture from "../../../../components/profilePicture";
 import { getUserProfilePictureUrl } from "../../../../lib/authentication/user.js";
@@ -131,6 +132,16 @@ class DashboardNav extends React.Component {
                 <GroupList navigate={navigate} />
               </div>
             </div>
+          </div>
+          <div
+            className="navButton navButtonBottom"
+            onClick={() => navigate("help")}
+          >
+            <Ripple />
+            <div className="icon">
+              <HelpIcon size="30" />
+            </div>
+            <span>Help</span>
           </div>
           <div
             className="navButton navButtonBottom"

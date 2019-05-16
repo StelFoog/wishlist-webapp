@@ -10,6 +10,7 @@ import RoundKeyboardArrowLeft from "./icons/RoundKeyboardArrowLeft";
 import EditIcon from "./icons/EditIcon";
 import DeleteIcon from "./icons/DeleteIcon";
 import LogoutIcon from "./icons/LogoutIcon";
+import HelpIcon from "./icons/HelpIcon";
 
 import SvgIcon from "./SvgIcon";
 
@@ -25,7 +26,8 @@ export {
   ChatIcon,
   EditIcon,
   DeleteIcon,
-  LogoutIcon
+  LogoutIcon,
+  HelpIcon
 };
 
 export default SvgIcon;
