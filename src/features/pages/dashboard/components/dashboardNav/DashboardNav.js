@@ -1,4 +1,5 @@
 import React from "react";
+import { 
 import IconButton from "../../../../components/iconButton";
 import Ripple from "../../../../components/ripple";
 import {
@@ -7,7 +8,8 @@ import {
   RoundKeyboardArrowDown,
   SettingsIcon,
   ListIcon,
-  PlusIcon
+  PlusIcon,
+  LogoutIcon
 } from "../../../../components/svgIcon";
 import ProfilePicture from "../../../../components/profilePicture";
 import { getUserProfilePictureUrl } from "../../../../lib/authentication/user.js";
@@ -124,6 +126,16 @@ class DashboardNav extends React.Component {
           </div>
           <div
             className="navButton navButtonBottom"
+            onClick={() => navigate("/")}
+          >
+            <Ripple />
+            <div className="icon">
+              <LogoutIcon size="30" />
+            </div>
+            <span>Log out</span>
+          </div>
+          <div
+            className="navButton navButtonBottom"
             onClick={() => navigate("settings")}
           >
             <Ripple />
@@ -147,5 +159,11 @@ class DashboardNav extends React.Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  dispatchLogout: () => {
+    
+  }
+})
 
 export default DashboardNav;

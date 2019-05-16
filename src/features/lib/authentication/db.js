@@ -20,7 +20,6 @@ const searchForUsersWithName = async (name) => {
     .orderBy("nameLowerCase")
     .where("nameLowerCase", ">=", nameLowerCase)
     .where("nameLowerCase", "<", nextHigherString(nameLowerCase))
-    .limit(20)
     .get().then((docArray) =>
       docArray.docs.map((doc) => doc.data())));
   return users;
