@@ -16,12 +16,13 @@ const nextHigherString = (string) => {
 }
 
 const searchForUsersWithName = async (name) => {
+  const nameLowerCase = name.toLowerCase();
   const users = (await 
     /*database.collection("Users")
     .orderBy("name")*/
     ordered
-    .where("nameLowerCase", ">=", name.toLowerCase())
-    .where("nameLowerCase", "<", nextHigherString(name))
+    .where("nameLowerCase", ">=", nameLowerCase)
+    .where("nameLowerCase", "<", nextHigherString(nameLowerCase))
     .limit(20)
     .get().then((docArray) =>
       docArray.docs.map((doc) => doc.data())));
