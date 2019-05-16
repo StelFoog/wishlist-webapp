@@ -28,7 +28,7 @@ const {
   REMOVE_USER_FROM_GROUP_SUCCESS
 } = groupTypes;
 
-const { ADD_GROUP_ID_TO_USER } = authTypes;
+const { ADD_GROUP_ID_TO_USER, REMOVE_GROUP_ID_FROM_USER } = authTypes;
 
 const { CLOSE_DIALOG } = dialogTypes;
 
@@ -51,7 +51,26 @@ function* watchRemoveUserFromGroup() {
 function* workFetchAllUserGroups() {
   try {
     const user = yield select(getUser);
-    const result = yield call(fetchAllGroupsFromUser, user);
+    let result = yield call(fetchAllGroupsFromUser, user);
+
+    // Remove reference to deleted groups in db and user state
+    for (let i = 0; i < result.length; i++) {
+      let group = result[i];
+      if (typeof group === "string") {
+        console.log("deleting group reference: " + group);
+        yield call(removeGroupFromUser, user.uid, group);
+        yield put({
+          type: REMOVE_GROUP_ID_FROM_USER,
+          groupId: group
+        });
+      }
+    }
+
+    // Don't send invalid groups to state
+    result = result.filter(function(group) {
+      return typeof group !== "string" && group !== undefined;
+    });
+
     yield put({ type: FETCH_ALL_USER_GROUPS_SUCCESS, value: result });
   } catch (error) {
     yield put({ type: FETCH_ALL_USER_GROUPS_ERROR, error: error });

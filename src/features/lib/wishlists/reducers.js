@@ -57,9 +57,7 @@ const wishlistReducer = (state = initialState, action) => {
       return nextState;
 
     case FETCH_OWNED_WISHLISTS_SUCCESS:
-      console.log(wishlistData);
       nextState.ownedWishlists = wishlistData;
-      console.log("Fetched owned wishlists!" + wishlistData);
       return nextState;
 
     case FETCH_OWNED_WISHLISTS_ERROR:
@@ -70,7 +68,6 @@ const wishlistReducer = (state = initialState, action) => {
 
     case FETCH_WISHLISTS_SUCCESS:
       nextState.wishlists = wishlistData;
-      console.log("Fetched wishlists!" + wishlistData);
       return nextState;
 
     case FETCH_WISHLISTS_ERROR:

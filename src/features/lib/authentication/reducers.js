@@ -9,6 +9,7 @@ const {
   ADD_WISHLIST_ID_TO_USER,
   REMOVE_WISHLIST_ID_FROM_USER,
   ADD_GROUP_ID_TO_USER,
+  REMOVE_GROUP_ID_FROM_USER,
   SEARCH_FOR_USERS_WITH_NAME_ERROR,
   SEARCH_FOR_USERS_WITH_NAME_SUCCESS,
   CLEAR_SEARCH
@@ -52,6 +53,7 @@ const userReducer = (state = initialState, action) => {
     case ADD_USER_TO_WISHLIST_SUCCESS:
       nextState.user.wishlists.push(wishlistUid);
       return { ...nextState };
+      
     case CLEAR_SEARCH:
       nextState.searchResults = [];
       return { ...nextState };
@@ -62,16 +64,29 @@ const userReducer = (state = initialState, action) => {
       return nextState;
 
     case REMOVE_WISHLIST_ID_FROM_USER:
-      const wishlistIndexDelete = nextState.user.ownedWishlists.findIndex(
+      let wishlistIndexDelete = nextState.user.ownedWishlists.findIndex(
         element => element === wishlistUid
       );
-      if (wishlistIndexDelete > -1)
+      if (wishlistIndexDelete)
         nextState.user.ownedWishlists.splice(wishlistIndexDelete, 1);
+
+      wishlistIndexDelete = nextState.user.wishlists.findIndex(
+        element => element === wishlistUid
+      );
+      if (wishlistIndexDelete)
+        nextState.user.wishlists.splice(wishlistIndexDelete, 1);
 
       return nextState;
 
     case ADD_GROUP_ID_TO_USER:
       nextState.user.groups.push(groupId);
+      return nextState;
+      
+    case REMOVE_GROUP_ID_FROM_USER:
+      let groupIndexDelete = nextState.user.groups.findIndex(
+        element => element === groupId
+      );
+      if (groupIndexDelete) nextState.user.groups.splice(groupIndexDelete, 1);
       return nextState;
 
     default:

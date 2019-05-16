@@ -20,12 +20,19 @@ const createWishlistWithOwner = async (user, wishlistName) => {
   return wishlist;
 };
 
+// Returns either:
+// * A wishlist object, if loading is successful
+// * A UID string, if wishlist has been removed from database
+// * Undefines, if loading fails for some unknown reason
 const fetchWishlistByUid = async uid => {
   return _getWishlistRef(uid)
     .get()
     .then(doc => {
       if (doc.data()) return { ...defaultWishlist, ...doc.data() };
-      else return;
+      else if (!doc.exists) {
+        console.log("(DB) user wishlist doesn't exist: " + uid);
+        return uid; // Hacky, but it lets the Saga handle a deleted wishlist
+      } else return undefined; // Wishlist not missing, but not properly loaded somehow
     });
 };
 
@@ -35,22 +42,25 @@ const editWishlistProperties = async (uid, field, data) => {
 };
 
 const fetchAllWishlistsFromUser = user => {
-  return Promise.all(user.wishlists.map(fetchWishlistByUid)).then(list =>
-    list.filter(wishlist => (wishlist ? true : false))
-  );
+  return Promise.all(user.wishlists.map(uid => fetchWishlistByUid(uid)));
 };
 
 const fetchAllOwnedWishlistsFromUser = user => {
-  return Promise.all(user.ownedWishlists.map(fetchWishlistByUid));
+  return Promise.all(user.ownedWishlists.map(uid => fetchWishlistByUid(uid)));
 };
 
 const deleteWishlistFromUser = async (uid, user) => {
   const _ref = database.collection("Users").doc("" + user.uid);
 
+  console.log("(DB) deleting wishlist from user: " + uid + ", " + user.name);
+
   await _ref.get().then(doc => {
-    _ref.update({
-      ownedWishlists: doc.data().ownedWishlists.filter(id => id !== uid)
-    });
+    return _ref
+      .update({
+        ownedWishlists: doc.data().ownedWishlists.filter(id => id !== uid),
+        wishlists: doc.data().wishlists.filter(id => id !== uid)
+      })
+      .then();
   });
 };
 

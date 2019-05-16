@@ -92,8 +92,26 @@ function* workCreateUserWishlist() {
 function* workFetchWishlists() {
   try {
     const user = yield select(getUser);
-    const wishlists = yield call(fetchAllWishlistsFromUser, user);
-    console.log(wishlists);
+    let wishlists = yield call(fetchAllWishlistsFromUser, user);
+
+    // Remove reference to deleted wishlist in db and user state
+    for (let i = 0; i < wishlists.length; i++) {
+      let wishlist = wishlists[i];
+      if (typeof wishlist === "string") {
+        console.log("deleting...");
+        yield call(deleteWishlistFromUser, wishlist, user);
+        yield put({
+          type: REMOVE_WISHLIST_ID_FROM_USER,
+          wishlistUid: wishlist
+        });
+      }
+    }
+
+    // Don't send invalid wishlists to state
+    wishlists = wishlists.filter(function(wishlist) {
+      return typeof wishlist !== "string" && wishlist !== undefined;
+    });
+
     yield put({
       type: FETCH_WISHLISTS_SUCCESS,
       wishlistData: wishlists
@@ -106,7 +124,26 @@ function* workFetchWishlists() {
 function* workFetchOwnedWishlists() {
   try {
     const user = yield select(getUser);
-    const wishlists = yield call(fetchAllOwnedWishlistsFromUser, user);
+    let wishlists = yield call(fetchAllOwnedWishlistsFromUser, user);
+
+    // Remove reference to deleted wishlist in db and user state
+    for (let i = 0; i < wishlists.length; i++) {
+      let wishlist = wishlists[i];
+      if (typeof wishlist === "string") {
+        console.log("deleting...");
+        yield call(deleteWishlistFromUser, wishlist, user);
+        yield put({
+          type: REMOVE_WISHLIST_ID_FROM_USER,
+          wishlistUid: wishlist
+        });
+      }
+    }
+
+    // Don't send invalid wishlists to state
+    wishlists = wishlists.filter(function(wishlist) {
+      return typeof wishlist !== "string" && wishlist !== undefined;
+    });
+
     yield put({
       type: FETCH_OWNED_WISHLISTS_SUCCESS,
       wishlistData: wishlists
