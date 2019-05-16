@@ -18,6 +18,7 @@ import WishlistPage from "./features/pages/wishlistPage";
 import InvitedUserPage from "./features/pages/invitedUserPage";
 import InvitedWishlistPage from "./features/pages/invitedWishlistPage";
 import GroupPage from "./features/pages/groupPage";
+import HelpPage from "./features/pages/helpPage";
 
 const Root = ({ store, history, persistor }) => (
   <Provider store={store}>
@@ -59,6 +60,13 @@ const Root = ({ store, history, persistor }) => (
             exact
             render={props => {
               return <WishlistPage {...props} />;
+            }}
+          />
+          <Route
+            path="/dashboard/help"
+            exact
+            render={props => {
+              return <HelpPage {...props } />
             }}
           />
           <Route
