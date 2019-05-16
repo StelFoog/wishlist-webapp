@@ -8,6 +8,7 @@ import Ripple from "../../../../components/ripple";
 import { InsertEmoji } from "../../../../components/svgIcon";
 import ChatBubble from "../chatBubble";
 import EmojiSelector from "./EmojiSelector";
+import Button from "../../../../components/button";
 import "./chatWindow.css";
 
 class ChatWindow extends React.Component {
@@ -113,6 +114,14 @@ class ChatWindow extends React.Component {
               })}
           </div>
           <div className="chat-input">
+            <Button
+              variant="filled"
+              label="submit"
+              color="var(--color-primary)"
+              fontSize="1rem"
+              padding="0.015rem 0.5rem"
+              handleClick={() => (this.submitClick())}
+            />
             <InputBase
               id="chatInput"
               className="chat-input-field"
