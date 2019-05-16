@@ -52,7 +52,6 @@ const Root = ({
                   return <HomePage {...props} />;
                 }}
               />
-              <Route path="/chat" exact component={Chat} />
               <Route
                 path={"/dashboard/"}
                 render={props => {

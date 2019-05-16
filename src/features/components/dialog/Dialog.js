@@ -9,11 +9,8 @@ import {
   CreateGroup,
   AddMember,
   Share,
-<<<<<<< HEAD
+  NoLogin,
   YesNoDialog
-=======
-  NoLogin
->>>>>>> added dialog for not-logged-in
 } from "./variants";
 
 import "./dialog.css";
