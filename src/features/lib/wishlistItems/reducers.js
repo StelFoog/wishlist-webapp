@@ -8,7 +8,9 @@ const {
   // EDIT_WISHLIST_ITEM_SUCCESS,
   EDIT_WISHLIST_ITEM_ERROR,
   CLAIM_WISHLIST_ITEM_SUCCESS,
-  CLAIM_WISHLIST_ITEM_ERROR
+  CLAIM_WISHLIST_ITEM_ERROR,
+  UNCLAIM_WISHLIST_ITEM_SUCCESS,
+  UNCLAIM_WISHLIST_ITEM_ERROR
 } = types;
 
 const initalState = {
@@ -48,7 +50,16 @@ const wishlistItemReducer = (state = initalState, action) => {
       return nextState;
     case CLAIM_WISHLIST_ITEM_ERROR:
       console.error(
-        "Wishlist item claiming error: " + error.code + "->" + error.message
+        "Wishlist item unclaiming error: " + error.code + "->" + error.message
+      );
+      return nextState;
+
+    case UNCLAIM_WISHLIST_ITEM_SUCCESS:
+      nextState.items[index].claimedBy.push(userId);
+      return nextState;
+    case UNCLAIM_WISHLIST_ITEM_ERROR:
+      console.error(
+        "Wishlist item unclaiming error: " + error.code + "->" + error.message
       );
       return nextState;
 

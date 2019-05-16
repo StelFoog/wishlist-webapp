@@ -33,6 +33,14 @@ const claimWishlistItem = async (userId, index, wishlistId) => {
   });
 };
 
+const unclaimWishlistItem = async (userId, index, wishlistId) => {
+  await modifyWishlistItems(wishlistId, items => {
+    if(items[index].claimedBy.includes(userId))
+      items.splice(index, 1);
+    return items;
+  });
+};
+
 const modifyWishlistItems = async (wishlistId, lambda) => {
   let wishlist = await fetchWishlistByUid(wishlistId);
   wishlist.items = lambda(wishlist.items);
