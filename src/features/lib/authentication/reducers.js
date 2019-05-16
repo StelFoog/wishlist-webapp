@@ -1,9 +1,11 @@
 import types from "./types.js";
 
 const {
+  AUTH_LOGOUT,
+  AUTH_LOGOUT_ERROR,
+  AUTH_LOGOUT_SUCCESS,
   AUTH_USER_ERROR,
   AUTH_USER_SUCCESS,
-  AUTH_LOGOUT,
   ADD_USER_TO_WISHLIST_ERROR,
   ADD_USER_TO_WISHLIST_SUCCESS,
   ADD_WISHLIST_ID_TO_USER,
@@ -35,14 +37,15 @@ const userReducer = (state = initialState, action) => {
     case AUTH_USER_SUCCESS:
       nextState.loggedIn = true;
       nextState.user = userData;
-      console.log("Logged in!" + userData);
       return nextState;
 
-    case AUTH_LOGOUT:
+    case AUTH_LOGOUT_ERROR:
+      console.log("Error logging out " + error.code + ": " + error.message);
+      break;
+    case AUTH_LOGOUT_SUCCESS:
       nextState.loggedIn = false;
       nextState.user = null;
-      alert("logged out successfully");
-      return nextState;
+      break;
 
     case ADD_USER_TO_WISHLIST_ERROR:
       console.error(
@@ -99,6 +102,7 @@ const userReducer = (state = initialState, action) => {
       nextState.searchResults = searchResults;
       return nextState;
   }
+  return nextState;
 };
 
 export default { userReducer };

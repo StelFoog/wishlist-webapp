@@ -1,6 +1,6 @@
 import { takeEvery, call, put, select, all } from "redux-saga/effects";
 import { push } from "connected-react-router";
-import { authWithFacebookAPI /* authWithGoogleAPI */ } from "./auth.js";
+import { authWithFacebookAPI, logout /* authWithGoogleAPI */ } from "./auth.js";
 import {
   addInvitedWishlistToUser,
   addInvitedUserToWishlist,
@@ -13,6 +13,9 @@ import actions from "./actions.js";
 const { addUserToWishlist } = actions;
 
 const {
+  AUTH_LOGOUT,
+  AUTH_LOGOUT_ERROR,
+  AUTH_LOGOUT_SUCCESS,
   AUTH_USER_FACEBOOK,
   AUTH_USER_GOOGLE,
   AUTH_USER_SUCCESS,
@@ -39,6 +42,10 @@ function* watchAddUserToWishlist() {
 
 function* watchSearchForUsersWithName() {
   yield takeEvery(SEARCH_FOR_USERS_WITH_NAME, workSearchForUsersWithName);
+}
+
+function* watchLogout() {
+  yield takeEvery(AUTH_LOGOUT, workLogout);
 }
 
 function* workSearchForUsersWithName(action) {
@@ -99,9 +106,19 @@ function* workUserAuthFacebook() {
 
 function* workUserAuthGoogle() {}
 
+function* workLogout() {
+  try {
+    logout();
+    yield put({ type: AUTH_LOGOUT_SUCCESS });
+  }catch(error) {
+    yield put({ type: AUTH_LOGOUT_ERROR, error: error });
+  }
+}
+
 export default {
   watchUserAuthFacebook,
   watchUserAuthGoogle,
   watchAddUserToWishlist,
-  watchSearchForUsersWithName
+  watchSearchForUsersWithName,
+  watchLogout
 };

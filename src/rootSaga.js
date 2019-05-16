@@ -11,6 +11,7 @@ function* rootSaga() {
     authSagas.watchUserAuthFacebook(),
     authSagas.watchAddUserToWishlist(),
     authSagas.watchSearchForUsersWithName(),
+    authSagas.watchLogout(),
     wishlistSagas.watchCreateUserWishlist(),
     wishlistItemSagas.watchCreateWishlistItem(),
     wishlistSagas.watchFetchWishlists(),
