@@ -3,3 +3,12 @@
   flex-direction: row;
   flex: 1;
 }
+
+.groupWishlists {
+  flex: 1;
+}
+
+.groupPageHeader {
+  z-index: 999;
+  top: 0;
+}

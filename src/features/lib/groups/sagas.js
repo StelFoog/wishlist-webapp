@@ -5,7 +5,8 @@ import {
   createGroupWithOwner,
   addUserToGroup,
   removeUserFromGroup,
-  fetchAllGroupsFromUser
+  fetchAllGroupsFromUser,
+  addWishlistToGroup
 } from "./db.js";
 import groupTypes from "./types";
 import { types as authTypes } from "../authentication";
@@ -85,10 +86,11 @@ function* workCreateGroup(action) {
     const result = yield call(createGroupWithOwner, user, groupName);
     const groupId = result.uid;
     yield call(addGroupToUser, userUid, groupId);
+    yield call(addWishlistToGroup, groupId, userUid);
     yield put({ type: CREATE_GROUP_SUCCESS, value: result });
     yield put({ type: ADD_GROUP_ID_TO_USER, groupId });
     yield put({ type: CLOSE_DIALOG });
-    //yield put(push(`/dashboard/group/${groupId}`));
+    yield put(push(`/dashboard/group/${groupId}/${userUid}`));
   } catch (error) {
     yield put({ type: CREATE_GROUP_ERROR, error: error });
   }
@@ -99,8 +101,9 @@ function* workInviteUserToGroup(action) {
     const { userId, maybeGroupId } = action;
     const { uid } = yield select(getDialogValues);
     const groupId = maybeGroupId || uid;
-    console.log(groupId);
+
     yield call(addUserToGroup, groupId, userId);
+    yield call(addWishlistToGroup, groupId, userId);
     yield call(addGroupToUser, userId, groupId);
     yield put({ type: CLOSE_DIALOG });
     yield put({ type: INVITE_USER_TO_GROUP_SUCCESS, userId, groupId });

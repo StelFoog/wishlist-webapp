@@ -26,22 +26,29 @@ class MemberList extends React.Component {
   }
 
   render() {
-    const { 
-      users, 
-      openForm, 
-      uid, 
-      navigate, 
-      members, 
-      currentGroup 
+    const {
+      users,
+      openForm,
+      uid,
+      navigate,
+      members,
+      currentGroup,
+      fetchItems
     } = this.props;
-
     return (
       <div className="memberBar">
         <div className="memberContainer">
           {this.getFilteredUsers(members, users).map(user => (
             <div
+              key={user.uid}
               className="memberCard"
-              onClick={() => navigate(`group/${uid}/${user.uid}`)}
+              onClick={() => {
+                fetchItems({
+                  groupID: uid,
+                  userID: user.uid
+                });
+                navigate(`group/${uid}/${user.uid}`);
+              }}
             >
               <Ripple />
               <div className="memberPicture">

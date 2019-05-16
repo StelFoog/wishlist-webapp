@@ -53,12 +53,13 @@
   transition: background 0.1s linear;
 }
 
-.active-0 > div:first-child,
-.active-1 > div:nth-child(2),
 .group:hover,
-.navButton:hover {
+.navButton:hover,
+.group.active,
+.navButton.active {
   background: rgba(255, 255, 255, 0.2);
 }
+
 .navButton .icon svg {
   display: flex;
   margin-right: 5px;

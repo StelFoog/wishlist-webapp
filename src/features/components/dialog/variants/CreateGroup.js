@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { selectors } from "../";
 import { CardHeader, CardContent, CardActions } from "../../card";
 import { Field, reduxForm, submit } from "redux-form";
 import renderField, { required } from "../../wishListForm/validate";
