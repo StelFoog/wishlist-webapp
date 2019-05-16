@@ -8,7 +8,8 @@ import {
   CreateItem,
   CreateGroup,
   AddMember,
-  Share
+  Share,
+  YesNoDialog
 } from "./variants";
 
 import "./dialog.css";
@@ -19,7 +20,8 @@ const DIALOG_VARIANTS = {
   createItem: CreateItem,
   createGroup: CreateGroup,
   addMember: AddMember,
-  share: Share
+  share: Share,
+  yesNo: YesNoDialog
 };
 
 const Dialog = ({ variant, showDialog, handleClose, ...rest }) => {
