@@ -9,6 +9,7 @@ import ChatIcon from "./icons/ChatIcon";
 import RoundKeyboardArrowLeft from "./icons/RoundKeyboardArrowLeft";
 import EditIcon from "./icons/EditIcon";
 import DeleteIcon from "./icons/DeleteIcon";
+import LogoutIcon from "./icons/LogoutIcon";
 
 import SvgIcon from "./SvgIcon";
 
@@ -23,7 +24,8 @@ export {
   InsertEmoji,
   ChatIcon,
   EditIcon,
-  DeleteIcon
+  DeleteIcon,
+  LogoutIcon
 };
 
 export default SvgIcon;
