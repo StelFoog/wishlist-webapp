@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import PageHeader from "../../components/pageHeader";
 import WishlistItem from "./components/wishlistItem";
@@ -22,22 +23,13 @@ class InvitedWishlistPage extends React.Component {
     };
   }
 
-  getAllWishlistItems() {
-    const { uid } = this.state;
-    firebase
-      .firestore()
-      .collection("Wishlists")
-      .doc(uid)
-      .get()
-      .then(doc => {
-        if (doc.data()) {
-          this.setState({ items: doc.data().items, name: doc.data().title });
-        }
-      });
-  }
-
   componentDidMount() {
-    this.getAllWishlistItems();
+    const { uid } = this.state;
+    //this.getAllWishlistItems();
+    let wishlist = this.props.wishlists.find(function(list) {
+      return list.uid === uid;
+    });
+    this.setState({ items: wishlist.items, name: wishlist.title });
   }
 
   toggleChatWindow() {
@@ -75,4 +67,14 @@ class InvitedWishlistPage extends React.Component {
   }
 }
 
-export default InvitedWishlistPage;
+const mapStateToProps = state => {
+  return state => ({
+    user: state.auth,
+    wishlists: state.wishlist.wishlists
+  });
+};
+
+export default connect(
+  mapStateToProps,
+  null
+)(InvitedWishlistPage);

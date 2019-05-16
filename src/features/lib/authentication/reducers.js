@@ -98,6 +98,8 @@ const userReducer = (state = initialState, action) => {
     case SEARCH_FOR_USERS_WITH_NAME_SUCCESS:
       nextState.searchResults = searchResults;
       return nextState;
+    default:
+      return nextState;
   }
   return nextState;
 };
