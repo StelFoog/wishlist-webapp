@@ -22,7 +22,10 @@ import InvitedUserPage from "./features/pages/invitedUserPage";
 import InvitedWishlistPage from "./features/pages/invitedWishlistPage";
 import GroupPage from "./features/pages/groupPage";
 import NoLogin from "./features/pages/noLoginPage";
+<<<<<<< HEAD
 import HelpPage from "./features/pages/helpPage";
+=======
+>>>>>>> 93b68d3594437e830cee613fd3b5ac2f13ad2934
 
 const Root = ({
   store,
@@ -71,6 +74,7 @@ const Root = ({
                 }}
               />
             </Switch>
+<<<<<<< HEAD
             <Route
               path={"/dashboard"}
               exact
@@ -106,6 +110,37 @@ const Root = ({
                 return <GroupPage {...props} />;
               }}
             />
+=======
+            <Route
+              path={"/dashboard"}
+              exact
+              render={props => {
+                return <LoggedInPage {...props} />;
+              }}
+            />
+            <Route
+              path={"/dashboard/wishlist/:uid"}
+              exact
+              render={props => {
+                return <WishlistPage {...props} />;
+              }}
+            />
+            <Route
+              path={"/wishlist/:uid/invite"}
+              exact
+              render={props => {
+                return <InvitedUserPage {...props} />;
+              }}
+            />
+            <Route
+              path={"/dashboard/group/:uid/:user"}
+              exact
+              render={props => {
+                return <GroupPage {...props} />;
+              }}
+            />
+
+>>>>>>> 93b68d3594437e830cee613fd3b5ac2f13ad2934
             <Route
               path={"/dashboard/guest/:uid"}
               exact
