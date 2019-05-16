@@ -1,5 +1,6 @@
 import React from "react";
-import { EditButton, DeleteButton, WishlistMembers } from "../";
+import { EditButton, DeleteButton } from "../";
+import WishlistMembers from "../../../../components/wishlistMembers";
 
 import "./wishlistTitle.css";
 

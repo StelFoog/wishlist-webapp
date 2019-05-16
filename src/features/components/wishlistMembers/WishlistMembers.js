@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 //import { selectors as wishlistSelectors } from "../../../../lib/wishlists";
-import { selectors as userSelectors, actions } from "../../../../lib/users";
-import ProfilePicture from "../../../../components/profilePicture/ProfilePicture";
+import { selectors as userSelectors, actions } from "../../lib/users";
+import ProfilePicture from "../profilePicture/ProfilePicture";
 import "./wishlistMembers.css";
 
 const { getUsersWithUid } = actions;
