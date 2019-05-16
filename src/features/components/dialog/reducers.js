@@ -5,7 +5,7 @@ const { OPEN_DIALOG, CLOSE_DIALOG } = types;
 const initialState = {
   showDialog: false,
   variant: "",
-  values: null
+  values: {}
 };
 
 const dialogReducer = (state = initialState, action) => {
