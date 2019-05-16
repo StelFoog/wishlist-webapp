@@ -90,13 +90,11 @@ const mapDispatchToProps = dispatch => ({
             dispatch(addUserToWishlist(currentWishlist.uid, user));
           });
         },
-        showIf: user => {
-          return (
-            user.uid !== currentUser.uid &&
-            !currentWishlist.members.includes(user.uid) &&
-            !currentWishlist.owner !== user.uid
-          );
-        }
+        showIf: user => (
+          user.uid !== currentUser.uid &&
+          !currentWishlist.members.includes(user.uid) &&
+          !currentWishlist.owner !== user.uid
+        );
       })
     )
 });
