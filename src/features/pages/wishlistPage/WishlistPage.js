@@ -29,7 +29,7 @@ const WishlistPage = ({
   const { uid } = match.params;
   const wishlist = wishlists.find(element => element.uid === uid);
   const { items } = wishlist;
-  
+
   return (
     <div className="page">
       <WishlistTitle
@@ -37,6 +37,7 @@ const WishlistPage = ({
         editing={editing}
         editWishlistProperties={editWishlistProperties}
         uid={uid}
+        wishlist={wishlist}
       />
       <div className="shareWishlistButton">
         <Button
@@ -85,13 +86,13 @@ const mapDispatchToProps = dispatch => ({
       title: "Share wishlist",
       share: (users) => {
         users.forEach((user) => {
-            dispatch(addUserToWishlist(currentWishlist.uid, user));
+          dispatch(addUserToWishlist(currentWishlist.uid, user));
         })
       },
       showIf: (user) => {
         return user.uid !== currentUser.uid
-            && !currentWishlist.members.includes(user.uid)
-            && !currentWishlist.owner !== user.uid;
+          && !currentWishlist.members.includes(user.uid)
+          && !currentWishlist.owner !== user.uid;
       }
     }))
 });

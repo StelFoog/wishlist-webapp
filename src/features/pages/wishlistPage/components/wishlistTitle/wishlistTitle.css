@@ -44,6 +44,23 @@
   outline: none;
 }
 
+.titleNoEdit {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.invitedUsers {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 20px;
+}
+
+.invitedUsers > h2 {
+  margin-right: 5px;
+}
+
 /* Bar */
 
 .bar {

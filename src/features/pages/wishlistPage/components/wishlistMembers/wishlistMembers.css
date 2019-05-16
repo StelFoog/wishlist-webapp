@@ -1,0 +1,10 @@
+
+.wishlistMembers{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.wishlistMembers > .profilePicture {
+  margin: 0 5px;
+}
