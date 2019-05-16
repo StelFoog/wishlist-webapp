@@ -20,17 +20,21 @@ const createWishlistWithOwner = async (user, wishlistName) => {
   return wishlist;
 };
 
+// Returns either:
+// * A wishlist object, if loading is successful
+// * A UID string, if wishlist has been removed from database
+// * Undefines, if loading fails for some unknown reason
 const fetchWishlistByUid = async (uid, user) => {
   return _getWishlistRef(uid)
     .get()
     .then(doc => {
       if (doc.data()) return { ...defaultWishlist, ...doc.data() };
-      else {
+      else if (!doc.exists) {
         console.log(
           "(DB) user wishlist doesn't exist: " + uid + ", " + user.name
         );
-        return uid; // Hacky, but it lets the Saga know which wishlist to prune
-      }
+        return uid; // Hacky, but it lets the Saga handle a deleted wishlist
+      } else return undefined; // Wishlist not missing, but not properly loaded somehow
     });
 };
 

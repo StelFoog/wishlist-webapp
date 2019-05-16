@@ -94,7 +94,7 @@ function* workFetchWishlists() {
     const user = yield select(getUser);
     let wishlists = yield call(fetchAllWishlistsFromUser, user);
 
-    // Deletes invalid wishlist references in db and user state
+    // Remove reference to deleted wishlist in db and user state
     for (let i = 0; i < wishlists.length; i++) {
       let wishlist = wishlists[i];
       if (typeof wishlist === "string") {
@@ -109,7 +109,7 @@ function* workFetchWishlists() {
 
     // Don't send invalid wishlists to state
     wishlists = wishlists.filter(function(wishlist) {
-      return typeof wishlist !== "string";
+      return typeof wishlist !== "string" && wishlist !== undefined;
     });
 
     yield put({
@@ -126,7 +126,7 @@ function* workFetchOwnedWishlists() {
     const user = yield select(getUser);
     let wishlists = yield call(fetchAllOwnedWishlistsFromUser, user);
 
-    // Deletes invalid wishlist references in db and user state
+    // Remove reference to deleted wishlist in db and user state
     for (let i = 0; i < wishlists.length; i++) {
       let wishlist = wishlists[i];
       if (typeof wishlist === "string") {
@@ -141,7 +141,7 @@ function* workFetchOwnedWishlists() {
 
     // Don't send invalid wishlists to state
     wishlists = wishlists.filter(function(wishlist) {
-      return typeof wishlist !== "string";
+      return typeof wishlist !== "string" && wishlist !== undefined;
     });
 
     yield put({
