@@ -7,6 +7,7 @@ import {
   actions as userActions,
   selectors as userSelectors
 } from "../../../../lib/users";
+import { selectors as currentUserSelectors } from "../../../../lib/authentication";
 import "./wishlistItem.css";
 import ProfilePicture from "../../../../components/profilePicture/ProfilePicture";
 import usersReducer from "../../../../lib/users/reducers";
@@ -52,6 +53,31 @@ class WishlistItem extends React.Component {
     return array;
   }
 
+
+  unclaimButton() {
+    return (
+      <Button
+        variant="filled"
+        label="Unclaim"
+        color="var(--color-primary)"
+        padding="5px"
+        className="smallClaimButton"
+      />
+    );
+  }
+
+  smallClaimButton() {
+    return (
+      <Button
+        variant="filled"
+        label="Claim"
+        color="var(--color-primary)"
+        padding="5px"
+        className="smallClaimButton"
+      />
+    );
+  }
+
   getClaimContent(wishlistUid, index, claimedBy) {
     if (claimedBy === undefined || claimedBy.length == 0) {
       return (
@@ -64,15 +90,34 @@ class WishlistItem extends React.Component {
           />
         </div>
       );
-    } else {
+    }
+    else if (claimedBy.includes(this.props.currentUser.uid)) {
       return (
         <div className="itemContent itemClaim">
-          <h3>Claimed by:</h3>
-          <div className="claimUsers">
-            {this.getFilteredUsers(claimedBy, this.props.users).map(user =>
-              this.getClaimedByUser(user)
-            )}
+          <div className="claimedBy">
+            <h3>Claimed by:</h3>
+            <div className="claimUsers">
+              {this.getFilteredUsers(claimedBy, this.props.users).map(user =>
+                this.getClaimedByUser(user)
+              )}
+            </div>
           </div>
+          {this.unclaimButton()}
+        </div>
+      );
+    }
+    else {
+      return (
+        <div className="itemContent itemClaim">
+          <div className="claimedBy">
+            <h3>Claimed by:</h3>
+            <div className="claimUsers">
+              {this.getFilteredUsers(claimedBy, this.props.users).map(user =>
+                this.getClaimedByUser(user)
+              )}
+            </div>
+          </div>
+          {this.smallClaimButton()}
         </div>
       );
     }
@@ -125,9 +170,11 @@ class WishlistItem extends React.Component {
 const mapStateToProps = () => {
   const getWishlists = selectors.getWishlistsState();
   const getUsers = userSelectors.getUsersState();
+  const getCurrentUser = currentUserSelectors.getCurrentUserState();
   return state => ({
     wishlists: getWishlists(state),
-    users: getUsers(state)
+    users: getUsers(state),
+    currentUser: getCurrentUser(state)
   });
 };
 
