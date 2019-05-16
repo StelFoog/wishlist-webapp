@@ -30,11 +30,7 @@ const StartScreen = ({ handleDownClick, handleFacebookCLick }) => (
           variant="outlined"
           color="var(--color-lighter)"
         />
-        <Button
-          label="Log in with Google"
-          variant="outlined"
-          color="var(--color-lighter)"
-        />
+
       </div>
       <div className="downArrowContainer">
         <NavLink to="#intro" smooth>
