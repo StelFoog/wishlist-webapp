@@ -18,30 +18,12 @@ const WishlistCreateForm = ({ handleSubmit }) => (
           validate={required}
         />
       </div>
-      {false && ( // Currently unnessicary
+      <div>
+        <label htmlFor="Event date">Event date</label>
         <div>
-          <label htmlFor="firstName">First Name</label>
-          <div>
-            <Field
-              name="firstName"
-              component={renderField}
-              type="text"
-              placeholder="Gifts recivers first name"
-              validate={required}
-            />
-          </div>
-          <label htmlFor="lastName">Last Name</label>
-          <div>
-            <Field
-              name="lastName"
-              component={renderField}
-              type="text"
-              placeholder="Gifts recivers last name"
-              validate={required}
-            />
-          </div>
+          <Field name="EventDate" component={renderField} type="date" />
         </div>
-      )}
+      </div>
     </React.Fragment>
   </form>
 );
