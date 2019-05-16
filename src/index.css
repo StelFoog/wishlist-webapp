@@ -46,3 +46,8 @@ p {
   font-size: 1.25rem;
   font-weight: 300;
 }
+
+input[type="date"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  display: none;
+}

@@ -15,33 +15,8 @@ const wishListItem = ({ wishlists, index, editItem, wishlistUid }) => {
   console.log(item);
   const { name, description, price } = item;
   return (
-
-    /*
-    <CardContainer key={name}>
-      <div className="itemContent">
-        <div className="itemText">
-          <CardHeader children={name} />
-          <CardContent>
-            <p>{description}</p>
-          </CardContent>
-        </div>
-
-        <div className="itemPrice">
-          <h3>{price}:-</h3>
-          <Button
-            variant={"filled"}
-            label={"Edit"}
-            color={"var(--color-primary"}
-            handleClick={() => editItem({ item, index, wishlistUid })}
-          />
-        </div>
-      </div>
-    </CardContainer>
-    */
-
     <React.Fragment>
       <div className="wishlistItem">
-
         <div className="itemContent itemTitle">
           <h2>{name}</h2>
         </div>
@@ -73,7 +48,6 @@ const wishListItem = ({ wishlists, index, editItem, wishlistUid }) => {
             handleClick={() => editItem({ item, index, wishlistUid })}
           />
         </div>
-
       </div>
     </React.Fragment>
   );
