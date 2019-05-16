@@ -29,7 +29,7 @@ const WishlistPage = ({
   const { uid } = match.params;
   const wishlist = wishlists.find(element => element.uid === uid);
   const { items } = wishlist;
-  
+
   return (
     <div className="page">
       <WishlistTitle
@@ -43,7 +43,7 @@ const WishlistPage = ({
           variant="filled"
           label="Share"
           color="var(--color-primary)"
-          handleClick={() => (shareWishlist(wishlist, user.user))}
+          handleClick={() => shareWishlist(wishlist, user.user)}
         />
       </div>
       <div className="wishlistPage">
@@ -57,21 +57,22 @@ const WishlistPage = ({
         <div className="createItemButton">
           <IconButton
             variant="filled"
+            color="var(--color-primary)"
             handleClick={() => createItem(wishlist.uid)}
           >
-            <PlusIcon size={50} />
+            <PlusIcon size={50} color="white" />
           </IconButton>
         </div>
       </div>
     </div>
   );
-}
+};
 
 const mapStateToProps = () => {
   return state => ({
-    user: state.auth,
-  })
-}
+    user: state.auth
+  });
+};
 
 const mapDispatchToProps = dispatch => ({
   createItem: wishlistUid =>
@@ -81,19 +82,23 @@ const mapDispatchToProps = dispatch => ({
    * members of the wishlist
    */
   shareWishlist: (currentWishlist, currentUser) =>
-    dispatch(openDialog("share", {
-      title: "Share wishlist",
-      share: (users) => {
-        users.forEach((user) => {
+    dispatch(
+      openDialog("share", {
+        title: "Share wishlist",
+        share: users => {
+          users.forEach(user => {
             dispatch(addUserToWishlist(currentWishlist.uid, user));
-        })
-      },
-      showIf: (user) => {
-        return user.uid !== currentUser.uid
-            && !currentWishlist.members.includes(user.uid)
-            && !currentWishlist.owner !== user.uid;
-      }
-    }))
+          });
+        },
+        showIf: user => {
+          return (
+            user.uid !== currentUser.uid &&
+            !currentWishlist.members.includes(user.uid) &&
+            !currentWishlist.owner !== user.uid
+          );
+        }
+      })
+    )
 });
 
 export default connect(
