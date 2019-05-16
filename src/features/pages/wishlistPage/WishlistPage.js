@@ -1,7 +1,7 @@
 import React from "react";
 import WishlistTitle from "./../../components/wishlistTitle";
 import WishlistItem from "../../components/wishlistItem";
-import actions from "../../lib/authentication/actions.js";
+import actions from "../../lib/wishlists/actions.js";
 
 import { connect } from "react-redux";
 
@@ -14,6 +14,7 @@ import dialogActions from "../../components/dialog/actions.js";
 import { getUser } from "../../lib/authentication/selectors";
 
 const { addUserToWishlist } = actions;
+const { editWishlistProperties } = actions;
 const { openDialog } = dialogActions;
 
 const WishlistPage = ({
@@ -88,23 +89,23 @@ const mapDispatchToProps = dispatch => ({
    * members of the wishlist
    */
   shareWishlist: (currentWishlist, currentUser) =>
-    dispatch(
-      openDialog("share", {
-        title: "Share wishlist",
-        share: users => {
-          users.forEach(user => {
-            dispatch(addUserToWishlist(currentWishlist.uid, user));
-          });
-        },
-        showIf: user => {
-          return (
-            user.uid !== currentUser.uid &&
-            !currentWishlist.members.includes(user.uid) &&
-            !currentWishlist.owner !== user.uid
-          );
-        }
-      })
-    )
+    dispatch(openDialog("share", {
+      title: "Share wishlist",
+      onShare: (users) => {
+        dispatch(editWishlistProperties(
+          currentWishlist.uid, 
+          "members", 
+          users.map((x) => { 
+            return x.uid;
+          })
+        ));
+      },
+      preSelected: currentWishlist.members,
+      showIf: (user) => {
+        return user.uid !== currentUser.uid
+            && !currentWishlist.owner !== user.uid;
+      }
+    }))
 });
 
 export default connect(
