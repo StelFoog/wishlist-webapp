@@ -4,6 +4,7 @@ import actions from "../../lib/authentication/actions.js";
 import types from "../../lib/authentication/types.js";
 import { connect } from "react-redux";
 import UserCard from "./UserCard.js"
+import Paper from "../paper";
 
 const { searchForUsersWithName } = actions;
 
@@ -23,12 +24,18 @@ const displayUserSharedWith = (component) => {
   );
 }
 
+const displayUserList = (users) => {
+  return users; 
+}
+
 const displayUserNotSharedWith = (component) => { 
   return user => (
     <UserCard 
       user={user} 
       buttonText="+ Add"
       buttonColor="#009f3f"
+      roundCorner={false}
+      margin="0.5rem"
       onClick={() => {
         component.selected.push(user);
         component.unselected = component.unselected.filter((x) => 
@@ -42,7 +49,7 @@ const displayUserNotSharedWith = (component) => {
 const renderField = ({input}) => {
     return(
       <div>
-        Username: <input type="text" {...input} />
+        <input type="text" {...input} placeholder="Search username..." />
       </div>
     );
 }
@@ -61,8 +68,9 @@ const deepIncludes = (seq, elem) => {
 
 class ShareForm extends Component {
   componentWillMount() {
-    this.selected = [];
-    this.unselected = this.props.searchResults; 
+    this.selected = this.props.preSelected;
+    this.unselected = this.props.searchResults.filter((x) => 
+      (!this.props.preSelected.includes(x)));
   }
 
   componentWillUnmount() {
@@ -71,6 +79,7 @@ class ShareForm extends Component {
   }
 
   render() {
+    const { showIf, preSelected, storeSelected } = this.props;
     this.unselected = this.props.searchResults.filter((x) => {
       return !deepIncludes(this.selected, x) 
               && (this.props.showIf === undefined || this.props.showIf(x));
@@ -82,15 +91,23 @@ class ShareForm extends Component {
       <div className="shareForm">
         <div>
           <Field
-            name="Username"
             component={renderField}
             onChange={handleInputWith(this)}
           />
-          <h3> Results </h3>
-          {this.unselected.map(displayUserNotSharedWith(this))}
+          <Paper>
+            <h4> Search results: </h4>
+            <div className="userCardArea">
+              {displayUserList(
+                this.unselected.map(displayUserNotSharedWith(this)))}
+            </div>
+          </Paper>
         </div>
-        <h3> Shared with </h3>
-        {this.selected.map(displayUserSharedWith(this))}
+        <Paper>
+          <h4> Shared with: </h4>
+          <div className="userCardArea">
+            {displayUserList(this.selected.map(displayUserSharedWith(this)))}
+          </div>
+        </Paper>
       </div>
     );
   }
@@ -104,9 +121,8 @@ const mapStateToProps = () => {
 
 const mapDispatchToProps = dispatch => ({
   search: (name) => {
-    if(name.length >= 3) {
+    if(name.length >= 3)
       dispatch(searchForUsersWithName(name));
-    }
   }
 });
 

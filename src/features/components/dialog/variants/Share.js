@@ -20,7 +20,8 @@ class ShareDialog extends Component {
         <CardContent>
           <ShareForm 
             storeSelected={(x) => (this.selected = x)}
-            showIf={this.props.value.showIf}
+            preSelected={this.props.value.preSelected || []}
+            showIf={this.props.value.showIf || (() => true)}
           />
         </CardContent>
         <CardActions>
