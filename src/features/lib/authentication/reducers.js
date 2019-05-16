@@ -9,6 +9,7 @@ const {
   ADD_WISHLIST_ID_TO_USER,
   REMOVE_WISHLIST_ID_FROM_USER,
   ADD_GROUP_ID_TO_USER,
+  REMOVE_GROUP_ID_FROM_USER,
   SEARCH_FOR_USERS_WITH_NAME_ERROR,
   SEARCH_FOR_USERS_WITH_NAME_SUCCESS,
   CLEAR_SEARCH
@@ -78,6 +79,12 @@ const userReducer = (state = initialState, action) => {
 
     case ADD_GROUP_ID_TO_USER:
       nextState.user.groups.push(groupId);
+      return nextState;
+    case REMOVE_GROUP_ID_FROM_USER:
+      let groupIndexDelete = nextState.user.groups.findIndex(
+        element => element === groupId
+      );
+      if (groupIndexDelete) nextState.user.groups.splice(groupIndexDelete, 1);
       return nextState;
 
     default:
