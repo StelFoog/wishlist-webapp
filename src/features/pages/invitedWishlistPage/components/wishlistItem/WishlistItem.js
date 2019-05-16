@@ -12,7 +12,7 @@ import "./wishlistItem.css";
 import ProfilePicture from "../../../../components/profilePicture/ProfilePicture";
 import usersReducer from "../../../../lib/users/reducers";
 
-const { claimWishlistItem } = wishlistActions;
+const { claimWishlistItem, unclaimWishlistItem } = wishlistActions;
 const { getUsersWithUid } = userActions;
 
 class WishlistItem extends React.Component {
@@ -54,7 +54,7 @@ class WishlistItem extends React.Component {
   }
 
 
-  unclaimButton() {
+  unclaimButton(wishlistUid, index) {
     return (
       <Button
         variant="filled"
@@ -62,11 +62,12 @@ class WishlistItem extends React.Component {
         color="var(--color-primary)"
         padding="5px"
         className="smallClaimButton"
+        handleClick={() => this.props.unclaimItem(wishlistUid, index)}
       />
     );
   }
 
-  smallClaimButton() {
+  smallClaimButton(wishlistUid, index) {
     return (
       <Button
         variant="filled"
@@ -74,6 +75,7 @@ class WishlistItem extends React.Component {
         color="var(--color-primary)"
         padding="5px"
         className="smallClaimButton"
+        handleClick={() => this.props.claimItem(wishlistUid, index)}
       />
     );
   }
@@ -102,7 +104,7 @@ class WishlistItem extends React.Component {
               )}
             </div>
           </div>
-          {this.unclaimButton()}
+          {this.unclaimButton(wishlistUid, index)}
         </div>
       );
     }
@@ -117,7 +119,7 @@ class WishlistItem extends React.Component {
               )}
             </div>
           </div>
-          {this.smallClaimButton()}
+          {this.smallClaimButton(wishlistUid, index)}
         </div>
       );
     }
@@ -125,9 +127,7 @@ class WishlistItem extends React.Component {
 
   //Load all the users who have claimed the item into the state
   componentDidMount() {
-    console.log("component did mount");
     const { claimedBy } = this.state.item;
-    console.log(claimedBy);
     this.props.getUsers(claimedBy);
   }
 
@@ -181,6 +181,8 @@ const mapStateToProps = () => {
 const mapDispatchToProps = dispatch => ({
   claimItem: (wishlistUid, index) =>
     dispatch(claimWishlistItem(wishlistUid, index)),
+  unclaimItem: (wishlistUid, index) =>
+    dispatch(unclaimWishlistItem(wishlistUid, index)),
   getUsers: claimedBy => dispatch(getUsersWithUid(claimedBy))
 });
 
