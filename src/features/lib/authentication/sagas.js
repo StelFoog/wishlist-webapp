@@ -6,9 +6,11 @@ import {
   addInvitedUserToWishlist,
   searchForUsersWithName
 } from "./db";
-import types from "./types.js";
+import authTypes from "./types.js";
+import { types as dialogTypes } from "../../components/dialog";
 import { getUser } from "./selectors";
 import actions from "./actions.js";
+import { getPathname, getSearch } from "../router/selectors";
 
 const { addUserToWishlist } = actions;
 
@@ -22,8 +24,11 @@ const {
   ADD_USER_TO_WISHLIST_SUCCESS,
   SEARCH_FOR_USERS_WITH_NAME,
   SEARCH_FOR_USERS_WITH_NAME_ERROR,
-  SEARCH_FOR_USERS_WITH_NAME_SUCCESS
-} = types;
+  SEARCH_FOR_USERS_WITH_NAME_SUCCESS,
+  HANDLE_NOT_LOGGED_IN
+} = authTypes;
+
+const { CLOSE_DIALOG } = dialogTypes;
 
 function* watchUserAuthFacebook() {
   yield takeEvery(AUTH_USER_FACEBOOK, workUserAuthFacebook);
@@ -60,10 +65,10 @@ function* workAddUserToWishlist(action) {
     const { wishlistUid, user } = action;
     const addedUser = user || (yield select(getUser));
     const userUid = addedUser.uid;
-    
+
     yield all([
-      call(addInvitedWishlistToUser, {wishlistId: wishlistUid, uid: userUid}),
-      call(addInvitedUserToWishlist, {wishlistId: wishlistUid, uid: userUid})
+      call(addInvitedWishlistToUser, { wishlistId: wishlistUid, uid: userUid }),
+      call(addInvitedUserToWishlist, { wishlistId: wishlistUid, uid: userUid })
     ]);
 
     yield put({ type: ADD_USER_TO_WISHLIST_SUCCESS, wishlistUid: wishlistUid });
@@ -76,21 +81,13 @@ function* workUserAuthFacebook() {
   try {
     let result = yield call(authWithFacebookAPI);
     yield put({ type: AUTH_USER_SUCCESS, userData: result });
+    const pathname = yield select(getPathname);
 
-    // This code is used to detect and handle login/redirection for a user that has arrived through an invite link
-    const checkIfInvite = window.location.pathname.match(
-      /(wishlist\/[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\/invite)/g
-    );
-
-    if (checkIfInvite !== null) {
-      const wishlistUid = checkIfInvite.toString().split("/")[1]; // Get wishlist Uid from URL (please shoot me)
-
-      // Login via invite link
-      yield call(addUserToWishlist, wishlistUid);
-      yield put(push("/dashboard/guest/" + wishlistUid));
-    } else {
-      // Login via regular front page
+    if (pathname === "/") {
       yield put(push("/dashboard"));
+    } else if (pathname.startsWith("/nologin")) {
+      const pathBack = (yield select(getSearch)).substr(1);
+      yield all([put({ type: CLOSE_DIALOG }), put(push(pathBack))]);
     }
   } catch (error) {
     yield put({ type: AUTH_USER_ERROR, error: error });
