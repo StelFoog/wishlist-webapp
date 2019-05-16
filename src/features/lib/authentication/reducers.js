@@ -53,6 +53,7 @@ const userReducer = (state = initialState, action) => {
     case ADD_USER_TO_WISHLIST_SUCCESS:
       nextState.user.wishlists.push(wishlistUid);
       return { ...nextState };
+      
     case CLEAR_SEARCH:
       nextState.searchResults = [];
       return { ...nextState };
@@ -80,6 +81,7 @@ const userReducer = (state = initialState, action) => {
     case ADD_GROUP_ID_TO_USER:
       nextState.user.groups.push(groupId);
       return nextState;
+      
     case REMOVE_GROUP_ID_FROM_USER:
       let groupIndexDelete = nextState.user.groups.findIndex(
         element => element === groupId
