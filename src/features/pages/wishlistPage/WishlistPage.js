@@ -37,6 +37,7 @@ const WishlistPage = ({
         editing={editing}
         editWishlistProperties={editWishlistProperties}
         uid={uid}
+        wishlist={wishlist}
       />
       <div className="shareWishlistButton">
         <Button
