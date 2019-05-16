@@ -4,7 +4,8 @@ const {
   CREATE_WISHLIST_ITEM,
   FETCH_ALL_WISHLISTS,
   EDIT_WISHLIST_ITEM,
-  CLAIM_WISHLIST_ITEM
+  CLAIM_WISHLIST_ITEM,
+  UNCLAIM_WISHLIST_ITEM
 } = types;
 
 const createWishlistItem = () => ({
@@ -25,9 +26,16 @@ const claimWishlistItem = (wishlistId, index) => ({
   index
 });
 
+const unclaimWishlistItem = (wishlistId, index) => ({
+  type: UNCLAIM_WISHLIST_ITEM,
+  wishlistId,
+  index
+});
+
 export default {
   createWishlistItem,
   fetchAllItems,
   editWishlistItem,
-  claimWishlistItem
+  claimWishlistItem,
+  unclaimWishlistItem
 };

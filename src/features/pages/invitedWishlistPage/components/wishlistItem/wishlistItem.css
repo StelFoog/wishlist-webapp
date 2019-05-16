@@ -11,7 +11,7 @@
   padding: 10px;
 
   display: grid;
-  grid-template-columns: 20% 40% 15% 25%;
+  grid-template-columns: 20% 35% 15% 30%;
 
   border-bottom: 2px solid white;
 
@@ -50,14 +50,23 @@
 
 .itemClaim {
   display: flex;
+  flex-direction: row;
+}
+
+.claimedBy {
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
 }
 
-.itemClaim > h3 {
+.claimedBy > h3 {
   margin: 0;
   padding: 0;
+}
+
+.smallClaimButton {
+  min-width: 100px;
 }
 
 .claimUsers{

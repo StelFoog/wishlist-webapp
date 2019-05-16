@@ -15,7 +15,8 @@ const {
   addWishlistItem,
   editWishlistItem,
   makeItem,
-  claimWishlistItem
+  claimWishlistItem,
+  unclaimWishlistItem
 } = wishlistItemDb;
 
 const {
@@ -30,7 +31,10 @@ const {
   FETCH_ALL_ITEMS_ERROR,
   CLAIM_WISHLIST_ITEM,
   CLAIM_WISHLIST_ITEM_SUCCESS,
-  CLAIM_WISHLIST_ITEM_ERROR
+  CLAIM_WISHLIST_ITEM_ERROR,
+  UNCLAIM_WISHLIST_ITEM,
+  UNCLAIM_WISHLIST_ITEM_SUCCESS,
+  UNCLAIM_WISHLIST_ITEM_ERROR
 } = types;
 
 const { CLOSE_DIALOG } = dialogTypes;
@@ -49,6 +53,10 @@ function* watchFetchAllItems() {
 
 function* watchClaimWishlistItem() {
   yield takeEvery(CLAIM_WISHLIST_ITEM, workClaimWishlistItem);
+}
+
+function* watchUnclaimWishlistItem() {
+  yield takeEvery(UNCLAIM_WISHLIST_ITEM, workUnclaimWishlistItem);
 }
 
 function* workCreateWishlistItem() {
@@ -120,9 +128,23 @@ function* workClaimWishlistItem(action) {
   }
 }
 
+function* workUnclaimWishlistItem(action) {
+  try {
+    const { index, wishlistId } = action;
+    const user = yield select(getUser);
+
+    yield call(unclaimWishlistItem, user.uid, index, wishlistId);
+
+    yield put({ type: UNCLAIM_WISHLIST_ITEM_SUCCESS, wishlistUid: wishlistId, index, userUid: user.uid });
+  } catch (error) {
+    yield put({ type: UNCLAIM_WISHLIST_ITEM_ERROR, error });
+  }
+}
+
 export default {
   watchCreateWishlistItem,
   watchFetchAllItems,
   watchEditWishlistItem,
-  watchClaimWishlistItem
+  watchClaimWishlistItem,
+  watchUnclaimWishlistItem
 };
