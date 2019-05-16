@@ -17,7 +17,7 @@ const initialState = {
 
 const groupReducer = (state = initialState, action) => {
   let nextState = JSON.parse(JSON.stringify(state)); // Deep copy
-  const { type, error, value } = action;
+  const { type, error, value, groupId, userId } = action;
 
   switch (type) {
     case CREATE_GROUP_SUCCESS:
@@ -39,6 +39,10 @@ const groupReducer = (state = initialState, action) => {
       break;
 
     case INVITE_USER_TO_GROUP_SUCCESS:
+      const inviteUserIndex = nextState.groups.findIndex(
+        group => group.uid === groupId
+      );
+      nextState.groups[inviteUserIndex].members.push(userId);
       break;
     case INVITE_USER_TO_GROUP_ERROR:
       console.error(
