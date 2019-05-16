@@ -55,7 +55,7 @@ function* watchClaimWishlistItem() {
   yield takeEvery(CLAIM_WISHLIST_ITEM, workClaimWishlistItem);
 }
 
-function *watchUnclaimWishlistItem() {
+function* watchUnclaimWishlistItem() {
   yield takeEvery(UNCLAIM_WISHLIST_ITEM, workUnclaimWishlistItem);
 }
 
@@ -135,7 +135,7 @@ function* workUnclaimWishlistItem(action) {
 
     yield call(unclaimWishlistItem, user.uid, index, wishlistId);
 
-    yield put({type: UNCLAIM_WISHLIST_ITEM_SUCCESS,});
+    yield put({ type: UNCLAIM_WISHLIST_ITEM_SUCCESS, wishlistUid: wishlistId, index, userUid: user.uid });
   } catch (error) {
     yield put({ type: UNCLAIM_WISHLIST_ITEM_ERROR, error });
   }

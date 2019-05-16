@@ -36,5 +36,6 @@ export default {
   createWishlistItem,
   fetchAllItems,
   editWishlistItem,
-  claimWishlistItem
+  claimWishlistItem,
+  unclaimWishlistItem
 };

@@ -87,7 +87,7 @@ class WishlistItem extends React.Component {
           <Button
             handleClick={() => this.props.claimItem(wishlistUid, index)}
             variant="filled"
-            label="Claim item"
+            label="Claim"
             color="var(--color-primary)"
           />
         </div>
