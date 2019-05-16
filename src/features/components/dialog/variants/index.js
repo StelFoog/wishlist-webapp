@@ -4,5 +4,14 @@ import CreateItem from "./CreateItem";
 import CreateGroup from "./CreateGroup";
 import AddMember from "./AddMember";
 import Share from "./Share";
+import NoLogin from "./NoLogin";
 
-export { NewWishlist, EditItem, CreateItem, CreateGroup, AddMember, Share };
+export {
+  NewWishlist,
+  EditItem,
+  CreateItem,
+  CreateGroup,
+  AddMember,
+  Share,
+  NoLogin
+};
