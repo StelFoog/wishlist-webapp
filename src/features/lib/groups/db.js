@@ -40,7 +40,13 @@ const editGroupProperties = async (groupId, fields) => {
 const fetchGroupByUid = async groupId => {
   return await _getGroupRef(groupId)
     .get()
-    .then(doc => doc.data());
+    .then(doc => {
+      if (doc.data()) return doc.data();
+      else if (!doc.exists) {
+        console.log("(DB) user group doesn't exist: " + groupId);
+        return groupId; // Hacky, but it lets the Saga handle a deleted group
+      } else return undefined; // Group not missing, but not properly loaded somehow
+    });
 };
 
 const fetchAllGroupsFromUser = user => {
