@@ -24,7 +24,7 @@ const WishlistPage = ({
   editing,
   editWishlistProperties,
   shareWishlist,
-  user
+  user /* Actually auth */
 }) => {
   const { uid } = match.params;
   const wishlist = wishlists.find(element => element.uid === uid);
@@ -43,7 +43,7 @@ const WishlistPage = ({
           variant="filled"
           label="Share"
           color="var(--color-primary)"
-          handleClick={() => (shareWishlist(wishlist, user))}
+          handleClick={() => (shareWishlist(wishlist, user.user))}
         />
       </div>
       <div className="wishlistPage">
@@ -89,8 +89,9 @@ const mapDispatchToProps = dispatch => ({
         })
       },
       showIf: (user) => {
-        return user.uid !== currentUser.uid 
-            && !currentWishlist.members.includes(user.uid);
+        return user.uid !== currentUser.uid
+            && !currentWishlist.members.includes(user.uid)
+            && !currentWishlist.owner !== user.uid;
       }
     }))
 });
