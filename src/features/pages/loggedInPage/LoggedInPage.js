@@ -61,8 +61,12 @@ class LoggedInPage extends React.Component {
         <div
           className={`createWishlistButton ${index === 0 ? "shown" : "hidden"}`}
         >
-          <IconButton variant="filled" handleClick={openForm}>
-            <PlusIcon size={50} />
+          <IconButton
+            variant="filled"
+            handleClick={openForm}
+            color="var(--color-primary)"
+          >
+            <PlusIcon size={50} color="white" />
           </IconButton>
         </div>
       </div>
