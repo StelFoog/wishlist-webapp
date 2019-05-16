@@ -8,6 +8,7 @@ import Ripple from "../../../../components/ripple";
 import { InsertEmoji } from "../../../../components/svgIcon";
 import ChatBubble from "../chatBubble";
 import EmojiSelector from "./EmojiSelector";
+import Button from "../../../../components/button";
 import "./chatWindow.css";
 
 class ChatWindow extends React.Component {
@@ -96,7 +97,7 @@ class ChatWindow extends React.Component {
           <div className="chat">
             {messages &&
               messages.map((msg, index) => {
-                sameSender = prevMsgSender === msg.senderName ? true : false;
+                sameSender = prevMsgSender === msg.senderName;
 
                 prevMsgSender = msg.senderName;
                 return (
@@ -107,12 +108,20 @@ class ChatWindow extends React.Component {
                     messageText={msg.text}
                     timestamp={msg.timestamp}
                     userProfilePicture={msg.photoURL}
-                    sent={msg.senderId === user.uid ? true : false}
+                    sent={msg.senderId === user.uid}
                   />
                 );
               })}
           </div>
           <div className="chat-input">
+            <Button
+              variant="filled"
+              label="submit"
+              color="var(--color-primary)"
+              fontSize="1rem"
+              padding="0.015rem 0.5rem"
+              handleClick={() => (this.submitClick())}
+            />
             <InputBase
               id="chatInput"
               className="chat-input-field"
