@@ -97,7 +97,7 @@ class ChatWindow extends React.Component {
           <div className="chat">
             {messages &&
               messages.map((msg, index) => {
-                sameSender = prevMsgSender === msg.senderName ? true : false;
+                sameSender = prevMsgSender === msg.senderName;
 
                 prevMsgSender = msg.senderName;
                 return (
@@ -108,7 +108,7 @@ class ChatWindow extends React.Component {
                     messageText={msg.text}
                     timestamp={msg.timestamp}
                     userProfilePicture={msg.photoURL}
-                    sent={msg.senderId === user.uid ? true : false}
+                    sent={msg.senderId === user.uid}
                   />
                 );
               })}
