@@ -1,6 +1,7 @@
 import React from "react";
-import { EditButton, DeleteButton } from "../";
-import WishlistMembers from "../../../../components/wishlistMembers";
+import EditButton from "./editButton";
+import DeleteButton from "./deleteButton";
+import WishlistMembers from "../wishlistMembers";
 
 import "./wishlistTitle.css";
 
@@ -23,13 +24,22 @@ class WishlistTitle extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { editWishlistProperties, uid } = this.props;
+    const { editProperties, uid } = this.props;
     const { value } = this.state;
-    editWishlistProperties(uid, "title", value);
+    editProperties(uid, "title", value);
   }
 
   render() {
-    const { editing, title, uid } = this.props;
+    const {
+      editing,
+      title,
+      uid,
+      deleteObject,
+      user,
+      type,
+      isOwner,
+      leave
+    } = this.props;
     const { value } = this.state;
     return (
       <div className="wishlistTitle">
@@ -39,16 +49,27 @@ class WishlistTitle extends React.Component {
             <span className="bar" />
           </form>
         ) : (
-            <div className="titleNoEdit">
-              <h1>{title}</h1>
+          <div className="titleNoEdit">
+            <h1>{title}</h1>
+            {type === "wishlist" && (
               <div className="invitedUsers">
                 <h2>Invited users: </h2>
                 <WishlistMembers wishlist={this.state.wishlist} />
               </div>
-            </div>
-          )}
+            )}
+          </div>
+        )}
         <div className="editButtons">
-          {editing && <DeleteButton uid={uid} />}
+          {editing && (
+            <DeleteButton
+              uid={uid}
+              deleteObject={deleteObject}
+              user={user}
+              type={type}
+              isOwner={isOwner}
+              leave={leave}
+            />
+          )}
           <EditButton />
         </div>
       </div>

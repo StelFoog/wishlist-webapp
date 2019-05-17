@@ -56,7 +56,7 @@ const userReducer = (state = initialState, action) => {
     case ADD_USER_TO_WISHLIST_SUCCESS:
       nextState.user.wishlists.push(wishlistUid);
       return { ...nextState };
-      
+
     case CLEAR_SEARCH:
       nextState.searchResults = [];
       return { ...nextState };
@@ -84,17 +84,20 @@ const userReducer = (state = initialState, action) => {
     case ADD_GROUP_ID_TO_USER:
       nextState.user.groups.push(groupId);
       return nextState;
-      
+
     case REMOVE_GROUP_ID_FROM_USER:
-      let groupIndexDelete = nextState.user.groups.findIndex(
-        element => element === groupId
-      );
-      if (groupIndexDelete) nextState.user.groups.splice(groupIndexDelete, 1);
-      return nextState;
+      return {
+        ...nextState,
+        user: {
+          ...nextState.user,
+          groups: nextState.user.groups.filter(group => !(group === groupId))
+        }
+      };
 
     case SEARCH_FOR_USERS_WITH_NAME_ERROR:
       console.error("User search error: " + error.code + "-> " + error.message);
       return nextState;
+
     case SEARCH_FOR_USERS_WITH_NAME_SUCCESS:
       nextState.searchResults = searchResults;
       return nextState;

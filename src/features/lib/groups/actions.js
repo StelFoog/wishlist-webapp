@@ -5,7 +5,10 @@ const {
   CREATE_GROUP,
   INVITE_USER_TO_GROUP,
   REMOVE_USER_FROM_GROUP,
-  UPDATE_CURRENT_GROUP
+  UPDATE_CURRENT_GROUP,
+  EDIT_GROUP_PROPERTIES,
+  LEAVE_GROUP,
+  DELETE_GROUP
 } = types;
 
 const fetchAllUserGroups = () => ({
@@ -23,8 +26,29 @@ const addUserToGroup = (userId, maybeGroupId) => ({
   maybeGroupId: maybeGroupId
 });
 
-const removeUserFromGroup = (groupId, userId) => ({
-  type: REMOVE_USER_FROM_GROUP
+const removeUserFromGroup = (groupID, userID) => ({
+  type: REMOVE_USER_FROM_GROUP,
+  groupID,
+  userID
+});
+
+const editGroupProperties = (uid, field, data) => ({
+  type: EDIT_GROUP_PROPERTIES,
+  uid,
+  field,
+  data
+});
+
+const leaveGroup = (groupID, userID) => ({
+  type: LEAVE_GROUP,
+  groupID,
+  userID
+});
+
+const deleteGroup = (groupID, userID) => ({
+  type: DELETE_GROUP,
+  groupID,
+  userID
 });
 
 const updateCurrentGroup = group => ({
@@ -38,5 +62,8 @@ export default {
   createGroup,
   addUserToGroup,
   removeUserFromGroup,
-  updateCurrentGroup
+  updateCurrentGroup,
+  editGroupProperties,
+  leaveGroup,
+  deleteGroup
 };

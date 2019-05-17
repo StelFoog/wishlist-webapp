@@ -1,6 +1,6 @@
 import EditButton from "./EditButton";
 import { connect } from "react-redux";
-import { actions } from "../../../../lib/wishlists";
+import { actions } from "../../../lib/wishlists";
 
 const { editToggle } = actions;
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { WishlistTitle } from "./components";
+import WishlistTitle from "./../../components/wishlistTitle";
 import WishlistItem from "../../components/wishlistItem";
 import actions from "../../lib/authentication/actions.js";
 
@@ -9,8 +9,9 @@ import "./wishlistPage.css";
 
 import IconButton from "../../components/iconButton";
 import PlusIcon from "../../components/svgIcon/icons/PlusIcon";
-import Button from "../../components/button";
 import dialogActions from "../../components/dialog/actions.js";
+
+import { getUser } from "../../lib/authentication/selectors";
 
 const { addUserToWishlist } = actions;
 const { openDialog } = dialogActions;
@@ -21,8 +22,8 @@ const WishlistPage = ({
   setCurrentPage,
   match,
   firebase,
-  editing,
-  editWishlistProperties,
+  editProperties,
+  deleteObject,
   shareWishlist,
   user /* Actually auth */
 }) => {
@@ -34,10 +35,12 @@ const WishlistPage = ({
     <div className="page">
       <WishlistTitle
         title={wishlist.title}
-        editing={editing}
-        editWishlistProperties={editWishlistProperties}
+        editProperties={editProperties}
         uid={uid}
         wishlist={wishlist}
+        deleteObject={deleteObject}
+        user={user}
+        type="wishlist"
       />
       {/*
       <div className="shareWishlistButton">
@@ -73,7 +76,7 @@ const WishlistPage = ({
 
 const mapStateToProps = () => {
   return state => ({
-    user: state.auth
+    user: getUser(state)
   });
 };
 
