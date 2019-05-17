@@ -38,7 +38,7 @@ function* rootSaga() {
     groupItemSagas.watchCreateGroupItem(),
     groupItemSagas.watchFetchGroupItems(),
     groupItemSagas.watchEditGroupItem(),
-    groupItemSagas.watchClaimGroupItem()
+    groupItemSagas.watchClaimGroupItem(),
     usersSagas.watchGetUsersWithUids()
   ]);
 }

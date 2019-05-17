@@ -55,7 +55,7 @@ const userReducer = (state = initialState, action) => {
       return nextState;
 
     case ADD_USER_TO_WISHLIST_SUCCESS:
-      nextState.user.wishlists.push(wishlistUid);
+      //nextState.user.wishlists.push(wishlistUid);
       return { ...nextState };
 
     case CLEAR_SEARCH:

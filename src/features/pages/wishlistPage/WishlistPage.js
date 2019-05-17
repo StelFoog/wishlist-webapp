@@ -5,19 +5,20 @@ import actions from "../../lib/wishlists/actions.js";
 import userActions from "../../lib/users/actions.js";
 import { actions as authActions } from "../../lib/authentication/";
 import { selectUserCache } from "../../lib/users/selectors.js";
+import { actions as wishlistActions } from "../../lib/wishlists/";
 
 import { connect } from "react-redux";
 
 import "./wishlistPage.css";
 
 import IconButton from "../../components/iconButton";
+import Button from "../../components/button";
 import PlusIcon from "../../components/svgIcon/icons/PlusIcon";
 import dialogActions from "../../components/dialog/actions.js";
 
 import { getUser } from "../../lib/authentication/selectors";
 
-const { addUserToWishlist } = actions;
-const { editWishlistProperties } = actions;
+const { editWishlistProperties } = wishlistActions;
 const { openDialog } = dialogActions;
 const { getUsersWithUids } = userActions;
 const { addUserToWishlist, removeUserFromWishlist } = authActions;
@@ -32,7 +33,6 @@ const WishlistPage = ({
   deleteObject,
   shareWishlist,
   user, /* Actually auth */
-  userCache
 }) => {
   const { uid } = match.params;
   const wishlist = wishlists.find(element => element.uid === uid);
@@ -55,7 +55,7 @@ const WishlistPage = ({
           label="Share"
           color="var(--color-primary)"
           handleClick={() => shareWishlist(wishlist, user.user)}
-          handleClick={() => (shareWishlist(wishlist, user.user, state))}
+          handleClick={() => (shareWishlist(wishlist, user.user))}
         />
       </div>
       <div className="wishlistPage">
@@ -81,12 +81,14 @@ const WishlistPage = ({
 };
 
 const shareWishlistWithDispatch = dispatch => {
-  return (currentWishlist, currentUser, userCache) => {
+  return (currentWishlist, currentUser) => {
     dispatch(openDialog("share", {
       title: "Share wishlist",
       withAdded: (added) => {
-        added.forEach(user => (
-          dispatch(addUserToWishlist(user.uid, currentWishlist.uid))
+        added
+          .filter((user) => (user.uid !== currentUser.uid))
+          .forEach(user => (
+            dispatch(addUserToWishlist(user.uid, currentWishlist.uid))
         ));
       },
       withRemoved: (removed) => {

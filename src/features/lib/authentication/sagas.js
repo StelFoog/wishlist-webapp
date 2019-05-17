@@ -33,10 +33,10 @@ const {
   SEARCH_FOR_USERS_WITH_NAME,
   SEARCH_FOR_USERS_WITH_NAME_ERROR,
   SEARCH_FOR_USERS_WITH_NAME_SUCCESS,
-  HANDLE_NOT_LOGGED_IN
+  HANDLE_NOT_LOGGED_IN,
   REMOVE_USER_FROM_WISHLIST,
   REMOVE_USER_FROM_WISHLIST_ERROR,
-  REMOVE_USER_FROM_WISHLIST_SUCCESS,
+  REMOVE_USER_FROM_WISHLIST_SUCCESS
 } = authTypes;
 
 const { CLOSE_DIALOG } = dialogTypes;
@@ -81,18 +81,11 @@ function* workSearchForUsersWithName(action) {
 
 function* workAddUserToWishlist(action) {
   try {
-<<<<<<< HEAD
-    const { wishlistUid, user } = action;
-    const addedUser = user || (yield select(getUser));
-    const userUid = addedUser.uid;
-
-=======
     const { type, userUid, wishlistUid } = action;
     console.log("workAddUserToWishlist()");
     console.log(action);
     const addedUser = userUid || (yield select(getUser)).uid;
     
->>>>>>> Added user cache, added functionality to unshare, need to reload the wishlist in order for the share window to update
     yield all([
       call(addInvitedWishlistToUser, { wishlistId: wishlistUid, uid: userUid }),
       call(addInvitedUserToWishlist, { wishlistId: wishlistUid, uid: userUid })
