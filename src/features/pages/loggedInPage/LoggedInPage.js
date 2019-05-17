@@ -41,6 +41,8 @@ class LoggedInPage extends React.Component {
     this.setState({
       index
     });
+
+    console.log("TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEST!");
   };
 
   render() {
