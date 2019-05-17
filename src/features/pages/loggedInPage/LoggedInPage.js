@@ -2,10 +2,10 @@ import React from "react";
 import ListWishlists from "./components/listWishlists";
 import IconButton from "../../components/iconButton";
 import PlusIcon from "../../components/svgIcon/icons/PlusIcon";
-import { Tabs, Tab } from "./components/tabs";
-import PageHeader from "../../components/pageHeader";
+import AllWishlistsHeader from "./components/allWishlistsHeader";
 import SharedWishlists from "./components/sharedWishlists";
 import SwipeableViews from "react-swipeable-views";
+import { Tabs, Tab } from "./components/allWishlistsHeader/tabs";
 import "./loggedInPage.css";
 
 class LoggedInPage extends React.Component {
@@ -13,16 +13,28 @@ class LoggedInPage extends React.Component {
     index: 0
   };
 
+
   handleChange = value => {
     this.setState({
       index: value
     });
+
+
+    if (this.state.index === 0) {
+      document.getElementById("0").classList.remove("active");
+      document.getElementById("1").classList.add("active");
+    }
+    else {
+      document.getElementById("0").classList.add("active");
+      document.getElementById("1").classList.remove("active");
+    }
   };
 
   handleChangeIndex = index => {
     this.setState({
       index
     });
+
   };
 
   render() {
@@ -30,30 +42,20 @@ class LoggedInPage extends React.Component {
     const { openForm } = this.props;
     return (
       <div className="logged-in-page">
-        <Tabs>
-          <Tab
-            label="Your wishlists"
-            index={0}
-            handleClick={this.handleChange}
-          />
-          <Tab
-            label="Friends and family"
-            index={1}
-            handleClick={this.handleChange}
-          />
-        </Tabs>
+
+        <AllWishlistsHeader handleChange={this.handleChange} />
         <SwipeableViews
           index={index}
           onChangeIndex={this.handleChangeIndex}
           style={{ flex: 1, display: "flex" }}
         >
           <div className="page-tab page-tab-1">
-            <PageHeader title="Your wishlists" />
+            {/*<PageHeader title="Your wishlists" />*/}
             <ListWishlists />
           </div>
           <div className="page-tab page-tab-2">
             <div className="shared-wishlists">
-              <PageHeader title="Shared wishlists" />
+              {/*<PageHeader title="Shared wishlists" />*/}
               <SharedWishlists />
             </div>
           </div>
