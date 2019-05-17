@@ -22,6 +22,7 @@ import InvitedUserPage from "./features/pages/invitedUserPage";
 import InvitedWishlistPage from "./features/pages/invitedWishlistPage";
 import GroupPage from "./features/pages/groupPage";
 import NoLogin from "./features/pages/noLoginPage";
+import InvitePage from "./features/pages/invitePage";
 import HelpPage from "./features/pages/helpPage";
 
 const Root = ({
@@ -31,7 +32,7 @@ const Root = ({
   handleNotLoggedIn,
   loggedIn,
   pathname,
-  loginReqPush
+  push
 }) => (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
@@ -41,7 +42,7 @@ const Root = ({
             loggedIn={loggedIn}
             pathname={pathname}
             handleNotLoggedIn={handleNotLoggedIn}
-            loginReqPush={loginReqPush}
+            push={push}
           >
             <Dialog />
             <Switch>
@@ -62,6 +63,12 @@ const Root = ({
                 path={"/nologin"}
                 render={props => {
                   return <NoLogin {...props} />;
+                }}
+              />
+              <Route
+                path={"/invite"}
+                render={props => {
+                  return <InvitePage {...props} />;
                 }}
               />
               <Route
@@ -132,15 +139,25 @@ const RequireLogin = ({
   loggedIn,
   pathname,
   handleNotLoggedIn,
-  accepted = ["/"],
-  loginReqPush
+  accepted = ["/", "invite"],
+  push
 }) => {
   const ifNot = accepted.includes(pathname);
-  console.log("push", loginReqPush);
-  if (loggedIn || ifNot || pathname.startsWith("/nologin")) {
+  if (pathname.endsWith("/invite") && pathname.length > 7 && loggedIn) {
+    push(pathname.substring(0, pathname.length - 7));
+    return null;
+  } else if (
+    loggedIn ||
+    ifNot ||
+    pathname.startsWith("/nologin") ||
+    pathname.startsWith("/invite")
+  ) {
     return <React.Fragment>{children}</React.Fragment>;
+  } else if (pathname.endsWith("/invite")) {
+    push(`/invite?${pathname.substring(0, pathname.length - 7)}`);
+    return null;
   } else {
-    loginReqPush(`/nologin?${pathname}`);
+    push(`/nologin?${pathname}`);
     return null;
   }
 };
@@ -156,7 +173,7 @@ const mapStateToProps = () => {
 const { handleNotLoggedIn } = authActions;
 const mapDispatchToProps = dispatch => ({
   handleNotLoggedIn: () => dispatch(handleNotLoggedIn()),
-  loginReqPush: path => dispatch(push(path))
+  push: path => dispatch(push(path))
 });
 
 export default connect(
