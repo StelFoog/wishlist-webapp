@@ -42,19 +42,6 @@ class DashboardNav extends React.Component {
     this.setState({ showSideNav: !show });
   };
 
-  getActivePage() {
-    const { pathname } = this.props.location;
-    if (
-      pathname.indexOf("wishlist") > 0 ||
-      pathname === "/dashboard/" ||
-      pathname === "/dashboard"
-    ) {
-      return 0;
-    } else if (pathname.indexOf("group") > 0) {
-      return 1;
-    } else return -1;
-  }
-
   componentDidMount() {
     document.addEventListener("mousedown", this.handleClickOutside);
   }
@@ -74,9 +61,9 @@ class DashboardNav extends React.Component {
   }
 
   render() {
-    const activeTab = this.getActivePage();
     const { showSideNav, groupDropdown } = this.state;
     const { navigate, user, createGroup, openForm, askLogout } = this.props;
+    const { pathParam1, pathParam2 } = this.props.match.params;
     return (
       <React.Fragment>
         <div
@@ -93,8 +80,13 @@ class DashboardNav extends React.Component {
             </div>
           </div>
           <hr className="navDivider" />
-          <div className={`navButtonContainer active-${activeTab}`}>
-            <div className="navButton" onClick={() => navigate("")}>
+          <div className={`navButtonContainer`}>
+            <div
+              className={`navButton ${(!pathParam1 ||
+                pathParam1 === "wishlist") &&
+                "active"}`}
+              onClick={() => navigate("")}
+            >
               <Ripple />
               <div className="icon">
                 <ListIcon size={30} color="var(--color-light)" />
@@ -103,7 +95,7 @@ class DashboardNav extends React.Component {
             </div>
 
             <div
-              className="navButton"
+              className={`navButton ${pathParam1 === "group" && "active"}`}
               onClick={() => this.setState({ groupDropdown: !groupDropdown })}
             >
               <Ripple />
@@ -129,7 +121,10 @@ class DashboardNav extends React.Component {
                   <span>Add new group</span>
                 </div>
 
-                <GroupList navigate={navigate} />
+                <GroupList
+                  navigate={navigate}
+                  selected={pathParam1 === "group" && pathParam2}
+                />
               </div>
             </div>
           </div>
@@ -143,10 +138,7 @@ class DashboardNav extends React.Component {
             </div>
             <span>Help</span>
           </div>
-          <div
-            className="navButton navButtonBottom"
-            onClick={askLogout}
-          >
+          <div className="navButton navButtonBottom" onClick={askLogout}>
             <Ripple />
             <div className="icon">
               <LogoutIcon size="30" />
@@ -181,13 +173,15 @@ class DashboardNav extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   askLogout: () => {
-    dispatch(openDialog("yesNo", {
-      title: "Are you sure you want to log out?",
-      onYes: () => {
-        dispatch(logout());
-        dispatch(push("/"));
-      }
-    }));
+    dispatch(
+      openDialog("yesNo", {
+        title: "Are you sure you want to log out?",
+        onYes: () => {
+          dispatch(logout());
+          dispatch(push("/"));
+        }
+      })
+    );
   }
 });
 

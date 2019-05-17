@@ -10,7 +10,9 @@ import {
   AddMember,
   Share,
   NoLogin,
-  YesNoDialog
+  YesNoDialog,
+  CreateGroupItem,
+  EditGroupItem
 } from "./variants";
 
 import "./dialog.css";
@@ -19,6 +21,8 @@ const DIALOG_VARIANTS = {
   newWishlist: NewWishlist,
   editItem: EditItem,
   createItem: CreateItem,
+  createGroupItem: CreateGroupItem,
+  editGroupItem: EditGroupItem,
   createGroup: CreateGroup,
   addMember: AddMember,
   share: Share,

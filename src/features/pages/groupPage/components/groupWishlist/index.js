@@ -1,30 +1,28 @@
-import MemberList from "./MemberList";
-import { push } from "connected-react-router";
+import GroupWishlist from "./GroupWishlist";
+
 import { connect } from "react-redux";
+
+import { getUser } from "../../../../lib/authentication/selectors";
 import { actions as dialogActions } from "../../../../components/dialog";
-import {
-  actions as usersActions,
-  selectors as usersSelectors
-} from "../../../../lib/users";
 import {
   selectors,
   actions as groupItemsActions
 } from "../../../../lib/groupItems";
 
+const { openDialog } = dialogActions;
 const { fetchGroupWishlistItems } = groupItemsActions;
 
 const mapStateToProps = () => {
-  const getUsers = usersSelectors.getUsersState();
+  const getGroupWishlistItems = selectors.getGroupWishlistItemsState();
   return state => ({
-    users: getUsers(state)
+    items: getGroupWishlistItems(state),
+    currentUser: getUser(state).uid
   });
 };
 
 const mapDispatchToProps = dispatch => ({
-  navigate: path => dispatch(push(`/dashboard/${path}`)),
-  getUsersWithUid: users => dispatch(usersActions.getUsersWithUid(users)),
-  openForm: uid =>
-    dispatch(dialogActions.openDialog("addMember", { uid: uid })),
+  createItem: ({ groupID, userID }) =>
+    dispatch(openDialog("createGroupItem", { groupID, userID })),
   fetchItems: ({ groupID, userID }) =>
     dispatch(fetchGroupWishlistItems({ groupID, userID }))
 });
@@ -32,4 +30,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(MemberList);
+)(GroupWishlist);

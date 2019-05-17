@@ -13,7 +13,8 @@ const createGroupWithOwner = async (user, groupName) => {
       title: groupName,
       uid: uid,
       owner: user.uid,
-      members: [user.uid]
+      members: [user.uid],
+      wishlists: []
     }
   };
   await _getGroupRef(uid).set(group);
@@ -24,6 +25,12 @@ const createGroupWithOwner = async (user, groupName) => {
 const addUserToGroup = async (groupId, userId) => {
   await editGroupProperties(groupId, {
     members: firebase.firestore.FieldValue.arrayUnion(userId)
+  });
+};
+
+const addWishlistToGroup = async (groupId, userId) => {
+  await editGroupProperties(groupId, {
+    ["wishlists." + userId]: []
   });
 };
 
@@ -54,10 +61,12 @@ const fetchAllGroupsFromUser = user => {
 };
 
 export {
+  _getGroupRef,
   createGroupWithOwner,
   addUserToGroup,
   removeUserFromGroup,
   editGroupProperties,
   fetchGroupByUid,
-  fetchAllGroupsFromUser
+  fetchAllGroupsFromUser,
+  addWishlistToGroup
 };
