@@ -1,0 +1,26 @@
+.tabs {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+
+  margin-left: 1rem;
+}
+
+.tab {
+  padding: 1rem;
+  flex: 1;
+}
+
+.tab:hover  {
+  cursor: pointer;
+}
+
+.active {
+  border-bottom: 3px solid var(--color-dark);
+  margin-bottom: -3px;
+}
+
+.tab > h2{
+  flex: 1;
+  margin: 0;
+}
