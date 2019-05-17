@@ -53,7 +53,7 @@ const Root = ({
                 }}
               />
               <Route
-                path={"/dashboard/"}
+                path={"/dashboard/:pathParam1?/:pathParam2?"}
                 render={props => {
                   return <Dashboard {...props} />;
                 }}
