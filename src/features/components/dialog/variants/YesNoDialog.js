@@ -7,36 +7,36 @@ import { selectors } from "../";
 
 const YesNoDialog = ({ handleClose, value }) => {
   const { title, onYes } = value;
-  return(
+  return (
     <React.Fragment>
       <CardHeader>{title}</CardHeader>
       <CardActions>
         <Button
           variant="text"
           label="No"
-          color="red"
+          color="var(--color-error)"
           handleClick={handleClose}
         />
         <Button
           variant="filled"
           label="Yes"
-          color="#003f9f"
+          color="var(--color-accept)"
           handleClick={() => {
-            onYes()
-            handleClose()
+            onYes();
+            handleClose();
           }}
         />
       </CardActions>
     </React.Fragment>
   );
-}
+};
 
 const mapStateToProps = () => {
   const getDialogValues = selectors.getDialogValuesState();
   return state => ({
     value: getDialogValues(state)
   });
-}
+};
 
 export default connect(
   mapStateToProps,

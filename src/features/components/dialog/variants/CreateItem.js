@@ -15,24 +15,33 @@ const CreateItem = ({ handleSubmit, handleClose, values, performSubmit }) => (
     <CardHeader>{"Create new wishlist item"}</CardHeader>
     <CardContent>
       <form onSubmit={handleSubmit}>
-        <label>Name:</label>
         <Field
           name="name"
+          label={"Name"}
           component={renderField}
           type="text"
           validate={required}
         />
-        <label>Price:</label>
-        <Field name="price" component={renderField} type="number" />
-        <label>Description:</label>
-        <Field name="description" component={renderField} type="text" />
+
+        <Field
+          name="price"
+          label={"Price"}
+          component={renderField}
+          type="number"
+        />
+        <Field
+          name="description"
+          label={"Description"}
+          component={renderField}
+          type="text"
+        />
       </form>
     </CardContent>
     <CardActions>
       <Button
         label="SUBMIT"
-        color="green"
-        variant="filled"
+        color="var(--color-accept)"
+        variant="text"
         handleClick={performSubmit}
       />
     </CardActions>

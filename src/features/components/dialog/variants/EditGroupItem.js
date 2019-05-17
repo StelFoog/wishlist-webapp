@@ -25,8 +25,8 @@ const EditGroupItem = ({ handleSubmit, performSubmit }) => (
     <CardActions>
       <Button
         label="SUBMIT"
-        color="green"
-        variant="filled"
+        color="var(--color-accept)"
+        variant="text"
         handleClick={performSubmit}
       />
     </CardActions>
