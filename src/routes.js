@@ -18,7 +18,6 @@ import HomePage from "./features/pages/homePage";
 import Dashboard from "./features/pages/dashboard";
 import LoggedInPage from "./features/pages/loggedInPage";
 import WishlistPage from "./features/pages/wishlistPage";
-import InvitedUserPage from "./features/pages/invitedUserPage";
 import InvitedWishlistPage from "./features/pages/invitedWishlistPage";
 import GroupPage from "./features/pages/groupPage";
 import NoLogin from "./features/pages/noLoginPage";
@@ -100,13 +99,6 @@ const Root = ({
               exact
               render={props => {
                 return <HelpPage {...props} />;
-              }}
-            />
-            <Route
-              path={"/wishlist/:uid/invite"}
-              exact
-              render={props => {
-                return <InvitedUserPage {...props} />;
               }}
             />
             <ProtectedRoute
