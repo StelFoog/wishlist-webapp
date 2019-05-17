@@ -85,26 +85,16 @@ const shareWishlistWithDispatch = dispatch => {
     dispatch(openDialog("share", {
       title: "Share wishlist",
       withAdded: (added) => {
-        console.log("with added");
-        console.log(added);
         added.forEach(user => (
           dispatch(addUserToWishlist(user.uid, currentWishlist.uid))
         ));
       },
       withRemoved: (removed) => {
-        console.log("with removed");
-        console.log(removed);
         removed.forEach(user => (
           dispatch(removeUserFromWishlist(user.uid, currentWishlist.uid))
         ));
       },
-      preSelected: currentWishlist.members.map((uid) => {
-        console.log("getting preselected for " + uid);
-        if(!userCache[uid]) {
-          dispatch(getUsersWithUids([uid]));
-        }
-        return userCache[uid];
-      }),
+      preSelectedByUid: currentWishlist.members,
       showIf: (user) => {
         return user.uid !== currentUser.uid
             && !currentWishlist.owner !== user.uid;
@@ -114,7 +104,6 @@ const shareWishlistWithDispatch = dispatch => {
 }
 
 const mapStateToProps = state => ({
-  userCache: selectUserCache(state),
   user: state.auth
 });
 

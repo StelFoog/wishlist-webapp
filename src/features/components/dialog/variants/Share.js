@@ -14,8 +14,8 @@ const { clearSearch } = actions;
 
 class ShareDialog extends Component {
   componentWillMount() {
-    this.initiallySelected = this.props.value.preSelected
-      ? this.props.value.preSelected.slice(0)
+    this.initiallySelected = this.props.value.preSelectedByUid
+      ? this.props.value.preSelectedByUid.slice(0)
       : [];
     this.selected = [];
   }
@@ -27,7 +27,7 @@ class ShareDialog extends Component {
         <CardContent>
           <ShareForm 
             storeSelected={(x) => (this.selected = x)}
-            preSelected={this.initiallySelected}
+            preSelectedByUid={this.initiallySelected}
             showIf={this.props.value.showIf}
           />
         </CardContent>

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Field } from "redux-form";
 import actions from "../../lib/authentication/actions.js";
 import types from "../../lib/authentication/types.js";
+import { selectUserCache } from "../../lib/users/selectors.js";
 import { connect } from "react-redux";
 import UserCard from "./UserCard.js"
 import Paper from "../paper";
@@ -66,9 +67,11 @@ const userIncludes = (users, user) => {
   return users.map((x) => (x.uid)).includes(user.uid);
 }
 
+const isUserUid = (x) => (typeof(x) === "string");
+
 class ShareForm extends Component {
   componentWillMount() {
-    this.selected = this.props.preSelected.slice(0);
+    this.selected = this.props.preSelectedByUid;
   }
 
   componentWillUnmount() {
@@ -77,8 +80,11 @@ class ShareForm extends Component {
   }
 
   render() {
+    this.selected = this.selected.map((x) => {
+      return isUserUid(x) ? this.props.userCache[x] : x;
+    });
     this.unselected = this.props.searchResults.filter((x) => {
-      return !userIncludes(this.selected, x)
+      return !userIncludes(this.selected.filter((y) => (!isUserUid(y))), x)
           && (this.props.showIf === undefined || this.props.showIf(x));
     });
 
@@ -113,6 +119,7 @@ class ShareForm extends Component {
 const mapStateToProps = () => {
   return state => ({
     searchResults: state.auth.searchResults,
+    userCache: selectUserCache(state)
   });
 }
 
