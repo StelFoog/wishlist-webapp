@@ -1,9 +1,11 @@
 import types from "./types.js";
-const { GET_USERS_WITH_UID } = types;
+const { GET_USERS_WITH_UIDS } = types;
 
-const getUsersWithUid = uid => ({
-  type: GET_USERS_WITH_UID,
-  uid
+const getUsersWithUids = uids => ({
+  type: GET_USERS_WITH_UIDS,
+  uids
 });
 
-export default { getUsersWithUid };
+const getUsersWithUid = getUsersWithUids;
+
+export default { getUsersWithUid, getUsersWithUids  };
