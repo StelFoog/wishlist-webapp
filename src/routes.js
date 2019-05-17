@@ -18,7 +18,6 @@ import HomePage from "./features/pages/homePage";
 import Dashboard from "./features/pages/dashboard";
 import LoggedInPage from "./features/pages/loggedInPage";
 import WishlistPage from "./features/pages/wishlistPage";
-import InvitedUserPage from "./features/pages/invitedUserPage";
 import InvitedWishlistPage from "./features/pages/invitedWishlistPage";
 import GroupPage from "./features/pages/groupPage";
 import NoLogin from "./features/pages/noLoginPage";
@@ -32,6 +31,7 @@ const Root = ({
   handleNotLoggedIn,
   loggedIn,
   pathname,
+  user,
   push
 }) => (
   <Provider store={store}>
@@ -85,12 +85,14 @@ const Root = ({
                 return <LoggedInPage {...props} />;
               }}
             />
-            <Route
+            <ProtectedRoute
               path={"/dashboard/wishlist/:uid"}
               exact
-              render={props => {
-                return <WishlistPage {...props} />;
-              }}
+              user={user}
+              component={WishlistPage}
+              pathname={pathname}
+              push={push}
+              variant={"ownWishlist"}
             />
             <Route
               path="/dashboard/help"
@@ -99,26 +101,23 @@ const Root = ({
                 return <HelpPage {...props} />;
               }}
             />
-            <Route
-              path={"/wishlist/:uid/invite"}
-              exact
-              render={props => {
-                return <InvitedUserPage {...props} />;
-              }}
-            />
-            <Route
+            <ProtectedRoute
               path={"/dashboard/group/:uid/:user"}
               exact
-              render={props => {
-                return <GroupPage {...props} />;
-              }}
+              user={user}
+              component={GroupPage}
+              pathname={pathname}
+              push={push}
+              variant={"group"}
             />
-            <Route
+            <ProtectedRoute
               path={"/dashboard/guest/:uid"}
               exact
-              render={props => {
-                return <InvitedWishlistPage {...props} />;
-              }}
+              user={user}
+              component={InvitedWishlistPage}
+              pathname={pathname}
+              push={push}
+              variant={"sharedWishlist"}
             />
             <Route
               path={"/wishlistitem"}
@@ -162,10 +161,48 @@ const RequireLogin = ({
   }
 };
 
+const ProtectedRoute = ({
+  component: Component,
+  pathname,
+  user,
+  variant,
+  exact = false,
+  path,
+  push
+}) => {
+  let hasAccess = false;
+  switch (variant) {
+    case "ownWishlist":
+      const ownWishlistUid = pathname.split("/")[3];
+      hasAccess = user.ownedWishlists.includes(ownWishlistUid);
+      break;
+    case "sharedWishlist":
+      const sharedWishlistUid = pathname.split("/")[3];
+      hasAccess = user.wishlists.includes(sharedWishlistUid);
+      break;
+    case "group":
+      const groupUid = pathname.split("/")[3];
+      hasAccess = user.groups.includes(groupUid);
+      break;
+  }
+  return (
+    <Route
+      path={path}
+      exact={exact}
+      render={props => {
+        if (hasAccess) return <Component {...props} />;
+        // Should be a proper component or a page push
+        else return <div>{"Not for your eyes"}</div>;
+      }}
+    />
+  );
+};
+
 const mapStateToProps = () => {
   const getPathname = routerSelectors.getPathhameState();
   return state => ({
     loggedIn: state.auth.loggedIn,
+    user: state.auth.user,
     pathname: getPathname(state)
   });
 };
