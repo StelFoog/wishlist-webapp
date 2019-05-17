@@ -189,16 +189,17 @@ const ProtectedRoute = ({
       hasAccess = user.groups.includes(groupUid);
       break;
   }
-  if (hasAccess)
-    return (
-      <Route
-        path={path}
-        exact={exact}
-        render={props => <Component {...props} />}
-      />
-    );
-  // Should be a proper component later that goes to last accessable page
-  else return <div>{"Not for your eyes"}</div>;
+  return (
+    <Route
+      path={path}
+      exact={exact}
+      render={props => {
+        if (hasAccess) return <Component {...props} />;
+        // Should be a proper component or a page push
+        else return <div>{"Not for your eyes"}</div>;
+      }}
+    />
+  );
 };
 
 const mapStateToProps = () => {
