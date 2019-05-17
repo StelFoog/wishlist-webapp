@@ -85,22 +85,24 @@ const shareWishlistWithDispatch = dispatch => {
     dispatch(openDialog("share", {
       title: "Share wishlist",
       withAdded: (added) => {
+        console.log("withAdded()");
+        console.log(added);
         added
-          .filter((user) => (user.uid !== currentUser.uid))
+          .filter((user) => (user && user.uid !== currentUser.uid))
           .forEach(user => (
             dispatch(addUserToWishlist(user.uid, currentWishlist.uid))
         ));
       },
       withRemoved: (removed) => {
-        removed.forEach(user => (
+        console.log("withRemoved()");
+        console.log(removed);
+        removed
+          .forEach(user => (
           dispatch(removeUserFromWishlist(user.uid, currentWishlist.uid))
         ));
       },
-      preSelectedByUid: currentWishlist.members,
-      showIf: (user) => {
-        return user.uid !== currentUser.uid
-            && !currentWishlist.owner !== user.uid;
-      }
+      preSelectedUids: currentWishlist.members,
+      showIf: user => (user.uid !== currentUser.uid)
     }))
   };
 }

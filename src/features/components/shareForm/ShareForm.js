@@ -10,37 +10,42 @@ import Paper from "../paper";
 const { searchForUsersWithName } = actions;
 
 const displayUserSharedWith = (component) => {
+  const removeUser = (user) => {
+    component.selected = component.selected.filter(
+      selectedUser => (user.uid !== selectedUser.uid)
+    );
+    component.unselected.push(user);
+  };
+
   return user => (
     <UserCard
       user={user}
       buttonText="Remove"
       buttonColor="#9f003f"
       onClick={() => {
-        component.selected = component.selected.filter((x) =>
-            x !== user);
-        component.unselected.unshift(user);
+        removeUser(user);
         component.forceUpdate();
       }}
     />
   );
 }
 
-const displayUserList = (users) => {
-  return users; 
-}
-
 const displayUserNotSharedWith = (component) => { 
+  const addUser = (user) => {
+    component.unselected.filter(
+      unselectedUser => (user.uid !== unselectedUser.uid)
+    );
+    component.selected.unshift(user);
+  };
+
   return user => (
     <UserCard 
       user={user} 
       buttonText="Add"
       buttonColor="#009f3f"
-      roundCorner={false}
       margin="0.5rem"
       onClick={() => {
-        component.selected.unshift(user);
-        component.unselected = component.unselected.filter((x) => 
-            x !== user);
+        addUser(user);
         component.forceUpdate();
       }}
     />
@@ -70,23 +75,29 @@ const userIncludes = (users, user) => {
 const isUserUid = (x) => (typeof(x) === "string");
 
 class ShareForm extends Component {
-  componentWillMount() {
-    this.selected = this.props.preSelectedByUid;
-  }
-
-  componentWillUnmount() {
-    this.selected = [];
-    this.unselected = [];
+  constructor(props) {
+    super(props);
+    this.selected = props.preSelectedUids.slice(0);
   }
 
   render() {
-    this.selected = this.selected.map((x) => {
-      return isUserUid(x) ? this.props.userCache[x] : x;
-    });
-    this.unselected = this.props.searchResults.filter((x) => {
-      return !userIncludes(this.selected.filter((y) => (!isUserUid(y))), x)
-          && (this.props.showIf === undefined || this.props.showIf(x));
-    });
+    this.selected = this.selected.map(
+      selectedUser => (
+        isUserUid(selectedUser) 
+          ? this.props.userCache[selectedUser] 
+          : selectedUser
+      )
+    );
+    this.selectedToShow = this.selected.filter(selectedUser =>
+      (selectedUser || !isUserUid(selectedUser))
+    );
+
+    this.unselected = this.props.searchResults.filter(
+      unselectedUser => (
+           !userIncludes(this.selectedToShow, unselectedUser)
+        && (!this.props.showIf || this.props.showIf(unselectedUser))
+      )
+    );
 
     this.props.storeSelected(this.selected);
 
@@ -94,21 +105,21 @@ class ShareForm extends Component {
       <div className="shareForm">
         <div>
           <Field
+            name="Username"
             component={renderField}
             onChange={handleInputWith(this)}
           />
           <Paper>
             <h4> Search results: </h4>
             <div className="userCardArea">
-              {displayUserList(
-                this.unselected.map(displayUserNotSharedWith(this)))}
+              {this.unselected.map(displayUserNotSharedWith(this))}
             </div>
           </Paper>
         </div>
         <Paper>
           <h4> Shared with: </h4>
           <div className="userCardArea">
-            {displayUserList(this.selected.map(displayUserSharedWith(this)))}
+            {this.selected.map(displayUserSharedWith(this))}
           </div>
         </Paper>
       </div>
