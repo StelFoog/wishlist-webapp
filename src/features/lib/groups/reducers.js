@@ -40,10 +40,7 @@ const groupReducer = (state = initialState, action) => {
       break;
 
     case INVITE_USER_TO_GROUP_SUCCESS:
-      const inviteUserIndex = nextState.groups.findIndex(
-        group => group.uid === groupId
-      );
-      nextState.groups[inviteUserIndex].members.push(userId);
+      // No need to push to state as we listen to the DB anyway
       break;
     case INVITE_USER_TO_GROUP_ERROR:
       console.error(
@@ -52,6 +49,7 @@ const groupReducer = (state = initialState, action) => {
       break;
 
     case REMOVE_USER_FROM_GROUP_SUCCESS:
+      // No need to pop from state as we listen to the DB anyway
       break;
     case REMOVE_USER_FROM_GROUP_ERROR:
       console.error(
