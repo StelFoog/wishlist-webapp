@@ -116,12 +116,14 @@ const Root = ({
                 return <GroupPage {...props} />;
               }}
             />
-            <Route
+            <ProtectedRoute
               path={"/dashboard/guest/:uid"}
               exact
-              render={props => {
-                return <InvitedWishlistPage {...props} />;
-              }}
+              user={user}
+              component={InvitedWishlistPage}
+              pathname={pathname}
+              push={push}
+              variant={"sharedWishlist"}
             />
             <Route
               path={"/wishlistitem"}
