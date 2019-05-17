@@ -1,6 +1,7 @@
 import React from "react";
 
 import PageHeader from "../../components/pageHeader";
+import WishlistMembers from "../../components/wishlistMembers";
 import WishlistItem from "./components/wishlistItem";
 import ChatWindow from "./components/chatWindow";
 import MobileChatButton from "./components/mobileChatButton";
@@ -49,8 +50,8 @@ class InvitedWishlistPage extends React.Component {
     const { items, uid, name, showChat } = this.state;
     return (
       <React.Fragment>
+        <PageHeader title={name} />
         <div className={`invitedPageContainer ${showChat ? "pageLeft" : ""}`}>
-          <PageHeader title={name} />
           {items.length > 0 && (
             <React.Fragment>
               {items.map((item, index) => (
