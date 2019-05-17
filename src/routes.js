@@ -162,6 +162,42 @@ const RequireLogin = ({
   }
 };
 
+const ProtectedRoute = ({
+  component: Component,
+  pathname,
+  user,
+  variant,
+  exact = false,
+  path,
+  push
+}) => {
+  let hasAccess = false;
+  switch (variant) {
+    case "ownWishlist":
+      const ownWishlistUid = pathname.split("/")[3];
+      hasAccess = user.ownedWishlists.includes(ownWishlistUid);
+      break;
+    case "sharedWishlist":
+      const sharedWishlistUid = pathname.split("/")[3];
+      hasAccess = user.wishlists.includes(sharedWishlistUid);
+      break;
+    case "group":
+      const groupUid = pathname.split("/")[3];
+      hasAccess = user.groups.includes(groupUid);
+      break;
+  }
+  if (hasAccess)
+    return (
+      <Route
+        path={path}
+        exact={exact}
+        render={props => <Component {...props} />}
+      />
+    );
+  // Should be a proper component later that goes to last accessable page
+  else return <div>{"Not for your eyes"}</div>;
+};
+
 const mapStateToProps = () => {
   const getPathname = routerSelectors.getPathhameState();
   return state => ({
