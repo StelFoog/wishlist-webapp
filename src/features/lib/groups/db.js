@@ -60,6 +60,12 @@ const fetchAllGroupsFromUser = user => {
   return Promise.all(user.groups.map(fetchGroupByUid));
 };
 
+function onGroupChanged(uid, callback) {
+  return _getGroupRef(uid).onSnapshot(doc => {
+    callback(doc.data());
+  });
+}
+
 export {
   _getGroupRef,
   createGroupWithOwner,
@@ -68,5 +74,6 @@ export {
   editGroupProperties,
   fetchGroupByUid,
   fetchAllGroupsFromUser,
-  addWishlistToGroup
+  addWishlistToGroup,
+  onGroupChanged
 };

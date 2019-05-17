@@ -6,7 +6,8 @@ const {
   FETCH_OWNED_WISHLISTS,
   EDIT_WISHLIST_PROPERTIES,
   TOGGLE_EDIT,
-  DELETE_WISHLIST
+  DELETE_WISHLIST,
+  UPDATE_CURRENT_WISHLIST
 } = types;
 
 const createUserWishlist = () => ({
@@ -38,11 +39,18 @@ const deleteWishlist = (uid, user) => ({
   user
 });
 
+const updateCurrentWishlist = wishlist => ({
+  // Used by listener
+  type: UPDATE_CURRENT_WISHLIST,
+  wishlistData: wishlist
+});
+
 export default {
   createUserWishlist,
   fetchWishlists,
   fetchOwnedWishlists,
   editWishlistProperties,
   deleteWishlist,
-  editToggle
+  editToggle,
+  updateCurrentWishlist
 };

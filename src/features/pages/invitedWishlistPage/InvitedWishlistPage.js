@@ -7,8 +7,13 @@ import WishlistItem from "./components/wishlistItem";
 import ChatWindow from "./components/chatWindow";
 import MobileChatButton from "./components/mobileChatButton";
 import { firebase } from "../../lib/firebase";
+import db from "../../lib/wishlists/db.js";
+import { actions } from "../../lib/wishlists/";
 
 import "./invitedWishlistPage.css";
+
+const { updateCurrentWishlist } = actions;
+const { onWishlistChanged } = db;
 
 class InvitedWishlistPage extends React.Component {
   constructor(props) {
@@ -31,6 +36,19 @@ class InvitedWishlistPage extends React.Component {
       return list.uid === uid;
     });
     this.setState({ items: wishlist.items, name: wishlist.title });
+
+    this.unlisten = onWishlistChanged(
+      wishlist.uid,
+      (props => {
+        return updatedWishlist => {
+          props.updateCurrentWishlist(updatedWishlist);
+        };
+      })(this.props)
+    );
+  }
+
+  componentWillUnmount() {
+    this.unlisten();
   }
 
   toggleChatWindow() {
@@ -75,7 +93,11 @@ const mapStateToProps = state => {
   });
 };
 
+const mapDispatchToProps = dispatch => ({
+  updateCurrentWishlist: wishlist => dispatch(updateCurrentWishlist(wishlist))
+});
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(InvitedWishlistPage);

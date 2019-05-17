@@ -70,6 +70,12 @@ const deleteWishlistFromDB = async uid => {
     .then(() => console.log("Wishlist deleted"));
 };
 
+function onWishlistChanged(uid, callback) {
+  return _getWishlistRef(uid).onSnapshot(doc => {
+    callback(doc.data());
+  });
+}
+
 export default {
   editWishlistProperties,
   _getWishlistRef,
@@ -78,5 +84,6 @@ export default {
   fetchAllWishlistsFromUser,
   fetchAllOwnedWishlistsFromUser,
   deleteWishlistFromUser,
-  deleteWishlistFromDB
+  deleteWishlistFromDB,
+  onWishlistChanged
 };
