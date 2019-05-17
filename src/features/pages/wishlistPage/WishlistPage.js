@@ -15,22 +15,20 @@ import dialogActions from "../../components/dialog/actions.js";
 const { addUserToWishlist } = actions;
 const { openDialog } = dialogActions;
 
-class WishlistPage extends React.Component {
-  render() {
-    const {
-      wishlists,
-      createItem,
-      setCurrentPage,
-      match,
-      firebase,
-      editing,
-      editWishlistProperties,
-      shareWishlist,
-      user /* Actually auth */
-    } = this.props;
-    const { uid } = match.params;
-    const wishlist = wishlists.find(element => element.uid === uid);
-    const { items } = wishlist;
+const WishlistPage = ({
+  wishlists,
+  createItem,
+  setCurrentPage,
+  match,
+  firebase,
+  editing,
+  editWishlistProperties,
+  shareWishlist,
+  user /* Actually auth */
+}) => {
+  const { uid } = match.params;
+  const wishlist = wishlists.find(element => element.uid === uid);
+  const { items } = wishlist;
 
   return (
     <div className="page">
@@ -62,33 +60,16 @@ class WishlistPage extends React.Component {
         <div className="createItemButton">
           <IconButton
             variant="filled"
-            label="Share"
             color="var(--color-primary)"
-            handleClick={() => shareWishlist(wishlist, user.user)}
-          />
-        </div>
-        <div className="wishlistPage">
-          {items.length > 0 && (
-            <React.Fragment>
-              {items.map((item, index) => (
-                <WishlistItem index={index} wishlistUid={wishlist.uid} />
-              ))}
-            </React.Fragment>
-          )}
-          <div className="createItemButton">
-            <IconButton
-              variant="filled"
-              color="var(--color-primary)"
-              handleClick={() => createItem(wishlist.uid)}
-            >
-              <PlusIcon size={50} color="white" />
-            </IconButton>
-          </div>
+            handleClick={() => createItem(wishlist.uid)}
+          >
+            <PlusIcon size={50} color="white" />
+          </IconButton>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 const mapStateToProps = () => {
   return state => ({
