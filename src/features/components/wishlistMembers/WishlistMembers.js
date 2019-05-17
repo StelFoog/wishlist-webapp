@@ -23,7 +23,7 @@ class WishlistMembers extends React.Component {
 
   getUserPicture(user) {
     return (
-      <ProfilePicture src={user.profilePictureUrl} width={40} />
+      <ProfilePicture src={user.profilePictureUrl} width={this.props.size} />
     );
   }
 
