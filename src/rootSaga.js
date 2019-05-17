@@ -34,7 +34,6 @@ function* rootSaga() {
     groupSagas.watchEditGroupProperites(),
     groupSagas.watchLeaveGroup(),
     groupSagas.watchDeleteGroup(),
-    usersSagas.watchGetUserWithUid(),
     groupItemSagas.watchCreateGroupItem(),
     groupItemSagas.watchFetchGroupItems(),
     groupItemSagas.watchEditGroupItem(),

@@ -6,4 +6,6 @@ const getUsersWithUids = uids => ({
   uids
 });
 
-export default { getUsersWithUids  };
+const getUsersWithUid = getUsersWithUids;
+
+export default { getUsersWithUid, getUsersWithUids  };

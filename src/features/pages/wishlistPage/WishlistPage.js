@@ -54,7 +54,6 @@ const WishlistPage = ({
           variant="filled"
           label="Share"
           color="var(--color-primary)"
-          handleClick={() => shareWishlist(wishlist, user.user)}
           handleClick={() => (shareWishlist(wishlist, user.user))}
         />
       </div>
@@ -85,8 +84,6 @@ const shareWishlistWithDispatch = dispatch => {
     dispatch(openDialog("share", {
       title: "Share wishlist",
       withAdded: (added) => {
-        console.log("withAdded()");
-        console.log(added);
         added
           .filter((user) => (user && user.uid !== currentUser.uid))
           .forEach(user => (
@@ -94,8 +91,6 @@ const shareWishlistWithDispatch = dispatch => {
         ));
       },
       withRemoved: (removed) => {
-        console.log("withRemoved()");
-        console.log(removed);
         removed
           .forEach(user => (
           dispatch(removeUserFromWishlist(user.uid, currentWishlist.uid))

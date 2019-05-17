@@ -86,7 +86,7 @@ const mapStateToProps = () => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  handleSubmit: () => (console.log("handleSubmit()")),
+  handleSubmit: () => 0,
   clearSearch: () => (dispatch(clearSearch())),
   getUsersWithUids: uids => (dispatch(getUsersWithUids(uids)))
 });

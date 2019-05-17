@@ -34,26 +34,6 @@ const UserCard = ({user, buttonText, buttonColor, onClick}) => {
     }
     </Paper>
   );
-    /*<CardContainer>
-      <div className="userCard">
-        <CardContent>
-            <ProfilePicture 
-              src={user.profilePictureUrl}
-              width="50px"
-            />
-            {user.name}
-            <div className="userCardButton">
-              <Button
-              
-                variant="filled"
-                label={buttonText}
-                handleClick={onClick}
-                color={buttonColor}
-              />
-            </div>
-        </CardContent>
-      </div>
-    </CardContainer>*/
 }
 
 export default UserCard;
