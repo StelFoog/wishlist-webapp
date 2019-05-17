@@ -8,7 +8,8 @@ const {
   INVITE_USER_TO_GROUP_ERROR,
   INVITE_USER_TO_GROUP_SUCCESS,
   REMOVE_USER_FROM_GROUP_ERROR,
-  REMOVE_USER_FROM_GROUP_SUCCESS
+  REMOVE_USER_FROM_GROUP_SUCCESS,
+  UPDATE_CURRENT_GROUP
 } = types;
 
 const initialState = {
@@ -17,7 +18,7 @@ const initialState = {
 
 const groupReducer = (state = initialState, action) => {
   let nextState = JSON.parse(JSON.stringify(state)); // Deep copy
-  const { type, error, value, groupId, userId } = action;
+  const { type, error, value, groupId, userId, group } = action;
 
   switch (type) {
     case CREATE_GROUP_SUCCESS:
@@ -57,6 +58,17 @@ const groupReducer = (state = initialState, action) => {
         "REMOVE_USER_FROM_GROUP_ERROR: " + error.code + "-> " + error.message
       );
       break;
+
+    case UPDATE_CURRENT_GROUP:
+      const i = state.groups.findIndex(locGroup => locGroup.uid === group.uid);
+      if (i >= 0) {
+        nextState.groups[i] = group;
+      } else
+        console.error(
+          "(REDUX) DB listener: Couldn't find local group to update"
+        );
+      break;
+
     default:
   }
   return nextState;
