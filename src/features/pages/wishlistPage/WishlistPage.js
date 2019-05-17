@@ -85,6 +85,7 @@ const mapDispatchToProps = dispatch => ({
    * members of the wishlist
    */
   shareWishlist: (currentWishlist, currentUser) =>
+<<<<<<< HEAD
     dispatch(
       openDialog("share", {
         title: "Share wishlist",
@@ -102,6 +103,21 @@ const mapDispatchToProps = dispatch => ({
         }
       })
     )
+=======
+    dispatch(openDialog("share", {
+      title: "Share wishlist",
+      share: (users) => {
+        users.forEach((user) => {
+          dispatch(addUserToWishlist(currentWishlist.uid, user));
+        })
+      },
+      showIf: (user) => {
+        return user.uid !== currentUser.uid
+          && !currentWishlist.members.includes(user.uid)
+          && !currentWishlist.owner !== user.uid;
+      }
+    }))
+>>>>>>> 1ccbb11dc5c660a1110794b644e68206a5953301
 });
 
 export default connect(
