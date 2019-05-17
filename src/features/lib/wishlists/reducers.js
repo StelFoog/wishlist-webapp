@@ -161,18 +161,16 @@ const wishlistReducer = (state = initialState, action) => {
 
     case UPDATE_CURRENT_WISHLIST:
       const wishlist = wishlistData;
-      console.log("(REDUX) trying to update wishlist: " + wishlist.uid); // TODO: Remove debug logging
-      console.log(wishlist);
       const iO = state.ownedWishlists.findIndex(ls => ls.uid === wishlist.uid);
       const iM = state.wishlists.findIndex(ls => ls.uid === wishlist.uid);
-      console.log(iO + " " + iM);
       if (iO >= 0) {
-        console.log("(REDUX) Owned wishlist update from DB change complete");
         nextState.ownedWishlists[iO] = wishlist;
       } else if (iM >= 0) {
-        console.log("(REDUX) Member wishlist update from DB change complete");
         nextState.wishlists[iM] = wishlist;
-      } else console.error("(REDUX) Couldn't find wishlist to update"); // TODO: Remove debug logging
+      } else
+        console.error(
+          "(REDUX) DB listener: Couldn't find local wishlist to update"
+        );
       return nextState;
 
     default:
