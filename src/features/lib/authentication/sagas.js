@@ -95,6 +95,11 @@ function* workUserAuthFacebook() {
     } else if (pathname.startsWith("/nologin")) {
       const pathBack = (yield select(getSearch)).substr(1);
       yield all([put({ type: CLOSE_DIALOG }), put(push(pathBack))]);
+    } else if (pathname.startsWith("/invite")) {
+      const pathBack = (yield select(getSearch)).substr(1);
+      // yield put({ type: CLOSE_DIALOG });
+      // yield put(push(pathBack));
+      yield all([put({ type: CLOSE_DIALOG }), put(push(pathBack))]);
     }
   } catch (error) {
     yield put({ type: AUTH_USER_ERROR, error: error });
@@ -107,7 +112,7 @@ function* workLogout() {
   try {
     yield call(logout);
     yield put({ type: AUTH_LOGOUT_SUCCESS });
-  }catch(error) {
+  } catch (error) {
     yield put({ type: AUTH_LOGOUT_ERROR, error: error });
   }
 }
