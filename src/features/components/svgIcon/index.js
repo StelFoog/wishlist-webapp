@@ -11,10 +11,12 @@ import EditIcon from "./icons/EditIcon";
 import DeleteIcon from "./icons/DeleteIcon";
 import LogoutIcon from "./icons/LogoutIcon";
 import HelpIcon from "./icons/HelpIcon";
+import LeaveIcon from "./icons/LeaveIcon";
 
 import SvgIcon from "./SvgIcon";
 
 export {
+  LeaveIcon,
   RoundKeyboardArrowDown,
   RoundKeyboardArrowLeft,
   GroupIcon,

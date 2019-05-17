@@ -1,6 +1,6 @@
 import React from "react";
-import { EditIcon } from "../../../../components/svgIcon";
-import IconButton from "../../../../components/iconButton";
+import { EditIcon } from "../../svgIcon";
+import IconButton from "../../iconButton";
 
 const EditButton = ({ toggleEdit }) => (
   <div className="editButton">

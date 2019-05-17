@@ -1,8 +1,8 @@
-
-.page{
+.page {
   margin-top: 10vh;
+  min-height: calc(100% - 10vh);
 }
-.itemContent{
+.itemContent {
   display: flex;
   justify-content: space-between;
 }

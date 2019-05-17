@@ -1,7 +1,7 @@
 import React from "react";
 
 import { MemberList } from "./components";
-import PageHeader from "../../components/pageHeader";
+import Title from "../../components/wishlistTitle";
 import "./groupPage.css";
 
 import { onGroupChanged } from "../../lib/groups/db.js";
@@ -29,10 +29,18 @@ class GroupPage extends React.Component {
   }
 
   render() {
-    const { uid } = this.props.match.params;
-    const group = this.props.groups.find(el => el.uid === uid);
-
-    const user = this.props.user;
+    const {
+      match,
+      groups,
+      editProperties,
+      deleteObject,
+      leave,
+      deleteGroup,
+      user
+    } = this.props;
+    const { uid } = match.params;
+    const currentUser = match.params.user;
+    const group = groups.find(el => el.uid === uid);
 
     return (
       <div
@@ -40,13 +48,21 @@ class GroupPage extends React.Component {
         style={{
           flex: 1,
           display: "flex",
-          flexDirection: "column",
-          height: "100%",
-          maxHeight: "100vh"
+          flexDirection: "column"
         }}
       >
         <div className="groupPageHeader">
-          <PageHeader title={group.title} />
+          <Title
+            title={group.title}
+            type={"group"}
+            editProperties={editProperties}
+            uid={uid}
+            deleteObject={deleteObject}
+            leave={leave}
+            user={currentUser}
+            deleteObject={deleteGroup}
+            isOwner={group.owner === user.uid}
+          />
         </div>
         <div className="groupPage">
           <div className="memberBarContainer">
@@ -56,11 +72,10 @@ class GroupPage extends React.Component {
               uid={uid}
             />
           </div>
-          <GroupWishlist groupID={uid} userID={user} />
+          <GroupWishlist groupID={uid} userID={currentUser} />
         </div>
       </div>
     );
   }
 }
-
 export default GroupPage;
