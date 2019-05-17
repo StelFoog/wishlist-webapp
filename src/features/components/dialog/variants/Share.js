@@ -13,6 +13,13 @@ const { CLEAR_SEARCH } = types;
 const { clearSearch } = actions;
 
 class ShareDialog extends Component {
+  componentWillMount() {
+    this.initiallySelected = this.props.value.preSelected
+      ? this.props.value.preSelected.slice(0)
+      : [];
+    this.selected = [];
+  }
+
   render() {
     return(
       <React.Fragment>
@@ -20,8 +27,8 @@ class ShareDialog extends Component {
         <CardContent>
           <ShareForm 
             storeSelected={(x) => (this.selected = x)}
-            preSelected={this.props.value.preSelected || []}
-            showIf={this.props.value.showIf || (() => true)}
+            preSelected={this.initiallySelected}
+            showIf={this.props.value.showIf}
           />
         </CardContent>
         <CardActions>
@@ -38,8 +45,13 @@ class ShareDialog extends Component {
             variant="filled"
             label="Done"
             handleClick={() => {
+              const added = this.selected.filter((x) => 
+                (!this.initiallySelected.includes(x)));
+              const removed = this.initiallySelected.filter((x) =>
+                (!this.selected.includes(x)));
               this.props.clearSearch();
-              this.props.value.share(this.selected);
+              this.props.value.withAdded(added);
+              this.props.value.withRemoved(removed);
               this.props.handleClose();
             }}
           color="#003f9f"

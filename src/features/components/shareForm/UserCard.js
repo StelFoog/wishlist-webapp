@@ -9,6 +9,7 @@ import "./userCard.css";
 const UserCard = ({user, buttonText, buttonColor, onClick}) => {
   return(
     <Paper>
+    { !user ? "Loading..." :
       <div className="userCard">
         <div className="userAvatar">
           <ProfilePicture
@@ -30,6 +31,7 @@ const UserCard = ({user, buttonText, buttonColor, onClick}) => {
           />
         </div>
       </div>
+    }
     </Paper>
   );
     /*<CardContainer>
@@ -42,6 +44,7 @@ const UserCard = ({user, buttonText, buttonColor, onClick}) => {
             {user.name}
             <div className="userCardButton">
               <Button
+              
                 variant="filled"
                 label={buttonText}
                 handleClick={onClick}

@@ -12,12 +12,12 @@ const displayUserSharedWith = (component) => {
   return user => (
     <UserCard
       user={user}
-      buttonText="- Remove"
+      buttonText="Remove"
       buttonColor="#9f003f"
       onClick={() => {
         component.selected = component.selected.filter((x) =>
             x !== user);
-        component.unselected.push(user);
+        component.unselected.unshift(user);
         component.forceUpdate();
       }}
     />
@@ -32,12 +32,12 @@ const displayUserNotSharedWith = (component) => {
   return user => (
     <UserCard 
       user={user} 
-      buttonText="+ Add"
+      buttonText="Add"
       buttonColor="#009f3f"
       roundCorner={false}
       margin="0.5rem"
       onClick={() => {
-        component.selected.push(user);
+        component.selected.unshift(user);
         component.unselected = component.unselected.filter((x) => 
             x !== user);
         component.forceUpdate();
@@ -62,15 +62,13 @@ const handleInputWith = (component) => {
 
 /* Ugly solution, but necessary to compare user objects
  */
-const deepIncludes = (seq, elem) => {
-  return seq.map(JSON.stringify).includes(JSON.stringify(elem));
+const userIncludes = (users, user) => {
+  return users.map((x) => (x.uid)).includes(user.uid);
 }
 
 class ShareForm extends Component {
   componentWillMount() {
-    this.selected = this.props.preSelected;
-    this.unselected = this.props.searchResults.filter((x) => 
-      (!this.props.preSelected.includes(x)));
+    this.selected = this.props.preSelected.slice(0);
   }
 
   componentWillUnmount() {
@@ -79,10 +77,9 @@ class ShareForm extends Component {
   }
 
   render() {
-    const { showIf, preSelected, storeSelected } = this.props;
     this.unselected = this.props.searchResults.filter((x) => {
-      return !deepIncludes(this.selected, x) 
-              && (this.props.showIf === undefined || this.props.showIf(x));
+      return !userIncludes(this.selected, x)
+          && (this.props.showIf === undefined || this.props.showIf(x));
     });
 
     this.props.storeSelected(this.selected);

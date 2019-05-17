@@ -12,7 +12,12 @@ import { getUser } from "./selectors";
 import actions from "./actions.js";
 import { getPathname, getSearch } from "../router/selectors";
 
+import wishlistDB from "../wishlists/db.js";
+import { firebase } from "../firebase";
+
 const { addUserToWishlist } = actions;
+
+const { editWishlistProperties, deleteWishlistFromUser } = wishlistDB;
 
 const {
   AUTH_LOGOUT,
@@ -29,6 +34,9 @@ const {
   SEARCH_FOR_USERS_WITH_NAME_ERROR,
   SEARCH_FOR_USERS_WITH_NAME_SUCCESS,
   HANDLE_NOT_LOGGED_IN
+  REMOVE_USER_FROM_WISHLIST,
+  REMOVE_USER_FROM_WISHLIST_ERROR,
+  REMOVE_USER_FROM_WISHLIST_SUCCESS,
 } = authTypes;
 
 const { CLOSE_DIALOG } = dialogTypes;
@@ -43,6 +51,10 @@ function* watchUserAuthGoogle() {
 
 function* watchAddUserToWishlist() {
   yield takeEvery(ADD_USER_TO_WISHLIST, workAddUserToWishlist);
+}
+
+function* watchRemoveUserFromWishlist() {
+  yield takeEvery(REMOVE_USER_FROM_WISHLIST, workRemoveUserFromWishlist);
 }
 
 function* watchSearchForUsersWithName() {
@@ -69,10 +81,18 @@ function* workSearchForUsersWithName(action) {
 
 function* workAddUserToWishlist(action) {
   try {
+<<<<<<< HEAD
     const { wishlistUid, user } = action;
     const addedUser = user || (yield select(getUser));
     const userUid = addedUser.uid;
 
+=======
+    const { type, userUid, wishlistUid } = action;
+    console.log("workAddUserToWishlist()");
+    console.log(action);
+    const addedUser = userUid || (yield select(getUser)).uid;
+    
+>>>>>>> Added user cache, added functionality to unshare, need to reload the wishlist in order for the share window to update
     yield all([
       call(addInvitedWishlistToUser, { wishlistId: wishlistUid, uid: userUid }),
       call(addInvitedUserToWishlist, { wishlistId: wishlistUid, uid: userUid })
@@ -81,6 +101,25 @@ function* workAddUserToWishlist(action) {
     yield put({ type: ADD_USER_TO_WISHLIST_SUCCESS, wishlistUid: wishlistUid });
   } catch (error) {
     yield put({ type: ADD_USER_TO_WISHLIST_ERROR, error: error });
+  }
+}
+
+function* workRemoveUserFromWishlist(action) {
+  try {
+    const { type, userUid, wishlistUid } = action;
+    console.log("workRemoveUserFromWishlist()");
+    console.log(action);
+    
+    yield all([
+      call(deleteWishlistFromUser, wishlistUid, userUid),
+      call(editWishlistProperties, wishlistUid, "members",
+        firebase.firestore.FieldValue.arrayRemove(userUid)
+      )
+    ]);
+
+    yield put({ type: REMOVE_USER_FROM_WISHLIST_SUCCESS });
+  } catch (error) {
+    yield put({ type: REMOVE_USER_FROM_WISHLIST_ERROR, error: error });
   }
 }
 
@@ -121,6 +160,7 @@ export default {
   watchUserAuthFacebook,
   watchUserAuthGoogle,
   watchAddUserToWishlist,
+  watchRemoveUserFromWishlist,
   watchSearchForUsersWithName,
   watchLogout
 };

@@ -6,6 +6,7 @@ const {
   AUTH_USER_FACEBOOK,
   AUTH_USER_GOOGLE,
   ADD_USER_TO_WISHLIST,
+  REMOVE_USER_FROM_WISHLIST,
   CLEAR_SEARCH
 } = types;
 
@@ -25,10 +26,16 @@ const logout = () => ({
   type: AUTH_LOGOUT
 });
 
-const addUserToWishlist = (wishlistUid, user) => ({
+const addUserToWishlist = (userUid, wishlistUid) => ({
   type: ADD_USER_TO_WISHLIST,
-  wishlistUid,
-  user
+  userUid,
+  wishlistUid
+});
+
+const removeUserFromWishlist = (userUid, wishlistUid) => ({
+  type: REMOVE_USER_FROM_WISHLIST,
+  userUid,
+  wishlistUid
 });
 
 const searchForUsersWithName = name => ({
@@ -41,6 +48,7 @@ export default {
   authenticateGoogle,
   logout,
   addUserToWishlist,
+  removeUserFromWishlist,
   searchForUsersWithName,
   clearSearch
 };

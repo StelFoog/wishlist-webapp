@@ -1,27 +1,39 @@
 import { takeEvery, call, put, select, all } from "redux-saga/effects";
 import { getUser } from "../authentication/db";
 import types from "./types";
+import { selectUserCache } from "./selectors.js";
 
 const {
-  GET_USERS_WITH_UID,
-  GET_USERS_WITH_UID_ERROR,
-  GET_USERS_WITH_UID_SUCCESS
+  GET_USERS_WITH_UIDS,
+  GET_USERS_WITH_UIDS_ERROR,
+  GET_USERS_WITH_UIDS_SUCCESS
 } = types;
 
-function* watchGetUserWithUid() {
-  yield takeEvery(GET_USERS_WITH_UID, workGetUserWithUid);
+function* watchGetUsersWithUids() {
+  yield takeEvery(GET_USERS_WITH_UIDS, workGetUsersWithUids);
 }
 
-function* workGetUserWithUid(action) {
+function* workGetUsersWithUids(action) {
   try {
-    const { uid } = action;
-    const users = yield all(uid.map(x => call(getUser, x)));
-    yield put({ type: GET_USERS_WITH_UID_SUCCESS, users: users });
+    console.log("workGetUsersWithUids()");
+    const userCache = yield select(selectUserCache);
+    console.log("userCache before: ");
+    console.log(userCache);
+    const { uids } = action;
+    let users = [];
+    for(let uidi = 0; uidi < uids.length; ++uidi) {
+      if(!userCache[uids[uidi]])
+        users.push(yield call(getUser, uids[uidi]));
+    }
+    console.log("Returning ");
+    console.log(users);
+    
+    yield put({ type: GET_USERS_WITH_UIDS_SUCCESS, users: users });
   } catch (error) {
-    yield put({ type: GET_USERS_WITH_UID_ERROR, error: error });
+    yield put({ type: GET_USERS_WITH_UIDS_ERROR, error: error });
   }
 }
 
 export default {
-  watchGetUserWithUid
+  watchGetUsersWithUids
 };
