@@ -5,6 +5,7 @@ import PlusIcon from "../../components/svgIcon/icons/PlusIcon";
 import AllWishlistsHeader from "./components/allWishlistsHeader";
 import SharedWishlists from "./components/sharedWishlists";
 import SwipeableViews from "react-swipeable-views";
+import ShareForm from "../../components/shareForm/ShareForm";
 import { Tabs, Tab } from "./components/allWishlistsHeader/tabs";
 import "./loggedInPage.css";
 
@@ -52,7 +53,6 @@ class LoggedInPage extends React.Component {
       <div className="logged-in-page">
 
         <AllWishlistsHeader handleChange={this.handleChange} />
-
         <SwipeableViews
           index={index}
           onChangeIndex={this.handleChangeIndex}

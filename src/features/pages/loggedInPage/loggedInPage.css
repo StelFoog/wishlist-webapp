@@ -33,6 +33,10 @@
   .logged-in-page {
     min-height: calc(100% - 64px);
   }
+
+  .react-swipeable-view-container {
+    margin-top: calc(16vh + 64px);
+  }
 }
 
 @keyframes showButton {
