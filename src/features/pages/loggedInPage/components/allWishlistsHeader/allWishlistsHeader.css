@@ -18,3 +18,11 @@
   align-items: flex-end;
   */
 }
+
+@media (max-width: 600px) {
+  .headerTitle {
+    margin: 0.4rem 0;
+    text-align: center;
+  }
+
+}
