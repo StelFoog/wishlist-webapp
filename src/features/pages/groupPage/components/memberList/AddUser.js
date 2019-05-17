@@ -5,7 +5,7 @@ import Ripple from "../../../../components/ripple";
 import dialogActions from "../../../../components/dialog/actions.js";
 import groupActions from "../../../../lib/groups/actions.js";
 
-const { addUserToGroup } = groupActions;
+const { removeUserFromGroup, addUserToGroup } = groupActions;
 const { openDialog } = dialogActions;
 
 const AddUser = ({ shareGroup, currentUserUid, currentGroup}) => (
@@ -19,21 +19,28 @@ const AddUser = ({ shareGroup, currentUserUid, currentGroup}) => (
   </div>
 );
 
-const mapDispatchToProps = dispatch => ({
-  shareGroup: (currentGroup, currentUserUid) => {
+const shareGroupWithDispatch = dispatch => (
+  (currentGroup, currentUserUid) => {
     dispatch(openDialog("share", {
       title: "Share group",
-      share: (users) => {
-        users.forEach((user) => {
+      withAdded: added => {
+        added.forEach(user => {
           dispatch(addUserToGroup(user.uid, currentGroup.uid));
         })
       },
-      showIf: (user) => {
-        return user.uid !== currentUserUid
-            && !currentGroup.members.includes(user.uid);
-      }
+      withRemoved: removed => {
+        removed.forEach(user => {
+          dispatch(removeUserFromGroup(currentGroup.uid, user.uid));
+        });
+      },
+      preSelectedUids: currentGroup.members,
+      showIf: user => (user.uid !== currentUserUid)
     }))
   }
+);
+
+const mapDispatchToProps = dispatch => ({
+  shareGroup: shareGroupWithDispatch(dispatch)
 })
 
 export default connect(

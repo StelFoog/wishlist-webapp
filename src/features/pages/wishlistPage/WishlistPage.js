@@ -1,20 +1,27 @@
 import React from "react";
 import WishlistTitle from "./../../components/wishlistTitle";
 import WishlistItem from "../../components/wishlistItem";
-import actions from "../../lib/authentication/actions.js";
+import actions from "../../lib/wishlists/actions.js";
+import userActions from "../../lib/users/actions.js";
+import { actions as authActions } from "../../lib/authentication/";
+import { selectUserCache } from "../../lib/users/selectors.js";
+import { actions as wishlistActions } from "../../lib/wishlists/";
 
 import { connect } from "react-redux";
 
 import "./wishlistPage.css";
 
 import IconButton from "../../components/iconButton";
+import Button from "../../components/button";
 import PlusIcon from "../../components/svgIcon/icons/PlusIcon";
 import dialogActions from "../../components/dialog/actions.js";
 
 import { getUser } from "../../lib/authentication/selectors";
 
-const { addUserToWishlist } = actions;
+const { editWishlistProperties } = wishlistActions;
 const { openDialog } = dialogActions;
+const { getUsersWithUids } = userActions;
+const { addUserToWishlist, removeUserFromWishlist } = authActions;
 
 const WishlistPage = ({
   wishlists,
@@ -25,7 +32,7 @@ const WishlistPage = ({
   editProperties,
   deleteObject,
   shareWishlist,
-  user /* Actually auth */
+  user, /* Actually auth */
 }) => {
   const { uid } = match.params;
   const wishlist = wishlists.find(element => element.uid === uid);
@@ -42,16 +49,14 @@ const WishlistPage = ({
         user={user}
         type="wishlist"
       />
-      {/*
       <div className="shareWishlistButton">
         <Button
           variant="filled"
           label="Share"
           color="var(--color-primary)"
-          handleClick={() => shareWishlist(wishlist, user.user)}
+          handleClick={() => (shareWishlist(wishlist, user.user))}
         />
       </div>
-      */}
       <div className="wishlistPage">
         {items.length > 0 && (
           <React.Fragment>
@@ -74,37 +79,36 @@ const WishlistPage = ({
   );
 };
 
-const mapStateToProps = () => {
-  return state => ({
-    user: getUser(state)
-  });
-};
+const shareWishlistWithDispatch = dispatch => {
+  return (currentWishlist, currentUser) => {
+    dispatch(openDialog("share", {
+      title: "Share wishlist",
+      withAdded: added => {
+        added
+          .forEach(user => (
+            dispatch(addUserToWishlist(user.uid, currentWishlist.uid))
+        ));
+      },
+      withRemoved: (removed) => {
+        removed.forEach(user => (
+          dispatch(removeUserFromWishlist(user.uid, currentWishlist.uid))
+        ));
+      },
+      preSelectedUids: currentWishlist.members,
+      showIf: user => (user.uid !== currentUser.uid)
+    }))
+  };
+}
+
+const mapStateToProps = state => ({
+  user: state.auth
+});
 
 const mapDispatchToProps = dispatch => ({
   createItem: wishlistUid =>
     dispatch(openDialog("createItem", { wishlistUid })),
-  /* With each UID; invite the users to the wishlist
-   * Only show users that are a) not yourself and b) not already
-   * members of the wishlist
-   */
-  shareWishlist: (currentWishlist, currentUser) =>
-    dispatch(
-      openDialog("share", {
-        title: "Share wishlist",
-        share: users => {
-          users.forEach(user => {
-            dispatch(addUserToWishlist(currentWishlist.uid, user));
-          });
-        },
-        showIf: user => {
-          return (
-            user.uid !== currentUser.uid &&
-            !currentWishlist.members.includes(user.uid) &&
-            !currentWishlist.owner !== user.uid
-          );
-        }
-      })
-    )
+  shareWishlist: 
+    shareWishlistWithDispatch(dispatch)
 });
 
 export default connect(

@@ -49,10 +49,8 @@ const fetchAllOwnedWishlistsFromUser = user => {
   return Promise.all(user.ownedWishlists.map(uid => fetchWishlistByUid(uid)));
 };
 
-const deleteWishlistFromUser = async (uid, user) => {
-  const _ref = database.collection("Users").doc("" + user.uid);
-
-  console.log("(DB) deleting wishlist from user: " + uid + ", " + user.name);
+const deleteWishlistFromUser = async (uid, userUid) => {
+  const _ref = database.collection("Users").doc("" + userUid);
 
   await _ref.get().then(doc => {
     return _ref

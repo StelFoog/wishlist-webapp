@@ -70,6 +70,7 @@ class GroupPage extends React.Component {
               currentGroup={group}
               members={group.members}
               uid={uid}
+              currentUser={user}
             />
           </div>
           <GroupWishlist groupID={uid} userID={currentUser} />

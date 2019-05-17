@@ -3,6 +3,9 @@ import { defaultUser } from "./user.js";
 
 const _getUserRef = uid => database.collection("Users").doc(uid.toString());
 
+const usersOrderedByName = database.collection("Users")
+                                   .orderBy("nameLowerCase");
+
 const userExistsWithUid = async uid => {
   return (await getUser(uid)) !== null;
 };
@@ -15,9 +18,7 @@ const nextHigherString = (string) => {
 
 const searchForUsersWithName = async (name) => {
   const nameLowerCase = name.toLowerCase();
-  const users = (await 
-    database.collection("Users")
-    .orderBy("nameLowerCase")
+  const users = (await usersOrderedByName
     .where("nameLowerCase", ">=", nameLowerCase)
     .where("nameLowerCase", "<", nextHigherString(nameLowerCase))
     .get().then((docArray) =>
