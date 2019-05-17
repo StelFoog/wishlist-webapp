@@ -8,6 +8,7 @@
 .tab {
   padding: 1rem;
   flex: 1;
+  margin-right: 5px;
 }
 
 .tab:hover  {
@@ -28,7 +29,11 @@
 
   .tabs {
     margin-left: 0;
-    justify-content: center;
+    justify-content: space-around;
+  }
+
+  .tab{
+    margin-right: 0;
   }
   
   .tab h2{

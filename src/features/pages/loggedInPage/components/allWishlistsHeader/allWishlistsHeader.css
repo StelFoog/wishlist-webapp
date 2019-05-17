@@ -15,9 +15,11 @@
 }
 
 @media (max-width: 600px) {
+  .allWishlistsHeader{
+    margin-top: 64px;
+  }
   .headerTitle {
-    margin: 0.4rem 0;
-    text-align: center;
+    display: none;
   }
 
 }
