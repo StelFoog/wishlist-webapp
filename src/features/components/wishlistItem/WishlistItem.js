@@ -12,7 +12,7 @@ const { openDialog } = actions;
 const wishListItem = ({ wishlists, index, editItem, wishlistUid }) => {
   const wishlist = wishlists.find(element => element.uid === wishlistUid);
   const item = wishlist.items[index];
-  const { name, description, price } = item;
+  const { name, description, price, websitelink } = item;
   return (
     <React.Fragment>
       <div className="wishlistItem">
@@ -29,18 +29,25 @@ const wishListItem = ({ wishlists, index, editItem, wishlistUid }) => {
             <h3>{price}:-</h3>
           </div>
           <div className="itemLink">
-            <Button
-              variant="filled"
-              label="Link"
-              className="itemLinkButton"
-              padding="0"
-              color="var(--color-primary)"
-            />
+            <a
+              href={"//" + websitelink}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <Button
+                variant="filled"
+                label="Link"
+                className="itemLinkButton"
+                padding="0"
+                color="var(--color-primary)"
+              />
+            </a>
           </div>
         </div>
 
         <div className="itemContent">
           <Button
+            className="editButton"
             variant={"filled"}
             label={"Edit"}
             color={"var(--color-primary"}

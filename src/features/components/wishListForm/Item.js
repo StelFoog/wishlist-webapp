@@ -21,7 +21,7 @@ const ItemAddition = ({ handleSubmit, handleCreateItem }) => (
       </div>
       <div>
         <label htmlFor="Website link">Website link</label>
-        <Field name="weblink" component="input" type="text" />
+        <Field name="weblink" component="input" type="url" />
         {/*Fixa Url compatibiltet och check*/}
       </div>
       <div>

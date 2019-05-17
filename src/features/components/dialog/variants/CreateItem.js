@@ -26,6 +26,8 @@ const CreateItem = ({ handleSubmit, handleClose, values, performSubmit }) => (
         <Field name="price" component={renderField} type="number" />
         <label>Description:</label>
         <Field name="description" component={renderField} type="text" />
+        <label>Website Link:</label>
+        <Field name="websitelink" component={renderField} type="text" />
       </form>
     </CardContent>
     <CardActions>

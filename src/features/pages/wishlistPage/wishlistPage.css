@@ -1,10 +1,11 @@
-
-.wishlistPage{
-  padding: 3rem;
+.wishlistPage {
+  padding-bottom: 3rem;
+  padding-left: 3rem;
 }
-.itemContent{
+.itemContent {
   display: flex;
   justify-content: space-between;
+  padding-right: 8rem;
 }
 
 .createItemButton {
