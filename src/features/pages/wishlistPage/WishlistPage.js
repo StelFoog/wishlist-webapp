@@ -37,7 +37,9 @@ const WishlistPage = ({
         editing={editing}
         editWishlistProperties={editWishlistProperties}
         uid={uid}
+        wishlist={wishlist}
       />
+      {/*
       <div className="shareWishlistButton">
         <Button
           variant="filled"
@@ -46,6 +48,7 @@ const WishlistPage = ({
           handleClick={() => shareWishlist(wishlist, user.user)}
         />
       </div>
+      */}
       <div className="wishlistPage">
         {items.length > 0 && (
           <React.Fragment>

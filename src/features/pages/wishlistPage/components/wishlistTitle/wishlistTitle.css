@@ -1,9 +1,22 @@
 .wishlistTitle {
   display: flex;
-  border-bottom: 2px solid var(--color-dark);
   align-items: center;
   justify-content: space-between;
-  padding: 1rem;
+
+  position: fixed;
+  top: 0;
+  left: 170px;
+  width: calc(100vw - 170px);
+
+  height: 10vh;
+
+  z-index: 10;
+  background-color: var(--color-light-gray);
+
+  border-bottom: 2px solid var(--color-dark);
+  box-shadow: 0 2px 2px -2px var(--color-dark);
+
+
 }
 
 .wishlistTitle .editButtons {
@@ -19,11 +32,11 @@
 .wishlistTitle input,
 .wishlistTitle h1 {
   text-align: left;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 3rem;
   color: var(--color-dark);
-  padding: 0.25rem 0px;
-  margin: 0;
+  margin: 1rem;
+  margin-left: 3rem;
 }
 
 .wishlistTitle form {
@@ -42,6 +55,23 @@
 
 .wishlistTitle input:focus {
   outline: none;
+}
+
+.titleNoEdit {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.invitedUsers {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 20px;
+}
+
+.invitedUsers > h2 {
+  margin-right: 5px;
 }
 
 /* Bar */
