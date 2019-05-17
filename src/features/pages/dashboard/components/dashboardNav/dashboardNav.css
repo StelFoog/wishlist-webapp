@@ -138,6 +138,8 @@
     color: var(--color-light);
   }
   .mobileTopNav {
+    position: fixed;
+    z-index: 11;
     width: 100%;
     background-color: var(--color-primary-dark);
     box-shadow: 1px 0 2px 0 var(--color-dark);
