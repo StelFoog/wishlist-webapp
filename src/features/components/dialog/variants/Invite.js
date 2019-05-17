@@ -23,16 +23,16 @@ const Invite = ({
       </CardContent>
       <CardActions>
         <Button
-          label="Login"
-          color="green"
-          variant="filled"
-          handleClick={authenticate}
+          label="Cancel"
+          color="var(--color-error)"
+          variant="text"
+          handleClick={handleClose}
         />
         <Button
-          label="Cancel"
-          color="red"
-          variant="outlined"
-          handleClick={handleClose}
+          label="Login"
+          color="var(--color-accept)"
+          variant="text"
+          handleClick={authenticate}
         />
       </CardActions>
     </React.Fragment>

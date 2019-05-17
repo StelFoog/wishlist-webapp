@@ -9,21 +9,19 @@ const { createUserWishlist } = actions;
 const WishlistCreateForm = ({ handleSubmit }) => (
   <form onSubmit={handleSubmit}>
     <React.Fragment>
-      <label htmlFor="Wish List Title">Wish List Title</label>
-      <div>
-        <Field
-          name="title"
-          component={renderField}
-          type="text"
-          validate={required}
-        />
-      </div>
-      <div>
-        <label htmlFor="Event date">Event date</label>
-        <div>
-          <Field name="EventDate" component={renderField} type="date" />
-        </div>
-      </div>
+      <Field
+        name="title"
+        component={renderField}
+        type="text"
+        validate={required}
+        label={"Wishlist Title"}
+      />
+      <Field
+        name="EventDate"
+        label="Event date"
+        component={renderField}
+        type="date"
+      />
     </React.Fragment>
   </form>
 );

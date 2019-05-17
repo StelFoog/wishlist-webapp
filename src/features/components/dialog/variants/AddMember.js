@@ -14,9 +14,9 @@ const AddMember = ({ performSubmit, values, ...rest }) => {
       <CardHeader>{"Add new member"}</CardHeader>
       <CardContent>
         <form onSubmit={performSubmit}>
-          <label>Users uid:</label>
           <Field
             name="name"
+            label="Users uid"
             component={renderField}
             type="text"
             validate={required}
@@ -26,8 +26,8 @@ const AddMember = ({ performSubmit, values, ...rest }) => {
       <CardActions>
         <Button
           label="SUBMIT"
-          color="green"
-          variant="filled"
+          color="var(--color-accept)"
+          variant="text"
           handleClick={performSubmit}
         />
       </CardActions>
