@@ -2,6 +2,8 @@ import React from "react";
 import WishlistTitle from "./../../components/wishlistTitle";
 import WishlistItem from "../../components/wishlistItem";
 import actions from "../../lib/wishlists/actions.js";
+import userActions from "../../lib/users/actions.js";
+import { selectUserCache } from "../../lib/users/selectors.js";
 
 import { connect } from "react-redux";
 
@@ -16,6 +18,8 @@ import { getUser } from "../../lib/authentication/selectors";
 const { addUserToWishlist } = actions;
 const { editWishlistProperties } = actions;
 const { openDialog } = dialogActions;
+const { getUsersWithUid } = userActions;
+const { getUserCache } = userSelectors;
 
 const WishlistPage = ({
   wishlists,
@@ -26,7 +30,8 @@ const WishlistPage = ({
   editProperties,
   deleteObject,
   shareWishlist,
-  user /* Actually auth */
+  user, /* Actually auth */
+  state
 }) => {
   const { uid } = match.params;
   const wishlist = wishlists.find(element => element.uid === uid);
@@ -49,7 +54,11 @@ const WishlistPage = ({
           variant="filled"
           label="Share"
           color="var(--color-primary)"
+<<<<<<< HEAD
           handleClick={() => shareWishlist(wishlist, user.user)}
+=======
+          handleClick={() => (shareWishlist(wishlist, user.user, state))}
+>>>>>>> WIP: user cache
         />
       </div>
       */}
@@ -88,7 +97,7 @@ const mapDispatchToProps = dispatch => ({
    * Only show users that are a) not yourself and b) not already
    * members of the wishlist
    */
-  shareWishlist: (currentWishlist, currentUser) =>
+  shareWishlist: (currentWishlist, currentUser, userCache) =>
     dispatch(openDialog("share", {
       title: "Share wishlist",
       onShare: (users) => {
@@ -100,7 +109,11 @@ const mapDispatchToProps = dispatch => ({
           })
         ));
       },
-      preSelected: currentWishlist.members,
+      preSelected: currentWishlist.members.map((uid) => {
+        if(!userCache[uid])
+          dispatch(getUsersWithUids([uid]));
+        return userCache[uid];
+      }),
       showIf: (user) => {
         return user.uid !== currentUser.uid
             && !currentWishlist.owner !== user.uid;
