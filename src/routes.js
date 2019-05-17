@@ -32,6 +32,7 @@ const Root = ({
   handleNotLoggedIn,
   loggedIn,
   pathname,
+  user,
   push
 }) => (
   <Provider store={store}>
@@ -85,12 +86,14 @@ const Root = ({
                 return <LoggedInPage {...props} />;
               }}
             />
-            <Route
+            <ProtectedRoute
               path={"/dashboard/wishlist/:uid"}
               exact
-              render={props => {
-                return <WishlistPage {...props} />;
-              }}
+              user={user}
+              component={WishlistPage}
+              pathname={pathname}
+              push={push}
+              variant={"ownWishlist"}
             />
             <Route
               path="/dashboard/help"
@@ -202,6 +205,7 @@ const mapStateToProps = () => {
   const getPathname = routerSelectors.getPathhameState();
   return state => ({
     loggedIn: state.auth.loggedIn,
+    user: state.auth.user,
     pathname: getPathname(state)
   });
 };
