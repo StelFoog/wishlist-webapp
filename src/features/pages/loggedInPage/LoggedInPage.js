@@ -32,12 +32,17 @@ class LoggedInPage extends React.Component {
       index: value
     });
 
+    // Scroll to the top when user changes tabs
+    window.scrollTo(0, 0);
+
   };
 
   handleChangeIndex = index => {
     this.setState({
       index
     });
+
+    console.log("TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEST!");
   };
 
   render() {
@@ -47,6 +52,7 @@ class LoggedInPage extends React.Component {
       <div className="logged-in-page">
 
         <AllWishlistsHeader handleChange={this.handleChange} />
+
         <SwipeableViews
           index={index}
           onChangeIndex={this.handleChangeIndex}
