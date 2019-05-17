@@ -3,16 +3,13 @@
 
   background-color: var(--color-light-gray);
 
-
   /* Padding that compensates for active tab bottom border */
   padding-bottom: 3px;
 
   border-bottom: 2px solid var(--color-dark);
   box-shadow: 0 2px 2px -2px var(--color-dark);
 
-  /*
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  */
+  position: fixed;
+  z-index: 10;
+  width: 100%;
 }
