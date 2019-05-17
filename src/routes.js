@@ -109,12 +109,14 @@ const Root = ({
                 return <InvitedUserPage {...props} />;
               }}
             />
-            <Route
+            <ProtectedRoute
               path={"/dashboard/group/:uid/:user"}
               exact
-              render={props => {
-                return <GroupPage {...props} />;
-              }}
+              user={user}
+              component={GroupPage}
+              pathname={pathname}
+              push={push}
+              variant={"group"}
             />
             <ProtectedRoute
               path={"/dashboard/guest/:uid"}
