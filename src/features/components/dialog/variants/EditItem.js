@@ -16,19 +16,10 @@ const EditItem = ({ handleSubmit, handleClose, values, performSubmit }) => {
       <CardHeader>{"Edit wishlist item"}</CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit}>
-          <Field name="name" label="Name" component={renderField} type="text" />
-          <Field
-            name="price"
-            label="Price"
-            component={renderField}
-            type="number"
-          />
-          <Field
-            name="description"
-            label="Description"
-            component={renderField}
-            type="text"
-          />
+          <Field name="name" label={"Name"} component={renderField} type="text" />
+          <Field name="price" label={"Price"} component={renderField} type="number" />
+          <Field name="description" label={"Description"} component={renderField} type="text" />
+          <Field name="websitelink" label={"Website link"} component={renderField} type="text" />
         </form>
       </CardContent>
       <CardActions>
