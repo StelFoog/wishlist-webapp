@@ -13,7 +13,8 @@ import {
   Invite,
   YesNoDialog,
   CreateGroupItem,
-  EditGroupItem
+  EditGroupItem,
+  HelpPage
 } from "./variants";
 
 import "./dialog.css";
@@ -29,7 +30,8 @@ const DIALOG_VARIANTS = {
   share: Share,
   noLogin: NoLogin,
   invite: Invite,
-  yesNo: YesNoDialog
+  yesNo: YesNoDialog,
+  help: HelpPage
 };
 
 const Dialog = ({ variant, showDialog, handleClose, values, ...rest }) => {
@@ -38,9 +40,9 @@ const Dialog = ({ variant, showDialog, handleClose, values, ...rest }) => {
     : "div";
   const onClose = values.onClose
     ? () => {
-        handleClose();
-        values.onClose();
-      }
+      handleClose();
+      values.onClose();
+    }
     : handleClose;
   return (
     <React.Fragment>
