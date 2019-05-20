@@ -9,7 +9,6 @@ import ChatIcon from "./icons/ChatIcon";
 import RoundKeyboardArrowLeft from "./icons/RoundKeyboardArrowLeft";
 import EditIcon from "./icons/EditIcon";
 import DeleteIcon from "./icons/DeleteIcon";
-import LogoutIcon from "./icons/LogoutIcon";
 import HelpIcon from "./icons/HelpIcon";
 import LeaveIcon from "./icons/LeaveIcon";
 
@@ -28,7 +27,6 @@ export {
   ChatIcon,
   EditIcon,
   DeleteIcon,
-  LogoutIcon,
   HelpIcon
 };
 

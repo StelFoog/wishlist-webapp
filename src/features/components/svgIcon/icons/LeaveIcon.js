@@ -1,6 +1,6 @@
 import React from "react";
 
-const InsertEmoji = ({ size = 40, color = "#fff" }) => (
+const InsertEmoji = ({ size = 40, color = "var(--color-light)" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={size}
