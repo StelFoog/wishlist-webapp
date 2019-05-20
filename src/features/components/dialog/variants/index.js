@@ -10,6 +10,7 @@ import NoLogin from "./NoLogin";
 import Invite from "./Invite";
 import YesNoDialog from "./YesNoDialog";
 import HelpPage from "./HelpPage";
+import ErrorDialog from "./ErrorDialog";
 
 export {
   NewWishlist,
@@ -23,5 +24,6 @@ export {
   YesNoDialog,
   CreateGroupItem,
   EditGroupItem,
-  HelpPage
+  HelpPage,
+  ErrorDialog
 };

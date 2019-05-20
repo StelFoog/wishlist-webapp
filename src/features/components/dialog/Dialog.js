@@ -14,7 +14,8 @@ import {
   YesNoDialog,
   CreateGroupItem,
   EditGroupItem,
-  HelpPage
+  HelpPage,
+  ErrorDialog
 } from "./variants";
 
 import "./dialog.css";
@@ -31,7 +32,8 @@ const DIALOG_VARIANTS = {
   noLogin: NoLogin,
   invite: Invite,
   yesNo: YesNoDialog,
-  help: HelpPage
+  help: HelpPage,
+  error: ErrorDialog
 };
 
 const Dialog = ({ variant, showDialog, handleClose, values, ...rest }) => {
