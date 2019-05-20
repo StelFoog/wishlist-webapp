@@ -1,6 +1,3 @@
-.listWishlists {
-  
-}
 
 
 .wishlistCard {
@@ -8,6 +5,13 @@
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+
+}
+
+.wishlistCard:hover {
+  border: 2px solid var(--color-dark-gray);
+  margin: -2px;
+  border-radius: var(--border-radius);
 }
 
 .wishlistAvatarList {
@@ -20,6 +24,7 @@
   flex-direction: column;
   align-items: flex-end;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 @media (min-width: 601px) {
@@ -34,6 +39,8 @@
   .wishlistCardTitle {
     text-align: center;
   }
+
+
 
   .wishlistMembersDue{
     align-items: center;
