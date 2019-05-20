@@ -6,9 +6,11 @@ import { sagas as chatSagas } from "./features/lib/chat";
 import { sagas as groupSagas } from "./features/lib/groups";
 import { sagas as usersSagas } from "./features/lib/users";
 import { sagas as groupItemSagas } from "./features/lib/groupItems";
+import errorSagas from "./features/lib/error-handling/sagas.js";
 
 function* rootSaga() {
   yield all([
+    errorSagas.watchError(),
     authSagas.watchUserAuthFacebook(),
     authSagas.watchAddUserToWishlist(),
     authSagas.watchRemoveUserFromWishlist(),
