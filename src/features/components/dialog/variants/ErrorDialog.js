@@ -6,10 +6,11 @@ import Button from "../../button";
 import { CardHeader, CardContent, CardActions } from "../../card";
 
 const ErrorDialog = ({ handleClose, value }) => {
-  const { error } = value;
+  const { type, error } = value;
   return(
     <React.Fragment>
       <CardHeader>Something went wrong! :(</CardHeader>
+      { type || "" }
       <CardContent>
         <Paper>
           { error &&
