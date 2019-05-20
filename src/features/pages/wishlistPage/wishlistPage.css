@@ -1,4 +1,4 @@
-.page {
+.wishlistPage {
   margin-top: 10vh;
   min-height: calc(100% - 10vh);
 }
@@ -9,9 +9,8 @@
 
 .createItemButton {
   position: fixed;
-  right: 40px;
-  bottom: 40px;
-  width: 100px;
+  right: 2rem;
+  bottom: 2rem;
 }
 
 @media (min-width: 901px) {
@@ -32,5 +31,10 @@
 @media (max-width: 600px) {
   .page {
     width: 100vw;
+  }
+
+  .wishlistPage {
+    margin-top: calc(10vh + 64px);
+    min-height: calc(100% - 10vh - 64px);
   }
 }

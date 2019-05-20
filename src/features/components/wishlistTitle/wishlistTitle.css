@@ -5,7 +5,6 @@
 
   position: fixed;
   top: 0;
-  left: 170px;
   width: calc(100vw - 170px);
 
   height: 10vh;
@@ -15,8 +14,10 @@
 
   border-bottom: 2px solid var(--color-dark);
   box-shadow: 0 2px 2px -2px var(--color-dark);
+}
 
-
+.wishlistTitleContainer {
+  margin: 1rem 1.5rem;
 }
 
 .wishlistTitle .editButtons {
@@ -35,12 +36,6 @@
   font-weight: 500;
   font-size: 3rem;
   color: var(--color-dark);
-  margin: 1rem;
-  margin-left: 3rem;
-}
-
-.wishlistTitle form {
-  margin-right: 2.5rem;
 }
 
 .wishlistTitle input {
@@ -103,6 +98,13 @@
 input:focus ~ .bar:before,
 input:focus ~ .bar:after {
   width: 50%;
+}
+
+@media (max-width: 600px) {
+  .wishlistTitle {
+    top: 64px;
+    width: 100%;
+  }
 }
 
 /* ANIMATIONS ================ */

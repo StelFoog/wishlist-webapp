@@ -43,22 +43,24 @@ class WishlistTitle extends React.Component {
     const { value } = this.state;
     return (
       <div className="wishlistTitle">
-        {editing ? (
-          <form onSubmit={this.handleSubmit}>
-            <input value={value} type="text" onChange={this.handleChange} />
-            <span className="bar" />
-          </form>
-        ) : (
-          <div className="titleNoEdit">
-            <h1>{title}</h1>
-            {type === "wishlist" && (
-              <div className="invitedUsers">
-                <h2>Invited users: </h2>
-                <WishlistMembers wishlist={this.state.wishlist} />
-              </div>
-            )}
-          </div>
-        )}
+        <div className="wishlistTitleContainer">
+          {editing ? (
+            <form onSubmit={this.handleSubmit}>
+              <input value={value} type="text" onChange={this.handleChange} />
+              <span className="bar" />
+            </form>
+          ) : (
+            <div className="titleNoEdit">
+              <h1>{title}</h1>
+              {type === "wishlist" && (
+                <div className="invitedUsers">
+                  <h2>Invited users: </h2>
+                  <WishlistMembers wishlist={this.state.wishlist} />
+                </div>
+              )}
+            </div>
+          )}
+        </div>
         <div className="editButtons">
           {editing && (
             <DeleteButton
