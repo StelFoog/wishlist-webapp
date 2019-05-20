@@ -116,7 +116,7 @@ const mapDispatchToProps = dispatch => ({
   confirmDelete: (deleteWishlist, title) => (
     () => (
       dispatch(openDialog("yesNo", {
-        title: 
+        title:
           "Are you sure you want to delete the wishlist \"" + title + "\"?",
         onYes: deleteWishlist
       }))
