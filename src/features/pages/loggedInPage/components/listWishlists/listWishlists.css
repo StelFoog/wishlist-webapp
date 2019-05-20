@@ -5,13 +5,12 @@
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-
+  border-radius: var(--border-radius);
 }
 
 .wishlistCard:hover {
-  border: 2px solid var(--color-dark-gray);
-  margin: -2px;
-  border-radius: var(--border-radius);
+  box-shadow: 2px 0px 5px 0 var(--color-dark);
+  
 }
 
 .wishlistAvatarList {
