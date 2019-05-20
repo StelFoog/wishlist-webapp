@@ -34,14 +34,6 @@ class LoggedInPage extends React.Component {
     window.scrollTo(0, 0);
   };
 
-  handleChangeIndex = index => {
-    this.setState({
-      index
-    });
-
-    console.log("TEEEEEEEEEEEEEEEEEEEEEEEEEEEEEST!");
-  };
-
   render() {
     const { index } = this.state;
     const { openForm } = this.props;
@@ -50,7 +42,7 @@ class LoggedInPage extends React.Component {
         <AllWishlistsHeader handleChange={this.handleChange} index={index} />
         <SwipeableViews
           index={index}
-          onChangeIndex={this.handleChangeIndex}
+          onChangeIndex={this.handleChange}
           style={{ flex: 1, display: "flex" }}
         >
           <div className="page-tab page-tab-1">
