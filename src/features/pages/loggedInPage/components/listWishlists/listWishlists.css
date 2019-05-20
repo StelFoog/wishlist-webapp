@@ -1,12 +1,42 @@
 .listWishlists {
-  align-items: flex-start;
+  
 }
+
 
 .wishlistCard {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
 }
 
 .wishlistAvatarList {
   align-items: right;
   margin-left: auto;
 }
+
+.wishlistMembersDue {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+@media (min-width: 601px) {
+  
+}
+
+@media (max-width: 600px) {
+  .wishlistCard{
+    flex-direction: column;
+  }
+
+  .wishlistCardTitle {
+    text-align: center;
+  }
+
+  .wishlistMembersDue{
+    align-items: center;
+  }
+}
+
