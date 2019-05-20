@@ -1,0 +1,45 @@
+.tabs {
+  margin-left: 1rem;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.tab {
+  padding: 1rem;
+  flex: 1;
+  margin-right: 5px;
+}
+
+.tab:hover  {
+  cursor: pointer;
+}
+
+.active {
+  border-bottom: 3px solid var(--color-dark);
+  margin-bottom: -3px;
+}
+
+.tab > h2{
+  flex: 1;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+
+  .tabs {
+    margin-left: 0;
+    justify-content: space-around;
+  }
+
+  .tab{
+    margin-right: 0;
+  }
+  
+  .tab h2{
+    text-align: center;
+    font-size: 1.2rem;
+  }
+
+
+}

@@ -30,6 +30,15 @@
 
 @media (max-width: 600px) {
   .dialog {
-    width: 280px;
+    flex: 1;
   }
+}
+
+.dialog button {
+  font-size: 1rem !important;
+  padding: 0.75rem 1rem !important;
+}
+
+.dialog h2 {
+  font-size: 2rem;
 }

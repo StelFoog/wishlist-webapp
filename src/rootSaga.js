@@ -11,6 +11,7 @@ function* rootSaga() {
   yield all([
     authSagas.watchUserAuthFacebook(),
     authSagas.watchAddUserToWishlist(),
+    authSagas.watchRemoveUserFromWishlist(),
     authSagas.watchSearchForUsersWithName(),
     authSagas.watchLogout(),
     wishlistSagas.watchCreateUserWishlist(),
@@ -30,11 +31,14 @@ function* rootSaga() {
     groupSagas.watchCreateGroup(),
     groupSagas.watchInviteUserToGroup(),
     groupSagas.watchRemoveUserFromGroup(),
-    usersSagas.watchGetUserWithUid(),
+    groupSagas.watchEditGroupProperites(),
+    groupSagas.watchLeaveGroup(),
+    groupSagas.watchDeleteGroup(),
     groupItemSagas.watchCreateGroupItem(),
     groupItemSagas.watchFetchGroupItems(),
     groupItemSagas.watchEditGroupItem(),
-    groupItemSagas.watchClaimGroupItem()
+    groupItemSagas.watchClaimGroupItem(),
+    usersSagas.watchGetUsersWithUids()
   ]);
 }
 

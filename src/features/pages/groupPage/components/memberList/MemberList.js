@@ -33,7 +33,8 @@ class MemberList extends React.Component {
       navigate,
       members,
       currentGroup,
-      fetchItems
+      fetchItems,
+      currentUser
     } = this.props;
     return (
       <div className="memberBar">
@@ -58,7 +59,7 @@ class MemberList extends React.Component {
             </div>
           ))}
         </div>
-        <AddUser currentUserUid={uid} currentGroup={currentGroup} />
+        <AddUser currentUserUid={currentUser.uid} currentGroup={currentGroup} />
       </div>
     );
   }

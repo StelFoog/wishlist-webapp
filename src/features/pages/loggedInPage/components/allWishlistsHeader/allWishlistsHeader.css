@@ -1,0 +1,29 @@
+
+.allWishlistsHeader {
+
+  background-color: var(--color-light-gray);
+
+  /* Padding that compensates for active tab bottom border */
+  padding-bottom: 3px;
+
+  border-bottom: 2px solid var(--color-dark);
+  box-shadow: 0 2px 2px -2px var(--color-dark);
+
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  /*
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  */
+}
+
+@media (max-width: 600px) {
+  .allWishlistsHeader{
+    margin-top: 64px;
+  }
+  .headerTitle {
+    display: none;
+  }
+}

@@ -36,7 +36,8 @@ const addWishlistToGroup = async (groupId, userId) => {
 
 const removeUserFromGroup = async (groupId, userId) => {
   await editGroupProperties(groupId, {
-    members: firebase.firestore.FieldValue.arrayRemove(userId)
+    members: firebase.firestore.FieldValue.arrayRemove(userId),
+    ["wishlists." + userId]: firebase.firestore.FieldValue.delete()
   });
 };
 
@@ -60,6 +61,15 @@ const fetchAllGroupsFromUser = user => {
   return Promise.all(user.groups.map(fetchGroupByUid));
 };
 
+function onGroupChanged(uid, callback) {
+  return _getGroupRef(uid).onSnapshot(doc => {
+    callback(doc.data());
+  });
+}
+const deleteGroupByUid = async ({ groupID }) => {
+  await _getGroupRef(groupID).delete();
+};
+
 export {
   _getGroupRef,
   createGroupWithOwner,
@@ -68,5 +78,7 @@ export {
   editGroupProperties,
   fetchGroupByUid,
   fetchAllGroupsFromUser,
-  addWishlistToGroup
+  addWishlistToGroup,
+  onGroupChanged,
+  deleteGroupByUid
 };

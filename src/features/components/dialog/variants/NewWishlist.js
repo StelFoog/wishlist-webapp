@@ -17,13 +17,13 @@ const NewWishlist = ({ handleSubmit, handleClose }) => (
         variant={"text"}
         label={"Cancel"}
         handleClick={handleClose}
-        color={"red"}
+        color={"var(--color-error)"}
       />
       <Button
-        variant={"filled"}
+        variant={"text"}
         label={"Submit"}
         handleClick={handleSubmit}
-        color={"green"}
+        color={"var(--color-accept)"}
       />
     </CardActions>
   </React.Fragment>

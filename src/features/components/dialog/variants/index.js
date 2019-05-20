@@ -7,6 +7,7 @@ import CreateGroup from "./CreateGroup";
 import AddMember from "./AddMember";
 import Share from "./Share";
 import NoLogin from "./NoLogin";
+import Invite from "./Invite";
 import YesNoDialog from "./YesNoDialog";
 
 export {
@@ -17,6 +18,7 @@ export {
   AddMember,
   Share,
   NoLogin,
+  Invite,
   YesNoDialog,
   CreateGroupItem,
   EditGroupItem

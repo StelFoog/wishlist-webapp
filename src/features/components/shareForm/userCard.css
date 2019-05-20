@@ -1,8 +1,26 @@
 
 .userCard {
-
+    display: flex;
+    align-items: center;
+    flex-direction: row;
 }
 
-.userCardButton {
+.userAvatar {
+    margin-left: 5px;
+    margin-top: 10px;
+}
 
+.username {
+    margin-left: 10px;
+}
+
+.addOrRemoveButton {
+    margin-left: auto;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.userCardArea {
+    max-height: 250px;
+    overflow-y: scroll;
 }

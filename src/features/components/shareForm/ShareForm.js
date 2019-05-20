@@ -2,21 +2,28 @@ import React, { Component } from "react";
 import { Field } from "redux-form";
 import actions from "../../lib/authentication/actions.js";
 import types from "../../lib/authentication/types.js";
+import { selectUserCache } from "../../lib/users/selectors.js";
 import { connect } from "react-redux";
 import UserCard from "./UserCard.js"
+import Paper from "../paper";
 
 const { searchForUsersWithName } = actions;
 
 const displayUserSharedWith = (component) => {
+  const removeUser = (user) => {
+    component.selected = component.selected.filter(
+      selectedUser => (user.uid !== selectedUser.uid)
+    );
+    component.unselected.push(user);
+  };
+
   return user => (
     <UserCard
       user={user}
-      buttonText="- Remove"
+      buttonText="Remove"
       buttonColor="#9f003f"
       onClick={() => {
-        component.selected = component.selected.filter((x) =>
-            x !== user);
-        component.unselected.push(user);
+        removeUser(user);
         component.forceUpdate();
       }}
     />
@@ -24,15 +31,21 @@ const displayUserSharedWith = (component) => {
 }
 
 const displayUserNotSharedWith = (component) => { 
+  const addUser = (user) => {
+    component.unselected.filter(
+      unselectedUser => (user.uid !== unselectedUser.uid)
+    );
+    component.selected.unshift(user);
+  };
+
   return user => (
     <UserCard 
       user={user} 
-      buttonText="+ Add"
+      buttonText="Add"
       buttonColor="#009f3f"
+      margin="0.5rem"
       onClick={() => {
-        component.selected.push(user);
-        component.unselected = component.unselected.filter((x) => 
-            x !== user);
+        addUser(user);
         component.forceUpdate();
       }}
     />
@@ -42,7 +55,7 @@ const displayUserNotSharedWith = (component) => {
 const renderField = ({input}) => {
     return(
       <div>
-        Username: <input type="text" {...input} />
+        <input type="text" {...input} placeholder="Search username..." />
       </div>
     );
 }
@@ -55,26 +68,36 @@ const handleInputWith = (component) => {
 
 /* Ugly solution, but necessary to compare user objects
  */
-const deepIncludes = (seq, elem) => {
-  return seq.map(JSON.stringify).includes(JSON.stringify(elem));
+const userIncludes = (users, user) => {
+  return users.map((x) => (x.uid)).includes(user.uid);
 }
 
-class ShareForm extends Component {
-  componentWillMount() {
-    this.selected = [];
-    this.unselected = this.props.searchResults; 
-  }
+const isUserUid = (x) => (typeof(x) === "string");
 
-  componentWillUnmount() {
-    this.selected = [];
-    this.unselected = [];
+class ShareForm extends Component {
+  constructor(props) {
+    super(props);
+    this.selected = props.preSelectedUids.slice(0);
   }
 
   render() {
-    this.unselected = this.props.searchResults.filter((x) => {
-      return !deepIncludes(this.selected, x) 
-              && (this.props.showIf === undefined || this.props.showIf(x));
-    });
+    this.selected = this.selected.map(
+      selectedUser => (
+        isUserUid(selectedUser) 
+          ? this.props.userCache[selectedUser] 
+          : selectedUser
+      )
+    );
+    this.selectedToShow = this.selected.filter(selectedUser =>
+      (selectedUser || !isUserUid(selectedUser))
+    );
+
+    this.unselected = this.props.searchResults.filter(
+      unselectedUser => (
+           !userIncludes(this.selectedToShow, unselectedUser)
+        && (!this.props.showIf || this.props.showIf(unselectedUser))
+      )
+    );
 
     this.props.storeSelected(this.selected);
 
@@ -86,11 +109,19 @@ class ShareForm extends Component {
             component={renderField}
             onChange={handleInputWith(this)}
           />
-          <h3> Results </h3>
-          {this.unselected.map(displayUserNotSharedWith(this))}
+          <Paper>
+            <h4> Search results: </h4>
+            <div className="userCardArea">
+              {this.unselected.map(displayUserNotSharedWith(this))}
+            </div>
+          </Paper>
         </div>
-        <h3> Shared with </h3>
-        {this.selected.map(displayUserSharedWith(this))}
+        <Paper>
+          <h4> Shared with: </h4>
+          <div className="userCardArea">
+            {this.selected.map(displayUserSharedWith(this))}
+          </div>
+        </Paper>
       </div>
     );
   }
@@ -99,14 +130,14 @@ class ShareForm extends Component {
 const mapStateToProps = () => {
   return state => ({
     searchResults: state.auth.searchResults,
+    userCache: selectUserCache(state)
   });
 }
 
 const mapDispatchToProps = dispatch => ({
   search: (name) => {
-    if(name.length >= 3) {
+    if(name.length >= 3)
       dispatch(searchForUsersWithName(name));
-    }
   }
 });
 

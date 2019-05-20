@@ -14,9 +14,9 @@ const CreateGroup = ({ performSubmit }) => {
       <CardHeader>{"Create new group"}</CardHeader>
       <CardContent>
         <form onSubmit={performSubmit}>
-          <label>Name of group:</label>
           <Field
             name="name"
+            label="Name of group"
             component={renderField}
             type="text"
             validate={required}
@@ -26,8 +26,8 @@ const CreateGroup = ({ performSubmit }) => {
       <CardActions>
         <Button
           label="SUBMIT"
-          color="green"
-          variant="filled"
+          color="var(--color-accept)"
+          variant="text"
           handleClick={performSubmit}
         />
       </CardActions>

@@ -35,12 +35,17 @@ class DashboardNav extends React.Component {
 
     this.setWrapperRef = this.setWrapperRef.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.closeSideNav = this.closeSideNav.bind(this);
   }
 
   toggleSideNav = () => {
     const show = this.state.showSideNav;
     this.setState({ showSideNav: !show });
   };
+
+  closeSideNav() {
+    this.setState({ showSideNav: false });
+  }
 
   componentDidMount() {
     document.addEventListener("mousedown", this.handleClickOutside);
@@ -85,7 +90,10 @@ class DashboardNav extends React.Component {
               className={`navButton ${(!pathParam1 ||
                 pathParam1 === "wishlist") &&
                 "active"}`}
-              onClick={() => navigate("")}
+              onClick={() => {
+                navigate("");
+                this.closeSideNav();
+              }}
             >
               <Ripple />
               <div className="icon">
@@ -124,6 +132,7 @@ class DashboardNav extends React.Component {
                 <GroupList
                   navigate={navigate}
                   selected={pathParam1 === "group" && pathParam2}
+                  closeSideNav={this.closeSideNav}
                 />
               </div>
             </div>

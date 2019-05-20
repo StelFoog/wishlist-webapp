@@ -38,16 +38,14 @@
   margin-top: 0;
   margin-bottom: -0.25rem;
   color: var(--color-dark);
+  font-weight: 600;
 }
 
 .card-header + .card-content {
+  margin-top: 0.5rem;
 }
 
 /* Card content */
-
-.card-content * {
-  margin-bottom: 0.25rem !important;
-}
 
 .card-content {
   color: var(--color-dark-gray);
@@ -72,8 +70,20 @@
 }
 
 .card-actions {
-  float: right;
   display: inline-flex;
+  justify-content: flex-end;
+}
+
+.card-actions > *:first-child:not(:last-child) {
+  margin-right: 0.25rem;
+}
+
+.card-actions > *:not(:last-child:not(:first-child)) {
+  margin: 0 0.25rem;
+}
+
+.card-actions > *:last-child:not(:first-child) {
+  margin-left: 0.25rem;
 }
 
 /* Elavation */

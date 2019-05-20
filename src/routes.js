@@ -18,10 +18,10 @@ import HomePage from "./features/pages/homePage";
 import Dashboard from "./features/pages/dashboard";
 import LoggedInPage from "./features/pages/loggedInPage";
 import WishlistPage from "./features/pages/wishlistPage";
-import InvitedUserPage from "./features/pages/invitedUserPage";
 import InvitedWishlistPage from "./features/pages/invitedWishlistPage";
 import GroupPage from "./features/pages/groupPage";
 import NoLogin from "./features/pages/noLoginPage";
+import InvitePage from "./features/pages/invitePage";
 import HelpPage from "./features/pages/helpPage";
 
 const Root = ({
@@ -31,7 +31,8 @@ const Root = ({
   handleNotLoggedIn,
   loggedIn,
   pathname,
-  loginReqPush
+  user,
+  push
 }) => (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
@@ -41,7 +42,7 @@ const Root = ({
             loggedIn={loggedIn}
             pathname={pathname}
             handleNotLoggedIn={handleNotLoggedIn}
-            loginReqPush={loginReqPush}
+            push={push}
           >
             <Dialog />
             <Switch>
@@ -65,6 +66,12 @@ const Root = ({
                 }}
               />
               <Route
+                path={"/invite"}
+                render={props => {
+                  return <InvitePage {...props} />;
+                }}
+              />
+              <Route
                 exact
                 render={props => {
                   return <h1> 404 </h1>;
@@ -78,12 +85,14 @@ const Root = ({
                 return <LoggedInPage {...props} />;
               }}
             />
-            <Route
+            <ProtectedRoute
               path={"/dashboard/wishlist/:uid"}
               exact
-              render={props => {
-                return <WishlistPage {...props} />;
-              }}
+              user={user}
+              component={WishlistPage}
+              pathname={pathname}
+              push={push}
+              variant={"ownWishlist"}
             />
             <Route
               path="/dashboard/help"
@@ -92,26 +101,23 @@ const Root = ({
                 return <HelpPage {...props} />;
               }}
             />
-            <Route
-              path={"/wishlist/:uid/invite"}
-              exact
-              render={props => {
-                return <InvitedUserPage {...props} />;
-              }}
-            />
-            <Route
+            <ProtectedRoute
               path={"/dashboard/group/:uid/:user"}
               exact
-              render={props => {
-                return <GroupPage {...props} />;
-              }}
+              user={user}
+              component={GroupPage}
+              pathname={pathname}
+              push={push}
+              variant={"group"}
             />
-            <Route
+            <ProtectedRoute
               path={"/dashboard/guest/:uid"}
               exact
-              render={props => {
-                return <InvitedWishlistPage {...props} />;
-              }}
+              user={user}
+              component={InvitedWishlistPage}
+              pathname={pathname}
+              push={push}
+              variant={"sharedWishlist"}
             />
             <Route
               path={"/wishlistitem"}
@@ -132,23 +138,71 @@ const RequireLogin = ({
   loggedIn,
   pathname,
   handleNotLoggedIn,
-  accepted = ["/"],
-  loginReqPush
+  accepted = ["/", "invite"],
+  push
 }) => {
   const ifNot = accepted.includes(pathname);
-  console.log("push", loginReqPush);
-  if (loggedIn || ifNot || pathname.startsWith("/nologin")) {
+  if (pathname.endsWith("/invite") && pathname.length > 7 && loggedIn) {
+    push(pathname.substring(0, pathname.length - 7));
+    return null;
+  } else if (
+    loggedIn ||
+    ifNot ||
+    pathname.startsWith("/nologin") ||
+    pathname.startsWith("/invite")
+  ) {
     return <React.Fragment>{children}</React.Fragment>;
+  } else if (pathname.endsWith("/invite")) {
+    push(`/invite?${pathname.substring(0, pathname.length - 7)}`);
+    return null;
   } else {
-    loginReqPush(`/nologin?${pathname}`);
+    push(`/nologin?${pathname}`);
     return null;
   }
+};
+
+const ProtectedRoute = ({
+  component: Component,
+  pathname,
+  user,
+  variant,
+  exact = false,
+  path,
+  push
+}) => {
+  let hasAccess = false;
+  switch (variant) {
+    case "ownWishlist":
+      const ownWishlistUid = pathname.split("/")[3];
+      hasAccess = user.ownedWishlists.includes(ownWishlistUid);
+      break;
+    case "sharedWishlist":
+      const sharedWishlistUid = pathname.split("/")[3];
+      hasAccess = user.wishlists.includes(sharedWishlistUid);
+      break;
+    case "group":
+      const groupUid = pathname.split("/")[3];
+      hasAccess = user.groups.includes(groupUid);
+      break;
+  }
+  return (
+    <Route
+      path={path}
+      exact={exact}
+      render={props => {
+        if (hasAccess) return <Component {...props} />;
+        // Should be a proper component or a page push
+        else return <div>{"Not for your eyes"}</div>;
+      }}
+    />
+  );
 };
 
 const mapStateToProps = () => {
   const getPathname = routerSelectors.getPathhameState();
   return state => ({
     loggedIn: state.auth.loggedIn,
+    user: state.auth.user,
     pathname: getPathname(state)
   });
 };
@@ -156,7 +210,7 @@ const mapStateToProps = () => {
 const { handleNotLoggedIn } = authActions;
 const mapDispatchToProps = dispatch => ({
   handleNotLoggedIn: () => dispatch(handleNotLoggedIn()),
-  loginReqPush: path => dispatch(push(path))
+  push: path => dispatch(push(path))
 });
 
 export default connect(

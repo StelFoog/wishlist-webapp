@@ -10,6 +10,7 @@ import {
   AddMember,
   Share,
   NoLogin,
+  Invite,
   YesNoDialog,
   CreateGroupItem,
   EditGroupItem
@@ -27,6 +28,7 @@ const DIALOG_VARIANTS = {
   addMember: AddMember,
   share: Share,
   noLogin: NoLogin,
+  invite: Invite,
   yesNo: YesNoDialog
 };
 

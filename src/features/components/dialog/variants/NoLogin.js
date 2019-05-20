@@ -19,14 +19,14 @@ const NoLogin = ({
       <CardActions>
         <Button
           label="Login"
-          color="green"
-          variant="filled"
+          color="var(--color-accept)"
+          variant="text"
           handleClick={authenticate}
         />
         <Button
           label="Cancel"
-          color="red"
-          variant="outlined"
+          color="var(--color-error)"
+          variant="text"
           handleClick={handleClose}
         />
       </CardActions>

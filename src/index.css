@@ -9,8 +9,10 @@
   --color-light: #d3d3d3;
   --color-lighter: #f2f2f2;
   --color-dark: #292929;
+  --color-light-gray: #e0e0e0;
   --color-dark-gray: #616161;
-  --color-error: #c0392b;
+  --color-error: #e84118;
+  --color-accept: #10ac84;
 }
 
 body {
@@ -24,6 +26,7 @@ body {
 
 #root {
   width: 100%;
+  overflow-x: hidden;
 }
 
 input,
@@ -50,4 +53,16 @@ p {
 input[type="date"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   display: none;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-direction-column {
+  flex-direction: column;
 }

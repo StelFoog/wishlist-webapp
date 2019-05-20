@@ -8,18 +8,29 @@ import { CardHeader, CardContent, CardActions } from "../../card";
 import ShareForm from "../../shareForm/ShareForm.js";
 import types from "../../../lib/authentication/types.js";
 import actions from "../../../lib/authentication/actions.js";
+import userActions from "../../../lib/users/actions.js";
+
+const { getUsersWithUids } = userActions;
 
 const { CLEAR_SEARCH } = types;
 const { clearSearch } = actions;
 
 class ShareDialog extends Component {
+  constructor(props) {
+    super(props);
+    props.getUsersWithUids(props.value.preSelectedUids);
+    this.initiallySelectedUids = props.value.preSelectedUids;
+    this.selected = [];
+  }
+
   render() {
-    return(
+    return (
       <React.Fragment>
         <CardHeader>{this.props.value.title}</CardHeader>
         <CardContent>
           <ShareForm 
             storeSelected={(x) => (this.selected = x)}
+            preSelectedUids={this.initiallySelectedUids}
             showIf={this.props.value.showIf}
           />
         </CardContent>
@@ -27,21 +38,38 @@ class ShareDialog extends Component {
           <Button
             variant="text"
             label="Cancel"
-            color="red"
+            color="var(--color-error)"
             handleClick={() => {
               this.props.clearSearch();
               this.props.handleClose();
             }}
           />
           <Button
-            variant="filled"
+            variant="text"
             label="Done"
             handleClick={() => {
+              const lookupUser = (uid) => {
+                return this.props.userCache[uid];
+              }
+              
+              console.log("MESSAGE:");
+              console.log(this.selected);
+              const added = this.selected.filter(selectedUser => 
+                (!this.initiallySelectedUids.includes(selectedUser.uid)));
+              console.log(added);
+              const removed = this.initiallySelectedUids
+                .filter(initiallySelectedUid => 
+                  (!this.selected
+                    .map(selectedUser => (selectedUser.uid))
+                    .includes(initiallySelectedUid)));
+              console.log(removed);
+
               this.props.clearSearch();
-              this.props.value.share(this.selected);
+              this.props.value.withAdded(added);
+              this.props.value.withRemoved(removed.map(lookupUser));
               this.props.handleClose();
             }}
-          color="#003f9f"
+            color="var(--color-accept)"
           />
         </CardActions>
       </React.Fragment>
@@ -52,20 +80,24 @@ class ShareDialog extends Component {
 const mapStateToProps = () => {
   const getDialogValues = selectors.getDialogValuesState();
   return state => ({
-    value: getDialogValues(state)
+    value: getDialogValues(state),
+    userCache: state.users.users
   });
-}
+};
 
 const mapDispatchToProps = dispatch => ({
-  handleSubmit: () => console.log("handleSubmit()"),
-  clearSearch: () => { dispatch(clearSearch()); }
+  handleSubmit: () => 0,
+  clearSearch: () => (dispatch(clearSearch())),
+  getUsersWithUids: uids => (dispatch(getUsersWithUids(uids)))
 });
 
 export default reduxForm({
   form: "share",
   onSubmit: () => {},
   destroyOnUnmount: true
-})(connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ShareDialog));
+})(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(ShareDialog)
+);

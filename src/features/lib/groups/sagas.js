@@ -6,7 +6,9 @@ import {
   addUserToGroup,
   removeUserFromGroup,
   fetchAllGroupsFromUser,
-  addWishlistToGroup
+  addWishlistToGroup,
+  editGroupProperties,
+  deleteGroupByUid
 } from "./db.js";
 import groupTypes from "./types";
 import { types as authTypes } from "../authentication";
@@ -26,7 +28,18 @@ const {
   INVITE_USER_TO_GROUP_SUCCESS,
   REMOVE_USER_FROM_GROUP,
   REMOVE_USER_FROM_GROUP_ERROR,
-  REMOVE_USER_FROM_GROUP_SUCCESS
+  REMOVE_USER_FROM_GROUP_SUCCESS,
+  EDIT_GROUP_PROPERTIES,
+  EDIT_GROUP_PROPERTIES_ERROR,
+  EDIT_GROUP_PROPERTIES_SUCCESS,
+
+  LEAVE_GROUP,
+  LEAVE_GROUP_ERROR,
+  LEAVE_GROUP_SUCCESS,
+
+  DELETE_GROUP,
+  DELETE_GROUP_ERROR,
+  DELETE_GROUP_SUCCESS
 } = groupTypes;
 
 const { ADD_GROUP_ID_TO_USER, REMOVE_GROUP_ID_FROM_USER } = authTypes;
@@ -47,6 +60,18 @@ function* watchInviteUserToGroup() {
 
 function* watchRemoveUserFromGroup() {
   yield takeEvery(REMOVE_USER_FROM_GROUP, workRemoveUserFromGroup);
+}
+
+function* watchEditGroupProperites() {
+  yield takeEvery(EDIT_GROUP_PROPERTIES, workEditGroupProperties);
+}
+
+function* watchLeaveGroup() {
+  yield takeEvery(LEAVE_GROUP, workLeaveGroup);
+}
+
+function* watchDeleteGroup() {
+  yield takeEvery(DELETE_GROUP, workDeleteGroup);
 }
 
 function* workFetchAllUserGroups() {
@@ -112,14 +137,56 @@ function* workInviteUserToGroup(action) {
   }
 }
 
-function* workRemoveUserFromGroup(action) {
+function* workRemoveUserFromGroup({ groupID, userID }) {
   try {
-    const { groupId, userId } = action;
-    yield call(removeUserFromGroup, groupId, userId);
-    yield call(removeGroupFromUser, userId, groupId);
-    yield put({ type: REMOVE_USER_FROM_GROUP_SUCCESS });
+    yield call(removeUserFromGroup, groupID, userID);
+    yield call(removeGroupFromUser, userID, groupID);
+    yield put({
+      type: REMOVE_USER_FROM_GROUP_SUCCESS,
+      userId: userID,
+      groupId: groupID
+    });
   } catch (error) {
     yield put({ type: REMOVE_USER_FROM_GROUP_ERROR, error: error });
+  }
+}
+
+function* workEditGroupProperties({ uid, field, data }) {
+  try {
+    const fields = {
+      [field]: data
+    };
+    yield call(editGroupProperties, uid, fields);
+    yield put({
+      type: EDIT_GROUP_PROPERTIES_SUCCESS,
+      groupId: uid,
+      field,
+      value: data
+    });
+  } catch (error) {
+    yield put({ type: EDIT_GROUP_PROPERTIES_ERROR, error: error });
+  }
+}
+
+function* workLeaveGroup({ groupID, userID }) {
+  try {
+    yield call(workRemoveUserFromGroup, { groupID, userID });
+    yield put(push(`/dashboard/`));
+    yield put({ type: REMOVE_GROUP_ID_FROM_USER, groupId: groupID });
+    yield put({ type: LEAVE_GROUP_SUCCESS, userId: userID, groupId: groupID });
+  } catch (error) {
+    yield put({ type: LEAVE_GROUP_ERROR, error: error });
+  }
+}
+
+function* workDeleteGroup({ groupID, userID }) {
+  try {
+    yield call(deleteGroupByUid, { groupID });
+    yield put(push(`/dashboard/`));
+    yield put({ type: REMOVE_GROUP_ID_FROM_USER, groupId: groupID });
+    yield put({ type: LEAVE_GROUP_SUCCESS, userId: userID, groupId: groupID });
+  } catch (error) {
+    yield put({ type: LEAVE_GROUP_ERROR, error: error });
   }
 }
 
@@ -127,5 +194,8 @@ export default {
   watchFetchAllUserGroups,
   watchCreateGroup,
   watchInviteUserToGroup,
-  watchRemoveUserFromGroup
+  watchRemoveUserFromGroup,
+  watchEditGroupProperites,
+  watchLeaveGroup,
+  watchDeleteGroup
 };

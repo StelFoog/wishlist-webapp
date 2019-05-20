@@ -9,13 +9,12 @@ import { actions as wishlistActions } from "../../lib/wishlists";
 
 const { openDialog } = dialogActions;
 const { setCurrentWishlistOrGroup } = miscActions;
-const { editWishlistProperties } = wishlistActions;
+const { editWishlistProperties, deleteWishlist } = wishlistActions;
 
 const mapStateToProps = () => {
   const getOwnedWishlists = selectors.getOwnedWishlistsState();
-  const getEdit = selectors.getEditState();
+
   return state => ({
-    editing: getEdit(state),
     wishlists: getOwnedWishlists(state)
   });
 };
@@ -25,8 +24,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch(openDialog("createItem", { wishlistUid })),
   setCurrentPage: wishlistUid =>
     dispatch(setCurrentWishlistOrGroup(wishlistUid)),
-  editWishlistProperties: (wishlistUid, field, data) =>
-    dispatch(editWishlistProperties(wishlistUid, field, data))
+  editProperties: (wishlistUid, field, data) =>
+    dispatch(editWishlistProperties(wishlistUid, field, data)),
+  deleteObject: (uid, user) => dispatch(deleteWishlist(uid, user))
 });
 
 export default connect(

@@ -1,5 +1,6 @@
 import types from "./types.js";
 import itemTypes from "../wishlistItems/types";
+import { getUser } from "../authentication/selectors";
 
 const {
   CREATE_USER_WISHLIST_ERROR,
@@ -12,7 +13,8 @@ const {
   EDIT_WISHLIST_PROPERTIES_SUCCESS,
   DELETE_WISHLIST_SUCCESS,
   DELETE_WISHLIST_ERROR,
-  TOGGLE_EDIT
+  TOGGLE_EDIT,
+  UPDATE_CURRENT_WISHLIST
 } = types;
 
 const {
@@ -109,36 +111,15 @@ const wishlistReducer = (state = initialState, action) => {
       return nextState;
 
     case CLAIM_WISHLIST_ITEM_SUCCESS:
-      const wishlistClaimIndex = nextState.wishlists.findIndex(function (
-        element
-      ) {
-        return element.uid === wishlistUid;
-      });
-      nextState.wishlists[wishlistClaimIndex].items[index].claimedBy.push(
-        userUid
-      );
+      // No need to push to state as we listen to the DB anyway
       return { ...nextState };
 
     case UNCLAIM_WISHLIST_ITEM_SUCCESS:
-      console.log(nextState);
-      const wishlistUnclaimIndex = nextState.wishlists.findIndex(function (
-        element
-      ) {
-        return element.uid === wishlistUid;
-      });
-      console.log(wishlistUid);
-      const claimedBy = nextState.wishlists[wishlistUnclaimIndex].items[index].claimedBy;
-      for (let i = 0; i < claimedBy.length; i++) {
-        if (claimedBy[i] === userUid) {
-          claimedBy.splice(i, 1);
-          break;
-        }
-      }
-      nextState.wishlists[wishlistUnclaimIndex].items[index].claimedBy = claimedBy;
+      // No need to pop from state as we listen to the DB anyway
       return nextState;
 
     case DELETE_WISHLIST_SUCCESS:
-      const wishlistIndexDelete = ownedWishlists.findIndex(
+      const wishlistIndexDelete = nextState.ownedWishlists.findIndex(
         element => element.uid === wishlistUid
       );
       nextState.ownedWishlists.splice(wishlistIndexDelete, 1);
@@ -152,6 +133,20 @@ const wishlistReducer = (state = initialState, action) => {
 
     case TOGGLE_EDIT:
       nextState.editing = !nextState.editing;
+      return nextState;
+
+    case UPDATE_CURRENT_WISHLIST:
+      const wishlist = wishlistData;
+      const iO = state.ownedWishlists.findIndex(ls => ls.uid === wishlist.uid);
+      const iM = state.wishlists.findIndex(ls => ls.uid === wishlist.uid);
+      if (iO >= 0) {
+        nextState.ownedWishlists[iO] = wishlist;
+      } else if (iM >= 0) {
+        nextState.wishlists[iM] = wishlist;
+      } else
+        console.error(
+          "(REDUX) DB listener: Couldn't find local wishlist to update"
+        );
       return nextState;
 
     default:
