@@ -12,8 +12,8 @@ import {
   SettingsIcon,
   ListIcon,
   PlusIcon,
-  LogoutIcon,
-  HelpIcon
+  HelpIcon,
+  LeaveIcon
 } from "../../../../components/svgIcon";
 import ProfilePicture from "../../../../components/profilePicture";
 import { getUserProfilePictureUrl } from "../../../../lib/authentication/user.js";
@@ -150,7 +150,7 @@ class DashboardNav extends React.Component {
           <div className="navButton navButtonBottom" onClick={askLogout}>
             <Ripple />
             <div className="icon">
-              <LogoutIcon size="30" />
+              <LeaveIcon size="30" />
             </div>
             <span>Log out</span>
           </div>
