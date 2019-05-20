@@ -32,7 +32,7 @@ const WishlistPage = ({
   editProperties,
   deleteObject,
   shareWishlist,
-  user, /* Actually auth */
+  user /* Actually auth */
 }) => {
   const { uid } = match.params;
   const wishlist = wishlists.find(element => element.uid === uid);
@@ -49,15 +49,16 @@ const WishlistPage = ({
         user={user}
         type="wishlist"
       />
-      <div className="shareWishlistButton">
-        <Button
-          variant="filled"
-          label="Share"
-          color="var(--color-primary)"
-          handleClick={() => (shareWishlist(wishlist, user.user))}
-        />
-      </div>
       <div className="wishlistPage">
+        <div className="shareWishlistButton">
+          <Button
+            borderRadius={0}
+            variant="filled"
+            label="Share"
+            color="var(--color-primary)"
+            handleClick={() => shareWishlist(wishlist, user.user)}
+          />
+        </div>
         {items.length > 0 && (
           <React.Fragment>
             {items.map((item, index) => (
@@ -81,24 +82,25 @@ const WishlistPage = ({
 
 const shareWishlistWithDispatch = dispatch => {
   return (currentWishlist, currentUser) => {
-    dispatch(openDialog("share", {
-      title: "Share wishlist",
-      withAdded: added => {
-        added
-          .forEach(user => (
+    dispatch(
+      openDialog("share", {
+        title: "Share wishlist",
+        withAdded: added => {
+          added.forEach(user =>
             dispatch(addUserToWishlist(user.uid, currentWishlist.uid))
-        ));
-      },
-      withRemoved: (removed) => {
-        removed.forEach(user => (
-          dispatch(removeUserFromWishlist(user.uid, currentWishlist.uid))
-        ));
-      },
-      preSelectedUids: currentWishlist.members,
-      showIf: user => (user.uid !== currentUser.uid)
-    }))
+          );
+        },
+        withRemoved: removed => {
+          removed.forEach(user =>
+            dispatch(removeUserFromWishlist(user.uid, currentWishlist.uid))
+          );
+        },
+        preSelectedUids: currentWishlist.members,
+        showIf: user => user.uid !== currentUser.uid
+      })
+    );
   };
-}
+};
 
 const mapStateToProps = state => ({
   user: state.auth
@@ -107,8 +109,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   createItem: wishlistUid =>
     dispatch(openDialog("createItem", { wishlistUid })),
-  shareWishlist: 
-    shareWishlistWithDispatch(dispatch)
+  shareWishlist: shareWishlistWithDispatch(dispatch)
 });
 
 export default connect(

@@ -50,17 +50,18 @@ class WishlistTitle extends React.Component {
               <span className="bar" />
             </form>
           ) : (
-              <div className="titleNoEdit">
-                <h1>{title}</h1>
-                {type === "wishlist" && (
-                  <div className="invitedUsers">
-                    <h2>Invited users: </h2>
-                    <WishlistMembers wishlist={this.state.wishlist} size={40} />
-                  </div>
-                )}
-              </div>
-            )}
+            <div className="titleNoEdit">
+              <h1>{title}</h1>
+            </div>
+          )}
         </div>
+
+        {!editing && type === "wishlist" && (
+          <div className="invitedUsers">
+            <WishlistMembers wishlist={this.state.wishlist} size={50} />
+          </div>
+        )}
+
         <div className="editButtons">
           {editing && (
             <DeleteButton

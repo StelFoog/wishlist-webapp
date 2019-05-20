@@ -83,19 +83,17 @@ class GroupPage extends React.Component {
           flexDirection: "column"
         }}
       >
-        <div className="groupPageHeader">
-          <Title
-            title={group.title}
-            type={"group"}
-            editProperties={editProperties}
-            uid={uid}
-            deleteObject={deleteObject}
-            leave={leave}
-            user={currentUser}
-            deleteObject={deleteGroup}
-            isOwner={group.owner === user.uid}
-          />
-        </div>
+        <Title
+          title={group.title}
+          type={"group"}
+          editProperties={editProperties}
+          uid={uid}
+          deleteObject={deleteObject}
+          leave={leave}
+          user={currentUser}
+          deleteObject={deleteGroup}
+          isOwner={group.owner === user.uid}
+        />
         <div className="groupPage">
           <div
             ref={showMemberList ? this.setWrapperRef : ""}
