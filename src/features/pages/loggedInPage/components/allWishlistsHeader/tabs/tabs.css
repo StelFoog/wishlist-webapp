@@ -8,7 +8,6 @@
 .tab {
   padding: 1rem;
   flex: 1;
-  margin-right: 5px;
 }
 
 .tab:hover {
@@ -16,8 +15,15 @@
 }
 
 .tab.active {
-  border-bottom: 3px solid var(--color-dark);
+  /*border-bottom: 3px solid var(--color-dark);*/
   margin-bottom: -3px;
+}
+
+.tab-bar {
+  position: absolute;
+  height: 3px;
+  background: #000;
+  transition: left 0.15s ease-in-out;
 }
 
 .tab > h2 {
