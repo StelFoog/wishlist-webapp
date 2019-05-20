@@ -112,7 +112,14 @@ input:focus ~ .bar:after {
   .wishlistTitle {
     top: 64px;
     width: 100%;
+    font-size: 0.6rem;
   }
+
+  .wishlistTitle > .invitedUsers {
+    display: none;
+  }
+
+
 }
 
 /* ANIMATIONS ================ */
