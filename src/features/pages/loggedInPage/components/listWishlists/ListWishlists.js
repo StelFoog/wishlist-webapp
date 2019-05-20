@@ -28,7 +28,7 @@ class ListWishlists extends React.Component {
                   <h1 className="wishlistCardTitle">{wishlist.title}</h1>
                   <div className="wishlistMembersDue">
                     <WishlistMembers wishlist={wishlist} size={60} />
-                    <h3>Event due date: {wishlist.endDate ? wishlist.endDate : "not set"}</h3>
+                    {wishlist.endDate && <h3>Date: {wishlist.endDate}</h3>}
                   </div>
                 </div>
               }
