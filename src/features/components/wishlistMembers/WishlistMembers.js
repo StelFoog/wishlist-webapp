@@ -8,7 +8,6 @@ import "./wishlistMembers.css";
 const { getUsersWithUid } = actions;
 
 class WishlistMembers extends React.Component {
-
   getFilteredUsers(filter, users) {
     let array = [];
     filter.forEach(element => {
@@ -17,9 +16,7 @@ class WishlistMembers extends React.Component {
     return array;
   }
 
-  componentDidMount() {
-    this.props.getUsers(this.props.wishlist.members)
-  }
+  componentDidMount() {}
 
   getUserPicture(user) {
     return (
@@ -28,34 +25,38 @@ class WishlistMembers extends React.Component {
   }
 
   render() {
+    const uid = this.props.wishlist.uid;
+    const wishlists = this.props.ownedWishlists.concat(this.props.wishlists);
+    const wishlist = wishlists.find(element => element.uid === uid);
+    console.log("Wishlist member display has the following member data: ");
+    console.log(wishlist.members);
     return (
       <div className="wishlistMembers">
         {//Object.values(this.props.users).map(user => this.getUserPicture(user))
-          this.getFilteredUsers(this.props.wishlist.members, this.props.users).map(user =>
-            this.getUserPicture(user))
-        }
+        this.getFilteredUsers(wishlist.members, this.props.users).map(user =>
+          this.getUserPicture(user)
+        )}
       </div>
     );
   }
 }
-
-
 
 const mapStateToProps = () => {
   //const getWishlists = wishlistSelectors.getWishlistsState();
   const getUsers = userSelectors.getUsersState();
   return state => ({
     //wishlists: getWishlists(state),
-    users: getUsers(state)
+    users: getUsers(state),
+    ownedWishlists: state.wishlist.ownedWishlists,
+    wishlists: state.wishlist.wishlists
   });
 };
 
 const mapDispatchToProps = dispatch => ({
   getUsers: members => dispatch(getUsersWithUid(members))
-})
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(WishlistMembers);
-
