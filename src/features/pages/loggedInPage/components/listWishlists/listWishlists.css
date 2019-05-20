@@ -6,6 +6,7 @@
   align-items: center;
   cursor: pointer;
   border-radius: var(--border-radius);
+  transition: box-shadow 0.25s linear;
 }
 
 .wishlistCard:hover {
