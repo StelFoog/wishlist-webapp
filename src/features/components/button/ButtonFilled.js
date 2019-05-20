@@ -11,13 +11,19 @@ const ButtonFilled = ({
   handleClick,
   className = "",
   fontSize = "1.25rem",
-  padding = "1rem 1.5rem"
+  padding = "1rem 1.5rem",
+  borderRadius = "var(--border-radius)"
 }) => (
   <div className="buttonContainer buttonFilledContainer">
     <button
       onClick={handleClick}
       className={`buttonFilled ${className}`}
-      style={{ background: color, fontSize: fontSize, padding: padding }}
+      style={{
+        background: color,
+        fontSize: fontSize,
+        padding: padding,
+        borderRadius: borderRadius
+      }}
     >
       <Ripple />
       <span className="buttonLabel">{label}</span>

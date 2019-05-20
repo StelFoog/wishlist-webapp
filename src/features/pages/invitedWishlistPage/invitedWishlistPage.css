@@ -1,16 +1,15 @@
-
 .invitedPageContainer {
-  margin-top: 10vh;
+  margin-top: 76px;
 }
 
-@media (min-width: 901px) {
+@media (min-width: 1271px) {
   .invitedPageContainer {
     margin-right: 500px;
     width: calc(100vw - 170px - 500px);
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1270px) {
   .invitedPageContainer {
     width: calc(100vw - 170px);
     transition: margin-left 0.2s ease-in-out;
@@ -23,5 +22,6 @@
 @media (max-width: 600px) {
   .invitedPageContainer {
     width: 100vw;
+    margin-top: calc(76px + 64px);
   }
 }

@@ -10,7 +10,8 @@ const TextButton = ({
   handleClick,
   className = "",
   fontSize = "1.25rem",
-  padding = "1rem 1.5rem"
+  padding = "1rem 1.5rem",
+  borderRadius = "var(--border-radius)"
 }) => (
   <div className="buttonContainer buttonTextContainer">
     <button
@@ -20,7 +21,8 @@ const TextButton = ({
         color: color,
         borderColor: color,
         padding: padding,
-        fontSize: fontSize
+        fontSize: fontSize,
+        borderRadius: borderRadius
       }}
     >
       <Ripple />

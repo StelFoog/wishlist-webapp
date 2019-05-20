@@ -4,7 +4,7 @@
   right: 40px;
 }
 
-@media (min-width: 901px) {
+@media (min-width: 1271px) {
   .mobileChatButtonContainer {
     display: none;
   }

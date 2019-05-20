@@ -29,7 +29,7 @@
   padding: 1px;
 }
 
-@media (min-width: 901px) {
+@media (min-width: 1271px) {
   .chatWindow {
     top: 0;
     right: 0;
@@ -40,7 +40,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1270px) {
   .chatWindow {
     transition: right 0.2s ease-in-out;
     top: 0;

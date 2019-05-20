@@ -16,43 +16,45 @@ const wishListItem = ({ wishlists, index, editItem, wishlistUid }) => {
   return (
     <React.Fragment>
       <div className="wishlistItem">
-        <div className="itemContent itemTitle">
-          <h2>{name}</h2>
-        </div>
-
-        <div className="itemContent itemDescription">
-          <p>{description}</p>
-        </div>
-
-        <div className="itemContent">
-          <div className="itemPrice">
-            <h3>{price}:-</h3>
+        <div className="wishlistItemColumn wishlistColumnTitleDesc">
+          <div className="itemContent itemTitle">
+            <h2>{name}</h2>
           </div>
-          <div className="itemLink">
-            <a
-              href={"//" + websitelink}
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              <Button
-                variant="filled"
-                label="Link"
-                className="itemLinkButton"
-                padding="0"
-                color="var(--color-primary)"
-              />
-            </a>
+
+          <div className="itemContent itemDescription">
+            <p>{description}</p>
           </div>
         </div>
-
-        <div className="itemContent">
-          <Button
-            className="editButton"
-            variant={"filled"}
-            label={"Edit"}
-            color={"var(--color-primary"}
-            handleClick={() => editItem({ item, index, wishlistUid })}
-          />
+        <div className="wishlistItemColumn">
+          <div className="itemContent">
+            <div className="itemPrice">
+              <h3>{price}:-</h3>
+            </div>
+            <div className="itemLink">
+              <a
+                href={"//" + websitelink}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                <Button
+                  variant="text"
+                  label="Link"
+                  className="itemLinkButton"
+                  padding="0"
+                  color="var(--color-primary)"
+                />
+              </a>
+            </div>
+          </div>
+          <div className="itemContent">
+            <Button
+              className="editButton"
+              variant={"text"}
+              label={"Edit"}
+              color={"var(--color-primary"}
+              handleClick={() => editItem({ item, index, wishlistUid })}
+            />
+          </div>
         </div>
       </div>
     </React.Fragment>

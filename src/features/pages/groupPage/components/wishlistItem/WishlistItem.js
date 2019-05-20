@@ -34,43 +34,47 @@ class WishlistItem extends React.Component {
     return (
       <React.Fragment>
         <div className="wishlistItem">
-          <div className="itemContent itemTitle">
-            <h2>{name}</h2>
-          </div>
-          <div className="itemContent itemDescription">
-            <p>{description}</p>
-          </div>
-          <div className="itemContent">
-            <div className="itemPrice">
-              <h3>{price}:-</h3>
+          <div className="wishlistItemColumn wishlistColumnTitleDesc">
+            <div className="itemContent itemTitle">
+              <h2>{name}</h2>
             </div>
-            <div className="itemLink">
-              <Button
-                variant="filled"
-                label="Link"
-                className="itemLinkButton"
-                padding="0"
-                color="var(--color-primary)"
-              />
+            <div className="itemContent itemDescription">
+              <p>{description}</p>
             </div>
           </div>
-          {isOwner ? (
+          <div className="wishlistItemColumn">
             <div className="itemContent">
-              <Button
-                variant={"filled"}
-                label={"Edit"}
-                color={"var(--color-primary"}
-                handleClick={() => editItem({ item, groupID, userID, index })}
-              />
+              <div className="itemPrice">
+                <h3>{price}:-</h3>
+              </div>
+              <div className="itemLink">
+                <Button
+                  variant="text"
+                  label="Link"
+                  className="itemLinkButton"
+                  padding="0"
+                  color="var(--color-primary)"
+                />
+              </div>
             </div>
-          ) : (
-            getClaimContent({
-              handleClaim: this.handleClaim,
-              claimedByUsers: claimedBy,
-              users,
-              claimItem
-            })
-          )}
+            {isOwner ? (
+              <div className="itemContent">
+                <Button
+                  variant={"text"}
+                  label={"Edit"}
+                  color={"var(--color-primary"}
+                  handleClick={() => editItem({ item, groupID, userID, index })}
+                />
+              </div>
+            ) : (
+              getClaimContent({
+                handleClaim: this.handleClaim,
+                claimedByUsers: claimedBy,
+                users,
+                claimItem
+              })
+            )}
+          </div>
         </div>
       </React.Fragment>
     );
