@@ -35,13 +35,13 @@
   }
 
   .react-swipeable-view-container {
-    margin-top: calc(12vh + 64px);
+    margin-top: calc(64px + 64px);
   }
 }
 
 @media (max-width: 340px) {
   .react-swipeable-view-container {
-    margin-top: calc(16vh + 64px);
+    margin-top: calc(90px + 64px);
   }}
 
 @keyframes showButton {
