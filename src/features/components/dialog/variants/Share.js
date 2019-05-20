@@ -28,8 +28,8 @@ class ShareDialog extends Component {
       <React.Fragment>
         <CardHeader>{this.props.value.title}</CardHeader>
         <CardContent>
-          <ShareForm 
-            storeSelected={(x) => (this.selected = x)}
+          <ShareForm
+            storeSelected={x => (this.selected = x)}
             preSelectedUids={this.initiallySelectedUids}
             showIf={this.props.value.showIf}
           />
@@ -48,21 +48,20 @@ class ShareDialog extends Component {
             variant="text"
             label="Done"
             handleClick={() => {
-              const lookupUser = (uid) => {
+              const lookupUser = uid => {
                 return this.props.userCache[uid];
-              }
-              
-              console.log("MESSAGE:");
-              console.log(this.selected);
-              const added = this.selected.filter(selectedUser => 
-                (!this.initiallySelectedUids.includes(selectedUser.uid)));
-              console.log(added);
-              const removed = this.initiallySelectedUids
-                .filter(initiallySelectedUid => 
-                  (!this.selected
-                    .map(selectedUser => (selectedUser.uid))
-                    .includes(initiallySelectedUid)));
-              console.log(removed);
+              };
+
+              const added = this.selected.filter(
+                selectedUser =>
+                  !this.initiallySelectedUids.includes(selectedUser.uid)
+              );
+              const removed = this.initiallySelectedUids.filter(
+                initiallySelectedUid =>
+                  !this.selected
+                    .map(selectedUser => selectedUser.uid)
+                    .includes(initiallySelectedUid)
+              );
 
               this.props.clearSearch();
               this.props.value.withAdded(added);
@@ -87,8 +86,8 @@ const mapStateToProps = () => {
 
 const mapDispatchToProps = dispatch => ({
   handleSubmit: () => 0,
-  clearSearch: () => (dispatch(clearSearch())),
-  getUsersWithUids: uids => (dispatch(getUsersWithUids(uids)))
+  clearSearch: () => dispatch(clearSearch()),
+  getUsersWithUids: uids => dispatch(getUsersWithUids(uids))
 });
 
 export default reduxForm({
