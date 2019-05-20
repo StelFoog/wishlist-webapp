@@ -1,12 +1,49 @@
-.listWishlists {
-  align-items: flex-start;
-}
+
 
 .wishlistCard {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+
+}
+
+.wishlistCard:hover {
+  border: 2px solid var(--color-dark-gray);
+  margin: -2px;
+  border-radius: var(--border-radius);
 }
 
 .wishlistAvatarList {
   align-items: right;
   margin-left: auto;
 }
+
+.wishlistMembersDue {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media (min-width: 601px) {
+  
+}
+
+@media (max-width: 600px) {
+  .wishlistCard{
+    flex-direction: column;
+  }
+
+  .wishlistCardTitle {
+    text-align: center;
+  }
+
+
+
+  .wishlistMembersDue{
+    align-items: center;
+  }
+}
+

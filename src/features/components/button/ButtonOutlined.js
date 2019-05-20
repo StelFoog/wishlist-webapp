@@ -12,7 +12,8 @@ const ButtonOutlined = ({
   className = "",
   colorOutline = true,
   fontSize = "1.25rem",
-  padding = "1rem 1.5rem"
+  padding = "1rem 1.5rem",
+  borderRadius = "var(--border-radius)"
 }) => (
   <div className="buttonContainer buttonOutlinedContainer">
     <button
@@ -22,6 +23,7 @@ const ButtonOutlined = ({
         color: color,
         fontSize: fontSize,
         padding: padding,
+        borderRadius: borderRadius,
         boxShadow: colorOutline
           ? "inset 0px 0px 0px 0.123rem ".concat(color)
           : "inset 0px 0px 0px 0.123rem #7f7f7f"

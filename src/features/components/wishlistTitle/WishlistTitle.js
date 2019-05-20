@@ -52,15 +52,16 @@ class WishlistTitle extends React.Component {
           ) : (
             <div className="titleNoEdit">
               <h1>{title}</h1>
-              {type === "wishlist" && (
-                <div className="invitedUsers">
-                  <h2>Invited users: </h2>
-                  <WishlistMembers wishlist={this.state.wishlist} />
-                </div>
-              )}
             </div>
           )}
         </div>
+
+        {!editing && type === "wishlist" && (
+          <div className="invitedUsers">
+            <WishlistMembers wishlist={this.state.wishlist} size={50} />
+          </div>
+        )}
+
         <div className="editButtons">
           {editing && (
             <DeleteButton

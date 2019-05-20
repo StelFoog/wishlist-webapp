@@ -1,6 +1,4 @@
-
 .allWishlistsHeader {
-
   background-color: var(--color-light-gray);
 
   /* Padding that compensates for active tab bottom border */
@@ -20,10 +18,7 @@
 }
 
 @media (max-width: 600px) {
-  .allWishlistsHeader{
+  .allWishlistsHeader {
     margin-top: 64px;
-  }
-  .headerTitle {
-    display: none;
   }
 }

@@ -10,15 +10,18 @@ const IntroCard = () => (
       <div className="introImage" />
       <div className="introText">
         <h3>
-          <i>"Have fun, make lists</i>"
+          <i>Have fun, make lists</i>
         </h3>
         <p>
-          ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse auctor
-          quis neque nec pellentesque. Fusce eget lorem convallis, malesuada
-          eros eu, aliquet nibh. Vestibulum blandit augue justo, accumsan metus
-          commodo ac. Aliquam ut venenatis magna. Donec ac arcu lacus. Orci
-          varius natoque penatibus et magnis dis parturient montes, nascetur
-          ridiculus mus.
+          It's easy! Make a list, add all the items you want to it and share it
+          with people. Everyone you shared it with can then plan for what gifts
+          they are to give.
+          <br />
+          <br />
+          For an event or other ocation where any people are all going to give
+          eachother gifts there are <b>groups</b>. Everyone in a group has a
+          wishlist specific for the group that everyone else in the group can
+          see and claim items in.
         </p>
       </div>
     </div>
