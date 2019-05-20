@@ -8,7 +8,7 @@ const {
 } = types;
 
 const initialState = {
-  user: {}
+  users: {}
 };
 const usersReducer = (state = initialState, action) => {
   let nextState = JSON.parse(JSON.stringify(state)); // Deep copy
