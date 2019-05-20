@@ -1,6 +1,7 @@
-import types from "./types.js";
 import itemTypes from "../wishlistItems/types";
+import { types as userTypes } from "../authentication/";
 import { getUser } from "../authentication/selectors";
+import types from "./types.js";
 
 const {
   CREATE_USER_WISHLIST_ERROR,
@@ -16,6 +17,13 @@ const {
   TOGGLE_EDIT,
   UPDATE_CURRENT_WISHLIST
 } = types;
+
+const {
+  ADD_USER_TO_WISHLIST_ERROR,
+  ADD_USER_TO_WISHLIST_SUCCESS,
+  REMOVE_USER_FROM_WISHLIST_ERROR,
+  REMOVE_USER_FROM_WISHLIST_SUCCESS
+} = userTypes;
 
 const {
   CREATE_WISHLIST_ITEM_SUCCESS,
@@ -83,8 +91,6 @@ const wishlistReducer = (state = initialState, action) => {
         element => element.uid === wishlistUid
       );
       nextState.ownedWishlists[wishlistIndex] = wishlistData;
-
-      console.log("Edited Wishlist!");
       return nextState;
 
     case EDIT_WISHLIST_PROPERTIES_ERROR:
@@ -149,9 +155,31 @@ const wishlistReducer = (state = initialState, action) => {
         );
       return nextState;
 
-    default:
-      return nextState;
+    case ADD_USER_TO_WISHLIST_ERROR:
+      console.log(error);
+      break;
+    case ADD_USER_TO_WISHLIST_SUCCESS:
+      const index = nextState.ownedWishlists.findIndex(
+        wishlist => wishlist.uid === wishlistUid
+      );
+      nextState.ownedWishlists[index].members.unshift(userUid);
+      break;
+    case REMOVE_USER_FROM_WISHLIST_ERROR:
+      console.error(
+        "Remove user from wishlist error: " + error.code + "-> " + error.message
+      );
+      break;
+    case REMOVE_USER_FROM_WISHLIST_SUCCESS:
+      const wIndex = nextState.ownedWishlists.findIndex(
+        wishlist => wishlist.uid === wishlistUid
+      );
+      const uIndex = nextState.ownedWishlists[wIndex].members.findIndex(
+        uuid => uuid === userUid
+      );
+      nextState.ownedWishlists[wIndex].members.splice(uIndex, 1);
+      break;
   }
+  return nextState;
 };
 
 export default { wishlistReducer };

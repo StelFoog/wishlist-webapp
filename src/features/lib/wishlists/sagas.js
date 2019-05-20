@@ -89,28 +89,34 @@ function* workCreateUserWishlist() {
   }
 }
 
+const id = x => x;
+
+/* Given a list of wishlists and a user,
+ * deletes the wishlists that do not exist in the
+ * database, and returns the list sent as parameter
+ * with the null elements and deleted wishlists filtered out
+ */
+function* handleWishlists(wishlists, user) {
+  wishlists = wishlists.filter(id);
+  for (let i = 0; i < wishlists.length; ++i) {
+    if (wishlists[i].deleted) {
+      yield call(deleteWishlistFromUser, wishlists[i].uid, user.uid);
+      // This removes the reference in local state?
+      yield put({
+        type: REMOVE_WISHLIST_ID_FROM_USER,
+        wishlistUid: wishlists[i].uid
+      });
+      yield call(deleteWishlistFromDB, wishlists[i].uid);
+    }
+  }
+  return wishlists.filter(wishlist => !wishlist.deleted);
+}
+
 function* workFetchWishlists() {
   try {
     const user = yield select(getUser);
     let wishlists = yield call(fetchAllWishlistsFromUser, user);
-
-    // Remove reference to deleted wishlist in db and user state
-    for (let i = 0; i < wishlists.length; i++) {
-      let wishlist = wishlists[i];
-      if (typeof wishlist === "string") {
-        console.log("deleting...");
-        yield call(deleteWishlistFromUser, wishlist, user);
-        yield put({
-          type: REMOVE_WISHLIST_ID_FROM_USER,
-          wishlistUid: wishlist
-        });
-      }
-    }
-
-    // Don't send invalid wishlists to state
-    wishlists = wishlists.filter(function(wishlist) {
-      return typeof wishlist !== "string" && wishlist !== undefined;
-    });
+    wishlists = yield* handleWishlists(wishlists, user);
 
     yield put({
       type: FETCH_WISHLISTS_SUCCESS,
@@ -125,24 +131,7 @@ function* workFetchOwnedWishlists() {
   try {
     const user = yield select(getUser);
     let wishlists = yield call(fetchAllOwnedWishlistsFromUser, user);
-
-    // Remove reference to deleted wishlist in db and user state
-    for (let i = 0; i < wishlists.length; i++) {
-      let wishlist = wishlists[i];
-      if (typeof wishlist === "string") {
-        console.log("deleting...");
-        yield call(deleteWishlistFromUser, wishlist, user);
-        yield put({
-          type: REMOVE_WISHLIST_ID_FROM_USER,
-          wishlistUid: wishlist
-        });
-      }
-    }
-
-    // Don't send invalid wishlists to state
-    wishlists = wishlists.filter(function(wishlist) {
-      return typeof wishlist !== "string" && wishlist !== undefined;
-    });
+    wishlists = yield* handleWishlists(wishlists, user);
 
     yield put({
       type: FETCH_OWNED_WISHLISTS_SUCCESS,

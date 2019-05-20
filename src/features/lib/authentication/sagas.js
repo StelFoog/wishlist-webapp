@@ -1,4 +1,4 @@
-import { takeEvery, call, put, select, all } from "redux-saga/effects";
+import { takeEvery, takeLatest, call, put, select, all } from "redux-saga/effects";
 import { push } from "connected-react-router";
 import { authWithFacebookAPI, logout /* authWithGoogleAPI */ } from "./auth.js";
 import {
@@ -11,13 +11,17 @@ import { types as dialogTypes } from "../../components/dialog";
 import { getUser } from "./selectors";
 import actions from "./actions.js";
 import { getPathname, getSearch } from "../router/selectors";
+import usersActions from "../users/actions.js";
 
 import wishlistDB from "../wishlists/db.js";
 import { firebase } from "../firebase";
 
 const { addUserToWishlist } = actions;
 
+const { cacheUser } = usersActions;
 const { editWishlistProperties, deleteWishlistFromUser } = wishlistDB;
+
+
 
 const {
   AUTH_LOGOUT,
@@ -58,7 +62,7 @@ function* watchRemoveUserFromWishlist() {
 }
 
 function* watchSearchForUsersWithName() {
-  yield takeEvery(SEARCH_FOR_USERS_WITH_NAME, workSearchForUsersWithName);
+  yield takeLatest(SEARCH_FOR_USERS_WITH_NAME, workSearchForUsersWithName);
 }
 
 function* watchLogout() {
@@ -74,6 +78,9 @@ function* workSearchForUsersWithName(action) {
       type: SEARCH_FOR_USERS_WITH_NAME_SUCCESS,
       searchResults: searchResults
     });
+    for(let i = 0; i < searchResults.length; ++i) {
+      yield put(cacheUser(searchResults[i].uid, searchResults[i]));
+    }
   } catch (error) {
     yield put({ type: SEARCH_FOR_USERS_WITH_NAME_ERROR, error: error });
   }
@@ -82,8 +89,6 @@ function* workSearchForUsersWithName(action) {
 function* workAddUserToWishlist(action) {
   try {
     const { type, userUid, wishlistUid } = action;
-    console.log("workAddUserToWishlist()");
-    console.log(action);
     const addedUser = userUid || (yield select(getUser)).uid;
     
     yield all([
@@ -91,7 +96,11 @@ function* workAddUserToWishlist(action) {
       call(addInvitedUserToWishlist, { wishlistId: wishlistUid, uid: userUid })
     ]);
 
-    yield put({ type: ADD_USER_TO_WISHLIST_SUCCESS, wishlistUid: wishlistUid });
+    yield put({ 
+      type: ADD_USER_TO_WISHLIST_SUCCESS, 
+      wishlistUid: wishlistUid, 
+      userUid: userUid 
+    });
   } catch (error) {
     yield put({ type: ADD_USER_TO_WISHLIST_ERROR, error: error });
   }
@@ -100,8 +109,6 @@ function* workAddUserToWishlist(action) {
 function* workRemoveUserFromWishlist(action) {
   try {
     const { type, userUid, wishlistUid } = action;
-    console.log("workRemoveUserFromWishlist()");
-    console.log(action);
     
     yield all([
       call(deleteWishlistFromUser, wishlistUid, userUid),
@@ -110,7 +117,11 @@ function* workRemoveUserFromWishlist(action) {
       )
     ]);
 
-    yield put({ type: REMOVE_USER_FROM_WISHLIST_SUCCESS });
+    yield put({ 
+      type: REMOVE_USER_FROM_WISHLIST_SUCCESS,
+      wishlistUid: wishlistUid,
+      userUid: userUid
+    });
   } catch (error) {
     yield put({ type: REMOVE_USER_FROM_WISHLIST_ERROR, error: error });
   }
