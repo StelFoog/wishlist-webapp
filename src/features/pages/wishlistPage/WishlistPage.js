@@ -46,7 +46,7 @@ const WishlistPage = ({
         editProperties={editProperties}
         uid={uid}
         wishlist={wishlist}
-        deleteObject={confirmDelete(deleteObject)}
+        deleteObject={confirmDelete(deleteObject, wishlist.title)}
         user={user}
         type="wishlist"
       />
@@ -113,11 +113,12 @@ const mapDispatchToProps = dispatch => ({
   createItem: wishlistUid =>
     dispatch(openDialog("createItem", { wishlistUid })),
   shareWishlist: shareWishlistWithDispatch(dispatch),
-  confirmDelete: deleteObject => (
+  confirmDelete: (deleteWishlist, title) => (
     () => (
       dispatch(openDialog("yesNo", {
-        title: "Are you sure you want to delete this wishlist?",
-        onYes: deleteObject
+        title: 
+          "Are you sure you want to delete the wishlist \"" + title + "\"?",
+        onYes: deleteWishlist
       }))
     )
   )

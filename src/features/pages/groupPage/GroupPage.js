@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import { MemberList, ShowMemberListButton } from "./components";
 import Title from "../../components/wishlistTitle";
@@ -7,6 +8,10 @@ import "./groupPage.css";
 import { onGroupChanged } from "../../lib/groups/db.js";
 
 import GroupWishlist from "./components/groupWishlist";
+
+import dialogActions from "../../components/dialog/actions.js";
+
+const { openDialog } = dialogActions;
 
 class GroupPage extends React.Component {
   constructor(props) {
@@ -63,10 +68,10 @@ class GroupPage extends React.Component {
       match,
       groups,
       editProperties,
-      deleteObject,
       leave,
       deleteGroup,
-      user
+      user,
+      confirmDelete
     } = this.props;
     const { uid } = match.params;
     const currentUser = match.params.user;
@@ -88,10 +93,9 @@ class GroupPage extends React.Component {
           type={"group"}
           editProperties={editProperties}
           uid={uid}
-          deleteObject={deleteObject}
           leave={leave}
           user={currentUser}
-          deleteObject={deleteGroup}
+          deleteObject={confirmDelete(deleteGroup, group.title)}
           isOwner={group.owner === user.uid}
         />
         <div className="groupPage">
@@ -117,4 +121,20 @@ class GroupPage extends React.Component {
     );
   }
 }
-export default GroupPage;
+
+const mapDispatchToProps = dispatch => ({
+  confirmDelete: (deleteGroup, groupTitle) => (
+    (groupId, userId) => {
+      dispatch(openDialog("yesNo", {
+        title: 
+          "Are you sure you want to delete the group \"" + groupTitle + "\"?",
+        onYes: () => (deleteGroup(groupId, userId))
+      }));
+    }
+  )
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(GroupPage);
