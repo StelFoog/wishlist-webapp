@@ -34,104 +34,104 @@ const Root = ({
   user,
   push
 }) => (
-  <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      <ConnectedRouter history={history}>
-        <Router>
-          <RequireLogin
-            loggedIn={loggedIn}
-            pathname={pathname}
-            handleNotLoggedIn={handleNotLoggedIn}
-            push={push}
-          >
-            <Dialog />
-            <Switch>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <ConnectedRouter history={history}>
+          <Router>
+            <RequireLogin
+              loggedIn={loggedIn}
+              pathname={pathname}
+              handleNotLoggedIn={handleNotLoggedIn}
+              push={push}
+            >
+              <Dialog />
+              <Switch>
+                <Route
+                  path={"/"}
+                  exact
+                  render={props => {
+                    return <HomePage {...props} />;
+                  }}
+                />
+                <Route
+                  path={"/dashboard/:pathParam1?/:pathParam2?"}
+                  render={props => {
+                    return <Dashboard {...props} />;
+                  }}
+                />
+                <Route
+                  path={"/nologin"}
+                  render={props => {
+                    return <NoLogin {...props} />;
+                  }}
+                />
+                <Route
+                  path={"/invite"}
+                  render={props => {
+                    return <InvitePage {...props} />;
+                  }}
+                />
+                <Route
+                  exact
+                  render={props => {
+                    return <h1> 404 </h1>;
+                  }}
+                />
+              </Switch>
               <Route
-                path={"/"}
+                path={"/dashboard"}
                 exact
                 render={props => {
-                  return <HomePage {...props} />;
+                  return <LoggedInPage {...props} />;
                 }}
               />
-              <Route
-                path={"/dashboard/:pathParam1?/:pathParam2?"}
-                render={props => {
-                  return <Dashboard {...props} />;
-                }}
+              <ProtectedRoute
+                path={"/dashboard/wishlist/:uid"}
+                exact
+                user={user}
+                component={WishlistPage}
+                pathname={pathname}
+                push={push}
+                variant={"ownWishlist"}
               />
               <Route
-                path={"/nologin"}
-                render={props => {
-                  return <NoLogin {...props} />;
-                }}
-              />
-              <Route
-                path={"/invite"}
-                render={props => {
-                  return <InvitePage {...props} />;
-                }}
-              />
-              <Route
+                path="/dashboard/help"
                 exact
                 render={props => {
-                  return <h1> 404 </h1>;
+                  return <HelpPage {...props} />;
                 }}
               />
-            </Switch>
-            <Route
-              path={"/dashboard"}
-              exact
-              render={props => {
-                return <LoggedInPage {...props} />;
-              }}
-            />
-            <ProtectedRoute
-              path={"/dashboard/wishlist/:uid"}
-              exact
-              user={user}
-              component={WishlistPage}
-              pathname={pathname}
-              push={push}
-              variant={"ownWishlist"}
-            />
-            <Route
-              path="/dashboard/help"
-              exact
-              render={props => {
-                return <HelpPage {...props} />;
-              }}
-            />
-            <ProtectedRoute
-              path={"/dashboard/group/:uid/:user"}
-              exact
-              user={user}
-              component={GroupPage}
-              pathname={pathname}
-              push={push}
-              variant={"group"}
-            />
-            <ProtectedRoute
-              path={"/dashboard/guest/:uid"}
-              exact
-              user={user}
-              component={InvitedWishlistPage}
-              pathname={pathname}
-              push={push}
-              variant={"sharedWishlist"}
-            />
-            <Route
-              path={"/wishlistitem"}
-              exact
-              render={props => {
-                return <WishlistItem {...props} />;
-              }}
-            />
-          </RequireLogin>
-        </Router>
-      </ConnectedRouter>
-    </PersistGate>
-  </Provider>
-);
+              <ProtectedRoute
+                path={"/dashboard/group/:uid/:user"}
+                exact
+                user={user}
+                component={GroupPage}
+                pathname={pathname}
+                push={push}
+                variant={"group"}
+              />
+              <ProtectedRoute
+                path={"/dashboard/guest/:uid"}
+                exact
+                user={user}
+                component={InvitedWishlistPage}
+                pathname={pathname}
+                push={push}
+                variant={"sharedWishlist"}
+              />
+              <Route
+                path={"/wishlistitem"}
+                exact
+                render={props => {
+                  return <WishlistItem {...props} />;
+                }}
+              />
+            </RequireLogin>
+          </Router>
+        </ConnectedRouter>
+      </PersistGate>
+    </Provider>
+  );
 
 const RequireLogin = ({
   children,
