@@ -69,6 +69,7 @@ class GroupPage extends React.Component {
       user
     } = this.props;
     const { uid } = match.params;
+    const selectedUser = match.params.user;
     const currentUser = match.params.user;
     const group = groups.find(el => el.uid === uid);
 
@@ -104,6 +105,7 @@ class GroupPage extends React.Component {
               members={group.members}
               uid={uid}
               currentUser={user}
+              selectedUser={selectedUser}
             />
           </div>
           <GroupWishlist groupID={uid} userID={currentUser} />

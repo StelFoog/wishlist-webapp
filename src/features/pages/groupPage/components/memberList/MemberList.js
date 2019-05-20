@@ -34,7 +34,8 @@ class MemberList extends React.Component {
       members,
       currentGroup,
       fetchItems,
-      currentUser
+      currentUser,
+      selectedUser
     } = this.props;
     return (
       <div className="memberBar">
@@ -42,7 +43,8 @@ class MemberList extends React.Component {
           {this.getFilteredUsers(members, users).map(user => (
             <div
               key={user.uid}
-              className="memberCard"
+              className={`memberCard ${user.uid === selectedUser &&
+                "active-group-member"}`}
               onClick={() => {
                 fetchItems({
                   groupID: uid,

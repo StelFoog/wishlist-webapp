@@ -24,6 +24,9 @@
 .memberPicture {
   margin-right: 0.5rem;
 }
+.active-group-member {
+  background-color: var(--color-primary-dark);
+}
 
 .memberContainer {
   overflow-y: auto;
