@@ -23,13 +23,11 @@ class WishlistMembers extends React.Component {
 
   getUserPicture(user) {
     return (
-      <ProfilePicture src={user.profilePictureUrl} width={40} />
+      <ProfilePicture src={user.profilePictureUrl} width={this.props.size} />
     );
   }
 
   render() {
-    console.log("test");
-    console.log(this.props.wishlist.members);
     return (
       <div className="wishlistMembers">
         {//Object.values(this.props.users).map(user => this.getUserPicture(user))
