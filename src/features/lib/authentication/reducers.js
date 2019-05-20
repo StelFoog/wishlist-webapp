@@ -15,7 +15,8 @@ const {
   SEARCH_FOR_USERS_WITH_NAME_ERROR,
   SEARCH_FOR_USERS_WITH_NAME_SUCCESS,
   CLEAR_SEARCH,
-  REMOVE_USER_FROM_WISHLIST_ERROR
+  REMOVE_USER_FROM_WISHLIST_ERROR,
+  REMOVE_USER_FROM_WISHLIST_SUCCESS
 } = types;
 
 const initialState = {
@@ -26,7 +27,15 @@ const initialState = {
 
 const userReducer = (state = initialState, action) => {
   let nextState = JSON.parse(JSON.stringify(state)); // Deep copy
-  const { type, userData, error, wishlistUid, groupId, searchResults } = action;
+  const { 
+    type, 
+    userData, 
+    error, 
+    wishlistUid, 
+    groupId, 
+    searchResults, 
+    userUid 
+  } = action;
 
   switch (type) {
     case AUTH_USER_ERROR:
@@ -48,22 +57,11 @@ const userReducer = (state = initialState, action) => {
       nextState.user = null;
       break;
 
-    case ADD_USER_TO_WISHLIST_ERROR:
-      console.error(
-        "Wishlist invitation error: " + error.code + "-> " + error.message
-      );
-      return nextState;
-
-    case ADD_USER_TO_WISHLIST_SUCCESS:
-      //nextState.user.wishlists.push(wishlistUid);
-      return { ...nextState };
-
     case CLEAR_SEARCH:
       nextState.searchResults = [];
       return { ...nextState };
 
     case ADD_WISHLIST_ID_TO_USER:
-      console.log(wishlistUid);
       nextState.user.ownedWishlists.push(wishlistUid);
       return nextState;
 
@@ -102,10 +100,6 @@ const userReducer = (state = initialState, action) => {
     case SEARCH_FOR_USERS_WITH_NAME_SUCCESS:
       nextState.searchResults = searchResults;
       return nextState;
-    
-    case REMOVE_USER_FROM_WISHLIST_ERROR:
-      console.log(error);
-      break;
   }
   return nextState;
 };
