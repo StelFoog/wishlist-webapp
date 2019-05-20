@@ -6,6 +6,7 @@ import userActions from "../../lib/users/actions.js";
 import { actions as authActions } from "../../lib/authentication/";
 import { selectUserCache } from "../../lib/users/selectors.js";
 import { actions as wishlistActions } from "../../lib/wishlists/";
+import { push } from "connected-react-router";
 
 import { connect } from "react-redux";
 
@@ -32,6 +33,7 @@ const WishlistPage = ({
   editProperties,
   deleteObject,
   shareWishlist,
+  confirmDelete,
   user /* Actually auth */
 }) => {
   const { uid } = match.params;
@@ -45,7 +47,7 @@ const WishlistPage = ({
         editProperties={editProperties}
         uid={uid}
         wishlist={wishlist}
-        deleteObject={deleteObject}
+        deleteObject={confirmDelete(deleteObject)}
         user={user}
         type="wishlist"
       />
@@ -109,7 +111,16 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   createItem: wishlistUid =>
     dispatch(openDialog("createItem", { wishlistUid })),
-  shareWishlist: shareWishlistWithDispatch(dispatch)
+  shareWishlist: shareWishlistWithDispatch(dispatch),
+  confirmDelete: deleteObject => 
+    () =>
+      dispatch(openDialog("yesNo", {
+        title: "Are you sure you want to delete this wishlist?",
+        onYes: () => {
+          deleteObject();
+          dispatch(push("/dashboard/"));
+        }
+      }))
 });
 
 export default connect(
