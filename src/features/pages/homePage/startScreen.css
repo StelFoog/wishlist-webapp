@@ -21,6 +21,20 @@
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover; /* Resize the background image to cover the entire container */
+  background-attachment: fixed;
+}
+
+.startContent {
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  flex-direction: column;
+  min-height: 100vh;
+
+  animation-name: fadeIn;
+  animation-duration: 1s;
 }
 
 .authButtonContainer,
@@ -47,7 +61,7 @@
 
 .titleContainer h1 {
   color: var(--color-lighter);
-  font-size: 4rem;
+  font-size: 6rem;
   font-weight: 700;
   margin: 0;
 }
@@ -104,6 +118,14 @@
   .authButtonContainer .buttonContainer:not(:first-child) {
     margin-top: 0.25rem;
   }
+
+  .titleContainer h1 {
+    font-size: 4rem;
+  }
+
+  .titleContainer h5 {
+    font-size: 1.5rem;
+  }
 }
 
 /* Keyframes for jumping animation */
@@ -129,5 +151,18 @@
   }
   100% {
     bottom: 0;
+  }
+}
+
+/* Fade in and animation for startpage content */
+
+@keyframes fadeIn {
+  from {
+    transform: translatey(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translatey(0);
+    opacity: 1;
   }
 }

@@ -1,6 +1,6 @@
 import React from "react";
 
-import Paper from "../paper";
+import Paper from "../../../../components/paper";
 
 import Header from "./Header";
 import Navigation from "./Navigation";
