@@ -3,7 +3,7 @@ import types from "./types.js";
 const { GET_USERS_WITH_UIDS_SUCCESS, GET_USERS_WITH_UIDS_ERROR } = types;
 
 const initialState = {
-  userCache: {}
+  users: {}
 };
 const usersReducer = (state = initialState, action) => {
   let nextState = JSON.parse(JSON.stringify(state)); // Deep copy
