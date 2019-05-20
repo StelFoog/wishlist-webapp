@@ -7,6 +7,8 @@ import { connect } from "react-redux";
 import UserCard from "./UserCard.js";
 import TextInput from "../textInput";
 
+const SEARCH_DELAY_MS = 500;
+
 const { searchForUsersWithName } = actions;
 
 const displayUserSharedWith = component => {
@@ -62,7 +64,15 @@ const renderField = ({ input }) => {
 
 const handleInputWith = component => {
   return (changeEvent, currValue, prevValue) => {
-    component.props.search(currValue);
+    if(component.searchDelay) {
+      clearTimeout(component.searchDelay);
+      component.searchDelay = null;
+    }
+    const shouldChange = currValue !== prevValue
+                      && currValue.length >= 3;
+    if(shouldChange)
+      component.searchDelay = setTimeout(() => 
+        (component.props.search(currValue)), SEARCH_DELAY_MS);
   };
 };
 
@@ -78,6 +88,7 @@ class ShareForm extends Component {
   constructor(props) {
     super(props);
     this.selected = props.preSelectedUids.slice(0);
+    this.searchDelay = null;
   }
 
   render() {
@@ -105,7 +116,7 @@ class ShareForm extends Component {
     return (
       <div className="shareForm">
         <Field
-          name="Username"
+          name=""
           component={renderField}
           onChange={handleInputWith(this)}
         />
@@ -140,7 +151,7 @@ const mapStateToProps = () => {
 
 const mapDispatchToProps = dispatch => ({
   search: name => {
-    if (name.length >= 3) dispatch(searchForUsersWithName(name));
+    dispatch(searchForUsersWithName(name));
   }
 });
 
