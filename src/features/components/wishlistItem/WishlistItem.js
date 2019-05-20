@@ -62,7 +62,6 @@ const wishListItem = ({ wishlists, index, editItem, wishlistUid }) => {
               </a>
             </div>
           )}
-        </div>
           <div className="itemContent">
             <Button
               className="editButton"
