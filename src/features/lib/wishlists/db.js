@@ -4,15 +4,15 @@ import { generateWishlistUid } from "../authentication/user";
 
 const _getWishlistRef = uid => database.collection("Wishlists").doc("" + uid);
 
-const createWishlistWithOwner = async (user, wishlistName) => {
+const createWishlistWithOwner = async (user, wishlistData) => {
   const uid = generateWishlistUid(user);
   const wishlist = {
     ...defaultWishlist,
     ...{
-      title: wishlistName,
       uid: uid,
       owner: user.uid
-    }
+    },
+    ...wishlistData
   };
 
   await _getWishlistRef(uid).set(wishlist);
@@ -31,8 +31,8 @@ const fetchWishlistByUid = async uid => {
       return !doc.exists
         ? { deleted: true, uid: uid }
         : !doc.data()
-        ? null
-        : { ...defaultWishlist, ...doc.data() };
+          ? null
+          : { ...defaultWishlist, ...doc.data() };
     });
 };
 

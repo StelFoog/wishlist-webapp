@@ -67,11 +67,7 @@ function* workCreateUserWishlist() {
   try {
     const wishlistForm = yield select(getFormValues("WishlistCreateForm"));
     const userValues = yield select(getUser);
-    let result = yield call(
-      createWishlistWithOwner,
-      userValues,
-      wishlistForm.title
-    );
+    let result = yield call(createWishlistWithOwner, userValues, wishlistForm);
 
     yield all([
       call(addNewWishlistIdToUser, userValues.uid, result.uid),
