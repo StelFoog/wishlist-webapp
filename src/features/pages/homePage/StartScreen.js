@@ -12,6 +12,7 @@ import "./startScreen.css";
 
 const { authenticateFacebook } = actions;
 
+
 const StartScreen = ({ handleDownClick, handleFacebookCLick }) => (
   <div className="startScreen">
     <div className="startBackground" />
