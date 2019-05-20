@@ -36,7 +36,13 @@ class EmojiSelector extends React.Component {
           title="Pick your emoji…"
           emoji="point_up"
           onSelect={onSelect}
-          style={{ position: "absolute", bottom: "45px", right: "20px" }}
+          style={{
+            position: "absolute",
+            bottom: `calc(${
+              document.getElementById("chat-input").clientHeight
+            }px + 5px)`,
+            right: "10px"
+          }}
         />
       </div>
     );

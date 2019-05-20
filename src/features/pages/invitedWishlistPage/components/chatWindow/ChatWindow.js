@@ -113,15 +113,7 @@ class ChatWindow extends React.Component {
                 );
               })}
           </div>
-          <div className="chat-input">
-            <Button
-              variant="filled"
-              label="submit"
-              color="var(--color-primary)"
-              fontSize="1rem"
-              padding="0.015rem 0.5rem"
-              handleClick={() => (this.submitClick())}
-            />
+          <div className="chat-input" id="chat-input">
             <InputBase
               id="chatInput"
               className="chat-input-field"
@@ -132,8 +124,21 @@ class ChatWindow extends React.Component {
               onKeyDown={this.handleKeyDown}
               multiline={true}
             />
+            <Button
+              variant="text"
+              borderRadius={0}
+              label="submit"
+              color="var(--color-primary)"
+              fontSize="1rem"
+              padding="0.015rem 0.5rem"
+              handleClick={() => this.submitClick()}
+            />
             <div
-              style={{ display: "flex" }}
+              style={{
+                display: "flex",
+                cursor: "pointer",
+                alignItems: "center"
+              }}
               onClick={() => {
                 this.setState({ showEmojiKeyboard: true });
               }}

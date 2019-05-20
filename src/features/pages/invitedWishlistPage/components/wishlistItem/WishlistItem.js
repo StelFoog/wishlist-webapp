@@ -34,12 +34,10 @@ class WishlistItem extends React.Component {
     const { name, profilePictureUrl } = user;
 
     return (
-      <div>
-        <div className="userWhoClaimed">
-          <ProfilePicture src={profilePictureUrl} width={40} />
-          <div className="userWhoClaimedName">
-            <p>{name}</p>
-          </div>
+      <div className="userWhoClaimed">
+        <ProfilePicture src={profilePictureUrl} width={40} />
+        <div className="userWhoClaimedName">
+          <p>{name}</p>
         </div>
       </div>
     );

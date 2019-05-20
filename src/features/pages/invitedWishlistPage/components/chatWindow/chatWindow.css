@@ -31,7 +31,8 @@
 
 @media (min-width: 1271px) {
   .chatWindow {
-    top: 0;
+    top: 76px;
+    max-height: calc(100% - 76px);
     right: 0;
     width: 500px;
   }
@@ -46,7 +47,7 @@
     top: 0;
     right: -100%;
     width: calc(100vw - 170px);
-    z-index: 999;
+    z-index: 99;
   }
   .chat-back-button {
     border-radius: 5rem;
