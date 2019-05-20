@@ -13,7 +13,7 @@ import "./wishlistPage.css";
 
 import IconButton from "../../components/iconButton";
 import Button from "../../components/button";
-import PlusIcon from "../../components/svgIcon/icons/PlusIcon";
+import { PlusIcon, ShareIcon } from "../../components/svgIcon";
 import dialogActions from "../../components/dialog/actions.js";
 
 import { getUser } from "../../lib/authentication/selectors";
@@ -52,13 +52,15 @@ const WishlistPage = ({
       />
       <div className="wishlistPage">
         <div className="shareWishlistButton">
-          <Button
+          <IconButton
             borderRadius={0}
             variant="filled"
             label="Share"
             color="var(--color-primary)"
             handleClick={() => shareWishlist(wishlist, user.user)}
-          />
+          >
+            <ShareIcon size={50} color="white" />
+          </IconButton>
         </div>
         {items.length > 0 && (
           <React.Fragment>

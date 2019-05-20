@@ -11,6 +11,7 @@ import EditIcon from "./icons/EditIcon";
 import DeleteIcon from "./icons/DeleteIcon";
 import HelpIcon from "./icons/HelpIcon";
 import LeaveIcon from "./icons/LeaveIcon";
+import ShareIcon from "./icons/ShareIcon";
 
 import SvgIcon from "./SvgIcon";
 
@@ -27,7 +28,8 @@ export {
   ChatIcon,
   EditIcon,
   DeleteIcon,
-  HelpIcon
+  HelpIcon,
+  ShareIcon
 };
 
 export default SvgIcon;

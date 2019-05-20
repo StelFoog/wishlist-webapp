@@ -13,6 +13,11 @@
   right: 2rem;
   bottom: 2rem;
 }
+.shareWishlistButton {
+  position: fixed;
+  right: 2rem;
+  bottom: calc(2rem + 5rem);
+}
 
 @media (min-width: 901px) {
   .wishlistPage .wishlistItem {
@@ -33,6 +38,11 @@
 }
 
 @media (max-width: 600px) {
+  .shareWishlistButton,
+  .createItemButton {
+    right: 0.5rem;
+  }
+
   .page {
     width: 100vw;
   }
