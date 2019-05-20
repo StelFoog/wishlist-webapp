@@ -17,7 +17,6 @@ const usersReducer = (state = initialState, action) => {
       console.log(error);
       break;
   }
-  nextState.userCache = nextState.users;
   return nextState;
 };
 
