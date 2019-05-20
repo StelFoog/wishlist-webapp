@@ -28,9 +28,11 @@ const fetchWishlistByUid = async uid => {
   return _getWishlistRef(uid)
     .get()
     .then(doc => {
-      return !doc.exists ? { deleted: true, uid: uid }
-           : !doc.data() ? null
-           : { ...defaultWishlist, ...doc.data() };
+      return !doc.exists
+        ? { deleted: true, uid: uid }
+        : !doc.data()
+        ? null
+        : { ...defaultWishlist, ...doc.data() };
     });
 };
 
@@ -40,8 +42,6 @@ const editWishlistProperties = async (uid, field, data) => {
 };
 
 const fetchAllWishlistsFromUser = async user => {
-  console.log("fetchAllWishlistsFromUser()");
-  console.log(user);
   return await Promise.all(user.wishlists.map(uid => fetchWishlistByUid(uid)));
 };
 
@@ -65,7 +65,7 @@ const deleteWishlistFromUser = async (uid, userUid) => {
 const deleteWishlistFromDB = async uid => {
   await _getWishlistRef(uid)
     .delete()
-    .then(() => console.log("Wishlist deleted"));
+    .then(() => console.log("Wishlist deleted from DB: " + uid));
 };
 
 function onWishlistChanged(uid, callback) {
