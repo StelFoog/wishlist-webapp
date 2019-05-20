@@ -14,18 +14,15 @@ class LoggedInPage extends React.Component {
     index: 0
   };
 
-
   handleChange = value => {
-
     // Check that we arent clicking on the active tab, if not, change active tab
     if (this.state.index !== value) {
       if (this.state.index === 0) {
-        document.getElementById("0").classList.remove("active");
-        document.getElementById("1").classList.add("active");
-      }
-      else {
-        document.getElementById("0").classList.add("active");
-        document.getElementById("1").classList.remove("active");
+        document.getElementById("0").classList.remove("active-tab");
+        document.getElementById("1").classList.add("active-tab");
+      } else {
+        document.getElementById("0").classList.add("active-tab");
+        document.getElementById("1").classList.remove("active-tab");
       }
     }
 
@@ -35,7 +32,6 @@ class LoggedInPage extends React.Component {
 
     // Scroll to the top when user changes tabs
     window.scrollTo(0, 0);
-
   };
 
   handleChangeIndex = index => {
@@ -51,8 +47,7 @@ class LoggedInPage extends React.Component {
     const { openForm } = this.props;
     return (
       <div className="logged-in-page">
-
-        <AllWishlistsHeader handleChange={this.handleChange} />
+        <AllWishlistsHeader handleChange={this.handleChange} index={index} />
         <SwipeableViews
           index={index}
           onChangeIndex={this.handleChangeIndex}
