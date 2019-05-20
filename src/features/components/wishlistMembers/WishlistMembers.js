@@ -26,8 +26,6 @@ class WishlistMembers extends React.Component {
     const uid = this.props.wishlist.uid;
     const wishlists = this.props.ownedWishlists.concat(this.props.wishlists);
     const wishlist = wishlists.find(element => element.uid === uid);
-    console.log("Wishlist member display has the following member data: ");
-    console.log(wishlist.members);
     return (
       <div className="wishlistMembers">
         {//Object.values(this.props.users).map(user => this.getUserPicture(user))
