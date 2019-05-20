@@ -67,9 +67,7 @@ const wishlistReducer = (state = initialState, action) => {
       return nextState;
 
     case FETCH_OWNED_WISHLISTS_SUCCESS:
-      console.log("bishbashbosh");
       nextState.ownedWishlists = wishlistData;
-      console.log("boshbashbish");
       return nextState;
 
     case FETCH_OWNED_WISHLISTS_ERROR:
@@ -93,8 +91,6 @@ const wishlistReducer = (state = initialState, action) => {
         element => element.uid === wishlistUid
       );
       nextState.ownedWishlists[wishlistIndex] = wishlistData;
-
-      console.log("Edited Wishlist!");
       return nextState;
 
     case EDIT_WISHLIST_PROPERTIES_ERROR:
@@ -160,21 +156,26 @@ const wishlistReducer = (state = initialState, action) => {
       return nextState;
 
     case ADD_USER_TO_WISHLIST_ERROR:
-      console.log(error);      
+      console.log(error);
       break;
     case ADD_USER_TO_WISHLIST_SUCCESS:
-      const index = nextState.ownedWishlists.findIndex((wishlist) =>
-        (wishlist.uid === wishlistUid));
+      const index = nextState.ownedWishlists.findIndex(
+        wishlist => wishlist.uid === wishlistUid
+      );
       nextState.ownedWishlists[index].members.unshift(userUid);
       break;
     case REMOVE_USER_FROM_WISHLIST_ERROR:
-      console.log(error);
+      console.error(
+        "Remove user from wishlist error: " + error.code + "-> " + error.message
+      );
       break;
     case REMOVE_USER_FROM_WISHLIST_SUCCESS:
-      const wIndex = nextState.ownedWishlists.findIndex((wishlist) =>
-        (wishlist.uid === wishlistUid));
-      const uIndex = nextState.ownedWishlists[wIndex]
-        .members.findIndex((uuid) => (uuid === userUid));
+      const wIndex = nextState.ownedWishlists.findIndex(
+        wishlist => wishlist.uid === wishlistUid
+      );
+      const uIndex = nextState.ownedWishlists[wIndex].members.findIndex(
+        uuid => uuid === userUid
+      );
       nextState.ownedWishlists[wIndex].members.splice(uIndex, 1);
       break;
   }
