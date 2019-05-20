@@ -7,6 +7,8 @@ import { connect } from "react-redux";
 import UserCard from "./UserCard.js";
 import TextInput from "../textInput";
 
+const SEARCH_DELAY_MS = 500;
+
 const { searchForUsersWithName } = actions;
 
 const displayUserSharedWith = component => {
@@ -62,7 +64,15 @@ const renderField = ({ input }) => {
 
 const handleInputWith = component => {
   return (changeEvent, currValue, prevValue) => {
-    component.props.search(currValue);
+    if(component.searchDelay) {
+      clearTimeout(component.searchDelay);
+      component.searchDelay = null;
+    }
+    const shouldChange = currValue !== prevValue
+                      && currValue.length >= 3;
+    if(shouldChange)
+      component.searchDelay = setTimeout(() => 
+        (component.props.search(currValue)), SEARCH_DELAY_MS);
   };
 };
 
@@ -78,29 +88,35 @@ class ShareForm extends Component {
   constructor(props) {
     super(props);
     this.selected = props.preSelectedUids.slice(0);
+    this.searchDelay = null;
   }
 
   render() {
+    const showIf = this.props.showIf || (() => (true));
+
     this.selected = this.selected.map(selectedUser =>
       isUserUid(selectedUser)
         ? this.props.userCache[selectedUser]
         : selectedUser
     );
     this.selectedToShow = this.selected.filter(
-      selectedUser => selectedUser || !isUserUid(selectedUser)
+      selectedUser => 
+        (selectedUser 
+     && !isUserUid(selectedUser) 
+     && showIf(selectedUser))
     );
 
     this.unselected = this.props.searchResults.filter(
       unselectedUser =>
         !userIncludes(this.selectedToShow, unselectedUser) &&
-        (!this.props.showIf || this.props.showIf(unselectedUser))
+        (showIf(unselectedUser))
     );
 
     this.props.storeSelected(this.selected);
     return (
       <div className="shareForm">
         <Field
-          name="Username"
+          name=""
           component={renderField}
           onChange={handleInputWith(this)}
         />
@@ -117,7 +133,7 @@ class ShareForm extends Component {
           <React.Fragment>
             <h4> Shared with </h4>
             <div className="userCardArea">
-              {this.selected.map(displayUserSharedWith(this))}
+              {this.selectedToShow.map(displayUserSharedWith(this))}
             </div>
           </React.Fragment>
         )}
@@ -129,13 +145,13 @@ class ShareForm extends Component {
 const mapStateToProps = () => {
   return state => ({
     searchResults: state.auth.searchResults,
-    userCache: selectUserCache(state)
+    userCache: selectUserCache(state),
   });
 };
 
 const mapDispatchToProps = dispatch => ({
   search: name => {
-    if (name.length >= 3) dispatch(searchForUsersWithName(name));
+    dispatch(searchForUsersWithName(name));
   }
 });
 
