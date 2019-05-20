@@ -25,6 +25,7 @@
 @media (min-width: 601px) {
   .dialog {
     width: 560px;
+    max-height: 100%;
   }
 }
 
@@ -41,4 +42,9 @@
 
 .dialog h2 {
   font-size: 2rem;
+}
+
+.helpPage{
+  overflow: auto;
+  max-height: 90vh;
 }

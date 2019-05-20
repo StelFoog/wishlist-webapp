@@ -9,6 +9,7 @@ import Share from "./Share";
 import NoLogin from "./NoLogin";
 import Invite from "./Invite";
 import YesNoDialog from "./YesNoDialog";
+import HelpPage from "./HelpPage";
 
 export {
   NewWishlist,
@@ -21,5 +22,6 @@ export {
   Invite,
   YesNoDialog,
   CreateGroupItem,
-  EditGroupItem
+  EditGroupItem,
+  HelpPage
 };
