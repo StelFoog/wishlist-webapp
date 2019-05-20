@@ -11,35 +11,32 @@
   margin-right: 5px;
 }
 
-.tab:hover  {
+.tab:hover {
   cursor: pointer;
 }
 
-.active {
+.tab.active {
   border-bottom: 3px solid var(--color-dark);
   margin-bottom: -3px;
 }
 
-.tab > h2{
+.tab > h2 {
   flex: 1;
   margin: 0;
 }
 
 @media (max-width: 600px) {
-
   .tabs {
     margin-left: 0;
     justify-content: space-around;
   }
 
-  .tab{
+  .tab {
     margin-right: 0;
   }
-  
-  .tab h2{
+
+  .tab h2 {
     text-align: center;
     font-size: 1.2rem;
   }
-
-
 }
