@@ -11,13 +11,17 @@ import { types as dialogTypes } from "../../components/dialog";
 import { getUser } from "./selectors";
 import actions from "./actions.js";
 import { getPathname, getSearch } from "../router/selectors";
+import usersActions from "../users/actions.js";
 
 import wishlistDB from "../wishlists/db.js";
 import { firebase } from "../firebase";
 
 const { addUserToWishlist } = actions;
 
+const { cacheUser } = usersActions;
 const { editWishlistProperties, deleteWishlistFromUser } = wishlistDB;
+
+
 
 const {
   AUTH_LOGOUT,
@@ -74,6 +78,9 @@ function* workSearchForUsersWithName(action) {
       type: SEARCH_FOR_USERS_WITH_NAME_SUCCESS,
       searchResults: searchResults
     });
+    for(let i = 0; i < searchResults.length; ++i) {
+      yield put(cacheUser(searchResults[i].uid, searchResults[i]));
+    }
   } catch (error) {
     yield put({ type: SEARCH_FOR_USERS_WITH_NAME_ERROR, error: error });
   }

@@ -6,11 +6,18 @@ import { selectUserCache } from "./selectors.js";
 const {
   GET_USERS_WITH_UIDS,
   GET_USERS_WITH_UIDS_ERROR,
-  GET_USERS_WITH_UIDS_SUCCESS
+  GET_USERS_WITH_UIDS_SUCCESS,
+  CACHE_USER_ERROR,
+  CACHE_USER_SUCCESS,
+  CACHE_USER
 } = types;
 
 function* watchGetUsersWithUids() {
   yield takeEvery(GET_USERS_WITH_UIDS, workGetUsersWithUids);
+}
+
+function* watchCacheUser() {
+  yield takeEvery(CACHE_USER, workCacheUser);
 }
 
 function* workGetUsersWithUids(action) {
@@ -29,6 +36,18 @@ function* workGetUsersWithUids(action) {
   }
 }
 
+function* workCacheUser(action) {
+  try {
+    const userCache = yield select(selectUserCache);
+    const { uid, value } = action;
+    userCache[uid] = value;
+    yield put({ type: CACHE_USER_SUCCESS, users: userCache });
+  } catch (error) {
+    yield put({ type: CACHE_USER_ERROR, error: error });
+  }
+}
+
 export default {
-  watchGetUsersWithUids
+  watchGetUsersWithUids,
+  watchCacheUser
 };
