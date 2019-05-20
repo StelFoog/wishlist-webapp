@@ -17,7 +17,7 @@ const WishlistCreateForm = ({ handleSubmit }) => (
         label={"Wishlist Title"}
       />
       <Field
-        name="EventDate"
+        name="endDate"
         label="Event date"
         component={renderField}
         type="date"
