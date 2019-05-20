@@ -16,8 +16,6 @@ class WishlistMembers extends React.Component {
     return array;
   }
 
-  componentDidMount() {}
-
   getUserPicture(user) {
     return (
       <ProfilePicture src={user.profilePictureUrl} width={this.props.size} />
