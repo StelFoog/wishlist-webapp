@@ -28,23 +28,23 @@ const wishListItem = ({ wishlists, index, editItem, wishlistUid }) => {
           <div className="itemPrice">
             <h3>{price}:-</h3>
           </div>
-          <div className="itemLink">
-            <a
-              href={"//" + websitelink}
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              <Button
-                variant="filled"
-                label="Link"
-                className="itemLinkButton"
-                padding="0"
-                color="var(--color-primary)"
-              />
-            </a>
-          </div>
+          {websitelink && (
+            <div className="itemLink">
+              <a
+                href={"//" + websitelink}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                <Button
+                  className="itemLinkButton"
+                  variant={"filled"}
+                  label={"Link"}
+                  color={"var(--color-primary)"}
+                />
+              </a>
+            </div>
+          )}
         </div>
-
         <div className="itemContent">
           <Button
             className="editButton"

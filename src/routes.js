@@ -171,19 +171,21 @@ const ProtectedRoute = ({
   push
 }) => {
   let hasAccess = false;
-  switch (variant) {
-    case "ownWishlist":
-      const ownWishlistUid = pathname.split("/")[3];
-      hasAccess = user.ownedWishlists.includes(ownWishlistUid);
-      break;
-    case "sharedWishlist":
-      const sharedWishlistUid = pathname.split("/")[3];
-      hasAccess = user.wishlists.includes(sharedWishlistUid);
-      break;
-    case "group":
-      const groupUid = pathname.split("/")[3];
-      hasAccess = user.groups.includes(groupUid);
-      break;
+  if (user) {
+    switch (variant) {
+      case "ownWishlist":
+        const ownWishlistUid = pathname.split("/")[3];
+        hasAccess = user.ownedWishlists.includes(ownWishlistUid);
+        break;
+      case "sharedWishlist":
+        const sharedWishlistUid = pathname.split("/")[3];
+        hasAccess = user.wishlists.includes(sharedWishlistUid);
+        break;
+      case "group":
+        const groupUid = pathname.split("/")[3];
+        hasAccess = user.groups.includes(groupUid);
+        break;
+    }
   }
   return (
     <Route
