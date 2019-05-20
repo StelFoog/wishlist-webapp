@@ -1,26 +1,29 @@
-
 .userCard {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
 }
 
 .userAvatar {
-    margin-left: 5px;
-    margin-top: 10px;
+  margin-left: 5px;
+  margin-top: 10px;
 }
 
 .username {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .addOrRemoveButton {
-    margin-left: auto;
-    margin-right: 10px;
-    margin-top: 10px;
+  margin-left: auto;
+  margin-right: 10px;
 }
 
 .userCardArea {
-    max-height: 250px;
-    overflow-y: scroll;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.shareForm h4 {
+  color: var(--color-primary);
+  margin-left: 5px;
 }
