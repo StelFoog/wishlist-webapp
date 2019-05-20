@@ -6,7 +6,6 @@ import userActions from "../../lib/users/actions.js";
 import { actions as authActions } from "../../lib/authentication/";
 import { selectUserCache } from "../../lib/users/selectors.js";
 import { actions as wishlistActions } from "../../lib/wishlists/";
-import { push } from "connected-react-router";
 
 import { connect } from "react-redux";
 
@@ -112,15 +111,14 @@ const mapDispatchToProps = dispatch => ({
   createItem: wishlistUid =>
     dispatch(openDialog("createItem", { wishlistUid })),
   shareWishlist: shareWishlistWithDispatch(dispatch),
-  confirmDelete: deleteObject => 
-    () =>
+  confirmDelete: deleteObject => (
+    () => (
       dispatch(openDialog("yesNo", {
         title: "Are you sure you want to delete this wishlist?",
-        onYes: () => {
-          deleteObject();
-          dispatch(push("/dashboard/"));
-        }
+        onYes: deleteObject
       }))
+    )
+  )
 });
 
 export default connect(
