@@ -81,19 +81,24 @@ class ShareForm extends Component {
   }
 
   render() {
+    const showIf = this.props.showIf || (() => (true));
+
     this.selected = this.selected.map(selectedUser =>
       isUserUid(selectedUser)
         ? this.props.userCache[selectedUser]
         : selectedUser
     );
     this.selectedToShow = this.selected.filter(
-      selectedUser => selectedUser || !isUserUid(selectedUser)
+      selectedUser => 
+        (selectedUser 
+     && !isUserUid(selectedUser) 
+     && showIf(selectedUser))
     );
 
     this.unselected = this.props.searchResults.filter(
       unselectedUser =>
         !userIncludes(this.selectedToShow, unselectedUser) &&
-        (!this.props.showIf || this.props.showIf(unselectedUser))
+        (showIf(unselectedUser))
     );
 
     this.props.storeSelected(this.selected);
@@ -117,7 +122,7 @@ class ShareForm extends Component {
           <React.Fragment>
             <h4> Shared with </h4>
             <div className="userCardArea">
-              {this.selected.map(displayUserSharedWith(this))}
+              {this.selectedToShow.map(displayUserSharedWith(this))}
             </div>
           </React.Fragment>
         )}
@@ -129,7 +134,7 @@ class ShareForm extends Component {
 const mapStateToProps = () => {
   return state => ({
     searchResults: state.auth.searchResults,
-    userCache: selectUserCache(state)
+    userCache: selectUserCache(state),
   });
 };
 
