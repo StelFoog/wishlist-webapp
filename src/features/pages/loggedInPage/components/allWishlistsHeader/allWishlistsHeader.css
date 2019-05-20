@@ -21,4 +21,7 @@
   .allWishlistsHeader {
     margin-top: 64px;
   }
+  .wishlistPageTitle {
+    display: none;
+  }
 }

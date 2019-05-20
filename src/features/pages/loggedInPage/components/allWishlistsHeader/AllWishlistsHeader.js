@@ -40,7 +40,7 @@ class AllWishlistsHeader extends React.Component {
   render() {
     return (
       <div className="allWishlistsHeader">
-        <h1 className="headerTitle">Wishlists</h1>
+        <h1 className="headerTitle wishlistPageTitle">Wishlists</h1>
         <Tabs>
           <Tab
             active={this.props.index}
