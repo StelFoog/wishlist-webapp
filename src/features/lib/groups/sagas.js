@@ -1,4 +1,4 @@
-import { takeEvery, put, select, call, all } from "redux-saga/effects";
+import { takeLeading, put, select, call, all } from "redux-saga/effects";
 import { getUser } from "../authentication/selectors.js";
 import { getDialogValues } from "../../components/dialog/selectors";
 import {
@@ -50,31 +50,31 @@ const { ADD_GROUP_ID_TO_USER, REMOVE_GROUP_ID_FROM_USER } = authTypes;
 const { CLOSE_DIALOG } = dialogTypes;
 
 function* watchFetchAllUserGroups() {
-  yield takeEvery(FETCH_ALL_USER_GROUPS, workFetchAllUserGroups);
+  yield takeLeading(FETCH_ALL_USER_GROUPS, workFetchAllUserGroups);
 }
 
 function* watchCreateGroup() {
-  yield takeEvery(CREATE_GROUP, workCreateGroup);
+  yield takeLeading(CREATE_GROUP, workCreateGroup);
 }
 
 function* watchInviteUserToGroup() {
-  yield takeEvery(INVITE_USER_TO_GROUP, workInviteUserToGroup);
+  yield takeLeading(INVITE_USER_TO_GROUP, workInviteUserToGroup);
 }
 
 function* watchRemoveUserFromGroup() {
-  yield takeEvery(REMOVE_USER_FROM_GROUP, workRemoveUserFromGroup);
+  yield takeLeading(REMOVE_USER_FROM_GROUP, workRemoveUserFromGroup);
 }
 
 function* watchEditGroupProperites() {
-  yield takeEvery(EDIT_GROUP_PROPERTIES, workEditGroupProperties);
+  yield takeLeading(EDIT_GROUP_PROPERTIES, workEditGroupProperties);
 }
 
 function* watchLeaveGroup() {
-  yield takeEvery(LEAVE_GROUP, workLeaveGroup);
+  yield takeLeading(LEAVE_GROUP, workLeaveGroup);
 }
 
 function* watchDeleteGroup() {
-  yield takeEvery(DELETE_GROUP, workDeleteGroup);
+  yield takeLeading(DELETE_GROUP, workDeleteGroup);
 }
 
 function* workFetchAllUserGroups() {

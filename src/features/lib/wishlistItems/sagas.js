@@ -1,4 +1,4 @@
-import { takeEvery, put, select, call, all } from "redux-saga/effects";
+import { takeLeading, put, select, call, all } from "redux-saga/effects";
 import { getFormValues, reset } from "redux-form";
 import { replace } from "connected-react-router";
 import { getUser } from "../authentication/selectors";
@@ -40,23 +40,23 @@ const {
 const { CLOSE_DIALOG } = dialogTypes;
 
 function* watchCreateWishlistItem() {
-  yield takeEvery(CREATE_WISHLIST_ITEM, workCreateWishlistItem);
+  yield takeLeading(CREATE_WISHLIST_ITEM, workCreateWishlistItem);
 }
 
 function* watchEditWishlistItem() {
-  yield takeEvery(EDIT_WISHLIST_ITEM, workEditWishlistItem);
+  yield takeLeading(EDIT_WISHLIST_ITEM, workEditWishlistItem);
 }
 
 function* watchFetchAllItems() {
-  yield takeEvery(FETCH_ALL_ITEMS, workFetchAllItems);
+  yield takeLeading(FETCH_ALL_ITEMS, workFetchAllItems);
 }
 
 function* watchClaimWishlistItem() {
-  yield takeEvery(CLAIM_WISHLIST_ITEM, workClaimWishlistItem);
+  yield takeLeading(CLAIM_WISHLIST_ITEM, workClaimWishlistItem);
 }
 
 function* watchUnclaimWishlistItem() {
-  yield takeEvery(UNCLAIM_WISHLIST_ITEM, workUnclaimWishlistItem);
+  yield takeLeading(UNCLAIM_WISHLIST_ITEM, workUnclaimWishlistItem);
 }
 
 function* workCreateWishlistItem() {
@@ -135,7 +135,12 @@ function* workUnclaimWishlistItem(action) {
 
     yield call(unclaimWishlistItem, user.uid, index, wishlistId);
 
-    yield put({ type: UNCLAIM_WISHLIST_ITEM_SUCCESS, wishlistUid: wishlistId, index, userUid: user.uid });
+    yield put({
+      type: UNCLAIM_WISHLIST_ITEM_SUCCESS,
+      wishlistUid: wishlistId,
+      index,
+      userUid: user.uid
+    });
   } catch (error) {
     yield put({ type: UNCLAIM_WISHLIST_ITEM_ERROR, error });
   }

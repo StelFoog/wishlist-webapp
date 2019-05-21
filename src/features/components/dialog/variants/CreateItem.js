@@ -48,7 +48,7 @@ const CreateItem = ({ handleSubmit, handleClose, values, performSubmit }) => (
         label="SUBMIT"
         color="var(--color-accept)"
         variant="text"
-        handleClick={composeSequential([performSubmit, handleClose])}
+        handleClick={performSubmit}
       />
     </CardActions>
   </React.Fragment>

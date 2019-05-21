@@ -5,13 +5,12 @@ import { submit } from "redux-form";
 import { CardHeader, CardContent, CardActions } from "../../card";
 import { WishlistCreateForm } from "../../wishListForm";
 import Button from "../../button";
-import composeSequential from "./lib/compose.js";
 
-const NewWishlist = ({ handleSubmit, handleClose }) => (
+const NewWishlist = ({ performSubmit, handleClose }) => (
   <React.Fragment>
     <CardHeader>{"Create new Wishlist"}</CardHeader>
     <CardContent>
-      <WishlistCreateForm handleSubmit={handleSubmit} />
+      <WishlistCreateForm />
     </CardContent>
     <CardActions>
       <Button
@@ -23,7 +22,7 @@ const NewWishlist = ({ handleSubmit, handleClose }) => (
       <Button
         variant={"text"}
         label={"Submit"}
-        handleClick={composeSequential([handleSubmit, handleClose])}
+        handleClick={performSubmit}
         color={"var(--color-accept)"}
       />
     </CardActions>
@@ -31,7 +30,7 @@ const NewWishlist = ({ handleSubmit, handleClose }) => (
 );
 
 const mapDispatchToProps = dispatch => ({
-  handleSubmit: () => dispatch(submit("WishlistCreateForm"))
+  performSubmit: () => dispatch(submit("WishlistCreateForm"))
 });
 
 export default connect(

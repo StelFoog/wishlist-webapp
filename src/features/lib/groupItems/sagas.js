@@ -1,4 +1,4 @@
-import { takeEvery, put, select, all, call } from "redux-saga/effects";
+import { takeLeading, put, select, all, call } from "redux-saga/effects";
 import { getFormValues, reset } from "redux-form";
 import { getDialogValues } from "../../components/dialog/selectors";
 import types from "./types";
@@ -34,19 +34,19 @@ const {
 const { CLOSE_DIALOG } = dialogTypes;
 
 function* watchCreateGroupItem() {
-  yield takeEvery(CREATE_GROUP_WISHLIST_ITEM, workCreateGroupItem);
+  yield takeLeading(CREATE_GROUP_WISHLIST_ITEM, workCreateGroupItem);
 }
 
 function* watchEditGroupItem() {
-  yield takeEvery(EDIT_GROUP_WISHLIST_ITEM, workEditGroupItem);
+  yield takeLeading(EDIT_GROUP_WISHLIST_ITEM, workEditGroupItem);
 }
 
 function* watchFetchGroupItems() {
-  yield takeEvery(FETCH_ALL_GROUP_ITEMS, workFetchGroupItems);
+  yield takeLeading(FETCH_ALL_GROUP_ITEMS, workFetchGroupItems);
 }
 
 function* watchClaimGroupItem() {
-  yield takeEvery(CLAIM_GROUP_WISHLIST_ITEM, workClaimGroupItem);
+  yield takeLeading(CLAIM_GROUP_WISHLIST_ITEM, workClaimGroupItem);
 }
 
 function* workCreateGroupItem() {

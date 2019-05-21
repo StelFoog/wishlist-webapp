@@ -1,4 +1,4 @@
-import { takeEvery, takeLatest, call, put, select, all } from "redux-saga/effects";
+import { takeLeading, call, put, select, all } from "redux-saga/effects";
 import { push } from "connected-react-router";
 import { authWithFacebookAPI, logout /* authWithGoogleAPI */ } from "./auth.js";
 import {
@@ -20,8 +20,6 @@ const { addUserToWishlist } = actions;
 
 const { cacheUser } = usersActions;
 const { editWishlistProperties, deleteWishlistFromUser } = wishlistDB;
-
-
 
 const {
   AUTH_LOGOUT,
@@ -46,27 +44,27 @@ const {
 const { CLOSE_DIALOG } = dialogTypes;
 
 function* watchUserAuthFacebook() {
-  yield takeEvery(AUTH_USER_FACEBOOK, workUserAuthFacebook);
+  yield takeLeading(AUTH_USER_FACEBOOK, workUserAuthFacebook);
 }
 
 function* watchUserAuthGoogle() {
-  yield takeEvery(AUTH_USER_GOOGLE, workUserAuthGoogle);
+  yield takeLeading(AUTH_USER_GOOGLE, workUserAuthGoogle);
 }
 
 function* watchAddUserToWishlist() {
-  yield takeEvery(ADD_USER_TO_WISHLIST, workAddUserToWishlist);
+  yield takeLeading(ADD_USER_TO_WISHLIST, workAddUserToWishlist);
 }
 
 function* watchRemoveUserFromWishlist() {
-  yield takeEvery(REMOVE_USER_FROM_WISHLIST, workRemoveUserFromWishlist);
+  yield takeLeading(REMOVE_USER_FROM_WISHLIST, workRemoveUserFromWishlist);
 }
 
 function* watchSearchForUsersWithName() {
-  yield takeLatest(SEARCH_FOR_USERS_WITH_NAME, workSearchForUsersWithName);
+  yield takeLeading(SEARCH_FOR_USERS_WITH_NAME, workSearchForUsersWithName);
 }
 
 function* watchLogout() {
-  yield takeEvery(AUTH_LOGOUT, workLogout);
+  yield takeLeading(AUTH_LOGOUT, workLogout);
 }
 
 function* workSearchForUsersWithName(action) {
@@ -78,7 +76,7 @@ function* workSearchForUsersWithName(action) {
       type: SEARCH_FOR_USERS_WITH_NAME_SUCCESS,
       searchResults: searchResults
     });
-    for(let i = 0; i < searchResults.length; ++i) {
+    for (let i = 0; i < searchResults.length; ++i) {
       yield put(cacheUser(searchResults[i].uid, searchResults[i]));
     }
   } catch (error) {
@@ -90,16 +88,16 @@ function* workAddUserToWishlist(action) {
   try {
     const { type, userUid, wishlistUid } = action;
     const addedUser = userUid || (yield select(getUser)).uid;
-    
+
     yield all([
       call(addInvitedWishlistToUser, { wishlistId: wishlistUid, uid: userUid }),
       call(addInvitedUserToWishlist, { wishlistId: wishlistUid, uid: userUid })
     ]);
 
-    yield put({ 
-      type: ADD_USER_TO_WISHLIST_SUCCESS, 
-      wishlistUid: wishlistUid, 
-      userUid: userUid 
+    yield put({
+      type: ADD_USER_TO_WISHLIST_SUCCESS,
+      wishlistUid: wishlistUid,
+      userUid: userUid
     });
   } catch (error) {
     yield put({ type: ADD_USER_TO_WISHLIST_ERROR, error: error });
@@ -109,15 +107,18 @@ function* workAddUserToWishlist(action) {
 function* workRemoveUserFromWishlist(action) {
   try {
     const { type, userUid, wishlistUid } = action;
-    
+
     yield all([
       call(deleteWishlistFromUser, wishlistUid, userUid),
-      call(editWishlistProperties, wishlistUid, "members",
+      call(
+        editWishlistProperties,
+        wishlistUid,
+        "members",
         firebase.firestore.FieldValue.arrayRemove(userUid)
       )
     ]);
 
-    yield put({ 
+    yield put({
       type: REMOVE_USER_FROM_WISHLIST_SUCCESS,
       wishlistUid: wishlistUid,
       userUid: userUid

@@ -5,18 +5,17 @@ import { Field, reduxForm, submit } from "redux-form";
 import renderField, { required } from "../../wishListForm/validate";
 import Button from "../../button";
 import { actions as groupActions } from "../../../lib/groups";
-import composeSequential from "./lib/compose.js";
 
 import "../dialog.css";
 
 const { createGroup } = groupActions;
 
-const CreateGroup = ({ handleClose, performSubmit }) => {
+const CreateGroup = ({ handleClose, handleSubmit, performSubmit }) => {
   return (
     <React.Fragment>
       <CardHeader>{"Create new group"}</CardHeader>
       <CardContent>
-        <form onSubmit={performSubmit}>
+        <form onSubmit={handleSubmit}>
           <Field
             name="name"
             label="Name of group"
@@ -27,9 +26,8 @@ const CreateGroup = ({ handleClose, performSubmit }) => {
           <button
             type="submit"
             onClick={e => {
-              performSubmit();
+              handleSubmit();
               e.preventDefault();
-              handleClose();
             }}
             className={"hidden-form-button"}
           />
@@ -40,7 +38,7 @@ const CreateGroup = ({ handleClose, performSubmit }) => {
           label="SUBMIT"
           color="var(--color-accept)"
           variant="text"
-          handleClick={composeSequential([performSubmit, handleClose])}
+          handleClick={performSubmit}
         />
       </CardActions>
     </React.Fragment>

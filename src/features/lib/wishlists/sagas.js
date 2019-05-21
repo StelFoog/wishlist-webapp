@@ -1,4 +1,4 @@
-import { takeEvery, call, put, select, all } from "redux-saga/effects";
+import { takeLeading, call, put, select, all } from "redux-saga/effects";
 import { getFormValues, reset } from "redux-form";
 import { replace, push } from "connected-react-router";
 import db from "./db";
@@ -44,23 +44,23 @@ const { ADD_WISHLIST_ID_TO_USER, REMOVE_WISHLIST_ID_FROM_USER } = authTypes;
 const { CLOSE_DIALOG } = dialogTypes;
 
 function* watchCreateUserWishlist() {
-  yield takeEvery(CREATE_USER_WISHLIST, workCreateUserWishlist);
+  yield takeLeading(CREATE_USER_WISHLIST, workCreateUserWishlist);
 }
 
 function* watchFetchWishlists() {
-  yield takeEvery(FETCH_WISHLISTS, workFetchWishlists);
+  yield takeLeading(FETCH_WISHLISTS, workFetchWishlists);
 }
 
 function* watchFetchOwnedWishlists() {
-  yield takeEvery(FETCH_OWNED_WISHLISTS, workFetchOwnedWishlists);
+  yield takeLeading(FETCH_OWNED_WISHLISTS, workFetchOwnedWishlists);
 }
 
 function* watchEditWishlistProperties() {
-  yield takeEvery(EDIT_WISHLIST_PROPERTIES, workEditWishlistProperties);
+  yield takeLeading(EDIT_WISHLIST_PROPERTIES, workEditWishlistProperties);
 }
 
 function* watchDeleteWishlist() {
-  yield takeEvery(DELETE_WISHLIST, workDeleteWishlist);
+  yield takeLeading(DELETE_WISHLIST, workDeleteWishlist);
 }
 
 function* workCreateUserWishlist() {
