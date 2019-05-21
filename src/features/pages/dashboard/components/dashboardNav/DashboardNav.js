@@ -67,7 +67,14 @@ class DashboardNav extends React.Component {
 
   render() {
     const { showSideNav, groupDropdown } = this.state;
-    const { navigate, user, createGroup, openForm, askLogout, openHelpDialog } = this.props;
+    const {
+      navigate,
+      user,
+      createGroup,
+      openForm,
+      askLogout,
+      openHelpDialog
+    } = this.props;
     const { pathParam1, pathParam2 } = this.props.match.params;
     return (
       <React.Fragment>
@@ -137,10 +144,7 @@ class DashboardNav extends React.Component {
               </div>
             </div>
           </div>
-          <div
-            className="navButton navButtonBottom"
-            onClick={openHelpDialog}
-          >
+          <div className="navButton navButtonBottom" onClick={openHelpDialog}>
             <Ripple />
             <div className="icon">
               <HelpIcon size="30" />
@@ -154,6 +158,7 @@ class DashboardNav extends React.Component {
             </div>
             <span>Log out</span>
           </div>
+          {/*
           <div
             className="navButton navButtonBottom"
             onClick={() => navigate("settings")}
@@ -164,6 +169,7 @@ class DashboardNav extends React.Component {
             </div>
             <span>Settings</span>
           </div>
+          */}
         </div>
 
         <div className="mobileTopNav">
