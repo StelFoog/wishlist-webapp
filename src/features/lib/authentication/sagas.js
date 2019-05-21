@@ -20,6 +20,7 @@ import actions from "./actions.js";
 import { getPathname, getSearch } from "../router/selectors";
 import usersActions from "../users/actions.js";
 import groupTypes from "../groups/types.js";
+import wishlistTypes from "../wishlists/types.js";
 
 import wishlistDB from "../wishlists/db.js";
 import { firebase } from "../firebase";
@@ -55,6 +56,7 @@ const {
 const { CLOSE_DIALOG } = dialogTypes;
 
 const { FETCH_ALL_USER_GROUPS } = groupTypes;
+const { FETCH_WISHLISTS } = wishlistTypes;
 
 function* watchUserAuthFacebook() {
   yield takeLeading(AUTH_USER_FACEBOOK, workUserAuthFacebook);
@@ -184,18 +186,14 @@ function* workUpdateCurrentUser({ userData }) {
 
     yield put({ type: UPDATE_CURRENT_USER_SUCCESS, userData: userData });
 
-    console.log(user.groups);
-    console.log(userData.groups);
-    console.log(
-      "Current user state has " +
-        user.groups.length +
-        " lists, new has " +
-        userData.groups.length
-    );
-
     if (userData.groups.length !== user.groups.length) {
-      console.log("Refetching groups!");
+      console.log("Refetching groups because user ref list has changed");
       yield put({ type: FETCH_ALL_USER_GROUPS });
+    }
+
+    if (userData.wishlists.length !== user.wishlists.length) {
+      console.log("Refetching wishlists because user ref list has changed");
+      yield put({ type: FETCH_WISHLISTS });
     }
 
     // TODO: Check for wishlist changes too?
