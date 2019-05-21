@@ -37,7 +37,7 @@ const groupReducer = (state = initialState, action) => {
       console.error(
         "CREATE_GROUP_ERROR: " + error.code + "-> " + error.message
       );
-      return { ...nextState };
+      return nextState;
 
     case FETCH_ALL_USER_GROUPS_SUCCESS:
       return { ...nextState, groups: value };
@@ -45,41 +45,26 @@ const groupReducer = (state = initialState, action) => {
       console.error(
         "FETCH_ALL_USER_GROUPS_ERROR: " + error.code + "-> " + error.message
       );
-      return { ...nextState };
+      return nextState;
 
     case INVITE_USER_TO_GROUP_SUCCESS:
-      return {
-        ...nextState,
-        groups: nextState.groups.map(group =>
-          group.uid === groupId
-            ? {
-                ...group,
-                members: group.members.concat(userId)
-              }
-            : { ...group }
-        )
-      };
+      // DB listener handles state update
+      return nextState;
     case INVITE_USER_TO_GROUP_ERROR:
       console.error(
         "INVITE_USER_TO_GROUP_ERROR: " + error.code + "-> " + error.message
       );
-      return { ...nextState };
+      return nextState;
 
     case REMOVE_USER_FROM_GROUP_SUCCESS:
-      return {
-        ...nextState,
-        groups: nextState.groups.map(group => {
-          if (group.uid === groupId)
-            group.members.splice(group.members.indexOf(userId), 1);
-          return { ...group };
-        })
-      };
+      // DB listener handles state update
+      return nextState;
 
     case REMOVE_USER_FROM_GROUP_ERROR:
       console.error(
         "REMOVE_USER_FROM_GROUP_ERROR: " + error.code + "-> " + error.message
       );
-      return { ...nextState };
+      return nextState;
 
     case UPDATE_CURRENT_GROUP:
       const i = state.groups.findIndex(locGroup => locGroup.uid === group.uid);
@@ -89,26 +74,17 @@ const groupReducer = (state = initialState, action) => {
         console.error(
           "(REDUX) DB listener: Couldn't find local group to update"
         );
-      return { ...nextState };
+      return nextState;
 
     case EDIT_GROUP_PROPERTIES_SUCCESS:
-      return {
-        ...nextState,
-        groups: nextState.groups.map(group =>
-          group.uid === groupId
-            ? {
-                ...group,
-                [field]: value
-              }
-            : { ...group }
-        )
-      };
+      // DB listener handles state update
+      return nextState;
 
     case EDIT_GROUP_PROPERTIES_ERROR:
       console.error(
         "EDIT_GROUP_PROPERTIES_ERROR: " + error.code + "-> " + error.message
       );
-      return { ...nextState };
+      return nextState;
 
     case LEAVE_GROUP_SUCCESS:
       return {
@@ -118,14 +94,14 @@ const groupReducer = (state = initialState, action) => {
 
     case LEAVE_GROUP_ERROR:
       console.error("LEAVE_GROUP_ERROR: " + error.code + "-> " + error.message);
-      return { ...nextState };
+      return nextState;
 
     case DELETE_GROUP_ERROR:
       console.log("DELETE_GROUP_ERROR: " + error.code + "-> " + error.message);
-      return { ...nextState };
+      return nextState;
 
     default:
-      return { ...nextState };
+      return nextState;
   }
 };
 
