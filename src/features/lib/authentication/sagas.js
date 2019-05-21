@@ -1,4 +1,11 @@
-import { takeLeading, call, put, select, all } from "redux-saga/effects";
+import {
+  takeLeading,
+  takeEvery,
+  call,
+  put,
+  select,
+  all
+} from "redux-saga/effects";
 import { push } from "connected-react-router";
 import { authWithFacebookAPI, logout /* authWithGoogleAPI */ } from "./auth.js";
 import {
@@ -52,11 +59,11 @@ function* watchUserAuthGoogle() {
 }
 
 function* watchAddUserToWishlist() {
-  yield takeLeading(ADD_USER_TO_WISHLIST, workAddUserToWishlist);
+  yield takeEvery(ADD_USER_TO_WISHLIST, workAddUserToWishlist);
 }
 
 function* watchRemoveUserFromWishlist() {
-  yield takeLeading(REMOVE_USER_FROM_WISHLIST, workRemoveUserFromWishlist);
+  yield takeEvery(REMOVE_USER_FROM_WISHLIST, workRemoveUserFromWishlist);
 }
 
 function* watchSearchForUsersWithName() {

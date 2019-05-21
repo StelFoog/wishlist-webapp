@@ -1,4 +1,11 @@
-import { takeLeading, put, select, call, all } from "redux-saga/effects";
+import {
+  takeLeading,
+  takeEvery,
+  put,
+  select,
+  call,
+  all
+} from "redux-saga/effects";
 import { getUser } from "../authentication/selectors.js";
 import { getDialogValues } from "../../components/dialog/selectors";
 import {
@@ -58,11 +65,11 @@ function* watchCreateGroup() {
 }
 
 function* watchInviteUserToGroup() {
-  yield takeLeading(INVITE_USER_TO_GROUP, workInviteUserToGroup);
+  yield takeEvery(INVITE_USER_TO_GROUP, workInviteUserToGroup);
 }
 
 function* watchRemoveUserFromGroup() {
-  yield takeLeading(REMOVE_USER_FROM_GROUP, workRemoveUserFromGroup);
+  yield takeEvery(REMOVE_USER_FROM_GROUP, workRemoveUserFromGroup);
 }
 
 function* watchEditGroupProperites() {
