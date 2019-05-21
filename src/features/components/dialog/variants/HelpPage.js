@@ -1,13 +1,20 @@
 import React from "react";
 import { connect } from "react-redux";
 import { CardHeader, CardContent, CardActions } from "../../card";
+import Button from "../../../components/button";
+import actions from "../actions";
 
-const HelpPage = () => {
+const { closeDialog } = actions;
+
+const HelpPage = ({ handleClose }) => {
   return (
     <React.Fragment>
       <div className="helpPage">
         <CardContent>
-          <h1>Help page</h1>
+
+          <div className="helpPageHeader">
+            <h1>Help page</h1>
+          </div>
           <p>
             Wishlists is a simple application to help you coordinate gift giving
             between your friends and family. Create a wishlist by going to
@@ -45,10 +52,26 @@ const HelpPage = () => {
               backgroundPosition: "center"
             }}
           />
+          <div className="helpExitContainer">
+            <Button
+              variant="text"
+              label="exit"
+              color="var(--color-error)"
+              className="helpPageExitButton"
+              handleClick={handleClose}
+            />
+          </div>
         </CardContent>
       </div>
     </React.Fragment>
   );
 };
 
-export default HelpPage;
+const mapDispatchToProps = dispatch => ({
+  handleClose: () => dispatch(closeDialog())
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(HelpPage);
