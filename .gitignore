@@ -16,3 +16,6 @@ package-lock.json
 
 # API
 .env
+
+# Now
+now.json
