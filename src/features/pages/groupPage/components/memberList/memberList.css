@@ -1,6 +1,5 @@
 .memberBarContainer {
-  position: fixed;
-  height: calc(100% - 76px);
+  max-height: 100vh;
 }
 
 .memberBar {
