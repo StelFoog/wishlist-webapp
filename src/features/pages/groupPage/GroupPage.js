@@ -11,6 +11,8 @@ import GroupWishlist from "./components/groupWishlist";
 
 import dialogActions from "../../components/dialog/actions.js";
 
+import ChatWindow, { MobileChatButton } from "../../components/chat";
+
 const { openDialog } = dialogActions;
 
 class GroupPage extends React.Component {
@@ -20,9 +22,11 @@ class GroupPage extends React.Component {
     this.toggleShowMemberList = this.toggleShowMemberList.bind(this);
     this.setWrapperRef = this.setWrapperRef.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.toggleChatWindow = this.toggleChatWindow.bind(this);
 
     this.state = {
-      showMemberList: false
+      showMemberList: false,
+      showChat: false
     };
   }
 
@@ -61,6 +65,11 @@ class GroupPage extends React.Component {
     if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
       this.toggleShowMemberList();
     }
+  }
+
+  toggleChatWindow() {
+    const { showChat } = this.state;
+    this.setState({ showChat: !showChat });
   }
 
   render() {
@@ -114,7 +123,13 @@ class GroupPage extends React.Component {
             />
           </div>
           <GroupWishlist groupID={uid} userID={currentUser} />
+          <MobileChatButton toggleChatWindow={this.toggleChatWindow} />
         </div>
+        <ChatWindow
+          wishlistUid={uid}
+          showChat={this.state.showChat}
+          toggleChatWindow={this.toggleChatWindow}
+        />
         <div className="showMembersButton">
           <ShowMemberListButton
             showMemberListToggle={this.toggleShowMemberList}

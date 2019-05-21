@@ -1,7 +1,7 @@
 import React from "react";
 
-import { ChatIcon } from "../../../../components/svgIcon";
-import IconButton from "../../../../components/iconButton";
+import { ChatIcon } from "../../../svgIcon";
+import IconButton from "../../../iconButton";
 import "./mobileChatButton.css";
 
 const MobileChatButton = ({ toggleChatWindow }) => (
@@ -9,10 +9,9 @@ const MobileChatButton = ({ toggleChatWindow }) => (
     <IconButton
       variant="filled"
       color="var(--color-primary)"
-      padding="0.75rem"
       handleClick={toggleChatWindow}
     >
-      <ChatIcon size={35} />
+      <ChatIcon size={40} />
     </IconButton>
   </div>
 );

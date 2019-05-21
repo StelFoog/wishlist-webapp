@@ -1,7 +1,8 @@
 import ChatWindow from "./ChatWindow";
 import { connect } from "react-redux";
-import { actions } from "../../../../lib/chat";
-import { getUser } from "../../../../lib/authentication/selectors";
+import { actions } from "../../lib/chat";
+import { getUser } from "../../lib/authentication/selectors";
+import MobileChatButton from "./components/mobileChatButton";
 const { sendChatMessage, updateLocalChat, createChat } = actions;
 
 const mapStateToProps = state => {
@@ -15,6 +16,8 @@ const mapDispatchToProps = dispatch => ({
   handleChatUpdate: messages => dispatch(updateLocalChat(messages)),
   handleCreateChat: user => dispatch(createChat(user))
 });
+
+export { MobileChatButton };
 
 export default connect(
   mapStateToProps,

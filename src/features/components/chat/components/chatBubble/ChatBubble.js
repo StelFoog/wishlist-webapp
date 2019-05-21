@@ -1,6 +1,6 @@
 import React from "react";
 import "./chatBubble.css";
-import ProfilePicture from "../../../../components/profilePicture";
+import ProfilePicture from "../../../profilePicture";
 
 const ChatBubble = ({
   username,

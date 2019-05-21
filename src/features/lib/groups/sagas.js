@@ -1,4 +1,4 @@
-import { takeEvery, put, select, call } from "redux-saga/effects";
+import { takeEvery, put, select, call, all } from "redux-saga/effects";
 import { getUser } from "../authentication/selectors.js";
 import { getDialogValues } from "../../components/dialog/selectors";
 import {
@@ -11,6 +11,7 @@ import {
   deleteGroupByUid
 } from "./db.js";
 import groupTypes from "./types";
+import { types as chatTypes } from "../chat";
 import { types as authTypes } from "../authentication";
 import { types as dialogTypes } from "../../components/dialog";
 import { addGroupToUser, removeGroupFromUser } from "../authentication/db.js";
@@ -41,6 +42,8 @@ const {
   DELETE_GROUP_ERROR,
   DELETE_GROUP_SUCCESS
 } = groupTypes;
+
+const { CREATE_CHAT, DELETE_CHAT } = chatTypes;
 
 const { ADD_GROUP_ID_TO_USER, REMOVE_GROUP_ID_FROM_USER } = authTypes;
 
@@ -110,10 +113,14 @@ function* workCreateGroup(action) {
     const { groupName } = action;
     const result = yield call(createGroupWithOwner, user, groupName);
     const groupId = result.uid;
-    yield call(addGroupToUser, userUid, groupId);
-    yield call(addWishlistToGroup, groupId, userUid);
-    yield put({ type: CREATE_GROUP_SUCCESS, value: result });
+    yield all([
+      call(addGroupToUser, userUid, groupId),
+      call(addWishlistToGroup, groupId, userUid),
+      put({ type: CREATE_CHAT, id: groupId })
+    ]);
+
     yield put({ type: ADD_GROUP_ID_TO_USER, groupId });
+    yield put({ type: CREATE_GROUP_SUCCESS, value: result });
     yield put({ type: CLOSE_DIALOG });
     yield put(push(`/dashboard/group/${groupId}/${userUid}`));
   } catch (error) {
@@ -184,6 +191,7 @@ function* workDeleteGroup({ groupID, userID }) {
     yield call(deleteGroupByUid, { groupID });
     yield put(push(`/dashboard/`));
     yield put({ type: REMOVE_GROUP_ID_FROM_USER, groupId: groupID });
+    yield put({ type: DELETE_CHAT, groupID });
     yield put({ type: LEAVE_GROUP_SUCCESS, userId: userID, groupId: groupID });
   } catch (error) {
     yield put({ type: LEAVE_GROUP_ERROR, error: error });
