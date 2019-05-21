@@ -5,10 +5,10 @@ import { Field, reduxForm, submit } from "redux-form";
 import renderField, { required } from "../../wishListForm/validate";
 import Button from "../../button";
 import { actions as groupActions } from "../../../lib/groups";
-
+import composeSequential from "./lib/compose.js";
 const { addUserToGroup } = groupActions;
 
-const AddMember = ({ performSubmit, values, ...rest }) => {
+const AddMember = ({ handleClose, performSubmit, values, ...rest }) => {
   return (
     <React.Fragment>
       <CardHeader>{"Add new member"}</CardHeader>
@@ -28,7 +28,7 @@ const AddMember = ({ performSubmit, values, ...rest }) => {
           label="SUBMIT"
           color="var(--color-accept)"
           variant="text"
-          handleClick={performSubmit}
+          handleClick={composeSequential([performSubmit, handleClose])}
         />
       </CardActions>
     </React.Fragment>

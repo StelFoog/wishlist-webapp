@@ -6,10 +6,11 @@ import { Field, reduxForm, submit } from "redux-form";
 import renderField from "../../wishListForm/validate";
 import Button from "../../button";
 import { actions } from "../../../lib/groupItems";
+import composeSequential from "./lib/compose.js";
 
 const { editGroupItem } = actions;
 
-const EditGroupItem = ({ handleSubmit, performSubmit }) => (
+const EditGroupItem = ({ handleClose, handleSubmit, performSubmit }) => (
   <React.Fragment>
     <CardHeader>{"Edit wishlist item"}</CardHeader>
     <CardContent>
@@ -27,7 +28,7 @@ const EditGroupItem = ({ handleSubmit, performSubmit }) => (
         label="SUBMIT"
         color="var(--color-accept)"
         variant="text"
-        handleClick={performSubmit}
+        handleClick={composeSequential([performSubmit, handleClose])}
       />
     </CardActions>
   </React.Fragment>
