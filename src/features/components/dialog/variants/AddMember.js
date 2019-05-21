@@ -41,7 +41,8 @@ const mapDispatchToProps = dispatch => ({
 
 export default reduxForm({
   form: "addMember",
-  onSubmit: (values, dispatch) => dispatch(addUserToGroup(values.name))
+  onSubmit: (values, dispatch) => dispatch(addUserToGroup(values.name)),
+  destroyOnUnmount: false
 })(
   connect(
     null,
