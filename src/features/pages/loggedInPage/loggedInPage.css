@@ -2,10 +2,12 @@
   position: fixed;
   left: 0;
   bottom: 40px;
-  max-width: 100vw;
+  max-width: 10vw;
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  flex-direction: row;
+  margin-left: 85%;
 }
 .createWishlistButton.shown {
   animation: showButton 0.75s;
