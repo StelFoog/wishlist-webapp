@@ -55,7 +55,7 @@
     display: block;
     position: fixed;
     bottom: 2rem;
-    left: 2rem;
+    left: 0.5rem;
   }
   .memberBarContainer {
     top: 0;

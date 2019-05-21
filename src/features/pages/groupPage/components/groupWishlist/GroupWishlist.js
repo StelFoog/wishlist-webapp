@@ -27,7 +27,7 @@ class GroupWishlist extends React.Component {
             />
           ))}
         {currentUser === userID && (
-          <div className="createItemButton" style={{ bottom: "7rem" }}>
+          <div className="createItemButton createItemButtonGroup">
             <IconButton
               variant="filled"
               color="var(--color-primary)"
