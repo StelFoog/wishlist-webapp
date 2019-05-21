@@ -20,7 +20,7 @@
   flex-direction: column;
 }
 
-.guide-col > * {
+.guide-col > .card-container {
   flex: 1;
 }
 

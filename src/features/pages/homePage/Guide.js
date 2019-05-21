@@ -15,7 +15,10 @@ const Guide = () => (
           </Paper>
         </div>
         <Card elevation={2}>
-          <CardMedia />
+          <CardMedia
+            media={"static/CreateWishlist.png"}
+            mediaHeight={"300px"}
+          />
           <CardContent>
             <p>
               Create a new Wishlist, give it a name and, if you want to, give it
@@ -32,7 +35,10 @@ const Guide = () => (
           </Paper>
         </div>
         <Card elevation={2}>
-          <CardMedia />
+          <CardMedia
+            media={"static/CreateWishlistItem.png"}
+            mediaHeight={"300px"}
+          />
           <CardContent>
             <p>Add items you want to the wishlist...</p>
           </CardContent>
@@ -45,7 +51,7 @@ const Guide = () => (
           </Paper>
         </div>
         <Card elevation={2}>
-          <CardMedia />
+          <CardMedia media={"static/ShareWishlist.png"} mediaHeight={"300px"} />
           <CardContent>
             <p>
               And then share it with your friends and family or anyone else who
@@ -61,7 +67,7 @@ const Guide = () => (
           </Paper>
         </div>
         <Card elevation={2}>
-          <CardMedia />
+          <CardMedia media={"static/SeeWishlist.png"} mediaHeight={"300px"} />
           <CardContent>
             <p>Other people can see what you want...</p>
           </CardContent>
