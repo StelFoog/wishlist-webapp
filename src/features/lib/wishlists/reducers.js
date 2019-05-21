@@ -124,13 +124,6 @@ const wishlistReducer = (state = initialState, action) => {
       // No need to pop from state as we listen to the DB anyway
       return nextState;
 
-    case DELETE_WISHLIST_SUCCESS:
-      const wishlistIndexDelete = nextState.ownedWishlists.findIndex(
-        element => element.uid === wishlistUid
-      );
-      nextState.ownedWishlists.splice(wishlistIndexDelete, 1);
-      return nextState;
-
     case DELETE_WISHLIST_ERROR:
       console.error(
         "Wishlist deleting error: " + error.code + "-> " + error.message
