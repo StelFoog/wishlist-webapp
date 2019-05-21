@@ -18,7 +18,7 @@ import dialogActions from "../../components/dialog/actions.js";
 
 import { getUser } from "../../lib/authentication/selectors";
 
-const { editWishlistProperties } = wishlistActions;
+const { deleteWishlist, editWishlistProperties } = wishlistActions;
 const { openDialog } = dialogActions;
 const { getUsersWithUids } = userActions;
 const { addUserToWishlist, removeUserFromWishlist } = authActions;
@@ -33,7 +33,7 @@ const WishlistPage = ({
   deleteObject,
   shareWishlist,
   confirmDelete,
-  user /* Actually auth */
+  user, /* Actually auth */
 }) => {
   const { uid } = match.params;
   const wishlist = wishlists.find(element => element.uid === uid);
@@ -46,7 +46,7 @@ const WishlistPage = ({
         editProperties={editProperties}
         uid={uid}
         wishlist={wishlist}
-        deleteObject={confirmDelete(deleteObject, wishlist.title)}
+        deleteObject={ confirmDelete(deleteObject, wishlist.title) }
         user={user}
         type="wishlist"
       />
@@ -121,7 +121,7 @@ const mapDispatchToProps = dispatch => ({
         onYes: deleteWishlist
       }))
     )
-  )
+  ),
 });
 
 export default connect(
