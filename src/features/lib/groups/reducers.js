@@ -82,7 +82,7 @@ const groupReducer = (state = initialState, action) => {
       return { ...nextState };
 
     case UPDATE_CURRENT_GROUP:
-      const i = state.groups.findIndex(locGroup => locGroup.uid === groupId);
+      const i = state.groups.findIndex(locGroup => locGroup.uid === group.uid);
       if (i >= 0) {
         nextState.groups[i] = group;
       } else

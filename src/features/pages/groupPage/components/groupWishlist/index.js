@@ -15,7 +15,7 @@ const { fetchGroupWishlistItems } = groupItemsActions;
 const mapStateToProps = () => {
   const getGroupWishlistItems = selectors.getGroupWishlistItemsState();
   return state => ({
-    items: getGroupWishlistItems(state),
+    groups: state.group.groups,
     currentUser: getUser(state).uid
   });
 };
