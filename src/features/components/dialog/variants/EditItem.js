@@ -40,6 +40,14 @@ const EditItem = ({ handleSubmit, handleClose, values, performSubmit }) => {
             component={renderField}
             type="text"
           />
+          <button
+            type="submit"
+            onClick={e => {
+              performSubmit();
+              e.preventDefault();
+            }}
+            className={"hidden-form-button"}
+          />
         </form>
       </CardContent>
       <CardActions>
