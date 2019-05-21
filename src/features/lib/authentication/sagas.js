@@ -83,7 +83,7 @@ function* watchLogout() {
 }
 
 function* watchUpdateCurrentUser() {
-  yield takeEvery(UPDATE_CURRENT_USER, workUpdateCurrentUser);
+  yield takeLeading(UPDATE_CURRENT_USER, workUpdateCurrentUser);
 }
 
 function* workSearchForUsersWithName(action) {
