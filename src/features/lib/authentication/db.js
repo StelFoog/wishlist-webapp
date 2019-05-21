@@ -3,28 +3,31 @@ import { defaultUser } from "./user.js";
 
 const _getUserRef = uid => database.collection("Users").doc(uid.toString());
 
-const usersOrderedByName = database.collection("Users")
-                                   .orderBy("nameLowerCase");
+const usersOrderedByName = database
+  .collection("Users")
+  .orderBy("nameLowerCase");
 
 const userExistsWithUid = async uid => {
   return (await getUser(uid)) !== null;
 };
 
-const nextHigherString = (string) => {
+const nextHigherString = string => {
   let seq = Array.from(string);
-  seq[seq.length-1] = String.fromCharCode(string.charCodeAt(seq.length-1)+1);
+  seq[seq.length - 1] = String.fromCharCode(
+    string.charCodeAt(seq.length - 1) + 1
+  );
   return seq.join("");
-}
+};
 
-const searchForUsersWithName = async (name) => {
+const searchForUsersWithName = async name => {
   const nameLowerCase = name.toLowerCase();
-  const users = (await usersOrderedByName
+  const users = await usersOrderedByName
     .where("nameLowerCase", ">=", nameLowerCase)
     .where("nameLowerCase", "<", nextHigherString(nameLowerCase))
-    .get().then((docArray) =>
-      docArray.docs.map((doc) => doc.data())));
+    .get()
+    .then(docArray => docArray.docs.map(doc => doc.data()));
   return users;
-}
+};
 
 const userFromFirebaseUser = firebaseUser => {
   return {
@@ -109,6 +112,12 @@ const addNewWishlistIdToUser = (uid, wishlistId) => {
   giveWishlistToUserAsOwner(uid, wishlistId);
 };
 
+function onUserChanged(uid, callback) {
+  return _getUserRef(uid).onSnapshot(doc => {
+    callback(doc.data());
+  });
+}
+
 export {
   giveWishlistToUserAsOwner,
   userExistsWithUid,
@@ -119,5 +128,6 @@ export {
   addInvitedWishlistToUser,
   addGroupToUser,
   removeGroupFromUser,
-  searchForUsersWithName
+  searchForUsersWithName,
+  onUserChanged
 };
