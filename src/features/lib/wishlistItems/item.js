@@ -3,6 +3,7 @@ const defaultItem = {
   description: null,
   price: null,
   websitelink: null,
+  link: null,
   claimedBy: []
 };
 
