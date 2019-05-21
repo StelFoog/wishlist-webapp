@@ -60,8 +60,8 @@ function* watchUnclaimWishlistItem() {
 }
 
 const validateLink = (link) => {
-  return link.replace("http://", "")
-             .replace("https://", "");
+  return !link ? "" : link.replace("http://", "")
+                          .replace("https://", "");
 }
 
 function* workCreateWishlistItem() {
