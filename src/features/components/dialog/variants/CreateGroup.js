@@ -6,6 +6,8 @@ import renderField, { required } from "../../wishListForm/validate";
 import Button from "../../button";
 import { actions as groupActions } from "../../../lib/groups";
 
+import "../dialog.css";
+
 const { createGroup } = groupActions;
 
 const CreateGroup = ({ performSubmit }) => {
@@ -20,6 +22,14 @@ const CreateGroup = ({ performSubmit }) => {
             component={renderField}
             type="text"
             validate={required}
+          />
+          <button
+            type="submit"
+            onClick={e => {
+              performSubmit();
+              e.preventDefault();
+            }}
+            className={"hidden-form-button"}
           />
         </form>
       </CardContent>
@@ -41,7 +51,8 @@ const mapDispatchToProps = dispatch => ({
 
 export default reduxForm({
   form: "createGroup",
-  onSubmit: (values, dispatch) => dispatch(createGroup(values.name))
+  onSubmit: (values, dispatch) => dispatch(createGroup(values.name)),
+  destroyOnUnmount: false
 })(
   connect(
     null,

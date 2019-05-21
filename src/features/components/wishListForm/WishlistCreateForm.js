@@ -22,6 +22,11 @@ const WishlistCreateForm = ({ handleSubmit }) => (
         component={renderField}
         type="date"
       />
+      <button
+        style={{ display: "none" }}
+        type={"submit"}
+        onClick={handleSubmit}
+      />
     </React.Fragment>
   </form>
 );

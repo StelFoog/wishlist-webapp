@@ -10,7 +10,7 @@ const NewWishlist = ({ handleSubmit, handleClose }) => (
   <React.Fragment>
     <CardHeader>{"Create new Wishlist"}</CardHeader>
     <CardContent>
-      <WishlistCreateForm />
+      <WishlistCreateForm handleSubmit={handleSubmit} />
     </CardContent>
     <CardActions>
       <Button
