@@ -17,7 +17,8 @@ const {
   CLEAR_SEARCH,
   REMOVE_USER_FROM_WISHLIST_ERROR,
   REMOVE_USER_FROM_WISHLIST_SUCCESS,
-  UPDATE_CURRENT_USER
+  UPDATE_CURRENT_USER_ERROR,
+  UPDATE_CURRENT_USER_SUCCESS
 } = types;
 
 const initialState = {
@@ -102,7 +103,12 @@ const userReducer = (state = initialState, action) => {
       nextState.searchResults = searchResults;
       return nextState;
 
-    case UPDATE_CURRENT_USER:
+    case UPDATE_CURRENT_USER_ERROR:
+      console.error(
+        "User updating error: " + error.code + "-> " + error.message
+      );
+      return nextState;
+    case UPDATE_CURRENT_USER_SUCCESS:
       nextState.user = userData;
       return nextState;
   }

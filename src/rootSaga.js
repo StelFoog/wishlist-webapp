@@ -16,6 +16,7 @@ function* rootSaga() {
     authSagas.watchRemoveUserFromWishlist(),
     authSagas.watchSearchForUsersWithName(),
     authSagas.watchLogout(),
+    authSagas.watchUpdateCurrentUser(),
     wishlistSagas.watchCreateUserWishlist(),
     wishlistItemSagas.watchCreateWishlistItem(),
     wishlistSagas.watchFetchWishlists(),
