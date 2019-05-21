@@ -29,7 +29,7 @@ class WishlistItem extends React.Component {
       users,
       claimItem
     } = this.props;
-    const { name, description, price, claimedBy } = item;
+    const { name, description, price, claimedBy, websitelink } = item;
 
     return (
       <React.Fragment>
@@ -47,15 +47,23 @@ class WishlistItem extends React.Component {
               <div className="itemPrice">
                 <h3>{price}:-</h3>
               </div>
-              <div className="itemLink">
-                <Button
-                  variant="text"
-                  label="Link"
-                  className="itemLinkButton"
-                  padding="0"
-                  color="var(--color-primary)"
-                />
-              </div>
+              {websitelink && (
+                <div className="itemLink">
+                  <a
+                    href={websitelink}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    <Button
+                      variant="text"
+                      label="Link"
+                      className="itemLinkButton"
+                      padding="0"
+                      color="var(--color-primary)"
+                    />
+                  </a>
+                </div>
+              )}
             </div>
             {isOwner ? (
               <div className="itemContent">
@@ -67,13 +75,13 @@ class WishlistItem extends React.Component {
                 />
               </div>
             ) : (
-              getClaimContent({
-                handleClaim: this.handleClaim,
-                claimedByUsers: claimedBy,
-                users,
-                claimItem
-              })
-            )}
+                getClaimContent({
+                  handleClaim: this.handleClaim,
+                  claimedByUsers: claimedBy,
+                  users,
+                  claimItem
+                })
+              )}
           </div>
         </div>
       </React.Fragment>
