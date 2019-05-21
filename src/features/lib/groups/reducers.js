@@ -31,7 +31,12 @@ const groupReducer = (state = initialState, action) => {
 
   switch (type) {
     case CREATE_GROUP_SUCCESS:
-      return { ...nextState, groups: nextState.groups.concat(value) };
+      // This is a bit convulted because sometimes the DB listener would manage
+      // to get the next list first, which would cause the item to be added twice
+      const i = state.groups.findIndex(locGroup => locGroup.uid === value.uid);
+      if (i === -1)
+        return { ...nextState, groups: nextState.groups.concat(value) };
+      else return nextState;
 
     case CREATE_GROUP_ERROR:
       console.error(
