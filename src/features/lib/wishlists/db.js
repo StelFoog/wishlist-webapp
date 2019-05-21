@@ -53,7 +53,7 @@ const deleteWishlistFromUser = async (uid, userUid) => {
   const _ref = database.collection("Users").doc("" + userUid);
 
   await _ref.get().then(doc => {
-    return _ref
+    return doc.exists && _ref
       .update({
         ownedWishlists: doc.data().ownedWishlists.filter(id => id !== uid),
         wishlists: doc.data().wishlists.filter(id => id !== uid)

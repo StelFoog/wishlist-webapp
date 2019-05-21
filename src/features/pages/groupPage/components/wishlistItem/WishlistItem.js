@@ -75,13 +75,13 @@ class WishlistItem extends React.Component {
                 />
               </div>
             ) : (
-              getClaimContent({
-                handleClaim: this.handleClaim,
-                claimedByUsers: claimedBy,
-                users,
-                claimItem
-              })
-            )}
+                getClaimContent({
+                  handleClaim: this.handleClaim,
+                  claimedByUsers: claimedBy,
+                  users,
+                  claimItem
+                })
+              )}
           </div>
         </div>
       </React.Fragment>

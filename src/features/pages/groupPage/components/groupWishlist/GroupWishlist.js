@@ -10,7 +10,9 @@ class GroupWishlist extends React.Component {
   }
 
   render() {
-    const { createItem, groupID, userID, currentUser, items } = this.props;
+    const { createItem, groupID, userID, currentUser, groups } = this.props;
+    const group = groups.find(element => element.uid == groupID);
+    const items = group.wishlists[userID];
     return (
       <div className="groupWishlists">
         {items &&

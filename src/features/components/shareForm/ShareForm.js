@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Field } from "redux-form";
+import { Form, Field } from "redux-form";
 import actions from "../../lib/authentication/actions.js";
 import types from "../../lib/authentication/types.js";
 import { selectUserCache } from "../../lib/users/selectors.js";
@@ -115,11 +115,15 @@ class ShareForm extends Component {
     this.props.storeSelected(this.selected);
     return (
       <div className="shareForm">
-        <Field
-          name=""
-          component={renderField}
-          onChange={handleInputWith(this)}
-        />
+        <Form>
+          <Field
+            name="shareField"
+            component={renderField}
+            onChange={handleInputWith(this)}
+            type="text"
+            onFocus={() => (undefined)}
+          />
+        </Form>
         {this.unselected.length > 0 && (
           <React.Fragment>
             <h4> Search results </h4>
