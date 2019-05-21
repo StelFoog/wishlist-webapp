@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 import PageHeader from "../../components/pageHeader";
 import WishlistMembers from "../../components/wishlistMembers";
 import WishlistItem from "./components/wishlistItem";
-import ChatWindow from "./components/chatWindow";
-import MobileChatButton from "./components/mobileChatButton";
+
+import ChatWindow, { MobileChatButton } from "../../components/chat";
 import { firebase } from "../../lib/firebase";
 import db from "../../lib/wishlists/db.js";
 import { actions } from "../../lib/wishlists/";

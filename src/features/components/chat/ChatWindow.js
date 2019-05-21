@@ -1,14 +1,14 @@
 import React from "react";
-import { onChatMessageReceived } from "../../../../lib/chat/db.js";
+import { onChatMessageReceived } from "../../lib/chat/db.js";
 
-import { RoundKeyboardArrowLeft } from "../../../../components/svgIcon";
-import Paper from "../../../../components/paper";
+import { RoundKeyboardArrowLeft } from "../svgIcon";
+import Paper from "../paper";
 import InputBase from "@material-ui/core/InputBase";
-import Ripple from "../../../../components/ripple";
-import { InsertEmoji } from "../../../../components/svgIcon";
-import ChatBubble from "../chatBubble";
+import Ripple from "../ripple";
+import { InsertEmoji } from "../svgIcon";
+import ChatBubble from "./components/chatBubble";
 import EmojiSelector from "./EmojiSelector";
-import Button from "../../../../components/button";
+import Button from "../button";
 import "./chatWindow.css";
 
 class ChatWindow extends React.Component {
@@ -26,9 +26,13 @@ class ChatWindow extends React.Component {
   }
 
   componentDidMount() {
+    this.listenToChat();
+  }
+
+  listenToChat() {
     const { wishlistUid } = this.props;
     this.unlisten = onChatMessageReceived(
-      wishlistUid,
+      this.props.wishlistUid,
       (props => {
         return chat => {
           props.handleChatUpdate(chat);
@@ -38,6 +42,13 @@ class ChatWindow extends React.Component {
         };
       })(this.props)
     );
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.wishlistUid !== this.props.wishlistUid) {
+      this.unlisten();
+      this.listenToChat();
+    }
   }
 
   componentWillUnmount() {
