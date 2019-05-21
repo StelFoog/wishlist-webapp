@@ -93,78 +93,76 @@ class ChatWindow extends React.Component {
     let prevMsgSender = "",
       sameSender = false;
     return (
-      <Paper elevation={2}>
-        <div
-          className={`chatWindow ${
-            showChat ? "mobile-visible" : "mobile-hidden"
-          }`}
-        >
-          <div className="chat-mobile-header">
-            <div className="chat-back-button" onClick={toggleChatWindow}>
-              <Ripple />
-              <RoundKeyboardArrowLeft color="var(--color-primary)" />
-            </div>
+      <div
+        className={`chatWindow  ${
+          showChat ? "mobile-visible" : "mobile-hidden"
+        }`}
+      >
+        <div className="chat-mobile-header">
+          <div className="chat-back-button" onClick={toggleChatWindow}>
+            <Ripple />
+            <RoundKeyboardArrowLeft color="var(--color-primary)" />
           </div>
-          <div className="chat">
-            {messages &&
-              messages.map((msg, index) => {
-                sameSender = prevMsgSender === msg.senderName;
-
-                prevMsgSender = msg.senderName;
-                return (
-                  <ChatBubble
-                    key={`msg ${index}`}
-                    sameSender={sameSender}
-                    username={msg.senderName}
-                    messageText={msg.text}
-                    timestamp={msg.timestamp}
-                    userProfilePicture={msg.photoURL}
-                    sent={msg.senderId === user.uid}
-                  />
-                );
-              })}
-          </div>
-          <div className="chat-input" id="chat-input">
-            <InputBase
-              id="chatInput"
-              className="chat-input-field"
-              placeholder="Aa"
-              label="chat-input"
-              onChange={this.handleChange}
-              value={this.state.input}
-              onKeyDown={this.handleKeyDown}
-              multiline={true}
-            />
-            <Button
-              variant="text"
-              borderRadius={0}
-              label="submit"
-              color="var(--color-primary)"
-              fontSize="1rem"
-              padding="0.015rem 0.5rem"
-              handleClick={() => this.submitClick()}
-            />
-            <div
-              style={{
-                display: "flex",
-                cursor: "pointer",
-                alignItems: "center"
-              }}
-              onClick={() => {
-                this.setState({ showEmojiKeyboard: true });
-              }}
-            >
-              <InsertEmoji color="var(--color-dark)" />
-            </div>
-          </div>
-          {showEmojiKeyboard && (
-            <EmojiSelector
-              onSelect={this.addEmoji}
-              toggleEmojiKeyboard={this.closeEmojiKeyboard}
-            />
-          )}
         </div>
-      </Paper>
+        <div className="chat">
+          {messages &&
+            messages.map((msg, index) => {
+              sameSender = prevMsgSender === msg.senderName;
+
+              prevMsgSender = msg.senderName;
+              return (
+                <ChatBubble
+                  key={`msg ${index}`}
+                  sameSender={sameSender}
+                  username={msg.senderName}
+                  messageText={msg.text}
+                  timestamp={msg.timestamp}
+                  userProfilePicture={msg.photoURL}
+                  sent={msg.senderId === user.uid}
+                />
+              );
+            })}
+        </div>
+        <div className="chat-input" id="chat-input">
+          <InputBase
+            id="chatInput"
+            className="chat-input-field"
+            placeholder="Aa"
+            label="chat-input"
+            onChange={this.handleChange}
+            value={this.state.input}
+            onKeyDown={this.handleKeyDown}
+            multiline={true}
+          />
+          <Button
+            variant="text"
+            borderRadius={0}
+            label="submit"
+            color="var(--color-primary)"
+            fontSize="1rem"
+            padding="0.015rem 0.5rem"
+            handleClick={() => this.submitClick()}
+          />
+          <div
+            style={{
+              display: "flex",
+              cursor: "pointer",
+              alignItems: "center"
+            }}
+            onClick={() => {
+              this.setState({ showEmojiKeyboard: true });
+            }}
+          >
+            <InsertEmoji color="var(--color-dark)" />
+          </div>
+        </div>
+        {showEmojiKeyboard && (
+          <EmojiSelector
+            onSelect={this.addEmoji}
+            toggleEmojiKeyboard={this.closeEmojiKeyboard}
+          />
+        )}
+      </div>
     );
   }
 }

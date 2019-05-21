@@ -108,6 +108,17 @@ class GroupPage extends React.Component {
           deleteObject={confirmDelete(deleteGroup, group.title)}
           isOwner={group.owner === user.uid}
         />
+        <div
+          className={`group-page-chat ${
+            this.state.showChat ? "show-chat" : "hide-chat"
+          }`}
+        >
+          <ChatWindow
+            wishlistUid={uid}
+            showChat={this.state.showChat}
+            toggleChatWindow={this.toggleChatWindow}
+          />
+        </div>
         <div className="groupPage">
           <div
             ref={showMemberList ? this.setWrapperRef : ""}
@@ -123,13 +134,10 @@ class GroupPage extends React.Component {
             />
           </div>
           <GroupWishlist groupID={uid} userID={currentUser} />
+        </div>
+        <div className="showChatButtonContainerGroup">
           <MobileChatButton toggleChatWindow={this.toggleChatWindow} />
         </div>
-        <ChatWindow
-          wishlistUid={uid}
-          showChat={this.state.showChat}
-          toggleChatWindow={this.toggleChatWindow}
-        />
         <div className="showMembersButton">
           <ShowMemberListButton
             showMemberListToggle={this.toggleShowMemberList}

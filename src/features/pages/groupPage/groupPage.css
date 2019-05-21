@@ -3,7 +3,7 @@
   flex-direction: row;
   flex: 1;
   margin-top: 76px;
-  min-height: calc(100vh - 76px);
+  min-height: calc(100% - 76px);
 }
 
 .groupWishlists {
@@ -19,10 +19,26 @@
   bottom: 7rem;
 }
 
+.showChatButtonContainerGroup .mobileChatButtonContainer {
+  display: block;
+}
+
 @media (min-width: 1271px) {
-  .createItemButtonGroup {
+  .group-page-chat .chatWindow,
+  .group-page-chat ~ .groupPage .createItemButtonGroup,
+  .group-page-chat ~ .showChatButtonContainerGroup .mobileChatButtonContainer {
+    transition: right 0.25s ease-in-out;
+  }
+
+  .group-page-chat.hide-chat .chatWindow {
+    right: -500px;
+  }
+
+  .group-page-chat.show-chat ~ .groupPage .createItemButtonGroup,
+  .group-page-chat.show-chat
+    ~ .showChatButtonContainerGroup
+    .mobileChatButtonContainer {
     right: calc(500px + 2rem);
-    bottom: 2rem;
   }
 }
 
@@ -35,6 +51,6 @@
 @media (max-width: 600px) {
   .groupPage {
     margin-top: calc(76px + 64px);
-    min-height: calc(100vh - 76px - 64px);
+    min-height: calc(100% - 76px - 64px);
   }
 }

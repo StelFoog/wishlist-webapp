@@ -1,9 +1,10 @@
 .chatWindow {
   position: fixed;
-  height: 100vh;
+  height: 100%;
   background: #fff;
   display: flex;
   flex-direction: column;
+  z-index: 99;
 }
 
 .chat {
@@ -68,7 +69,7 @@
 
 @media (max-width: 600px) {
   .chatWindow {
-    height: calc(100vh - 64px);
+    height: calc(100% - 64px);
     top: 64px;
     width: 100%;
   }
