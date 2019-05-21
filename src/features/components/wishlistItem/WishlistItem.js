@@ -33,7 +33,7 @@ const wishListItem = ({ wishlists, index, editItem, wishlistUid }) => {
             {websitelink && (
               <div className="itemLink">
                 <a
-                  href={websitelink}
+                  href={"//" + websitelink}
                   target="_blank"
                   rel="noreferrer noopener"
                 >
