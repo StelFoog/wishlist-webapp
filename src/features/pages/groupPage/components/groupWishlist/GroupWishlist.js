@@ -28,9 +28,10 @@ class GroupWishlist extends React.Component {
           <div className="createItemButton">
             <IconButton
               variant="filled"
+              color="var(--color-primary)"
               handleClick={() => createItem({ groupID, userID })}
             >
-              <PlusIcon size={50} />
+              <PlusIcon size={50} color="white" />
             </IconButton>
           </div>
         )}
