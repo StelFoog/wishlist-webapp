@@ -50,12 +50,11 @@ class WishlistTitle extends React.Component {
               <span className="bar" />
             </form>
           ) : (
-              <div className="titleNoEdit">
-                <h1>{title}</h1>
-              </div>
-            )}
+            <div className="titleNoEdit">
+              <h1>{title}</h1>
+            </div>
+          )}
         </div>
-
 
         {!editing && type === "wishlist" && (
           <div className="invitedUsers">
