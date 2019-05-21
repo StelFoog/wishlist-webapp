@@ -121,7 +121,7 @@ class ShareForm extends Component {
             component={renderField}
             onChange={handleInputWith(this)}
             type="text"
-            onFocus={() => (console.log("helo"))}
+            onFocus={() => (undefined)}
           />
         </Form>
         {this.unselected.length > 0 && (
