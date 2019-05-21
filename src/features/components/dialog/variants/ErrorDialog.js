@@ -12,13 +12,11 @@ const ErrorDialog = ({ handleClose, value }) => {
   return(
     <React.Fragment>
       <CardHeader>Something went wrong! :(</CardHeader>
-      { type || "" }
       <CardContent>
         <Paper>
-          { error &&
-            (<h2>{ error.code || "" }</h2>)
-            (error.message || error)
-          }
+          <h4> { type ? type : "Unknown error" } </h4>
+          { error && error.code }
+          { error && error.message ? error.message : error }
         </Paper>
       </CardContent>
       <CardActions>
