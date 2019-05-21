@@ -1,4 +1,11 @@
-import { takeLeading, call, put, select, all } from "redux-saga/effects";
+import {
+  takeLeading,
+  takeEvery,
+  call,
+  put,
+  select,
+  all
+} from "redux-saga/effects";
 import { push } from "connected-react-router";
 import { authWithFacebookAPI, logout /* authWithGoogleAPI */ } from "./auth.js";
 import {
@@ -12,6 +19,8 @@ import { getUser } from "./selectors";
 import actions from "./actions.js";
 import { getPathname, getSearch } from "../router/selectors";
 import usersActions from "../users/actions.js";
+import groupTypes from "../groups/types.js";
+import wishlistTypes from "../wishlists/types.js";
 
 import wishlistDB from "../wishlists/db.js";
 import { firebase } from "../firebase";
@@ -38,10 +47,16 @@ const {
   HANDLE_NOT_LOGGED_IN,
   REMOVE_USER_FROM_WISHLIST,
   REMOVE_USER_FROM_WISHLIST_ERROR,
-  REMOVE_USER_FROM_WISHLIST_SUCCESS
+  REMOVE_USER_FROM_WISHLIST_SUCCESS,
+  UPDATE_CURRENT_USER,
+  UPDATE_CURRENT_USER_ERROR,
+  UPDATE_CURRENT_USER_SUCCESS
 } = authTypes;
 
 const { CLOSE_DIALOG } = dialogTypes;
+
+const { FETCH_ALL_USER_GROUPS } = groupTypes;
+const { FETCH_WISHLISTS } = wishlistTypes;
 
 function* watchUserAuthFacebook() {
   yield takeLeading(AUTH_USER_FACEBOOK, workUserAuthFacebook);
@@ -52,11 +67,11 @@ function* watchUserAuthGoogle() {
 }
 
 function* watchAddUserToWishlist() {
-  yield takeLeading(ADD_USER_TO_WISHLIST, workAddUserToWishlist);
+  yield takeEvery(ADD_USER_TO_WISHLIST, workAddUserToWishlist);
 }
 
 function* watchRemoveUserFromWishlist() {
-  yield takeLeading(REMOVE_USER_FROM_WISHLIST, workRemoveUserFromWishlist);
+  yield takeEvery(REMOVE_USER_FROM_WISHLIST, workRemoveUserFromWishlist);
 }
 
 function* watchSearchForUsersWithName() {
@@ -65,6 +80,10 @@ function* watchSearchForUsersWithName() {
 
 function* watchLogout() {
   yield takeLeading(AUTH_LOGOUT, workLogout);
+}
+
+function* watchUpdateCurrentUser() {
+  yield takeLeading(UPDATE_CURRENT_USER, workUpdateCurrentUser);
 }
 
 function* workSearchForUsersWithName(action) {
@@ -161,11 +180,34 @@ function* workLogout() {
   }
 }
 
+function* workUpdateCurrentUser({ userData }) {
+  try {
+    const user = yield select(getUser);
+
+    yield put({ type: UPDATE_CURRENT_USER_SUCCESS, userData: userData });
+
+    if (userData.groups.length !== user.groups.length) {
+      console.log("Refetching groups because user ref list has changed");
+      yield put({ type: FETCH_ALL_USER_GROUPS });
+    }
+
+    if (userData.wishlists.length !== user.wishlists.length) {
+      console.log("Refetching wishlists because user ref list has changed");
+      yield put({ type: FETCH_WISHLISTS });
+    }
+
+    // TODO: Check for wishlist changes too?
+  } catch (error) {
+    yield put({ type: UPDATE_CURRENT_USER_ERROR, error: error });
+  }
+}
+
 export default {
   watchUserAuthFacebook,
   watchUserAuthGoogle,
   watchAddUserToWishlist,
   watchRemoveUserFromWishlist,
   watchSearchForUsersWithName,
-  watchLogout
+  watchLogout,
+  watchUpdateCurrentUser
 };

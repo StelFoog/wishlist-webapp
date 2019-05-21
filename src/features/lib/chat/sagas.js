@@ -1,4 +1,4 @@
-import { takeLeading, call, put, select } from "redux-saga/effects";
+import { takeLeading, takeEvery, call, put, select } from "redux-saga/effects";
 import types from "./types.js";
 import {
   createNewChat,
@@ -32,7 +32,7 @@ function* watchLoadChat() {
 }
 
 function* watchSendChatMessage() {
-  yield takeLeading(SEND_CHAT_MESSAGE, workSendChatMessage);
+  yield takeEvery(SEND_CHAT_MESSAGE, workSendChatMessage);
 }
 
 function* watchDeleteChat() {

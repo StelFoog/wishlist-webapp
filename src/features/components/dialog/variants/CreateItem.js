@@ -7,6 +7,7 @@ import { Field, reduxForm, submit } from "redux-form";
 import renderField, { required } from "../../wishListForm/validate";
 import Button from "../../button";
 import { actions } from "../../../lib/wishlistItems";
+import "../dialog.css";
 
 const { createWishlistItem } = actions;
 
@@ -39,6 +40,14 @@ const CreateItem = ({ handleSubmit, handleClose, values, performSubmit }) => (
           label={"Website link"}
           component={renderField}
           type="text"
+        />
+        <button
+          type="submit"
+          onClick={e => {
+            performSubmit();
+            e.preventDefault();
+          }}
+          className={"hidden-form-button"}
         />
       </form>
     </CardContent>

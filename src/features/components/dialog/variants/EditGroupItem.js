@@ -33,6 +33,14 @@ const EditGroupItem = ({ handleClose, handleSubmit, performSubmit }) => (
           component={renderField}
           type="text"
         />
+        <button
+          type="submit"
+          onClick={e => {
+            performSubmit();
+            e.preventDefault();
+          }}
+          className={"hidden-form-button"}
+        />
       </form>
     </CardContent>
     <CardActions>

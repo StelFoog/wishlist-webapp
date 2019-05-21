@@ -7,7 +7,6 @@ import {
   EditItem,
   CreateItem,
   CreateGroup,
-  AddMember,
   Share,
   NoLogin,
   Invite,
@@ -27,7 +26,6 @@ const DIALOG_VARIANTS = {
   createGroupItem: CreateGroupItem,
   editGroupItem: EditGroupItem,
   createGroup: CreateGroup,
-  addMember: AddMember,
   share: Share,
   noLogin: NoLogin,
   invite: Invite,
@@ -42,9 +40,9 @@ const Dialog = ({ variant, showDialog, handleClose, values, ...rest }) => {
     : "div";
   const onClose = values.onClose
     ? () => {
-      handleClose();
-      values.onClose();
-    }
+        handleClose();
+        values.onClose();
+      }
     : handleClose;
   return (
     <React.Fragment>

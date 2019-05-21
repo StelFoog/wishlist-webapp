@@ -4,7 +4,6 @@ import EditGroupItem from "./EditGroupItem";
 import CreateItem from "./CreateItem";
 import CreateGroupItem from "./CreateGroupItem";
 import CreateGroup from "./CreateGroup";
-import AddMember from "./AddMember";
 import Share from "./Share";
 import NoLogin from "./NoLogin";
 import Invite from "./Invite";
@@ -17,7 +16,6 @@ export {
   EditItem,
   CreateItem,
   CreateGroup,
-  AddMember,
   Share,
   NoLogin,
   Invite,
