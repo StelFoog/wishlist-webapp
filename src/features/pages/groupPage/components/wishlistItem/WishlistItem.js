@@ -50,7 +50,7 @@ class WishlistItem extends React.Component {
               {websitelink && (
                 <div className="itemLink">
                   <a
-                    href={websitelink}
+                    href={"//" + websitelink}
                     target="_blank"
                     rel="noreferrer noopener"
                   >
