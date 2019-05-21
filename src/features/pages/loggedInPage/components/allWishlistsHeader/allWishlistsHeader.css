@@ -17,6 +17,10 @@
   */
 }
 
+.allWishlistsHeader > .headerTitle {
+  font-size: 3rem;
+}
+
 @media (max-width: 600px) {
   .allWishlistsHeader {
     margin-top: 64px;
