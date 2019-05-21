@@ -48,7 +48,7 @@ const Guide = () => (
           <CardMedia />
           <CardContent>
             <p>
-              And then share it with your fiends and family or anyone else who
+              And then share it with your friends and family or anyone else who
               might need to know what you wish for.
             </p>
           </CardContent>
