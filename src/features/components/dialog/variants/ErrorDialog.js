@@ -5,6 +5,8 @@ import Paper from "../../paper";
 import Button from "../../button";
 import { CardHeader, CardContent, CardActions } from "../../card";
 
+import { selectors } from "../";
+
 const ErrorDialog = ({ handleClose, value }) => {
   const { type, error } = value;
   return(
@@ -31,4 +33,14 @@ const ErrorDialog = ({ handleClose, value }) => {
   );
 }
 
-export default ErrorDialog;
+const mapStateToProps = () => {
+  const getDialogValues = selectors.getDialogValuesState();
+  return state => ({
+    value: getDialogValues(state)
+  });
+}
+
+export default connect(
+  mapStateToProps,
+  null
+)(ErrorDialog);
