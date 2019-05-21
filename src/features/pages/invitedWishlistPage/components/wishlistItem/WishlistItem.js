@@ -148,15 +148,24 @@ class WishlistItem extends React.Component {
               <div className="itemPrice">
                 <h3>{price}:-</h3>
               </div>
-              <div className="itemLink">
-                <Button
-                  variant="text"
-                  label="Link"
-                  className="itemLinkButton"
-                  padding="5px"
-                  color="var(--color-primary)"
-                />
-              </div>
+              {link && (
+                <div className="itemLink">
+                  {console.log("test" + link)}
+                  <a
+                    href={link}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    <Button
+                      variant="text"
+                      label="Link"
+                      className="itemLinkButton"
+                      padding="5px"
+                      color="var(--color-primary)"
+                    />
+                  </a>
+                </div>
+              )}
             </div>
             {this.getClaimContent(wishlistUid, index, claimedBy)}
           </div>
