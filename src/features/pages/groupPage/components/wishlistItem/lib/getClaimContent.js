@@ -8,7 +8,7 @@ const claimedBy = ({ claimedByUsers, handleClaim, users }) => (
     {claimedByUsers === undefined || claimedByUsers.length === 0 ? (
       <Button
         handleClick={handleClaim}
-        variant="filled"
+        variant="text"
         label="Claim item"
         color="var(--color-primary)"
       />

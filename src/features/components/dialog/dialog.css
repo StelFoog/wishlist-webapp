@@ -46,7 +46,7 @@
 
 .helpPage {
   overflow: auto;
-  max-height: 90vh;
+  max-height: 80vh;
 }
 
 .hidden-form-button {
@@ -55,3 +55,22 @@
   opacity: 0;
   visibility: hidden;
 }
+
+
+/* Help page */
+.helpPageHeader {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+}
+
+.helpPageExitButton{
+  padding: 0;
+}
+
+.helpExitContainer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 10px;
+}
+
