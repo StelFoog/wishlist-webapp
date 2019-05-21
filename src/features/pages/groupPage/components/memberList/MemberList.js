@@ -35,7 +35,8 @@ class MemberList extends React.Component {
       currentGroup,
       fetchItems,
       currentUser,
-      selectedUser
+      selectedUser,
+      toggleShowMemberList
     } = this.props;
     return (
       <div className="memberBar">
@@ -46,6 +47,7 @@ class MemberList extends React.Component {
               className={`memberCard ${user.uid === selectedUser &&
                 "active-group-member"}`}
               onClick={() => {
+                toggleShowMemberList();
                 fetchItems({
                   groupID: uid,
                   userID: user.uid

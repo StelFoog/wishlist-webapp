@@ -110,6 +110,7 @@ class GroupPage extends React.Component {
               uid={uid}
               currentUser={user}
               selectedUser={selectedUser}
+              toggleShowMemberList={this.toggleShowMemberList}
             />
           </div>
           <GroupWishlist groupID={uid} userID={currentUser} />
@@ -125,15 +126,15 @@ class GroupPage extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  confirmDelete: (deleteGroup, groupTitle) => (
-    (groupId, userId) => {
-      dispatch(openDialog("yesNo", {
-        title: 
-          "Are you sure you want to delete the group \"" + groupTitle + "\"?",
-        onYes: () => (deleteGroup(groupId, userId))
-      }));
-    }
-  )
+  confirmDelete: (deleteGroup, groupTitle) => (groupId, userId) => {
+    dispatch(
+      openDialog("yesNo", {
+        title:
+          'Are you sure you want to delete the group "' + groupTitle + '"?',
+        onYes: () => deleteGroup(groupId, userId)
+      })
+    );
+  }
 });
 
 export default connect(
