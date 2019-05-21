@@ -2,7 +2,7 @@ import React from "react";
 import TextInput from "../textInput";
 
 const isValidName = (str) => (
-  str && str.length > 0 && /\s/.test(str[0])
+  str && str.length > 0 && !/\s/.test(str[0])
 );
 
 const required = value => (isValidName(value) ? undefined : "Required");
