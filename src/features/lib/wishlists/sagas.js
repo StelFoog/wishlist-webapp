@@ -154,8 +154,8 @@ function* workEditWishlistProperties({ uid, field, data }) {
 
 function* workDeleteWishlist({ uid, user }) {
   try {
-    yield put(push("/dashboard"));
     yield all([
+      put(push("/dashboard")),
       call(deleteWishlistFromDB, uid),
       call(deleteWishlistFromUser, uid, user),
       put({ type: REMOVE_WISHLIST_ID_FROM_USER, wishlistUid: uid }),
