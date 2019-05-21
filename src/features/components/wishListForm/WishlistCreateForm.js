@@ -6,7 +6,7 @@ import { actions } from "../../lib/wishlists";
 const { createUserWishlist } = actions;
 
 // Wishlist createation form component
-const WishlistCreateForm = ({ handleSubmit }) => (
+const WishlistCreateForm = ({ handleSubmit, performSubmit }) => (
   <form onSubmit={handleSubmit}>
     <React.Fragment>
       <Field
@@ -23,9 +23,12 @@ const WishlistCreateForm = ({ handleSubmit }) => (
         type="date"
       />
       <button
-        style={{ display: "none" }}
-        type={"submit"}
-        onClick={handleSubmit}
+        type="submit"
+        onClick={e => {
+          performSubmit();
+          e.preventDefault();
+        }}
+        className={"hidden-form-button"}
       />
     </React.Fragment>
   </form>
