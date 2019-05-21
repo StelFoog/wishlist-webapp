@@ -19,7 +19,7 @@ class ListWishlists extends React.Component {
   render() {
     const { ownedWishlists } = this.props;
     return (
-      <div class="listWishlists">
+      <div className="listWishlists">
         {ownedWishlists.map(wishlist => (
           <div onClick={() => this.props.goToWishlist(wishlist)}>
             <CardContainer
