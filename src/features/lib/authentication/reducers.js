@@ -16,7 +16,9 @@ const {
   SEARCH_FOR_USERS_WITH_NAME_SUCCESS,
   CLEAR_SEARCH,
   REMOVE_USER_FROM_WISHLIST_ERROR,
-  REMOVE_USER_FROM_WISHLIST_SUCCESS
+  REMOVE_USER_FROM_WISHLIST_SUCCESS,
+  UPDATE_CURRENT_USER_ERROR,
+  UPDATE_CURRENT_USER_SUCCESS
 } = types;
 
 const initialState = {
@@ -27,14 +29,14 @@ const initialState = {
 
 const userReducer = (state = initialState, action) => {
   let nextState = JSON.parse(JSON.stringify(state)); // Deep copy
-  const { 
-    type, 
-    userData, 
-    error, 
-    wishlistUid, 
-    groupId, 
-    searchResults, 
-    userUid 
+  const {
+    type,
+    userData,
+    error,
+    wishlistUid,
+    groupId,
+    searchResults,
+    userUid
   } = action;
 
   switch (type) {
@@ -99,6 +101,15 @@ const userReducer = (state = initialState, action) => {
 
     case SEARCH_FOR_USERS_WITH_NAME_SUCCESS:
       nextState.searchResults = searchResults;
+      return nextState;
+
+    case UPDATE_CURRENT_USER_ERROR:
+      console.error(
+        "User updating error: " + error.code + "-> " + error.message
+      );
+      return nextState;
+    case UPDATE_CURRENT_USER_SUCCESS:
+      nextState.user = userData;
       return nextState;
   }
   return nextState;

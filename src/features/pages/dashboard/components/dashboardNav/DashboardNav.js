@@ -4,6 +4,7 @@ import { push } from "connected-react-router";
 import IconButton from "../../../../components/iconButton";
 import Ripple from "../../../../components/ripple";
 import { actions as dialogActions } from "../../../../components/dialog";
+import { onUserChanged } from "../../../../lib/authentication/db.js";
 
 import {
   GroupIcon,
@@ -49,10 +50,20 @@ class DashboardNav extends React.Component {
 
   componentDidMount() {
     document.addEventListener("mousedown", this.handleClickOutside);
+
+    this.unlisten = onUserChanged(
+      this.props.user.uid,
+      (props => {
+        return updatedUser => {
+          props.updateCurrentUser(updatedUser);
+        };
+      })(this.props)
+    );
   }
 
   componentWillUnmount() {
     document.removeEventListener("mousedown", this.handleClickOutside);
+    this.unlisten();
   }
 
   setWrapperRef(node) {

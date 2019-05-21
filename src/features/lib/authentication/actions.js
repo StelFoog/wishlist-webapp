@@ -7,7 +7,8 @@ const {
   AUTH_USER_GOOGLE,
   ADD_USER_TO_WISHLIST,
   REMOVE_USER_FROM_WISHLIST,
-  CLEAR_SEARCH
+  CLEAR_SEARCH,
+  UPDATE_CURRENT_USER
 } = types;
 
 const authenticateFacebook = () => ({
@@ -43,6 +44,12 @@ const searchForUsersWithName = name => ({
   name
 });
 
+const updateCurrentUser = user => ({
+  // Used by listener
+  type: UPDATE_CURRENT_USER,
+  userData: user
+});
+
 export default {
   authenticateFacebook,
   authenticateGoogle,
@@ -50,5 +57,6 @@ export default {
   addUserToWishlist,
   removeUserFromWishlist,
   searchForUsersWithName,
-  clearSearch
+  clearSearch,
+  updateCurrentUser
 };

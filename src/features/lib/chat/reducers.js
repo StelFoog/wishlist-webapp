@@ -8,7 +8,8 @@ const {
   SEND_CHAT_MESSAGE_ERROR,
   SEND_CHAT_MESSAGE_SUCCESS,
   DELETE_CHAT_ERROR,
-  DELETE_CHAT_SUCCESS
+  DELETE_CHAT_SUCCESS,
+  UPDATE_LOCAL_CHAT
 } = types;
 
 const initialState = {
@@ -17,7 +18,7 @@ const initialState = {
 
 const chatReducer = (state = initialState, action) => {
   let nextState = JSON.parse(JSON.stringify(state)); // Deep copy
-  const { type, messages, error } = action;
+  const { type, messages, error, chat } = action;
 
   switch (type) {
     case CREATE_CHAT_ERROR:
@@ -60,6 +61,10 @@ const chatReducer = (state = initialState, action) => {
       console.error(
         "Chat deleting error: " + error.code + "-> " + error.message
       );
+      return nextState;
+
+    case UPDATE_LOCAL_CHAT:
+      if (chat !== undefined) nextState.messages = chat.messages;
       return nextState;
 
     default:
