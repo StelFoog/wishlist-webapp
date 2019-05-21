@@ -26,7 +26,7 @@ const CreateGroup = ({ handleClose, handleSubmit, performSubmit }) => {
           <button
             type="submit"
             onClick={e => {
-              handleSubmit();
+              performSubmit();
               e.preventDefault();
             }}
             className={"hidden-form-button"}
