@@ -59,12 +59,18 @@ function* watchUnclaimWishlistItem() {
   yield takeLeading(UNCLAIM_WISHLIST_ITEM, workUnclaimWishlistItem);
 }
 
+const validateLink = (link) => {
+  return link.replace("http://", "")
+             .replace("https://", "");
+}
+
 function* workCreateWishlistItem() {
   try {
     const itemForm = yield select(getFormValues("createItem"));
     const metaData = yield select(getDialogValues);
     const { wishlistUid } = metaData;
     const itemData = yield call(makeItem, itemForm);
+    itemData.websitelink = validateLink(itemData.websitelink);
     yield call(addWishlistItem, wishlistUid, itemData);
     yield put({ type: CREATE_WISHLIST_ITEM_SUCCESS, itemData, wishlistUid });
     yield all([put({ type: CLOSE_DIALOG }), put(reset("createItem"))]);
@@ -79,6 +85,7 @@ function* workEditWishlistItem() {
     const metaData = yield select(getDialogValues);
     const { index, wishlistUid } = metaData;
     const item = itemForm;
+    item.websitelink = validateLink(item.websitelink);
     // const item = yield call(validateNewItem, itemForm);
     yield call(editWishlistItem, wishlistUid, index, item);
     yield put({
