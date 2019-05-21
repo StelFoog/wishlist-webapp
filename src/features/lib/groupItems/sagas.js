@@ -6,7 +6,8 @@ import {
   addGroupWishlistItem,
   fetchGroupWishlistItems,
   editGroupWishlistItem,
-  claimGroupItem
+  claimGroupItem,
+  unclaimGroupItem
 } from "./db";
 import wishlistItemDb from "../wishlistItems/db";
 import { types as dialogTypes } from "../../components/dialog";
@@ -29,7 +30,11 @@ const {
 
   CLAIM_GROUP_WISHLIST_ITEM,
   CLAIM_GROUP_WISHLIST_ITEM_ERROR,
-  CLAIM_GROUP_WISHLIST_ITEM_SUCCESS
+  CLAIM_GROUP_WISHLIST_ITEM_SUCCESS,
+
+  UNCLAIM_GROUP_WISHLIST_ITEM,
+  UNCLAIM_GROUP_WISHLIST_ITEM_ERROR,
+  UNCLAIM_GROUP_WISHLIST_ITEM_SUCCESS
 } = types;
 const { CLOSE_DIALOG } = dialogTypes;
 
@@ -47,6 +52,10 @@ function* watchFetchGroupItems() {
 
 function* watchClaimGroupItem() {
   yield takeLeading(CLAIM_GROUP_WISHLIST_ITEM, workClaimGroupItem);
+}
+
+function* watchUnclaimGroupItem() {
+  yield takeLeading(UNCLAIM_GROUP_WISHLIST_ITEM, workUnclaimGroupItem);
 }
 
 function* workCreateGroupItem() {
@@ -122,9 +131,31 @@ function* workClaimGroupItem({ index, groupID, userID }) {
   }
 }
 
+function* workUnclaimGroupItem({ index, groupID, userID }) {
+  try {
+    const user = yield select(getUser);
+    yield call(unclaimGroupItem, {
+      claimerID: user.uid,
+      index,
+      groupID,
+      ownerID: userID
+    });
+
+    yield put({
+      type: UNCLAIM_GROUP_WISHLIST_ITEM_SUCCESS,
+
+      userID: user.uid,
+      index
+    });
+  } catch (error) {
+    yield put({ type: UNCLAIM_GROUP_WISHLIST_ITEM_ERROR, error });
+  }
+}
+
 export default {
   watchCreateGroupItem,
   watchFetchGroupItems,
   watchEditGroupItem,
-  watchClaimGroupItem
+  watchClaimGroupItem,
+  watchUnclaimGroupItem
 };

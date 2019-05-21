@@ -9,7 +9,7 @@ import {
 } from "../../../../lib/users";
 
 const { openDialog } = dialogActions;
-const { claimGroupItem } = groupActions;
+const { claimGroupItem, unclaimGroupItem } = groupActions;
 const { getUsersWithUid } = usersActions;
 
 const mapStateToProps = () => {
@@ -23,6 +23,8 @@ const mapStateToProps = () => {
 
 const mapDispatchToProps = dispatch => ({
   claimItem: ({ groupID, index, userID }) =>
+    dispatch(claimGroupItem({ groupID, index, userID })),
+  unclaimItem: ({ groupID, index, userID }) =>
     dispatch(claimGroupItem({ groupID, index, userID })),
   editItem: dialogValues => dispatch(openDialog("editGroupItem", dialogValues)),
   getUsers: claimedBy => dispatch(getUsersWithUid(claimedBy))

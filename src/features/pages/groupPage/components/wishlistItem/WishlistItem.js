@@ -7,6 +7,7 @@ class WishlistItem extends React.Component {
     super(props);
 
     this.handleClaim = this.handleClaim.bind(this);
+    this.handleUnclaim = this.handleUnclaim.bind(this);
   }
   componentDidMount() {
     const { claimedBy } = this.props.item;
@@ -14,6 +15,11 @@ class WishlistItem extends React.Component {
   }
 
   handleClaim = () => {
+    const { claimItem, groupID, userID, index } = this.props;
+    claimItem({ groupID, userID, index });
+  };
+
+  handleUnclaim = () => {
     const { claimItem, groupID, userID, index } = this.props;
     claimItem({ groupID, userID, index });
   };
@@ -75,13 +81,13 @@ class WishlistItem extends React.Component {
                 />
               </div>
             ) : (
-                getClaimContent({
-                  handleClaim: this.handleClaim,
-                  claimedByUsers: claimedBy,
-                  users,
-                  claimItem
-                })
-              )}
+              getClaimContent({
+                handleClaim: this.handleClaim,
+                claimedByUsers: claimedBy,
+                users,
+                claimItem
+              })
+            )}
           </div>
         </div>
       </React.Fragment>
