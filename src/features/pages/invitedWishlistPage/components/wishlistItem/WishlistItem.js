@@ -150,12 +150,7 @@ class WishlistItem extends React.Component {
               </div>
               {link && (
                 <div className="itemLink">
-                  {console.log("test" + link)}
-                  <a
-                    href={link}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
+                  <a href={link} target="_blank" rel="noreferrer noopener">
                     <Button
                       variant="text"
                       label="Link"
