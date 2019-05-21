@@ -7,7 +7,6 @@ import { Field, reduxForm, submit } from "redux-form";
 import renderField, { required } from "../../wishListForm/validate";
 import Button from "../../button";
 import { actions } from "../../../lib/wishlistItems";
-import composeSequential from "./lib/compose.js";
 
 const { createWishlistItem } = actions;
 
