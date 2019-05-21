@@ -23,6 +23,7 @@ import { types as authTypes } from "../authentication";
 import { types as dialogTypes } from "../../components/dialog";
 import { addGroupToUser, removeGroupFromUser } from "../authentication/db.js";
 import { replace, push } from "connected-react-router";
+import { reset } from "redux-form";
 
 const {
   FETCH_ALL_USER_GROUPS,
@@ -126,9 +127,12 @@ function* workCreateGroup(action) {
       put({ type: CREATE_CHAT, id: groupId })
     ]);
 
-    yield put({ type: ADD_GROUP_ID_TO_USER, groupId });
-    yield put({ type: CREATE_GROUP_SUCCESS, value: result });
-    yield put({ type: CLOSE_DIALOG });
+    yield all([
+      put({ type: ADD_GROUP_ID_TO_USER, groupId }),
+      put({ type: CREATE_GROUP_SUCCESS, value: result }),
+      put({ type: CLOSE_DIALOG }),
+      put(reset("createGroup"))
+    ]);
     yield put(push(`/dashboard/group/${groupId}/${userUid}`));
   } catch (error) {
     yield put({ type: CREATE_GROUP_ERROR, error: error });
