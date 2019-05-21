@@ -34,6 +34,7 @@ const WishlistPage = ({
   shareWishlist,
   confirmDelete,
   user, /* Actually auth */
+  dispatchDeleteWishlist
 }) => {
   const { uid } = match.params;
   const wishlist = wishlists.find(element => element.uid === uid);
@@ -46,7 +47,10 @@ const WishlistPage = ({
         editProperties={editProperties}
         uid={uid}
         wishlist={wishlist}
-        deleteObject={ confirmDelete(deleteObject, wishlist.title) }
+        deleteObject={ confirmDelete(
+          () => dispatchDeleteWishlist(wishlist.uid, user.user),
+          wishlist.title
+        )}
         user={user}
         type="wishlist"
       />
@@ -122,6 +126,8 @@ const mapDispatchToProps = dispatch => ({
       }))
     )
   ),
+  dispatchDeleteWishlist: (wishlistUid, user) =>
+    (dispatch(deleteWishlist(wishlistUid, user)))
 });
 
 export default connect(
