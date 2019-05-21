@@ -6,7 +6,6 @@ import { Field, reduxForm, submit } from "redux-form";
 import renderField, { required } from "../../wishListForm/validate";
 import Button from "../../button";
 
-import composeSequential from "./lib/compose.js";
 import { actions } from "../../../lib/groupItems";
 
 const { createGroupWishlistItem } = actions;
@@ -42,7 +41,7 @@ const CreateItem = ({ handleSubmit, handleClose, performSubmit }) => (
         label="SUBMIT"
         color="var(--color-accept)"
         variant="text"
-        handleClick={composeSequential([performSubmit, handleClose])}
+        handleClick={performSubmit}
       />
     </CardActions>
   </React.Fragment>
