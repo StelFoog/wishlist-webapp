@@ -80,7 +80,7 @@ const Guide = () => (
           </Paper>
         </div>
         <Card elevation={2}>
-          <CardMedia />
+          <CardMedia media={"static/Chat.png"} mediaHeight={"300px"} />
           <CardContent>
             <p>Discuss who should get what...</p>
           </CardContent>
@@ -93,7 +93,7 @@ const Guide = () => (
           </Paper>
         </div>
         <Card elevation={2}>
-          <CardMedia />
+          <CardMedia media={"static/Claim.png"} mediaHeight={"300px"} />
           <CardContent>
             <p>
               And claim items from your wishlist, so everyone you've invited can
