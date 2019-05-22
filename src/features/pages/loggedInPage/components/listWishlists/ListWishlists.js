@@ -26,6 +26,9 @@ class ListWishlists extends React.Component {
               children={
                 <div className="wishlistCard">
                   <h1 className="wishlistCardTitle">{wishlist.title}</h1>
+                  <p className="wishlistDescription">
+                    {wishlist.description || "No description provided"}
+                  </p>
                   <div className="wishlistMembersDue">
                     <WishlistMembers wishlist={wishlist} size={60} />
                     {wishlist.endDate && <h3>Date: {wishlist.endDate}</h3>}

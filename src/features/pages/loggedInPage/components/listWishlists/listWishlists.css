@@ -25,6 +25,22 @@
 }
 
 @media (min-width: 601px) {
+  .wishlistCardTitle {
+    display: flex;
+    flex-basis: 30%;
+    text-align: center;
+  }
+
+  .wishlistDescription {
+    display: flex;
+    flex-basis: 40%;
+    text-align: left;
+  }
+  .wishlistMembersDue {
+    align-items: center;
+    display: flex;
+    flex-basis: 30%;
+  }
 }
 
 @media (max-width: 600px) {
@@ -34,6 +50,12 @@
 
   .wishlistCardTitle {
     text-align: center;
+  }
+
+  .wishlistDescription {
+    text-align: left;
+    margin: 0;
+    padding: 0;
   }
 
   .wishlistMembersDue {
