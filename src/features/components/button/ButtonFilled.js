@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-/*CSS*/
+/* CSS */
 import "./button.css";
 /* Ripple */
-import Ripple from "./../ripple";
+import Ripple from "../ripple";
 
 const ButtonFilled = ({
   color,
@@ -20,9 +20,9 @@ const ButtonFilled = ({
       className={`buttonFilled ${className}`}
       style={{
         background: color,
-        fontSize: fontSize,
-        padding: padding,
-        borderRadius: borderRadius
+        fontSize,
+        padding,
+        borderRadius
       }}
     >
       <Ripple />

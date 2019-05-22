@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 /* CSS */
 import "./button.css";
 /* Ripple */
-import Ripple from "./../ripple";
+import Ripple from "../ripple";
 
 const ButtonOutlined = ({
   color,
@@ -20,10 +20,10 @@ const ButtonOutlined = ({
       onClick={handleClick}
       className={`buttonOutlined ${className}`}
       style={{
-        color: color,
-        fontSize: fontSize,
-        padding: padding,
-        borderRadius: borderRadius,
+        color,
+        fontSize,
+        padding,
+        borderRadius,
         boxShadow: colorOutline
           ? "inset 0px 0px 0px 0.123rem ".concat(color)
           : "inset 0px 0px 0px 0.123rem #7f7f7f"

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./button.css";
 /* Ripple */
-import Ripple from "./../ripple";
+import Ripple from "../ripple";
 
 const TextButton = ({
   color,
@@ -18,11 +18,11 @@ const TextButton = ({
       onClick={handleClick}
       className={`buttonText ${className}`}
       style={{
-        color: color,
+        color,
         borderColor: color,
-        padding: padding,
-        fontSize: fontSize,
-        borderRadius: borderRadius
+        padding,
+        fontSize,
+        borderRadius
       }}
     >
       <Ripple />
