@@ -35,9 +35,20 @@ const claimGroupItem = async ({ claimerID, index, groupID, ownerID }) => {
   });
 };
 
+const unclaimGroupItem = async ({ claimerID, index, groupID, ownerID }) => {
+  let doc = await fetchGroupWishlistItems({ groupID, userID: ownerID });
+
+  const i = doc[index].claimedBy.findIndex(element => element === claimerID);
+  doc[index].claimedBy.splice(i, 1);
+  await _getGroupRef(groupID).update({
+    ["wishlists." + ownerID]: doc
+  });
+};
+
 export {
   addGroupWishlistItem,
   fetchGroupWishlistItems,
   editGroupWishlistItem,
-  claimGroupItem
+  claimGroupItem,
+  unclaimGroupItem
 };
