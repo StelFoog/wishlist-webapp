@@ -15,11 +15,15 @@ const Guide = () => (
           </Paper>
         </div>
         <Card elevation={2}>
-          <CardMedia />
+          <CardMedia
+            media={"static/CreateWishlist.png"}
+            mediaHeight={"300px"}
+          />
           <CardContent>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-              et ex luctus, condimentum nisi id,
+              Create a new Wishlist, give it a name and, if you want to, give it
+              a description and set a time for when the gift-giving event will
+              happen.
             </p>
           </CardContent>
         </Card>
@@ -31,12 +35,12 @@ const Guide = () => (
           </Paper>
         </div>
         <Card elevation={2}>
-          <CardMedia />
+          <CardMedia
+            media={"static/CreateWishlistItem.png"}
+            mediaHeight={"300px"}
+          />
           <CardContent>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-              et ex luctus, condimentum nisi id,
-            </p>
+            <p>Add items you want to the wishlist...</p>
           </CardContent>
         </Card>
       </div>
@@ -47,11 +51,11 @@ const Guide = () => (
           </Paper>
         </div>
         <Card elevation={2}>
-          <CardMedia />
+          <CardMedia media={"static/ShareWishlist.png"} mediaHeight={"300px"} />
           <CardContent>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-              et ex luctus, condimentum nisi id,
+              And then share it with your friends and family or anyone else who
+              might need to know what you wish for.
             </p>
           </CardContent>
         </Card>
@@ -63,11 +67,37 @@ const Guide = () => (
           </Paper>
         </div>
         <Card elevation={2}>
-          <CardMedia />
+          <CardMedia media={"static/SeeWishlist.png"} mediaHeight={"300px"} />
+          <CardContent>
+            <p>Other people can see what you want...</p>
+          </CardContent>
+        </Card>
+      </div>
+      <div className="guide-col">
+        <div className="guide-step">
+          <Paper elevation={2} className="circle">
+            <span>5</span>
+          </Paper>
+        </div>
+        <Card elevation={2}>
+          <CardMedia media={"static/Chat.png"} mediaHeight={"300px"} />
+          <CardContent>
+            <p>Discuss who should get what...</p>
+          </CardContent>
+        </Card>
+      </div>
+      <div className="guide-col">
+        <div className="guide-step">
+          <Paper elevation={2} className="circle">
+            <span>6</span>
+          </Paper>
+        </div>
+        <Card elevation={2}>
+          <CardMedia media={"static/Claim.png"} mediaHeight={"300px"} />
           <CardContent>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-              et ex luctus, condimentum nisi id,
+              And claim items from your wishlist, so everyone you've invited can
+              see what someone is already getting you.
             </p>
           </CardContent>
         </Card>

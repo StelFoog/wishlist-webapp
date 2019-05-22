@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-// import editWishlistItem from "../../../lib/wishlistItems/db";
 import { selectors } from "../";
 import { CardHeader, CardContent, CardActions } from "../../card";
 import { Field, reduxForm, submit } from "redux-form";
@@ -12,25 +11,50 @@ const { editWishlistItem } = actions;
 
 const EditItem = ({ handleSubmit, handleClose, values, performSubmit }) => {
   const { item } = values;
-  console.log(item);
   return (
     <React.Fragment>
       <CardHeader>{"Edit wishlist item"}</CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit}>
-          <label>Name:</label>
-          <Field name="name" component={renderField} type="text" />
-          <label>Price:</label>
-          <Field name="price" component={renderField} type="number" />
-          <label>Description:</label>
-          <Field name="description" component={renderField} type="text" />
+          <Field
+            name="name"
+            label={"Name"}
+            component={renderField}
+            type="text"
+          />
+          <Field
+            name="price"
+            label={"Price"}
+            component={renderField}
+            type="number"
+          />
+          <Field
+            name="description"
+            label={"Description"}
+            component={renderField}
+            type="text"
+          />
+          <Field
+            name="websitelink"
+            label={"Website link"}
+            component={renderField}
+            type="text"
+          />
+          <button
+            type="submit"
+            onClick={e => {
+              performSubmit();
+              e.preventDefault();
+            }}
+            className={"hidden-form-button"}
+          />
         </form>
       </CardContent>
       <CardActions>
         <Button
           label="SUBMIT"
-          color="green"
-          variant="filled"
+          color="var(--color-accept)"
+          variant="text"
           handleClick={performSubmit}
         />
       </CardActions>

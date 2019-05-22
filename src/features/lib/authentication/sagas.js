@@ -1,18 +1,39 @@
-import { takeEvery, call, put, select, all } from "redux-saga/effects";
+import {
+  takeLeading,
+  takeEvery,
+  call,
+  put,
+  select,
+  all
+} from "redux-saga/effects";
 import { push } from "connected-react-router";
-import { authWithFacebookAPI /* authWithGoogleAPI */ } from "./auth.js";
+import { authWithFacebookAPI, logout /* authWithGoogleAPI */ } from "./auth.js";
 import {
   addInvitedWishlistToUser,
   addInvitedUserToWishlist,
   searchForUsersWithName
 } from "./db";
-import types from "./types.js";
+import authTypes from "./types.js";
+import { types as dialogTypes } from "../../components/dialog";
 import { getUser } from "./selectors";
 import actions from "./actions.js";
+import { getPathname, getSearch } from "../router/selectors";
+import usersActions from "../users/actions.js";
+import groupTypes from "../groups/types.js";
+import wishlistTypes from "../wishlists/types.js";
+
+import wishlistDB from "../wishlists/db.js";
+import { firebase } from "../firebase";
 
 const { addUserToWishlist } = actions;
 
+const { cacheUser } = usersActions;
+const { editWishlistProperties, deleteWishlistFromUser } = wishlistDB;
+
 const {
+  AUTH_LOGOUT,
+  AUTH_LOGOUT_ERROR,
+  AUTH_LOGOUT_SUCCESS,
   AUTH_USER_FACEBOOK,
   AUTH_USER_GOOGLE,
   AUTH_USER_SUCCESS,
@@ -22,23 +43,47 @@ const {
   ADD_USER_TO_WISHLIST_SUCCESS,
   SEARCH_FOR_USERS_WITH_NAME,
   SEARCH_FOR_USERS_WITH_NAME_ERROR,
-  SEARCH_FOR_USERS_WITH_NAME_SUCCESS
-} = types;
+  SEARCH_FOR_USERS_WITH_NAME_SUCCESS,
+  HANDLE_NOT_LOGGED_IN,
+  REMOVE_USER_FROM_WISHLIST,
+  REMOVE_USER_FROM_WISHLIST_ERROR,
+  REMOVE_USER_FROM_WISHLIST_SUCCESS,
+  UPDATE_CURRENT_USER,
+  UPDATE_CURRENT_USER_ERROR,
+  UPDATE_CURRENT_USER_SUCCESS
+} = authTypes;
+
+const { CLOSE_DIALOG } = dialogTypes;
+
+const { FETCH_ALL_USER_GROUPS } = groupTypes;
+const { FETCH_WISHLISTS } = wishlistTypes;
 
 function* watchUserAuthFacebook() {
-  yield takeEvery(AUTH_USER_FACEBOOK, workUserAuthFacebook);
+  yield takeLeading(AUTH_USER_FACEBOOK, workUserAuthFacebook);
 }
 
 function* watchUserAuthGoogle() {
-  yield takeEvery(AUTH_USER_GOOGLE, workUserAuthGoogle);
+  yield takeLeading(AUTH_USER_GOOGLE, workUserAuthGoogle);
 }
 
 function* watchAddUserToWishlist() {
   yield takeEvery(ADD_USER_TO_WISHLIST, workAddUserToWishlist);
 }
 
+function* watchRemoveUserFromWishlist() {
+  yield takeEvery(REMOVE_USER_FROM_WISHLIST, workRemoveUserFromWishlist);
+}
+
 function* watchSearchForUsersWithName() {
-  yield takeEvery(SEARCH_FOR_USERS_WITH_NAME, workSearchForUsersWithName);
+  yield takeLeading(SEARCH_FOR_USERS_WITH_NAME, workSearchForUsersWithName);
+}
+
+function* watchLogout() {
+  yield takeLeading(AUTH_LOGOUT, workLogout);
+}
+
+function* watchUpdateCurrentUser() {
+  yield takeLeading(UPDATE_CURRENT_USER, workUpdateCurrentUser);
 }
 
 function* workSearchForUsersWithName(action) {
@@ -50,6 +95,9 @@ function* workSearchForUsersWithName(action) {
       type: SEARCH_FOR_USERS_WITH_NAME_SUCCESS,
       searchResults: searchResults
     });
+    for (let i = 0; i < searchResults.length; ++i) {
+      yield put(cacheUser(searchResults[i].uid, searchResults[i]));
+    }
   } catch (error) {
     yield put({ type: SEARCH_FOR_USERS_WITH_NAME_ERROR, error: error });
   }
@@ -57,18 +105,45 @@ function* workSearchForUsersWithName(action) {
 
 function* workAddUserToWishlist(action) {
   try {
-    const { wishlistUid, user } = action;
-    const addedUser = user || (yield select(getUser));
-    const userUid = addedUser.uid;
-    
+    const { type, userUid, wishlistUid } = action;
+    const addedUser = userUid || (yield select(getUser)).uid;
+
     yield all([
-      call(addInvitedWishlistToUser, {wishlistId: wishlistUid, uid: userUid}),
-      call(addInvitedUserToWishlist, {wishlistId: wishlistUid, uid: userUid})
+      call(addInvitedWishlistToUser, { wishlistId: wishlistUid, uid: userUid }),
+      call(addInvitedUserToWishlist, { wishlistId: wishlistUid, uid: userUid })
     ]);
 
-    yield put({ type: ADD_USER_TO_WISHLIST_SUCCESS, wishlistUid: wishlistUid });
+    yield put({
+      type: ADD_USER_TO_WISHLIST_SUCCESS,
+      wishlistUid: wishlistUid,
+      userUid: userUid
+    });
   } catch (error) {
     yield put({ type: ADD_USER_TO_WISHLIST_ERROR, error: error });
+  }
+}
+
+function* workRemoveUserFromWishlist(action) {
+  try {
+    const { type, userUid, wishlistUid } = action;
+
+    yield all([
+      call(deleteWishlistFromUser, wishlistUid, userUid),
+      call(
+        editWishlistProperties,
+        wishlistUid,
+        "members",
+        firebase.firestore.FieldValue.arrayRemove(userUid)
+      )
+    ]);
+
+    yield put({
+      type: REMOVE_USER_FROM_WISHLIST_SUCCESS,
+      wishlistUid: wishlistUid,
+      userUid: userUid
+    });
+  } catch (error) {
+    yield put({ type: REMOVE_USER_FROM_WISHLIST_ERROR, error: error });
   }
 }
 
@@ -76,21 +151,18 @@ function* workUserAuthFacebook() {
   try {
     let result = yield call(authWithFacebookAPI);
     yield put({ type: AUTH_USER_SUCCESS, userData: result });
+    const pathname = yield select(getPathname);
 
-    // This code is used to detect and handle login/redirection for a user that has arrived through an invite link
-    const checkIfInvite = window.location.pathname.match(
-      /(wishlist\/[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\/invite)/g
-    );
-
-    if (checkIfInvite !== null) {
-      const wishlistUid = checkIfInvite.toString().split("/")[1]; // Get wishlist Uid from URL (please shoot me)
-
-      // Login via invite link
-      yield call(addUserToWishlist, wishlistUid);
-      yield put(push("/dashboard/guest/" + wishlistUid));
-    } else {
-      // Login via regular front page
+    if (pathname === "/") {
       yield put(push("/dashboard"));
+    } else if (pathname.startsWith("/nologin")) {
+      const pathBack = (yield select(getSearch)).substr(1);
+      yield all([put({ type: CLOSE_DIALOG }), put(push(pathBack))]);
+    } else if (pathname.startsWith("/invite")) {
+      const pathBack = (yield select(getSearch)).substr(1);
+      // yield put({ type: CLOSE_DIALOG });
+      // yield put(push(pathBack));
+      yield all([put({ type: CLOSE_DIALOG }), put(push(pathBack))]);
     }
   } catch (error) {
     yield put({ type: AUTH_USER_ERROR, error: error });
@@ -99,9 +171,43 @@ function* workUserAuthFacebook() {
 
 function* workUserAuthGoogle() {}
 
+function* workLogout() {
+  try {
+    yield call(logout);
+    yield put({ type: AUTH_LOGOUT_SUCCESS });
+  } catch (error) {
+    yield put({ type: AUTH_LOGOUT_ERROR, error: error });
+  }
+}
+
+function* workUpdateCurrentUser({ userData }) {
+  try {
+    const user = yield select(getUser);
+
+    yield put({ type: UPDATE_CURRENT_USER_SUCCESS, userData: userData });
+
+    if (userData.groups.length !== user.groups.length) {
+      console.log("Refetching groups because user ref list has changed");
+      yield put({ type: FETCH_ALL_USER_GROUPS });
+    }
+
+    if (userData.wishlists.length !== user.wishlists.length) {
+      console.log("Refetching wishlists because user ref list has changed");
+      yield put({ type: FETCH_WISHLISTS });
+    }
+
+    // TODO: Check for wishlist changes too?
+  } catch (error) {
+    yield put({ type: UPDATE_CURRENT_USER_ERROR, error: error });
+  }
+}
+
 export default {
   watchUserAuthFacebook,
   watchUserAuthGoogle,
   watchAddUserToWishlist,
-  watchSearchForUsersWithName
+  watchRemoveUserFromWishlist,
+  watchSearchForUsersWithName,
+  watchLogout,
+  watchUpdateCurrentUser
 };

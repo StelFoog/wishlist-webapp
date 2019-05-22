@@ -19,7 +19,10 @@
 
 /* Intro image */
 .introImage {
-  background: black;
+  background-image: url("/static/Home-page-card-pic.jpg");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat; /* Do not repeat the image */
 }
 
 /* Intro text */

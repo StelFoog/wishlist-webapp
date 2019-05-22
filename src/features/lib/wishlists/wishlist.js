@@ -5,7 +5,8 @@ const defaultWishlist = {
   uid: null,
   endDate: null,
   members: [],
-  items: []
+  items: [],
+  description: null
 };
 
 export { defaultWishlist };

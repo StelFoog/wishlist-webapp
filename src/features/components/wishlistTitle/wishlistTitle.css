@@ -1,0 +1,152 @@
+.wishlistTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  position: fixed;
+  top: 0;
+  width: calc(100vw - 170px);
+
+  z-index: 10;
+  background-color: var(--color-light-gray);
+
+  border-bottom: 2px solid var(--color-dark);
+  box-shadow: 0 2px 2px -2px var(--color-dark);
+}
+
+.wishlistTitleContainer {
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin: 1rem 1.5rem;
+}
+
+.wishlistTitle .editButtons {
+  display: flex;
+  flex-direction: row;
+  margin-right: 1rem;
+}
+
+.wishlistTitle > *:first-child {
+  flex: 1;
+}
+
+.wishlistTitle input,
+.wishlistTitle h1 {
+  margin: 0;
+  text-align: left;
+  font-weight: 500;
+  font-size: 2em;
+  color: var(--color-dark);
+}
+
+.wishlistTitle input {
+  width: 100%;
+  padding: 0;
+  font-family: "IBM Plex Sans", sans-serif;
+  background-color: transparent;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  margin-bottom: -2px;
+  border-bottom: 2px solid #757575;
+}
+
+.wishlistTitle input:focus {
+  outline: none;
+}
+
+.titleNoEdit {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.wishlistTitle h2 {
+  margin: 0;
+}
+
+.invitedUsers {
+  white-space: nowrap;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 20px;
+}
+
+.invitedUsers > h2 {
+  margin-right: 5px;
+}
+
+/* Bar */
+
+.bar {
+  position: relative;
+  display: block;
+}
+.bar:before,
+.bar:after {
+  content: "";
+  height: 2px;
+  width: 0;
+  bottom: -1;
+  position: absolute;
+  background: var(--color-primary-light);
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+.bar:before {
+  left: 50%;
+}
+.bar:after {
+  right: 50%;
+}
+
+/* active state */
+input:focus ~ .bar:before,
+input:focus ~ .bar:after {
+  width: 50%;
+}
+
+@media (max-width: 600px) {
+  .wishlistTitle {
+    top: 64px;
+    width: 100%;
+    font-size: 0.6rem;
+  }
+
+  .wishlistTitle > .invitedUsers {
+    display: none;
+  }
+
+
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+  from {
+    background: #5264ae;
+  }
+  to {
+    width: 0;
+    background: transparent;
+  }
+}
+@-moz-keyframes inputHighlighter {
+  from {
+    background: #5264ae;
+  }
+  to {
+    width: 0;
+    background: transparent;
+  }
+}
+@keyframes inputHighlighter {
+  from {
+    background: #5264ae;
+  }
+  to {
+    width: 0;
+    background: transparent;
+  }
+}

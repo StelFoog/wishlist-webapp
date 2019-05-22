@@ -5,7 +5,8 @@ const {
   LOAD_CHAT,
   SEND_CHAT_MESSAGE,
   LOAD_CHAT_SUCCESS,
-  DELETE_CHAT
+  DELETE_CHAT,
+  UPDATE_LOCAL_CHAT
 } = types;
 
 const createChat = id => ({
@@ -25,9 +26,8 @@ const sendChatMessage = (id, message) => ({
 });
 
 const updateLocalChat = chat => ({
-  // TODO: Descriptive action name
-  type: LOAD_CHAT_SUCCESS,
-  messages: chat.messages
+  type: UPDATE_LOCAL_CHAT,
+  chat: chat
 });
 
 const deleteChat = uid => ({

@@ -1,4 +1,11 @@
-import { takeEvery, call, put, select, all } from "redux-saga/effects";
+import {
+  takeLeading,
+  takeEvery,
+  call,
+  put,
+  select,
+  all
+} from "redux-saga/effects";
 import { getFormValues, reset } from "redux-form";
 import { replace, push } from "connected-react-router";
 import db from "./db";
@@ -44,34 +51,30 @@ const { ADD_WISHLIST_ID_TO_USER, REMOVE_WISHLIST_ID_FROM_USER } = authTypes;
 const { CLOSE_DIALOG } = dialogTypes;
 
 function* watchCreateUserWishlist() {
-  yield takeEvery(CREATE_USER_WISHLIST, workCreateUserWishlist);
+  yield takeLeading(CREATE_USER_WISHLIST, workCreateUserWishlist);
 }
 
 function* watchFetchWishlists() {
-  yield takeEvery(FETCH_WISHLISTS, workFetchWishlists);
+  yield takeLeading(FETCH_WISHLISTS, workFetchWishlists);
 }
 
 function* watchFetchOwnedWishlists() {
-  yield takeEvery(FETCH_OWNED_WISHLISTS, workFetchOwnedWishlists);
+  yield takeLeading(FETCH_OWNED_WISHLISTS, workFetchOwnedWishlists);
 }
 
 function* watchEditWishlistProperties() {
-  yield takeEvery(EDIT_WISHLIST_PROPERTIES, workEditWishlistProperties);
+  yield takeLeading(EDIT_WISHLIST_PROPERTIES, workEditWishlistProperties);
 }
 
 function* watchDeleteWishlist() {
-  yield takeEvery(DELETE_WISHLIST, workDeleteWishlist);
+  yield takeLeading(DELETE_WISHLIST, workDeleteWishlist);
 }
 
 function* workCreateUserWishlist() {
   try {
     const wishlistForm = yield select(getFormValues("WishlistCreateForm"));
     const userValues = yield select(getUser);
-    let result = yield call(
-      createWishlistWithOwner,
-      userValues,
-      wishlistForm.title
-    );
+    let result = yield call(createWishlistWithOwner, userValues, wishlistForm);
 
     yield all([
       call(addNewWishlistIdToUser, userValues.uid, result.uid),
@@ -89,11 +92,35 @@ function* workCreateUserWishlist() {
   }
 }
 
+const id = x => x;
+
+/* Given a list of wishlists and a user,
+ * deletes the wishlists that do not exist in the
+ * database, and returns the list sent as parameter
+ * with the null elements and deleted wishlists filtered out
+ */
+function* handleWishlists(wishlists, user) {
+  wishlists = wishlists.filter(id);
+  for (let i = 0; i < wishlists.length; ++i) {
+    if (wishlists[i].deleted) {
+      yield call(deleteWishlistFromUser, wishlists[i].uid, user.uid);
+      // This removes the reference in local state?
+      yield put({
+        type: REMOVE_WISHLIST_ID_FROM_USER,
+        wishlistUid: wishlists[i].uid
+      });
+      yield call(deleteWishlistFromDB, wishlists[i].uid);
+    }
+  }
+  return wishlists.filter(wishlist => !wishlist.deleted);
+}
+
 function* workFetchWishlists() {
   try {
     const user = yield select(getUser);
-    const wishlists = yield call(fetchAllWishlistsFromUser, user);
-    console.log(wishlists);
+    let wishlists = yield call(fetchAllWishlistsFromUser, user);
+    wishlists = yield* handleWishlists(wishlists, user);
+
     yield put({
       type: FETCH_WISHLISTS_SUCCESS,
       wishlistData: wishlists
@@ -106,7 +133,9 @@ function* workFetchWishlists() {
 function* workFetchOwnedWishlists() {
   try {
     const user = yield select(getUser);
-    const wishlists = yield call(fetchAllOwnedWishlistsFromUser, user);
+    let wishlists = yield call(fetchAllOwnedWishlistsFromUser, user);
+    wishlists = yield* handleWishlists(wishlists, user);
+
     yield put({
       type: FETCH_OWNED_WISHLISTS_SUCCESS,
       wishlistData: wishlists
@@ -133,6 +162,7 @@ function* workEditWishlistProperties({ uid, field, data }) {
 function* workDeleteWishlist({ uid, user }) {
   try {
     yield all([
+      put(push("/dashboard")),
       call(deleteWishlistFromDB, uid),
       call(deleteWishlistFromUser, uid, user),
       put({ type: REMOVE_WISHLIST_ID_FROM_USER, wishlistUid: uid }),
@@ -140,7 +170,6 @@ function* workDeleteWishlist({ uid, user }) {
     ]);
 
     yield put({ type: DELETE_WISHLIST_SUCCESS, wishlistUid: uid });
-    yield put(push("/dashboard"));
   } catch (error) {
     yield put({ type: DELETE_WISHLIST_ERROR, error: error });
   }

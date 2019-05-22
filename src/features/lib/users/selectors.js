@@ -8,4 +8,8 @@ const getUsersState = () =>
     users => users
   );
 
+const selectUserCache = getUsers;
+
 export default { getUsersState };
+
+export { selectUserCache }

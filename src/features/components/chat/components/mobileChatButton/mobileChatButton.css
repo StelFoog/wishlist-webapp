@@ -1,0 +1,21 @@
+.mobileChatButtonContainer {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+}
+
+.mobileChatButtonContainer svg {
+  padding: 5px;
+}
+
+@media (min-width: 1271px) {
+  .mobileChatButtonContainer {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .mobileChatButtonContainer {
+    right: 1.5rem;
+  }
+}

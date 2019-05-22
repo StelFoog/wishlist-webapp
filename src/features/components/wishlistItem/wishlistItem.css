@@ -1,22 +1,28 @@
-
-
 .wishlistItem {
-
-  /*
-  display: flex; 
-  justify-content: space-between;
-  */
   width: 100%;
-  height: 12vh;
+  height: auto;
   box-sizing: border-box;
   padding: 10px;
 
-  display: grid;
-  grid-template-columns: 20% 40% 15% 25%;
+  display: flex;
 
   border-bottom: 2px solid white;
+}
 
+.wishlistItemColumn {
+  display: flex;
+}
 
+.itemContent > .buttonContainer {
+  flex: 1;
+}
+
+.wishlistItemColumn .buttonContainer {
+  width: 100%;
+}
+
+.wishlistItemColumn > * {
+  flex: 1;
 }
 
 .itemContent {
@@ -32,6 +38,11 @@
 }
 
 .itemPrice {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   text-align: center;
   margin: 0;
   padding: 0;
@@ -39,9 +50,8 @@
   margin-block-end: 0;
 }
 
-.itemDescription{
+.itemDescription {
   overflow: auto;
-
 }
 
 .itemDescription > p {
@@ -61,7 +71,7 @@
   padding: 0;
 }
 
-.claimUsers{
+.claimUsers {
   width: 100%;
 
   display: flex;
@@ -69,25 +79,56 @@
 }
 
 .userWhoClaimed {
-  padding: 5px;
-  margin: 0;
+  padding: 5px 0;
+  margin: 0 0 0 -0.25rem;
+  display: flex;
+  justify-content: center;
 }
 
 .userWhoClaimedName {
   display: none;
   position: absolute;
-
-  opacity: 0.4;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 999;
   border-radius: 5px;
-  background-color: black;
   color: white;
+  overflow: hidden;
+  margin-top: 42px;
+}
+.userWhoClaimedName p {
+  margin: 2.5px 5px;
 }
 
-.userWhoClaimedName > p {
+.claimedBy > h3 {
   margin: 0;
   padding: 0;
 }
 
+.itemContent.itemPriceLink {
+  justify-content: space-between;
+}
+
 .userWhoClaimed:hover > .userWhoClaimedName {
   display: block;
+}
+
+.wishlistColumnTitleDesc {
+  align-items: center;
+}
+
+@media (min-width: 601px) {
+  .wishlistItemColumn {
+    flex-basis: 50%;
+  }
+}
+
+@media (max-width: 600px) {
+  .wishlistColumnTitleDesc {
+    flex-direction: column;
+    margin-bottom: 0.75rem;
+  }
+
+  .wishlistItem {
+    flex-direction: column;
+  }
 }

@@ -1,15 +1,37 @@
-
-.pageHeader{
+.pageHeader {
   width: 100%;
+
   border-bottom: 2px solid var(--color-dark);
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  z-index: 10;
+  background-color: var(--color-light-gray);
+
+  box-shadow: 0 2px 2px -2px var(--color-dark);
 }
 
-.headerTitle{
+.headerTitle {
   text-align: left;
-  font-weight: 400;
-  font-size: 3rem;
+  font-weight: 500;
   color: var(--color-dark);
 
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
   margin: 1rem;
-  
+}
+
+@media (min-width: 601px) {
+  .headerTitle {
+    margin-left: 3rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .pageHeader {
+    top: 64px;
+  }
 }

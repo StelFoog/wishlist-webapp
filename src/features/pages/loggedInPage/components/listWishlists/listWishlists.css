@@ -1,12 +1,64 @@
-.listWishlists {
-  align-items: flex-start;
-}
-
 .wishlistCard {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  transition: box-shadow 0.25s linear;
+}
+
+.wishlistCard:hover {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .wishlistAvatarList {
   align-items: right;
   margin-left: auto;
+}
+
+.wishlistMembersDue {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media (min-width: 601px) {
+  .wishlistCardTitle {
+    display: flex;
+    flex-basis: 30%;
+    text-align: center;
+  }
+
+  .wishlistDescription {
+    display: flex;
+    flex-basis: 40%;
+    text-align: left;
+  }
+  .wishlistMembersDue {
+    align-items: center;
+    display: flex;
+    flex-basis: 30%;
+  }
+}
+
+@media (max-width: 600px) {
+  .wishlistCard {
+    flex-direction: column;
+  }
+
+  .wishlistCardTitle {
+    text-align: center;
+  }
+
+  .wishlistDescription {
+    text-align: left;
+    margin: 0;
+    padding: 0;
+  }
+
+  .wishlistMembersDue {
+    align-items: center;
+  }
 }

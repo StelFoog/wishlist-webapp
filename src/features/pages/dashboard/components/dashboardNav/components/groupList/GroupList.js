@@ -8,13 +8,17 @@ class GroupList extends React.Component {
   }
 
   render() {
-    const { navigate, groups, user } = this.props;
+    const { navigate, groups, user, selected, closeSideNav } = this.props;
     return (
       <React.Fragment>
         {groups.map(group => (
           <div
-            className="group"
-            onClick={() => navigate(`group/${group.uid}/${user.uid}`)}
+            key={group.uid}
+            className={`group ${selected === group.uid && "active"}`}
+            onClick={() => {
+              navigate(`group/${group.uid}/${user.uid}`);
+              closeSideNav();
+            }}
           >
             <Ripple />
             <span> {group.title}</span>

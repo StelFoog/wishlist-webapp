@@ -7,11 +7,12 @@ import {
   actions as userActions,
   selectors as userSelectors
 } from "../../../../lib/users";
-import "./wishlistItem.css";
+import { selectors as currentUserSelectors } from "../../../../lib/authentication";
+
 import ProfilePicture from "../../../../components/profilePicture/ProfilePicture";
 import usersReducer from "../../../../lib/users/reducers";
 
-const { claimWishlistItem } = wishlistActions;
+const { claimWishlistItem, unclaimWishlistItem } = wishlistActions;
 const { getUsersWithUid } = userActions;
 
 class WishlistItem extends React.Component {
@@ -33,12 +34,10 @@ class WishlistItem extends React.Component {
     const { name, profilePictureUrl } = user;
 
     return (
-      <div>
-        <div className="userWhoClaimed">
-          <ProfilePicture src={profilePictureUrl} width={40} />
-          <div className="userWhoClaimedName">
-            <p>{name}</p>
-          </div>
+      <div className="userWhoClaimed">
+        <ProfilePicture src={profilePictureUrl} width={40} />
+        <div className="userWhoClaimedName">
+          <p>{name}</p>
         </div>
       </div>
     );
@@ -52,27 +51,70 @@ class WishlistItem extends React.Component {
     return array;
   }
 
+  unclaimButton(wishlistUid, index) {
+    return (
+      <Button
+        variant="text"
+        label="Unclaim"
+        color="var(--color-primary)"
+        padding="5px"
+        className="smallClaimButton"
+        handleClick={() => this.props.unclaimItem(wishlistUid, index)}
+      />
+    );
+  }
+
+  smallClaimButton(wishlistUid, index) {
+    return (
+      <Button
+        variant="text"
+        label="Claim"
+        color="var(--color-primary)"
+        padding="5px"
+        className="smallClaimButton"
+        handleClick={() => this.props.claimItem(wishlistUid, index)}
+      />
+    );
+  }
+
   getClaimContent(wishlistUid, index, claimedBy) {
     if (claimedBy === undefined || claimedBy.length == 0) {
       return (
         <div className="itemContent itemClaim">
           <Button
             handleClick={() => this.props.claimItem(wishlistUid, index)}
-            variant="filled"
-            label="Claim item"
+            variant="text"
+            label="Claim"
             color="var(--color-primary)"
           />
+        </div>
+      );
+    } else if (claimedBy.includes(this.props.currentUser.uid)) {
+      return (
+        <div className="itemContent itemClaim">
+          <div className="claimedBy">
+            <h3>Claimed by</h3>
+            <div className="claimUsers">
+              {this.getFilteredUsers(claimedBy, this.props.users).map(user =>
+                this.getClaimedByUser(user)
+              )}
+            </div>
+          </div>
+          {this.unclaimButton(wishlistUid, index)}
         </div>
       );
     } else {
       return (
         <div className="itemContent itemClaim">
-          <h3>Claimed by:</h3>
-          <div className="claimUsers">
-            {this.getFilteredUsers(claimedBy, this.props.users).map(user =>
-              this.getClaimedByUser(user)
-            )}
+          <div className="claimedBy">
+            <h3>Claimed by</h3>
+            <div className="claimUsers">
+              {this.getFilteredUsers(claimedBy, this.props.users).map(user =>
+                this.getClaimedByUser(user)
+              )}
+            </div>
           </div>
+          {this.smallClaimButton(wishlistUid, index)}
         </div>
       );
     }
@@ -80,9 +122,7 @@ class WishlistItem extends React.Component {
 
   //Load all the users who have claimed the item into the state
   componentDidMount() {
-    console.log("component did mount");
     const { claimedBy } = this.state.item;
-    console.log(claimedBy);
     this.props.getUsers(claimedBy);
   }
 
@@ -90,32 +130,44 @@ class WishlistItem extends React.Component {
     const { wishlists, index, wishlistUid } = this.props;
     const wishlist = wishlists.find(element => element.uid == wishlistUid);
     const item = wishlist.items[index];
-    const { name, description, price, claimedBy, link } = item;
+    const { name, description, price, claimedBy, websitelink } = item;
 
     return (
       <React.Fragment>
         <div className="wishlistItem">
-          <div className="itemContent itemTitle">
-            <h2>{name}</h2>
-          </div>
-          <div className="itemContent itemDescription">
-            <p>{description}</p>
-          </div>
-          <div className="itemContent">
-            <div className="itemPrice">
-              <h3>{price}:-</h3>
+          <div className="wishlistItemColumn wishlistColumnTitleDesc">
+            <div className="itemContent itemTitle">
+              <h2>{name}</h2>
             </div>
-            <div className="itemLink">
-              <Button
-                variant="filled"
-                label="Link"
-                className="itemLinkButton"
-                padding="0"
-                color="var(--color-primary)"
-              />
+            <div className="itemContent itemDescription">
+              <p>{description}</p>
             </div>
           </div>
-          {this.getClaimContent(wishlistUid, index, claimedBy)}
+          <div className="wishlistItemColumn">
+            <div className="itemContent itemPriceLink">
+              <div className="itemPrice">
+                <h3>{price}:-</h3>
+              </div>
+              {websitelink && (
+                <div className="itemLink">
+                  <a
+                    href={"//" + websitelink}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    <Button
+                      variant="text"
+                      label="Link"
+                      className="itemLinkButton"
+                      padding="5px"
+                      color="var(--color-primary)"
+                    />
+                  </a>
+                </div>
+              )}
+            </div>
+            {this.getClaimContent(wishlistUid, index, claimedBy)}
+          </div>
         </div>
       </React.Fragment>
     );
@@ -125,15 +177,19 @@ class WishlistItem extends React.Component {
 const mapStateToProps = () => {
   const getWishlists = selectors.getWishlistsState();
   const getUsers = userSelectors.getUsersState();
+  const getCurrentUser = currentUserSelectors.getCurrentUserState();
   return state => ({
     wishlists: getWishlists(state),
-    users: getUsers(state)
+    users: getUsers(state),
+    currentUser: getCurrentUser(state)
   });
 };
 
 const mapDispatchToProps = dispatch => ({
   claimItem: (wishlistUid, index) =>
     dispatch(claimWishlistItem(wishlistUid, index)),
+  unclaimItem: (wishlistUid, index) =>
+    dispatch(unclaimWishlistItem(wishlistUid, index)),
   getUsers: claimedBy => dispatch(getUsersWithUid(claimedBy))
 });
 

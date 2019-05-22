@@ -1,7 +1,7 @@
 import React from "react";
 /* Components */
 
-import Footer from "../../components/footer";
+import Footer from "./components/footer";
 
 import StartScreen from "./StartScreen";
 import IntroCard from "./IntroCard";

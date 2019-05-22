@@ -18,4 +18,8 @@ const authWithFacebookAPI = async () =>
 const authWithGoogleAPI = async () =>
   await authWithProvider(new firebase.auth.GoogleAuthProvider());
 
-export { authWithFacebookAPI, authWithGoogleAPI };
+const logout = async () => {
+  await firebase.auth().signOut();
+}
+
+export { authWithFacebookAPI, authWithGoogleAPI, logout };

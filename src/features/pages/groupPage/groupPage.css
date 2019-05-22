@@ -2,4 +2,55 @@
   display: flex;
   flex-direction: row;
   flex: 1;
+  margin-top: 76px;
+  min-height: calc(100% - 76px);
+}
+
+.groupWishlists {
+  flex: 1;
+}
+
+.groupPageHeader {
+  z-index: 9;
+  top: 64;
+}
+
+.createItemButtonGroup {
+  bottom: 7rem;
+}
+
+.showChatButtonContainerGroup .mobileChatButtonContainer {
+  display: block;
+}
+
+@media (min-width: 1271px) {
+  .group-page-chat .chatWindow,
+  .group-page-chat ~ .groupPage .createItemButtonGroup,
+  .group-page-chat ~ .showChatButtonContainerGroup .mobileChatButtonContainer {
+    transition: right 0.25s ease-in-out;
+  }
+
+  .group-page-chat.hide-chat .chatWindow {
+    right: -500px;
+  }
+
+  .group-page-chat.show-chat ~ .groupPage .createItemButtonGroup,
+  .group-page-chat.show-chat
+    ~ .showChatButtonContainerGroup
+    .mobileChatButtonContainer {
+    right: calc(500px + 2rem);
+  }
+}
+
+@media (min-width: 601px) {
+  .groupWishlists {
+    margin-left: 250px;
+  }
+}
+
+@media (max-width: 600px) {
+  .groupPage {
+    margin-top: calc(76px + 64px);
+    min-height: calc(100% - 76px - 64px);
+  }
 }

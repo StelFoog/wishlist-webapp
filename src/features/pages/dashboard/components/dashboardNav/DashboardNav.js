@@ -1,18 +1,30 @@
 import React from "react";
+import { connect } from "react-redux";
+import { push } from "connected-react-router";
 import IconButton from "../../../../components/iconButton";
 import Ripple from "../../../../components/ripple";
+import { actions as dialogActions } from "../../../../components/dialog";
+import { onUserChanged } from "../../../../lib/authentication/db.js";
+
 import {
   GroupIcon,
   MenuIcon,
   RoundKeyboardArrowDown,
   SettingsIcon,
   ListIcon,
-  PlusIcon
+  PlusIcon,
+  HelpIcon,
+  LeaveIcon
 } from "../../../../components/svgIcon";
 import ProfilePicture from "../../../../components/profilePicture";
 import { getUserProfilePictureUrl } from "../../../../lib/authentication/user.js";
 import GroupList from "./components/groupList";
 import "./dashboardNav.css";
+
+import authActions from "../../../../lib/authentication/actions.js";
+
+const { logout } = authActions;
+const { openDialog } = dialogActions;
 
 class DashboardNav extends React.Component {
   constructor(props) {
@@ -24,6 +36,7 @@ class DashboardNav extends React.Component {
 
     this.setWrapperRef = this.setWrapperRef.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.closeSideNav = this.closeSideNav.bind(this);
   }
 
   toggleSideNav = () => {
@@ -31,25 +44,26 @@ class DashboardNav extends React.Component {
     this.setState({ showSideNav: !show });
   };
 
-  getActivePage() {
-    const { pathname } = this.props.location;
-    if (
-      pathname.indexOf("wishlist") > 0 ||
-      pathname === "/dashboard/" ||
-      pathname === "/dashboard"
-    ) {
-      return 0;
-    } else if (pathname.indexOf("group") > 0) {
-      return 1;
-    } else return -1;
+  closeSideNav() {
+    this.setState({ showSideNav: false });
   }
 
   componentDidMount() {
     document.addEventListener("mousedown", this.handleClickOutside);
+
+    this.unlisten = onUserChanged(
+      this.props.user.uid,
+      (props => {
+        return updatedUser => {
+          props.updateCurrentUser(updatedUser);
+        };
+      })(this.props)
+    );
   }
 
   componentWillUnmount() {
     document.removeEventListener("mousedown", this.handleClickOutside);
+    this.unlisten();
   }
 
   setWrapperRef(node) {
@@ -63,9 +77,16 @@ class DashboardNav extends React.Component {
   }
 
   render() {
-    const activeTab = this.getActivePage();
     const { showSideNav, groupDropdown } = this.state;
-    const { navigate, user, createGroup, openForm } = this.props;
+    const {
+      navigate,
+      user,
+      createGroup,
+      openForm,
+      askLogout,
+      openHelpDialog
+    } = this.props;
+    const { pathParam1, pathParam2 } = this.props.match.params;
     return (
       <React.Fragment>
         <div
@@ -82,8 +103,16 @@ class DashboardNav extends React.Component {
             </div>
           </div>
           <hr className="navDivider" />
-          <div className={`navButtonContainer active-${activeTab}`}>
-            <div className="navButton" onClick={() => navigate("")}>
+          <div className={`navButtonContainer`}>
+            <div
+              className={`navButton ${(!pathParam1 ||
+                pathParam1 === "wishlist") &&
+                "active"}`}
+              onClick={() => {
+                navigate("");
+                this.closeSideNav();
+              }}
+            >
               <Ripple />
               <div className="icon">
                 <ListIcon size={30} color="var(--color-light)" />
@@ -92,7 +121,7 @@ class DashboardNav extends React.Component {
             </div>
 
             <div
-              className="navButton"
+              className={`navButton ${pathParam1 === "group" && "active"}`}
               onClick={() => this.setState({ groupDropdown: !groupDropdown })}
             >
               <Ripple />
@@ -118,10 +147,29 @@ class DashboardNav extends React.Component {
                   <span>Add new group</span>
                 </div>
 
-                <GroupList navigate={navigate} />
+                <GroupList
+                  navigate={navigate}
+                  selected={pathParam1 === "group" && pathParam2}
+                  closeSideNav={this.closeSideNav}
+                />
               </div>
             </div>
           </div>
+          <div className="navButton navButtonBottom" onClick={openHelpDialog}>
+            <Ripple />
+            <div className="icon">
+              <HelpIcon size="30" />
+            </div>
+            <span>Help</span>
+          </div>
+          <div className="navButton navButtonBottom" onClick={askLogout}>
+            <Ripple />
+            <div className="icon">
+              <LeaveIcon size="30" />
+            </div>
+            <span>Log out</span>
+          </div>
+          {/*
           <div
             className="navButton navButtonBottom"
             onClick={() => navigate("settings")}
@@ -132,6 +180,7 @@ class DashboardNav extends React.Component {
             </div>
             <span>Settings</span>
           </div>
+          */}
         </div>
 
         <div className="mobileTopNav">
@@ -148,4 +197,24 @@ class DashboardNav extends React.Component {
   }
 }
 
-export default DashboardNav;
+const mapDispatchToProps = dispatch => ({
+  askLogout: () => {
+    dispatch(
+      openDialog("yesNo", {
+        title: "Are you sure you want to log out?",
+        onYes: () => {
+          dispatch(logout());
+          dispatch(push("/"));
+        }
+      })
+    );
+  },
+  openHelpDialog: () => {
+    dispatch(openDialog("help", {}));
+  }
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(DashboardNav);

@@ -1,4 +1,5 @@
 import React from "react";
+import WishlistMembers from "../../../../components/wishlistMembers";
 
 import CardContainer, {
   CardHeader,
@@ -16,16 +17,13 @@ class SharedWishlists extends React.Component {
       <div onClick={() => this.props.goToWishlist(wishlist)}>
         <CardContainer
           children={
-            <div className="cardContent">
-              <CardHeader children={wishlist.title} />
-              <hr />
-              <CardContent
-                children={
-                  <div className="wishlistCard">
-                    <p className="wishlistText">...</p>
-                  </div>
-                }
-              />
+            <div className="wishlistCard">
+              <h1 className="wishlistCardTitle">{wishlist.title}</h1>
+              {wishlist.description || "No description provided"}
+              <div className="wishlistMembersDue">
+                <WishlistMembers wishlist={wishlist} size={60} />
+                {wishlist.endDate && <h3>Date: {wishlist.endDate}</h3>}
+              </div>
             </div>
           }
         />

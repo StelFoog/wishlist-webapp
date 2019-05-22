@@ -7,8 +7,14 @@ import {
   EditItem,
   CreateItem,
   CreateGroup,
-  AddMember,
-  Share
+  Share,
+  NoLogin,
+  Invite,
+  YesNoDialog,
+  CreateGroupItem,
+  EditGroupItem,
+  HelpPage,
+  ErrorDialog
 } from "./variants";
 
 import "./dialog.css";
@@ -17,16 +23,27 @@ const DIALOG_VARIANTS = {
   newWishlist: NewWishlist,
   editItem: EditItem,
   createItem: CreateItem,
+  createGroupItem: CreateGroupItem,
+  editGroupItem: EditGroupItem,
   createGroup: CreateGroup,
-  addMember: AddMember,
-  share: Share
+  share: Share,
+  noLogin: NoLogin,
+  invite: Invite,
+  yesNo: YesNoDialog,
+  help: HelpPage,
+  error: ErrorDialog
 };
 
-const Dialog = ({ variant, showDialog, handleClose, ...rest }) => {
+const Dialog = ({ variant, showDialog, handleClose, values, ...rest }) => {
   const DialogVariant = DIALOG_VARIANTS[variant]
     ? DIALOG_VARIANTS[variant]
     : "div";
-
+  const onClose = values.onClose
+    ? () => {
+        handleClose();
+        values.onClose();
+      }
+    : handleClose;
   return (
     <React.Fragment>
       {showDialog && (
@@ -35,13 +52,13 @@ const Dialog = ({ variant, showDialog, handleClose, ...rest }) => {
           onClick={event => {
             const target = event.target;
             if (target.id === "dialog-container") {
-              handleClose();
+              onClose();
             }
           }}
         >
           <div className="dialog">
             <Card elevation={5}>
-              <DialogVariant handleClose={handleClose} {...rest} />
+              <DialogVariant handleClose={onClose} {...rest} />
             </Card>
           </div>
         </div>

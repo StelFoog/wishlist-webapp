@@ -5,12 +5,18 @@ import { sagas as wishlistItemSagas } from "./features/lib/wishlistItems";
 import { sagas as chatSagas } from "./features/lib/chat";
 import { sagas as groupSagas } from "./features/lib/groups";
 import { sagas as usersSagas } from "./features/lib/users";
+import { sagas as groupItemSagas } from "./features/lib/groupItems";
+import errorSagas from "./features/lib/error-handling/sagas.js";
 
 function* rootSaga() {
   yield all([
+    errorSagas.watchError(),
     authSagas.watchUserAuthFacebook(),
     authSagas.watchAddUserToWishlist(),
+    authSagas.watchRemoveUserFromWishlist(),
     authSagas.watchSearchForUsersWithName(),
+    authSagas.watchLogout(),
+    authSagas.watchUpdateCurrentUser(),
     wishlistSagas.watchCreateUserWishlist(),
     wishlistItemSagas.watchCreateWishlistItem(),
     wishlistSagas.watchFetchWishlists(),
@@ -19,6 +25,7 @@ function* rootSaga() {
     wishlistSagas.watchEditWishlistProperties(),
     wishlistItemSagas.watchEditWishlistItem(),
     wishlistItemSagas.watchClaimWishlistItem(),
+    wishlistItemSagas.watchUnclaimWishlistItem(),
     chatSagas.watchCreateChat(),
     chatSagas.watchLoadChat(),
     chatSagas.watchSendChatMessage(),
@@ -27,7 +34,15 @@ function* rootSaga() {
     groupSagas.watchCreateGroup(),
     groupSagas.watchInviteUserToGroup(),
     groupSagas.watchRemoveUserFromGroup(),
-    usersSagas.watchGetUserWithUid()
+    groupSagas.watchEditGroupProperites(),
+    groupSagas.watchLeaveGroup(),
+    groupSagas.watchDeleteGroup(),
+    groupItemSagas.watchCreateGroupItem(),
+    groupItemSagas.watchFetchGroupItems(),
+    groupItemSagas.watchEditGroupItem(),
+    groupItemSagas.watchClaimGroupItem(),
+    usersSagas.watchGetUsersWithUids(),
+    usersSagas.watchCacheUser()
   ]);
 }
 

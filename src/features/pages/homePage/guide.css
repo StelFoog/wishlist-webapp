@@ -2,7 +2,6 @@
   display: flex;
   flex: 1;
   flex-wrap: wrap;
-  margin-top: 5rem;
   padding: 1rem;
 }
 
@@ -21,7 +20,7 @@
   flex-direction: column;
 }
 
-.guide-col > * {
+.guide-col > .card-container {
   flex: 1;
 }
 

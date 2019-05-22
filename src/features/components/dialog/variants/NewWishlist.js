@@ -6,31 +6,31 @@ import { CardHeader, CardContent, CardActions } from "../../card";
 import { WishlistCreateForm } from "../../wishListForm";
 import Button from "../../button";
 
-const NewWishlist = ({ handleSubmit, handleClose }) => (
+const NewWishlist = ({ performSubmit, handleClose }) => (
   <React.Fragment>
     <CardHeader>{"Create new Wishlist"}</CardHeader>
     <CardContent>
-      <WishlistCreateForm />
+      <WishlistCreateForm performSubmit={performSubmit} />
     </CardContent>
     <CardActions>
       <Button
         variant={"text"}
         label={"Cancel"}
         handleClick={handleClose}
-        color={"red"}
+        color={"var(--color-error)"}
       />
       <Button
-        variant={"filled"}
+        variant={"text"}
         label={"Submit"}
-        handleClick={handleSubmit}
-        color={"green"}
+        handleClick={performSubmit}
+        color={"var(--color-accept)"}
       />
     </CardActions>
   </React.Fragment>
 );
 
 const mapDispatchToProps = dispatch => ({
-  handleSubmit: () => dispatch(submit("WishlistCreateForm"))
+  performSubmit: () => dispatch(submit("WishlistCreateForm"))
 });
 
 export default connect(

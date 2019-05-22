@@ -1,4 +1,4 @@
-import { takeEvery, call, put, select } from "redux-saga/effects";
+import { takeLeading, takeEvery, call, put, select } from "redux-saga/effects";
 import types from "./types.js";
 import {
   createNewChat,
@@ -24,11 +24,11 @@ const {
 } = types;
 
 function* watchCreateChat() {
-  yield takeEvery(CREATE_CHAT, workCreateChat);
+  yield takeLeading(CREATE_CHAT, workCreateChat);
 }
 
 function* watchLoadChat() {
-  yield takeEvery(LOAD_CHAT, workLoadChat);
+  yield takeLeading(LOAD_CHAT, workLoadChat);
 }
 
 function* watchSendChatMessage() {
@@ -36,7 +36,7 @@ function* watchSendChatMessage() {
 }
 
 function* watchDeleteChat() {
-  yield takeEvery(DELETE_CHAT, workDeleteChat);
+  yield takeLeading(DELETE_CHAT, workDeleteChat);
 }
 
 function* workCreateChat(action) {

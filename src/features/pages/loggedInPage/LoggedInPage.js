@@ -2,10 +2,11 @@ import React from "react";
 import ListWishlists from "./components/listWishlists";
 import IconButton from "../../components/iconButton";
 import PlusIcon from "../../components/svgIcon/icons/PlusIcon";
-import { Tabs, Tab } from "./components/tabs";
-import PageHeader from "../../components/pageHeader";
+import AllWishlistsHeader from "./components/allWishlistsHeader";
 import SharedWishlists from "./components/sharedWishlists";
 import SwipeableViews from "react-swipeable-views";
+import ShareForm from "../../components/shareForm/ShareForm";
+import { Tabs, Tab } from "./components/allWishlistsHeader/tabs";
 import "./loggedInPage.css";
 
 class LoggedInPage extends React.Component {
@@ -14,15 +15,23 @@ class LoggedInPage extends React.Component {
   };
 
   handleChange = value => {
+    // Check that we arent clicking on the active tab, if not, change active tab
+    if (this.state.index !== value) {
+      if (this.state.index === 0) {
+        document.getElementById("0").classList.remove("active-tab");
+        document.getElementById("1").classList.add("active-tab");
+      } else {
+        document.getElementById("0").classList.add("active-tab");
+        document.getElementById("1").classList.remove("active-tab");
+      }
+    }
+
     this.setState({
       index: value
     });
-  };
 
-  handleChangeIndex = index => {
-    this.setState({
-      index
-    });
+    // Scroll to the top when user changes tabs
+    window.scrollTo(0, 0);
   };
 
   render() {
@@ -30,30 +39,19 @@ class LoggedInPage extends React.Component {
     const { openForm } = this.props;
     return (
       <div className="logged-in-page">
-        <Tabs>
-          <Tab
-            label="Your wishlists"
-            index={0}
-            handleClick={this.handleChange}
-          />
-          <Tab
-            label="Friends and family"
-            index={1}
-            handleClick={this.handleChange}
-          />
-        </Tabs>
+        <AllWishlistsHeader handleChange={this.handleChange} index={index} />
         <SwipeableViews
           index={index}
-          onChangeIndex={this.handleChangeIndex}
+          onChangeIndex={this.handleChange}
           style={{ flex: 1, display: "flex" }}
         >
           <div className="page-tab page-tab-1">
-            <PageHeader title="Your wishlists" />
+            {/*<PageHeader title="Your wishlists" />*/}
             <ListWishlists />
           </div>
           <div className="page-tab page-tab-2">
             <div className="shared-wishlists">
-              <PageHeader title="Shared wishlists" />
+              {/*<PageHeader title="Shared wishlists" />*/}
               <SharedWishlists />
             </div>
           </div>
@@ -61,8 +59,12 @@ class LoggedInPage extends React.Component {
         <div
           className={`createWishlistButton ${index === 0 ? "shown" : "hidden"}`}
         >
-          <IconButton variant="filled" handleClick={openForm}>
-            <PlusIcon size={50} />
+          <IconButton
+            variant="filled"
+            handleClick={openForm}
+            color="var(--color-primary)"
+          >
+            <PlusIcon size={50} color="white" />
           </IconButton>
         </div>
       </div>

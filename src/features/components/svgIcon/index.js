@@ -9,10 +9,14 @@ import ChatIcon from "./icons/ChatIcon";
 import RoundKeyboardArrowLeft from "./icons/RoundKeyboardArrowLeft";
 import EditIcon from "./icons/EditIcon";
 import DeleteIcon from "./icons/DeleteIcon";
+import HelpIcon from "./icons/HelpIcon";
+import LeaveIcon from "./icons/LeaveIcon";
+import ShareIcon from "./icons/ShareIcon";
 
 import SvgIcon from "./SvgIcon";
 
 export {
+  LeaveIcon,
   RoundKeyboardArrowDown,
   RoundKeyboardArrowLeft,
   GroupIcon,
@@ -23,7 +27,9 @@ export {
   InsertEmoji,
   ChatIcon,
   EditIcon,
-  DeleteIcon
+  DeleteIcon,
+  HelpIcon,
+  ShareIcon
 };
 
 export default SvgIcon;
