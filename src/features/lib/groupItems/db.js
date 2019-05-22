@@ -2,7 +2,7 @@ import { firebase } from "../firebase";
 import { _getGroupRef } from "../groups/db";
 
 const validateLink = (link) => {
-  return link.replace("https://", "")
+  return !link ? "" : link.replace("https://", "")
              .replace("http://", "");
 }
 
