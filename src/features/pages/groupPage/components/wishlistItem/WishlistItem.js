@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "../../../../components/button";
-import { getClaimContent } from "./lib";
+import { getFilteredUsers, getClaimedByUser } from "./lib";
 
 class WishlistItem extends React.Component {
   constructor(props) {
@@ -14,14 +14,83 @@ class WishlistItem extends React.Component {
     this.props.getUsers(claimedBy);
   }
 
+  unclaimButton() {
+    return (
+      <Button
+        variant="text"
+        label="Unclaim"
+        color="var(--color-primary)"
+        padding="5px"
+        className="smallClaimButton"
+        handleClick={this.handleUnclaim}
+      />
+    );
+  }
+
+  smallClaimButton() {
+    return (
+      <Button
+        variant="text"
+        label="Claim"
+        color="var(--color-primary)"
+        padding="5px"
+        className="smallClaimButton"
+        handleClick={this.handleClaim}
+      />
+    );
+  }
+
+  getClaimContent({ claimedByUsers, users }) {
+    if (claimedByUsers === undefined || claimedByUsers.length == 0) {
+      return (
+        <div className="itemContent itemClaim">
+          <Button
+            handleClick={this.handleClaim}
+            variant="text"
+            label="Claim"
+            color="var(--color-primary)"
+          />
+        </div>
+      );
+    } else if (claimedByUsers.includes(this.props.user.uid)) {
+      return (
+        <div className="itemContent itemClaim">
+          <div className="claimedBy">
+            <h3>Claimed by</h3>
+            <div className="claimUsers">
+              {getFilteredUsers(claimedByUsers, users).map(user =>
+                getClaimedByUser(user)
+              )}
+            </div>
+          </div>
+          {this.unclaimButton()}
+        </div>
+      );
+    } else {
+      return (
+        <div className="itemContent itemClaim">
+          <div className="claimedBy">
+            <h3>Claimed by</h3>
+            <div className="claimUsers">
+              {getFilteredUsers(claimedByUsers, users).map(user =>
+                getClaimedByUser(user)
+              )}
+            </div>
+          </div>
+          {this.smallClaimButton()}
+        </div>
+      );
+    }
+  }
+
   handleClaim = () => {
     const { claimItem, groupID, userID, index } = this.props;
     claimItem({ groupID, userID, index });
   };
 
   handleUnclaim = () => {
-    const { claimItem, groupID, userID, index } = this.props;
-    claimItem({ groupID, userID, index });
+    const { unclaimItem, groupID, userID, index } = this.props;
+    unclaimItem({ groupID, userID, index });
   };
 
   render() {
@@ -81,8 +150,7 @@ class WishlistItem extends React.Component {
                 />
               </div>
             ) : (
-              getClaimContent({
-                handleClaim: this.handleClaim,
+              this.getClaimContent({
                 claimedByUsers: claimedBy,
                 users,
                 claimItem
