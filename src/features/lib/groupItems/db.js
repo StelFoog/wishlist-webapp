@@ -2,7 +2,7 @@ import { firebase } from "../firebase";
 import { _getGroupRef } from "../groups/db";
 
 const validateLink = link => {
-  return link.replace("https://", "").replace("http://", "");
+  return link ? link.replace("https://", "").replace("http://", "") : "";
 };
 
 const addGroupWishlistItem = async ({ groupID, userID, itemData }) => {
