@@ -35,7 +35,7 @@ class InvitedWishlistPage extends React.Component {
     let wishlist = this.props.wishlists.find(function(list) {
       return list.uid === uid;
     });
-    this.setState({ items: wishlist.items, name: wishlist.title });
+    this.setState({ items: wishlist.items, name: wishlist.title }); // unused, render now pulls directly from state in order to update properly
 
     this.unlisten = onWishlistChanged(
       wishlist.uid,
@@ -57,7 +57,12 @@ class InvitedWishlistPage extends React.Component {
   }
 
   render() {
-    const { items, uid, name, showChat } = this.state;
+    const { uid, showChat } = this.state;
+    const wishlist = this.props.wishlists.find(function(wishlist) {
+      return wishlist.uid === uid;
+    });
+    const items = wishlist.items;
+    const name = wishlist.title;
     return (
       <React.Fragment>
         <PageHeader title={name} />
