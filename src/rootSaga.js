@@ -41,6 +41,7 @@ function* rootSaga() {
     groupItemSagas.watchFetchGroupItems(),
     groupItemSagas.watchEditGroupItem(),
     groupItemSagas.watchClaimGroupItem(),
+    groupItemSagas.watchUnclaimGroupItem(),
     usersSagas.watchGetUsersWithUids(),
     usersSagas.watchCacheUser()
   ]);
